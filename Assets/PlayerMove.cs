@@ -8,13 +8,22 @@ using System;
 
 public class PlayerMove : MonoBehaviour
 {
-    
+    [Header("Game Value")]
     [SerializeField]
     float PlayerMoveSpeed;
     [SerializeField]
     float ExplotionForce;
     [SerializeField]
     float ExplotionRadius;
+
+    [Header("Game VFX")]
+    [SerializeField]
+    GameObject StepParticlePosition;
+    [SerializeField]
+    GameObject StepParticle;
+
+    float StepCooldownValue = 6;
+    float StepCooldown = 0;
 
     PlayerStatus playerStatus;
 
@@ -79,10 +88,23 @@ public class PlayerMove : MonoBehaviour
             float angle = 0;
             angle = (Mathf.Atan2(v, h) * Mathf.Rad2Deg * -1);
 
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, angle, 0), 180 * Time.deltaTime);
-            
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, angle, 0), 480 * Time.deltaTime);
+            SpawnStepParticle();
         }
         
+    }
+
+    void SpawnStepParticle()
+    {
+        if(StepCooldown < StepCooldownValue)
+        {
+            StepCooldown++;
+            return;
+        }
+        StepCooldown = 0;
+
+        GameObject g = Instantiate(StepParticle, StepParticlePosition.transform.position, Quaternion.identity);
+        Destroy(g, 1);
     }
 
     void OnMove(InputValue value)

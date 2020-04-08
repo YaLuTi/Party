@@ -11,7 +11,7 @@ public class PlayerIdentity : MonoBehaviour
     Vector3[] SpawnPosition;
 
     PlayerInput playerInput;
-    int PlayerID;
+    public int PlayerID;
     // Start is called before the first frame update
     void Start()
     {
