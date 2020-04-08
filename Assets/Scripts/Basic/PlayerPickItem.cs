@@ -69,6 +69,10 @@ public class PlayerPickItem : MonoBehaviour
     {
         Instantiate(HitParticle, p, Quaternion.identity);
         GetComponent<Rigidbody>().AddForce(velocity * 20);
-
+        if (IsHolding)
+        {
+            itemHand.DropHoldingItem(-velocity);
+            IsHolding = false;
+        }
     }
 }

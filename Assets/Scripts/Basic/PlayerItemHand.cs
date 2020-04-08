@@ -45,4 +45,15 @@ public class PlayerItemHand : MonoBehaviour
         HoldingItem.transform.parent = null;
         HoldingItem = null;
     }
+
+    public void DropHoldingItem(Vector3 velocity)
+    {
+        HoldingItem.GetComponent<Collider>().isTrigger = false;
+        Rigidbody rb = HoldingItem.GetComponent<Rigidbody>();
+        rb.isKinematic = false;
+        rb.useGravity = true;
+        rb.AddForce(velocity * 7f);
+        HoldingItem.transform.parent = null;
+        HoldingItem = null;
+    }
 }

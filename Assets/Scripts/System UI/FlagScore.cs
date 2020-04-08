@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class FlagScore : MonoBehaviour
 {
+    [SerializeField]
+    Vector3 spawnPosition;
+
     int cooldown = 0;
     // Start is called before the first frame update
     void Start()
@@ -27,6 +30,13 @@ public class FlagScore : MonoBehaviour
         else
         {
             cooldown = 0;
+        }
+
+        if(transform.position.y < -5)
+        {
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            transform.rotation = Quaternion.identity;
+            transform.position = spawnPosition;
         }
     }
 }
