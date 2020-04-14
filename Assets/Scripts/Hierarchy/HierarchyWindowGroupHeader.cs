@@ -5,6 +5,7 @@ using UnityEditor;
 /// Hierarchy Window Group Header
 /// http://diegogiacomelli.com.br/unitytips-hierarchy-window-group-header
 /// </summary>
+/*
 [InitializeOnLoad]
 public static class HierarchyWindowGroupHeader
 {
@@ -23,4 +24,4 @@ public static class HierarchyWindowGroupHeader
             EditorGUI.DropShadowLabel(selectionRect, gameObject.name.Replace("-", "").ToUpperInvariant());
         }
     }
-}
+}*/

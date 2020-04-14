@@ -24,15 +24,13 @@ public class PlayerMove : MonoBehaviour
 
     float StepCooldownValue = 6;
     float StepCooldown = 0;
-
-    PlayerStatus playerStatus;
-
+    
     bool MoveEnable = true;
 
-    public GameObject Bullet;
-    bool Fire;
-    Rigidbody rb;
+    float MoveMultiplier = 1;
 
+    PlayerStatus playerStatus;
+    Rigidbody rb;
     float h;
     float v;
 
@@ -74,14 +72,10 @@ public class PlayerMove : MonoBehaviour
     void Update()
     {
         if (!MoveEnable) return;
-        if (Fire)
-        {
-            Debug.Log("S");
-        }
 
         // rb.velocity = new Vector3(h, 0, v) * 2.5f;
 
-        transform.position += new Vector3(h, 0, v) * PlayerMoveSpeed * Time.deltaTime;
+        transform.position += new Vector3(h, 0, v) * PlayerMoveSpeed * (1 - MoveMultiplier) * Time.deltaTime;
 
         if (Mathf.Abs(h) + Mathf.Abs(v) > 0.8f)
         {
