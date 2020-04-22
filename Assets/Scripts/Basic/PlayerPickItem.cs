@@ -6,14 +6,17 @@ public class PlayerPickItem : MonoBehaviour
 {
     [Header("Game VFX")]
     public GameObject HitParticle;
+    public GameObject PickUpParticle;
     
 
     bool IsHolding = false;
     PlayerItemHand itemHand;
+    PlayerStatusAnimator playerStatus;
     // Start is called before the first frame update
     void Start()
     {
         itemHand = GetComponentInChildren<PlayerItemHand>();
+        playerStatus = GetComponent<PlayerStatusAnimator>();
     }
 
     // Update is called once per frame
@@ -22,11 +25,19 @@ public class PlayerPickItem : MonoBehaviour
         
     }
 
+    void OnShoot()
+    {
+        if (IsHolding)
+        {
+            itemHand.UseItem();
+        }
+    }
+
     void OnPick()
     {
         if (IsHolding)
         {
-            itemHand.ThrowHoldingItem();
+            playerStatus.PlayerItem_Throw();
             IsHolding = false;
         }
         else
@@ -60,9 +71,17 @@ public class PlayerPickItem : MonoBehaviour
                 {
                     IsHolding = true;
                     itemHand.SetHoldingItem(pick.gameObject);
+                    GameObject g = Instantiate(PickUpParticle, transform.position, Quaternion.identity);
+                    g.transform.parent = this.gameObject.transform;
+                    Destroy(g, 1);
                 }
             }
         }
+    }
+
+    void Throw()
+    {
+        itemHand.ThrowHoldingItem();
     }
 
     public void OnHit(Vector3 p, Vector3 velocity)

@@ -10,6 +10,8 @@ public class PlayerIdentity : MonoBehaviour
     [SerializeField]
     Vector3[] SpawnPosition;
 
+    public SkinnedMeshRenderer r;
+
     PlayerInput playerInput;
     public int PlayerID;
     // Start is called before the first frame update
@@ -18,9 +20,9 @@ public class PlayerIdentity : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         PlayerID = playerInput.user.index;
 
-        Material[] mats = GetComponent<MeshRenderer>().materials;
+        Material[] mats = r.materials;
         mats[0] = MaterialsArray[PlayerID];
-        GetComponent<MeshRenderer>().materials = mats;
+        r.materials = mats;
 
         switch (PlayerID)
         {

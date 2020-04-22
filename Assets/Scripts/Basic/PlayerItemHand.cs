@@ -41,7 +41,7 @@ public class PlayerItemHand : MonoBehaviour
         Rigidbody rb = HoldingItem.GetComponent<Rigidbody>();
         rb.isKinematic = false;
         rb.useGravity = true;
-        rb.AddForce(ThrowStrength * transform.right);
+        rb.AddForce(ThrowStrength * transform.root.forward);
         HoldingItem.transform.parent = null;
         HoldingItem = null;
     }
@@ -55,5 +55,10 @@ public class PlayerItemHand : MonoBehaviour
         rb.AddForce(velocity * 7f);
         HoldingItem.transform.parent = null;
         HoldingItem = null;
+    }
+
+    public void UseItem()
+    {
+        HoldingItem.GetComponent<ItemBasic>().OnUse();
     }
 }

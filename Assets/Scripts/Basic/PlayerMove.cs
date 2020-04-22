@@ -22,14 +22,14 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     GameObject StepParticle;
 
-    float StepCooldownValue = 6;
+    float StepCooldownValue = 12;
     float StepCooldown = 0;
     
     bool MoveEnable = true;
 
-    float MoveMultiplier = 1;
+    float MoveMultiplier = 0;
 
-    PlayerStatus playerStatus;
+    PlayerStatusAnimator playerStatus;
     Rigidbody rb;
     float h;
     float v;
@@ -45,28 +45,10 @@ public class PlayerMove : MonoBehaviour
 
     void Start()
     {
-        playerStatus = GetComponent<PlayerStatus>();
+        playerStatus = GetComponent<PlayerStatusAnimator>();
         playerStatus.StatusUpdateHandler += OnStatusUpdate;
         rb = GetComponent<Rigidbody>();
     }
-
-    /*
-    void Shoot()
-    {
-        Instantiate(Bullet, transform.position, Quaternion.identity);
-        Collider[] colliders = Physics.OverlapSphere(transform.position, ExplotionRadius);
-        foreach (Collider hit in colliders)
-        {
-            Rigidbody rb = hit.GetComponent<Rigidbody>();
-
-            if (rb != null)
-            {
-                rb.AddExplosionForce(ExplotionForce, transform.position, ExplotionRadius, 999.0F);
-                rb.isKinematic = false;
-            }
-        }
-        Debug.Log("Fire");
-    }*/
 
     // Update is called once per frame
     void Update()
@@ -77,19 +59,27 @@ public class PlayerMove : MonoBehaviour
 
         transform.position += new Vector3(h, 0, v) * PlayerMoveSpeed * (1 - MoveMultiplier) * Time.deltaTime;
 
+        // 暫時將AnimatorSpeed的Update寫成二分法 之後將Smooth轉向引入後再改成數學判斷式
         if (Mathf.Abs(h) + Mathf.Abs(v) > 0.8f)
         {
             float angle = 0;
-            angle = (Mathf.Atan2(v, h) * Mathf.Rad2Deg * -1);
+            angle = (Mathf.Atan2(-h, v) * Mathf.Rad2Deg * -1);
+
+            playerStatus.MoveSpeedUpdate(1);
 
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, angle, 0), 480 * Time.deltaTime);
             SpawnStepParticle();
+        }
+        else
+        {
+            playerStatus.MoveSpeedUpdate(0);
         }
         
     }
 
     void SpawnStepParticle()
     {
+        if (StepParticle == null) return;
         if(StepCooldown < StepCooldownValue)
         {
             StepCooldown++;
