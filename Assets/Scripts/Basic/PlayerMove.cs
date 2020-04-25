@@ -5,32 +5,39 @@ using DG.Tweening;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 using System;
+using AnimFollow;
 
 public class PlayerMove : MonoBehaviour
 {
     [Header("Game Value")]
     [SerializeField]
-    float PlayerMoveSpeed;
-    [SerializeField]
-    float ExplotionForce;
-    [SerializeField]
-    float ExplotionRadius;
+    float PlayerMoveSpeed; // Set by user
 
     [Header("Game VFX")]
     [SerializeField]
     GameObject StepParticlePosition;
     [SerializeField]
     GameObject StepParticle;
-
-    float StepCooldownValue = 12;
+    float StepCooldownValue = 12; // Step Particle Cooldown
     float StepCooldown = 0;
     
+    Animator anim;          // Reference to the animator component.
+    HashIDs_AF hash;            // Reference to the HashIDs.
+
+    public float animatorSpeed = 1.3f; // Read by RagdollControl
+    public float speedDampTime = .1f;   // The damping for the speed parameter
+    float mouseInput;
+    public float mouseSensitivityX = 100f;
+    public bool inhibitMove = false; // Set from RagdollControl
+    [HideInInspector] public Vector3 glideFree = Vector3.zero; // Set from RagdollControl
+    Vector3 glideFree2 = Vector3.zero;
+    [HideInInspector] public bool inhibitRun = false; // Set from RagdollControl
+
     bool MoveEnable = true;
 
     float MoveMultiplier = 0;
 
     PlayerStatusAnimator playerStatus;
-    Rigidbody rb;
     float h;
     float v;
 
@@ -47,7 +54,6 @@ public class PlayerMove : MonoBehaviour
     {
         playerStatus = GetComponent<PlayerStatusAnimator>();
         playerStatus.StatusUpdateHandler += OnStatusUpdate;
-        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame

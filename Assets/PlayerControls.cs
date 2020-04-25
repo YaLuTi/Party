@@ -40,6 +40,22 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""id"": ""c39d4c13-e5e3-4a49-97e1-c8410d7b262f"",
                     ""expectedControlType"": """",
                     ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Throw"",
+                    ""type"": ""Button"",
+                    ""id"": ""1883b29a-41db-47e9-b042-19d5c64a2e52"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=1)""
+                },
+                {
+                    ""name"": ""Test"",
+                    ""type"": ""Button"",
+                    ""id"": ""6f7c1c1c-c7ce-4280-8252-829c4af75de5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
                     ""interactions"": """"
                 }
             ],
@@ -149,8 +165,41 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/k"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Pick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7ffda010-e541-422a-855f-74202a2f10f0"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Test"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8da6f623-23a5-4747-a710-d55fad0a0f00"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Throw"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f7d9329b-3e86-49e8-a7d7-ec5212a1e2a7"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""Throw"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -192,6 +241,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_GamePlay_Move = m_GamePlay.FindAction("Move", throwIfNotFound: true);
         m_GamePlay_Shoot = m_GamePlay.FindAction("Shoot", throwIfNotFound: true);
         m_GamePlay_Pick = m_GamePlay.FindAction("Pick", throwIfNotFound: true);
+        m_GamePlay_Throw = m_GamePlay.FindAction("Throw", throwIfNotFound: true);
+        m_GamePlay_Test = m_GamePlay.FindAction("Test", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -244,6 +295,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_GamePlay_Move;
     private readonly InputAction m_GamePlay_Shoot;
     private readonly InputAction m_GamePlay_Pick;
+    private readonly InputAction m_GamePlay_Throw;
+    private readonly InputAction m_GamePlay_Test;
     public struct GamePlayActions
     {
         private @PlayerControls m_Wrapper;
@@ -251,6 +304,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Move => m_Wrapper.m_GamePlay_Move;
         public InputAction @Shoot => m_Wrapper.m_GamePlay_Shoot;
         public InputAction @Pick => m_Wrapper.m_GamePlay_Pick;
+        public InputAction @Throw => m_Wrapper.m_GamePlay_Throw;
+        public InputAction @Test => m_Wrapper.m_GamePlay_Test;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -269,6 +324,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Pick.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPick;
                 @Pick.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPick;
                 @Pick.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPick;
+                @Throw.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnThrow;
+                @Throw.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnThrow;
+                @Throw.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnThrow;
+                @Test.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnTest;
+                @Test.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnTest;
+                @Test.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnTest;
             }
             m_Wrapper.m_GamePlayActionsCallbackInterface = instance;
             if (instance != null)
@@ -282,6 +343,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Pick.started += instance.OnPick;
                 @Pick.performed += instance.OnPick;
                 @Pick.canceled += instance.OnPick;
+                @Throw.started += instance.OnThrow;
+                @Throw.performed += instance.OnThrow;
+                @Throw.canceled += instance.OnThrow;
+                @Test.started += instance.OnTest;
+                @Test.performed += instance.OnTest;
+                @Test.canceled += instance.OnTest;
             }
         }
     }
@@ -309,5 +376,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnPick(InputAction.CallbackContext context);
+        void OnThrow(InputAction.CallbackContext context);
+        void OnTest(InputAction.CallbackContext context);
     }
 }

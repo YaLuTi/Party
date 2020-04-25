@@ -5,7 +5,9 @@ using UnityEngine;
 public class ItemBomb : ItemBasic
 {
     [SerializeField]
-    public GameObject ExplotionVFX;
+    public GameObject ExplosionVFX;
+    [SerializeField]
+    float delay;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,8 +28,8 @@ public class ItemBomb : ItemBasic
 
     IEnumerator Explotion()
     {
-        yield return new WaitForSecondsRealtime(2);
-        Instantiate(ExplotionVFX, transform.position, Quaternion.identity);
+        yield return new WaitForSecondsRealtime(delay);
+        Instantiate(ExplosionVFX, transform.position, Quaternion.identity);
         Destroy(this.gameObject);
         yield return 0;
     }

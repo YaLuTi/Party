@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using AnimFollow;
 
 public class ItemBasic : MonoBehaviour
 {
@@ -35,12 +36,17 @@ public class ItemBasic : MonoBehaviour
         }
     }
 
+    public void AddForce(BulletHitInfo_AF bulletHitInfo)
+    {
+        bulletHitInfo.hitTransform.GetComponent<Rigidbody>().AddForceAtPosition(bulletHitInfo.bulletForce, bulletHitInfo.hitPoint);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (!IsThrowing) return;
         if(collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<PlayerPickItem>().OnHit(collision.contacts[0].point, rb.velocity);
+            // collision.gameObject.GetComponent<PlayerPickItem>().OnHit(collision.contacts[0].point, rb.velocity);
         }
         Debug.Log(rb.velocity);
     }

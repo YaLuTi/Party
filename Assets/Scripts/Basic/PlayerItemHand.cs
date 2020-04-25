@@ -23,16 +23,23 @@ public class PlayerItemHand : MonoBehaviour
 
     public void SetHoldingItem(GameObject item)
     {
+        StartCoroutine(SetHoldItemDelay(item));
+        //
+    }
+
+    IEnumerator SetHoldItemDelay(GameObject item)
+    {
         HoldingItem = item;
+        HoldingItem.GetComponent<Collider>().isTrigger = true;
+        Rigidbody rb = HoldingItem.GetComponent<Rigidbody>();
+        rb.isKinematic = true;
+        rb.useGravity = false;
+        rb.velocity = Vector3.zero;
+        yield return new WaitForFixedUpdate();
         HoldingItem.transform.parent = transform;
         HoldingItem.transform.localPosition = Vector3.zero;
         HoldingItem.transform.localRotation = Quaternion.identity;
-        //
-        HoldingItem.GetComponent<Collider>().isTrigger = true;
-        Rigidbody rb = HoldingItem.GetComponent<Rigidbody>();
-        // rb.isKinematic = true;
-        rb.useGravity = false;
-        rb.velocity = Vector3.zero;
+        yield return null;
     }
 
     public void ThrowHoldingItem()
@@ -41,24 +48,33 @@ public class PlayerItemHand : MonoBehaviour
         Rigidbody rb = HoldingItem.GetComponent<Rigidbody>();
         rb.isKinematic = false;
         rb.useGravity = true;
-        rb.AddForce(ThrowStrength * transform.root.forward);
+        rb.AddForce(ThrowStrength * transform.root.forward); // Need fix
         HoldingItem.transform.parent = null;
         HoldingItem = null;
     }
 
     public void DropHoldingItem(Vector3 velocity)
     {
+        StartCoroutine(DropItem(velocity));
+    }
+
+    IEnumerator DropItem(Vector3 v)
+    {
+        HoldingItem.transform.parent = null;
+        yield return new WaitForFixedUpdate();
         HoldingItem.GetComponent<Collider>().isTrigger = false;
         Rigidbody rb = HoldingItem.GetComponent<Rigidbody>();
         rb.isKinematic = false;
         rb.useGravity = true;
-        rb.AddForce(velocity * 7f);
-        HoldingItem.transform.parent = null;
+        rb.AddForce(v * 7f);
+
         HoldingItem = null;
+        yield return null;
     }
 
     public void UseItem()
     {
+        Debug.Log("F");
         HoldingItem.GetComponent<ItemBasic>().OnUse();
     }
 }

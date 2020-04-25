@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using AnimFollow;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,12 +11,11 @@ public class PlayerPickItem : MonoBehaviour
     
 
     bool IsHolding = false;
-    PlayerItemHand itemHand;
+    public PlayerItemHand itemHand;
     PlayerStatusAnimator playerStatus;
     // Start is called before the first frame update
     void Start()
     {
-        itemHand = GetComponentInChildren<PlayerItemHand>();
         playerStatus = GetComponent<PlayerStatusAnimator>();
     }
 
@@ -51,11 +51,9 @@ public class PlayerPickItem : MonoBehaviour
 
                 foreach (Collider collider in colliders)
                 {
-                    Debug.Log("C");
                     if (collider.gameObject.tag != "Item") continue;
                     if (pick == null)
                     {
-                        Debug.Log("D");
                         pick = collider;
                         shortestDistance = Vector3.Distance(this.gameObject.transform.position, pick.transform.position);
                     }
@@ -79,18 +77,28 @@ public class PlayerPickItem : MonoBehaviour
         }
     }
 
-    void Throw()
+    void OnThrow()
+    {
+        /*Debug.Log("O");
+        if (IsHolding)
+        {
+            playerStatus.PlayerItem_Throw();
+            IsHolding = false;
+        }*/
+    }
+
+    void ThrowItem()
     {
         itemHand.ThrowHoldingItem();
     }
 
-    public void OnHit(Vector3 p, Vector3 velocity)
+    public void OnHit(BulletHitInfo_AF info)
     {
-        Instantiate(HitParticle, p, Quaternion.identity);
-        GetComponent<Rigidbody>().AddForce(velocity * 20);
+        Instantiate(HitParticle, info.hitPoint, Quaternion.identity);
+        // GetComponent<Rigidbody>().AddForce(info.bulletForce);
         if (IsHolding)
         {
-            itemHand.DropHoldingItem(-velocity);
+            itemHand.DropHoldingItem(info.bulletForce);
             IsHolding = false;
         }
     }

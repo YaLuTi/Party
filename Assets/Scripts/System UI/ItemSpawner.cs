@@ -4,6 +4,21 @@ using UnityEngine;
 
 public class ItemSpawner : MonoBehaviour
 {
+    [SerializeField]
+    float xOffset;
+    [SerializeField]
+    float yOffset;
+    [SerializeField]
+    float zOffset;
+    [SerializeField]
+    float xMinRange;
+    [SerializeField]
+    float xMaxRange;
+    [SerializeField]
+    float zMinRange;
+    [SerializeField]
+    float zMaxRange;
+
     public GameObject[] SpawnObject;
     
     float CooldownCount;
@@ -19,9 +34,9 @@ public class ItemSpawner : MonoBehaviour
         if(CooldownCount > 120)
         {
             CooldownCount = 0;
-            float x = Random.Range(-10, 10);
-            float y = Random.Range(-2, -14);
-            Vector3 p = new Vector3(x, 10, y);
+            float x = Random.Range(xMinRange, xMaxRange);
+            float z = Random.Range(zMinRange, zMaxRange);
+            Vector3 p = new Vector3(xOffset + x, yOffset, zOffset + z);
             Instantiate(SpawnObject[0], p, Quaternion.identity);
         }
         CooldownCount++;

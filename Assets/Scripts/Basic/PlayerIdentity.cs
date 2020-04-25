@@ -11,20 +11,24 @@ public class PlayerIdentity : MonoBehaviour
     Vector3[] SpawnPosition;
 
     public SkinnedMeshRenderer r;
+    public SkinnedMeshRenderer rr;
 
     PlayerInput playerInput;
     public int PlayerID;
     // Start is called before the first frame update
     void Start()
     {
-        playerInput = GetComponent<PlayerInput>();
+        playerInput = GetComponentInChildren<PlayerInput>();
         PlayerID = playerInput.user.index;
 
         Material[] mats = r.materials;
         mats[0] = MaterialsArray[PlayerID];
         r.materials = mats;
+        mats = rr.materials;
+        mats[0] = MaterialsArray[PlayerID];
+        rr.materials = mats;
 
-        switch (PlayerID)
+        /*switch (PlayerID)
         {
             case 0:
                 transform.position = SpawnPosition[0];
@@ -38,7 +42,7 @@ public class PlayerIdentity : MonoBehaviour
                 break;
             default:
                 break;
-        }
+        }*/
     }
 
     // Update is called once per frame

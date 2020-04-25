@@ -23,6 +23,15 @@ public class PlayerStatusAnimator : MonoBehaviour
         UpdateAnimator();
     }
 
+    void OnTest()
+    {
+        Rigidbody[] rbs = GetComponentsInChildren<Rigidbody>();
+        foreach(Rigidbody rb in rbs)
+        {
+            rb.isKinematic = false;
+        }
+    }
+
     void UpdateAnimator()
     {
         animator.SetFloat("Speed", MoveSpeed);
@@ -31,6 +40,10 @@ public class PlayerStatusAnimator : MonoBehaviour
     public void MoveSpeedUpdate(float speed)
     {
         MoveSpeed = speed;
+    }
+    public void PlayerItem_Aim()
+    {
+        animator.SetTrigger("Aim");
     }
     public void PlayerItem_Throw()
     {
