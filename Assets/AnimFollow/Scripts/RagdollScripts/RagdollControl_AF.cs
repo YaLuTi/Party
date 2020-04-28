@@ -46,7 +46,7 @@ namespace AnimFollow
 		[Range(2f, 26f)] public float graceSpeed = 8f;			// The relative speed limit for a collision to make the character dose off
 		[Range(.1f, 1.7f)] public float noGhostLimit = .5f;		// The Limit of limbError that is allowed before the character doses off, given certain conditions
 		/*[Range(5f, 45f)]*/ public float noGhostLimit2 = 15f;		// The Limit of limbError that is allowed before the character doses off, under all circumastances. This prevents you from going through walls like a ghost :)
-		[Range(0f, 1.2f)] public float glideFree = .3f;			// makes the character glide free from an object if collision is not severe
+		[Range(0f, 50f)] public float glideFree = .3f;			// makes the character glide free from an object if collision is not severe
 
 		// These are shown in the inspector for you to get a feel for the states
 		public bool falling = false;			// Is in falling state
@@ -229,7 +229,8 @@ namespace AnimFollow
 
             // Fall if: we hit with high enough speed or if the distortion of the character to large
             // || numberOfCollisions > 0 && (collisionSpeed > graceSpeed || (!(gettingUp || falling) && limbErrorMagnitude > noGhostLimit))
-            if (shotByBullet  || (limbErrorMagnitude > noGhostLimit2 && orientated))
+            //   || (limbErrorMagnitude > noGhostLimit2 && orientated)
+            if (shotByBullet)
 			{
                 Debug.Log("G");
 				if (!falling)
@@ -262,6 +263,7 @@ namespace AnimFollow
 					animFollow.drag = drag;
 				}
 
+                playerMovement.inhibitMove = true;
 				shotByBullet = false;
 				falling = true;
 				gettingUp = false;
@@ -433,8 +435,11 @@ namespace AnimFollow
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			
 			// Adjust player movements if ragdoll distortion is large, e.g. if we are walking into a wall
-			if (noContactTime < .3f && !(gettingUp || falling))
-				playerMovement.glideFree = new Vector3(-limbError.x, 0f, -limbError.z) * glideFree;
+			if (noContactTime < .1f && !(gettingUp || falling))
+            {
+                Debug.Log("F");
+                playerMovement.glideFree = new Vector3(-limbError.x, 0f, -limbError.z) * glideFree;
+            }
 			else
 				playerMovement.glideFree = Vector3.zero;
 		}

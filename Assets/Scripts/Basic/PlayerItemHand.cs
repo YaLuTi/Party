@@ -7,6 +7,8 @@ public class PlayerItemHand : MonoBehaviour
     [SerializeField]
     float ThrowStrength;
 
+    [Header("Setting")]
+    public Transform way;
 
     public GameObject HoldingItem = null;
     // Start is called before the first frame update
@@ -42,13 +44,13 @@ public class PlayerItemHand : MonoBehaviour
         yield return null;
     }
 
-    public void ThrowHoldingItem()
+    public void ThrowHoldingItem(float v)
     {
         HoldingItem.GetComponent<Collider>().isTrigger = false;
         Rigidbody rb = HoldingItem.GetComponent<Rigidbody>();
         rb.isKinematic = false;
         rb.useGravity = true;
-        rb.AddForce(ThrowStrength * transform.root.forward); // Need fix
+        rb.AddForce(ThrowStrength * v * (way.forward)); // Need fix
         HoldingItem.transform.parent = null;
         HoldingItem = null;
     }

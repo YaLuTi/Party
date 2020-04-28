@@ -8,9 +8,22 @@ public class PlayerPickItem : MonoBehaviour
     [Header("Game VFX")]
     public GameObject HitParticle;
     public GameObject PickUpParticle;
+
     
 
     bool IsHolding = false;
+    bool IsThrowing = false;
+
+    [Header("Game Value")]
+    [SerializeField]
+    float PickRadius;
+    [SerializeField]
+    float ThrowPower1 = 0.01f;
+    [SerializeField]
+    float ThrowPower2 = 0.01f;
+
+    public float ThrowStrength = 0.01f;
+
     public PlayerItemHand itemHand;
     PlayerStatusAnimator playerStatus;
     // Start is called before the first frame update
@@ -22,7 +35,12 @@ public class PlayerPickItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (IsThrowing)
+        {
+            ThrowStrength += ThrowPower1 * Time.deltaTime;
+            ThrowPower1 += ThrowPower2;
+            ThrowStrength = Mathf.Min(ThrowStrength, 10f);
+        }
     }
 
     void OnShoot()
@@ -37,12 +55,12 @@ public class PlayerPickItem : MonoBehaviour
     {
         if (IsHolding)
         {
-            playerStatus.PlayerItem_Throw();
-            IsHolding = false;
+            playerStatus.PlayerItem_Aim();
+            IsThrowing = true;
         }
         else
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, PickRadius);
 
             if (colliders.Length > 0)
             {
@@ -79,17 +97,20 @@ public class PlayerPickItem : MonoBehaviour
 
     void OnThrow()
     {
-        /*Debug.Log("O");
-        if (IsHolding)
+        Debug.Log("O");
+        if (IsThrowing)
         {
             playerStatus.PlayerItem_Throw();
             IsHolding = false;
-        }*/
+        }
     }
 
     void ThrowItem()
     {
-        itemHand.ThrowHoldingItem();
+        itemHand.ThrowHoldingItem(ThrowStrength);
+        IsThrowing = false;
+        ThrowStrength = 0.01f;
+        ThrowPower1 = 0.01f;
     }
 
     public void OnHit(BulletHitInfo_AF info)
@@ -100,6 +121,7 @@ public class PlayerPickItem : MonoBehaviour
         {
             itemHand.DropHoldingItem(info.bulletForce);
             IsHolding = false;
+            IsThrowing = false;
         }
     }
 }

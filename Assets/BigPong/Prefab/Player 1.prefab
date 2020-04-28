@@ -536,11 +536,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerMoveSpeed: 2
-  ExplotionForce: 0
-  ExplotionRadius: 0
   StepParticlePosition: {fileID: 6608233675989121745}
   StepParticle: {fileID: 5998785443049494368, guid: 2bfee02dc3a96b5468042121556cdb13,
     type: 3}
+  animatorSpeed: 1.3
+  speedDampTime: 0.1
+  mouseSensitivityX: 100
+  inhibitMove: 0
+  glideFree: {x: 0, y: 0, z: 0}
+  inhibitRun: 0
 --- !u!114 &2924178190690302544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -557,9 +561,10 @@ MonoBehaviour:
   - {fileID: 2100000, guid: f6a7d6511ea63104093e5bb6eabe41e0, type: 2}
   - {fileID: 2100000, guid: 6c4af7e40cf60264eb31448d186184bb, type: 2}
   SpawnPosition:
-  - {x: 3, y: 0.25, z: 0}
+  - {x: 3, y: 1.72, z: 0}
   - {x: -3, y: 0.25, z: 0}
   r: {fileID: 5028254279914382069}
+  rr: {fileID: 0}
   PlayerID: 0
 --- !u!114 &2924178190690302551
 MonoBehaviour:
@@ -576,6 +581,7 @@ MonoBehaviour:
   HitParticle: {fileID: 0}
   PickUpParticle: {fileID: 2067121338997837400, guid: 762dd2cb93b39bb42b1204994427b691,
     type: 3}
+  itemHand: {fileID: 0}
 --- !u!1 &3000562583105750799
 GameObject:
   m_ObjectHideFlags: 0

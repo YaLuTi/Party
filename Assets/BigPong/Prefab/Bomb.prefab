@@ -98,7 +98,7 @@ MonoBehaviour:
   Durability: 1
   ExplosionVFX: {fileID: 2700275486487721297, guid: 427db36d1538f0e45a54fcc404a3005b,
     type: 3}
-  delay: 2.5
+  delay: 2
 --- !u!135 &3970686953958161971
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -106,7 +106,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3970686953958161970}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 92103b746076cfe49ab352ecc5989c75, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -120,14 +120,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3970686953958161970}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 0.6
+  m_Drag: 0.5
+  m_AngularDrag: 0.3
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!1 &3970686954776534239
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,7 +29,7 @@ public class PlayerMove : MonoBehaviour
     float mouseInput;
     public float mouseSensitivityX = 100f;
     public bool inhibitMove = false; // Set from RagdollControl
-    [HideInInspector] public Vector3 glideFree = Vector3.zero; // Set from RagdollControl
+    public Vector3 glideFree = Vector3.zero; // Set from RagdollControl
     Vector3 glideFree2 = Vector3.zero;
     [HideInInspector] public bool inhibitRun = false; // Set from RagdollControl
 
@@ -59,11 +59,21 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!MoveEnable) return;
+        if (inhibitMove) return;
+
+        if (MoveEnable)
+        {
+            MoveMultiplier = 0;
+        }
+        else
+        {
+            MoveMultiplier = -1;
+        }
 
         // rb.velocity = new Vector3(h, 0, v) * 2.5f;
 
-        transform.position += new Vector3(h, 0, v) * PlayerMoveSpeed * (1 - MoveMultiplier) * Time.deltaTime;
+        glideFree2 = Vector3.Lerp(glideFree2, glideFree, .01f);
+        transform.position += new Vector3(h, 0, v) * PlayerMoveSpeed * (1 + MoveMultiplier) * Time.deltaTime + (glideFree * Time.deltaTime);
 
         // 暫時將AnimatorSpeed的Update寫成二分法 之後將Smooth轉向引入後再改成數學判斷式
         if (Mathf.Abs(h) + Mathf.Abs(v) > 0.8f)

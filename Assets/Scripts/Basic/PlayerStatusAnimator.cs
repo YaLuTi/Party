@@ -11,10 +11,12 @@ public class PlayerStatusAnimator : MonoBehaviour
     Animator animator;
 
     float MoveSpeed;
+    PlayerMove playerMove;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        playerMove = GetComponent<PlayerMove>();
     }
 
     // Update is called once per frame
@@ -43,11 +45,13 @@ public class PlayerStatusAnimator : MonoBehaviour
     }
     public void PlayerItem_Aim()
     {
-        animator.SetTrigger("Aim");
+        animator.SetTrigger("Throw1");
+        playerMove.SetMoveEnable(false);
     }
     public void PlayerItem_Throw()
     {
-        animator.SetTrigger("Throw");
+        animator.SetTrigger("Throw2");
+        playerMove.SetMoveEnable(true);
     }
 
     public void GetStatus(StatusEventArgs status, float time)

@@ -43,12 +43,14 @@ public class BasicExplosion : MonoBehaviour
 
             if(collider.gameObject.tag == "Item")
             {
-                Debug.Log("I");
-                BulletHitInfo_AF bulletHitInfo = new BulletHitInfo_AF();
-                bulletHitInfo.hitTransform = collider.transform;
-                bulletHitInfo.bulletForce = (collider.ClosestPoint(transform.position) - transform.position).normalized * velocity;
-                bulletHitInfo.hitPoint = collider.ClosestPoint(transform.position);
-                collider.gameObject.transform.root.GetComponent<ItemBasic>().AddForce(bulletHitInfo);
+                if (collider.gameObject.transform.root.GetComponent<ItemBasic>())
+                {
+                    BulletHitInfo_AF bulletHitInfo = new BulletHitInfo_AF();
+                    bulletHitInfo.hitTransform = collider.transform;
+                    bulletHitInfo.bulletForce = (collider.ClosestPoint(transform.position) - transform.position).normalized * velocity;
+                    bulletHitInfo.hitPoint = collider.ClosestPoint(transform.position);
+                    collider.gameObject.transform.root.GetComponent<ItemBasic>().AddForce(bulletHitInfo);
+                }
             }
         }
         yield return null;
