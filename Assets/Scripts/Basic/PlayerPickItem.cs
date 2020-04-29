@@ -22,7 +22,7 @@ public class PlayerPickItem : MonoBehaviour
     [SerializeField]
     float ThrowPower2 = 0.01f;
 
-    public float ThrowStrength = 0.01f;
+    public float ThrowStrength = 0.1f;
 
     public PlayerItemHand itemHand;
     PlayerStatusAnimator playerStatus;
@@ -47,7 +47,15 @@ public class PlayerPickItem : MonoBehaviour
     {
         if (IsHolding)
         {
-            itemHand.UseItem();
+            string animation = itemHand.UseItem();
+            if (animation == "Empty" || animation == "")
+            {
+
+            }
+            else
+            {
+                playerStatus.PlayerItemAnimation(animation);
+            }
         }
     }
 
@@ -97,7 +105,6 @@ public class PlayerPickItem : MonoBehaviour
 
     void OnThrow()
     {
-        Debug.Log("O");
         if (IsThrowing)
         {
             playerStatus.PlayerItem_Throw();
@@ -109,8 +116,14 @@ public class PlayerPickItem : MonoBehaviour
     {
         itemHand.ThrowHoldingItem(ThrowStrength);
         IsThrowing = false;
-        ThrowStrength = 0.01f;
+        ThrowStrength = 0.1f;
         ThrowPower1 = 0.01f;
+    }
+
+    void SetMine()
+    {
+        IsHolding = false;
+        itemHand.ThrowHoldingItem(0);
     }
 
     public void OnHit(BulletHitInfo_AF info)

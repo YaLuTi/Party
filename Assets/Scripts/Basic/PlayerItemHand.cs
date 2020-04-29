@@ -74,9 +74,8 @@ public class PlayerItemHand : MonoBehaviour
         yield return null;
     }
 
-    public void UseItem()
+    public string UseItem()
     {
-        Debug.Log("F");
-        HoldingItem.GetComponent<ItemBasic>().OnUse();
+        return HoldingItem.GetComponent<ItemBasic>().OnUse();
     }
 }

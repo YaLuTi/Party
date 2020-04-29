@@ -277,8 +277,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 1
+  m_Constraints: 126
+  m_CollisionDetection: 2
 --- !u!136 &8879871388824194862
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -661,6 +661,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerMoveSpeed: 2
+  spawnPosition: {x: 0, y: 10, z: 0}
   StepParticlePosition: {fileID: 8879871389263994034}
   StepParticle: {fileID: 5998785443049494368, guid: 2bfee02dc3a96b5468042121556cdb13,
     type: 3}
@@ -670,6 +671,7 @@ MonoBehaviour:
   inhibitMove: 0
   glideFree: {x: 0, y: 0, z: 0}
   inhibitRun: 0
+  rig: {fileID: 8879871390054196629}
 --- !u!114 &8879871389107737057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -720,6 +722,7 @@ MonoBehaviour:
     m_Bits: 0
   ignoreLayers:
   - Water
+  - Item
   raycastLength: 9.14
   maxStepHeight: 0.538
   footIKWeight: 1
@@ -1057,8 +1060,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 1
+  m_Constraints: 126
+  m_CollisionDetection: 2
 --- !u!136 &8879871389399799617
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1216,8 +1219,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 1
+  m_Constraints: 126
+  m_CollisionDetection: 2
 --- !u!136 &8879871389418364427
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1848,8 +1851,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 1
+  m_Constraints: 126
+  m_CollisionDetection: 2
 --- !u!136 &8879871389683538225
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2067,8 +2070,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 1
+  m_Constraints: 126
+  m_CollisionDetection: 2
 --- !u!136 &8879871389724603257
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2257,8 +2260,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 1
+  m_Constraints: 126
+  m_CollisionDetection: 2
 --- !u!136 &8879871389843246238
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2480,8 +2483,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 1
+  m_Constraints: 126
+  m_CollisionDetection: 2
 --- !u!65 &8879871390054196631
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2543,8 +2546,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 1
+  m_Constraints: 126
+  m_CollisionDetection: 2
 --- !u!136 &8879871390087968725
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2810,8 +2813,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 1
+  m_Constraints: 126
+  m_CollisionDetection: 2
 --- !u!65 &8879871390204968137
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3368,8 +3371,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 1
+  m_Constraints: 126
+  m_CollisionDetection: 2
 --- !u!135 &8879871390541313551
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3603,8 +3606,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 1
+  m_Constraints: 126
+  m_CollisionDetection: 2
 --- !u!153 &8879871390636095165
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -3748,8 +3751,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 1
+  m_Constraints: 126
+  m_CollisionDetection: 2
 --- !u!136 &8879871390643198706
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3982,9 +3985,18 @@ MonoBehaviour:
   MaterialsArray:
   - {fileID: 2100000, guid: f6a7d6511ea63104093e5bb6eabe41e0, type: 2}
   - {fileID: 2100000, guid: 6c4af7e40cf60264eb31448d186184bb, type: 2}
+  - {fileID: 2100000, guid: ecad2af013e300744b8d8b86069b763b, type: 2}
+  - {fileID: 2100000, guid: cc4a9836d4a20cf458ad27366f873a2a, type: 2}
   SpawnPosition:
-  - {x: 3, y: 0.25, z: 0}
-  - {x: -3, y: 0.25, z: 0}
+  - {x: -4, y: 0.3, z: 4}
+  - {x: 4, y: 0.3, z: 4}
+  - {x: -4, y: 0.3, z: -4}
+  - {x: 4, y: 0.3, z: -4}
+  SpawnRotation:
+  - {x: 0, y: 135, z: 0}
+  - {x: 0, y: 225, z: 0}
+  - {x: 0, y: 45, z: 0}
+  - {x: 0, y: 315, z: 0}
   r: {fileID: 8879871389183145001}
   rr: {fileID: 8879871388823248677}
   PlayerID: 0

@@ -11,7 +11,9 @@ public class ItemBasic : MonoBehaviour
 
     [Header("GameValue")]
     [SerializeField]
-    public float Durability = 0;
+    public float Durability = 1;
+
+    public string animation;
 
     // Start is called before the first frame update
     void Start()
@@ -24,15 +26,21 @@ public class ItemBasic : MonoBehaviour
     {
     }
 
-    public virtual void OnUse()
+    public virtual string OnUse()
     {
-        if(Durability > 0)
+        return animation;
+    }
+
+    public bool DurabilityCheck()
+    {
+        if (Durability > 0)
         {
             Durability--;
+            return true;
         }
         else
         {
-            return;
+            return false;
         }
     }
 
@@ -43,11 +51,5 @@ public class ItemBasic : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!IsThrowing) return;
-        if(collision.gameObject.tag == "Player")
-        {
-            // collision.gameObject.GetComponent<PlayerPickItem>().OnHit(collision.contacts[0].point, rb.velocity);
-        }
-        Debug.Log(rb.velocity);
     }
 }

@@ -12,6 +12,8 @@ public class PlayerMove : MonoBehaviour
     [Header("Game Value")]
     [SerializeField]
     float PlayerMoveSpeed; // Set by user
+    [SerializeField]
+    Vector3 spawnPosition;
 
     [Header("Game VFX")]
     [SerializeField]
@@ -32,6 +34,9 @@ public class PlayerMove : MonoBehaviour
     public Vector3 glideFree = Vector3.zero; // Set from RagdollControl
     Vector3 glideFree2 = Vector3.zero;
     [HideInInspector] public bool inhibitRun = false; // Set from RagdollControl
+
+    Rigidbody[] rbs; // 有重複的參數在PlayerIdentity被取得 之後要修
+    public Transform rig;
 
     bool MoveEnable = true;
 
@@ -54,11 +59,18 @@ public class PlayerMove : MonoBehaviour
     {
         playerStatus = GetComponent<PlayerStatusAnimator>();
         playerStatus.StatusUpdateHandler += OnStatusUpdate;
+        rbs = GetComponentsInChildren<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if (rig.position.y < -5 || rig.position.y > 15)
+        {
+            Debug.Log("A");
+            StartCoroutine(ReSpawn());
+        }
         if (inhibitMove) return;
 
         if (MoveEnable)
@@ -67,7 +79,7 @@ public class PlayerMove : MonoBehaviour
         }
         else
         {
-            MoveMultiplier = -1;
+            MoveMultiplier = -1f;
         }
 
         // rb.velocity = new Vector3(h, 0, v) * 2.5f;
@@ -82,8 +94,9 @@ public class PlayerMove : MonoBehaviour
             angle = (Mathf.Atan2(-h, v) * Mathf.Rad2Deg * -1);
 
             playerStatus.MoveSpeedUpdate(1);
-
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, angle, 0), 480 * Time.deltaTime);
+            
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, angle, 0), 480 * Time.deltaTime);
+            
             SpawnStepParticle();
         }
         else
@@ -91,6 +104,27 @@ public class PlayerMove : MonoBehaviour
             playerStatus.MoveSpeedUpdate(0);
         }
         
+    }
+
+    IEnumerator ReSpawn()
+    {
+        inhibitMove = true;
+        foreach (Rigidbody rb in rbs)
+        {
+            rb.constraints = RigidbodyConstraints.FreezeAll;
+        }
+        yield return new WaitForFixedUpdate();
+        inhibitMove = false;
+        transform.rotation = Quaternion.identity;
+        transform.position = spawnPosition;
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        foreach (Rigidbody rb in rbs)
+        {
+            rb.constraints = RigidbodyConstraints.None;
+        }
+        yield return null;
     }
 
     void SpawnStepParticle()

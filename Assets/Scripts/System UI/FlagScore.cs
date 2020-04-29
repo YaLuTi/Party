@@ -11,15 +11,15 @@ public class FlagScore : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(transform.parent != null)
+        if (transform.parent != null)
         {
-            if(cooldown > 45)
+            if (cooldown > 45)
             {
                 cooldown = 0;
                 int id = GetComponentInParent<PlayerIdentity>().PlayerID;
@@ -32,7 +32,7 @@ public class FlagScore : MonoBehaviour
             cooldown = 0;
         }
 
-        if(transform.position.y < -5)
+        if (transform.position.y < -5 || transform.position.y > 15)
         {
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             transform.rotation = Quaternion.identity;

@@ -54,6 +54,11 @@ public class PlayerStatusAnimator : MonoBehaviour
         playerMove.SetMoveEnable(true);
     }
 
+    public void PlayerItemAnimation(string s)
+    {
+        animator.SetTrigger(s);
+    }
+
     public void GetStatus(StatusEventArgs status, float time)
     {
         StatusUpdateHandler(this, status);

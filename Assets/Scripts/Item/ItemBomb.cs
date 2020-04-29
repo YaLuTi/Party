@@ -7,7 +7,10 @@ public class ItemBomb : ItemBasic
     [SerializeField]
     public GameObject ExplosionVFX;
     [SerializeField]
-    float delay;
+    ParticleSystem FuseParticle;
+    [SerializeField]
+    AudioSource FuseSFX;
+    public float delay;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,13 +23,22 @@ public class ItemBomb : ItemBasic
         
     }
 
-    public override void OnUse()
+    public override string OnUse()
     {
-        base.OnUse();
-        StartCoroutine(Explotion());
+        if (DurabilityCheck())
+        {
+            FuseParticle.Play();
+            FuseSFX.Play();
+            StartCoroutine(Explosion());
+        }
+        else
+        {
+            return "Empty";
+        }
+        return base.OnUse();
     }
 
-    IEnumerator Explotion()
+    IEnumerator Explosion()
     {
         yield return new WaitForSecondsRealtime(delay);
         Instantiate(ExplosionVFX, transform.position, Quaternion.identity);
