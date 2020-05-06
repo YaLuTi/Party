@@ -70,7 +70,7 @@ namespace AnimFollow
 			if (followTerrain)
 			{
 				transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, Mathf.Min(raycastHitLeftFoot.point.y, raycastHitRightFoot.point.y), transformYLerp * extraYLerp * deltaTime), transform.position.z);
-//				Debug.DrawLine(raycastHitLeftFoot.point, raycastHitRightFoot.point);
+				Debug.DrawLine(raycastHitLeftFoot.point, raycastHitRightFoot.point);
 			}
 		}
 	}

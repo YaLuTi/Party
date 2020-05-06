@@ -33,7 +33,7 @@ public class ItemSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(CooldownCount > 140)
+        if(CooldownCount > 140 + SpawnItem.Count * 10 && SpawnItem.Count < 25)
         {
             CooldownCount = 0;
             float x = Random.Range(xMinRange, xMaxRange);
