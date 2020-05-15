@@ -3,7 +3,6 @@ using UnityEngine;
 using System.Collections;
 using UnityEditor;
 
-[CanEditMultipleObjects]
 [CustomEditor(typeof(RFX4_EffectSettings))]
 public class RFX4_EffectSettingsInspector : Editor
 {
@@ -15,12 +14,12 @@ public class RFX4_EffectSettingsInspector : Editor
         EditorGUILayout.LabelField("Main Parameters", EditorStyles.boldLabel);
         var script = (RFX4_EffectSettings)target;
         var isMobilePlatfrom = IsMobilePlatform();
-
+      
         script.ParticlesBudget = EditorGUILayout.Slider("Particles Budget", script.ParticlesBudget, 0.1f, 1);
         if(!isMobilePlatfrom) script.UseLightShadows = EditorGUILayout.Toggle("Use Light Shadows", script.UseLightShadows);
 
-        //if (script.GetComponentInChildren<RFX4_Decal>() != null && isMobilePlatfrom)
-            script.UseFastFlatDecalsForMobiles = EditorGUILayout.Toggle("Use Fast Flat Decals for Mobiles", script.UseFastFlatDecalsForMobiles);
+        if (script.GetComponentInChildren<RFX4_Decal>() != null)
+            script.UseFastFlatDecals = EditorGUILayout.Toggle("Use Fast Flat Decals", script.UseFastFlatDecals);
 
         script.UseCustomColor = EditorGUILayout.Toggle("Use Custom Color", script.UseCustomColor);
         if (script.UseCustomColor) script.EffectColor = EditorGUILayout.ColorField("Effect Color", script.EffectColor);

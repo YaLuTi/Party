@@ -4,12 +4,13 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Fire
   m_Shader: {fileID: 4800000, guid: 18cc8fe7d50c89741b56c1ae6a5baa66, type: 3}
   m_ShaderKeywords: BlendAlpha Clip_ON FrameBlend_ON SoftParticles_ON VertLight_OFF
-    _ALPHABLEND_ON _BLENDMODE_BLEND _FADING_ON _FLIPBOOK_BLENDING
+    _ALPHABLEND_ON _BLENDMODE_ADD _FADING_ON _FLIPBOOK_BLENDING
   m_LightmapFlags: 5
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -66,7 +67,7 @@ Material:
     m_Floats:
     - DstMode: 10
     - SrcMode: 5
-    - _BlendMode: 1
+    - _BlendMode: 0
     - _BumpScale: 1
     - _CullMode: 0
     - _Cutoff: 0.5
@@ -74,13 +75,13 @@ Material:
     - _CutoutThreshold: 0.015
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _DstMode: 10
+    - _DstMode: 1
     - _FogColorMultiplier: 0
     - _FresnelFadeFactor: 3
     - _FresnelPow: 5
     - _FresnelR0: 0.04
     - _Glossiness: 0.5
-    - _InvFade: 8
+    - _InvFade: 3
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -110,4 +111,4 @@ Material:
     - _FogColorMultiplier: {r: 0, g: 0, b: 0, a: 0}
     - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}
     - _Tiling: {r: 800, g: 800, b: 8, a: 8}
-    - _TintColor: {r: 2.1536765, g: 1.1886722, b: 0.665106, a: 1}
+    - _TintColor: {r: 1.4421077, g: 0.30113116, b: 0, a: 1}

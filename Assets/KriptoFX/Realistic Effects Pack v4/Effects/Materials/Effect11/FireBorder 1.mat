@@ -9,8 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: FireBorder 1
   m_Shader: {fileID: 4800000, guid: 18cc8fe7d50c89741b56c1ae6a5baa66, type: 3}
-  m_ShaderKeywords: BlendAlpha Clip_ON FrameBlend_ON SoftParticles_ON VertLight_OFF
-    _ALPHABLEND_ON _BLENDMODE_BLEND
+  m_ShaderKeywords: BlendAlpha Clip_ON FrameBlend_ON SoftParticles_ON USE_CUTOUT
+    VertLight_OFF _ALPHABLEND_ON _BLENDMODE_BLEND _FADING_ON _FLIPBOOK_BLENDING
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -91,15 +91,15 @@ Material:
     - _SrcBlend: 1
     - _SrcMode: 5
     - _UVSec: 0
-    - _UseCutout: 0
+    - _UseCutout: 1
     - _UseCutoutTex: 0
     - _UseCutoutThreshold: 0
-    - _UseFrameBlending: 0
+    - _UseFrameBlending: 1
     - _UseFresnel: 0
     - _UseFresnelFading: 0
     - _UseNoiseDistortion: 0
     - _UseParticlesAlphaCutout: 0
-    - _UseSoft: 0
+    - _UseSoft: 1
     - _UseSoftCutout: 0
     - _UseVertexStreamRandom: 0
     - _ZWrite: 0
@@ -114,4 +114,4 @@ Material:
     - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 0}
     - _Tiling: {r: 800, g: 400, b: 8, a: 4}
-    - _TintColor: {r: 1.9895167, g: 0.6458117, b: 0, a: 1}
+    - _TintColor: {r: 0.6117648, g: 0.19858332, b: 0, a: 1}

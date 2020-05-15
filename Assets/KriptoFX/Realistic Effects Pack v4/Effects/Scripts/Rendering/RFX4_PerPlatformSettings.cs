@@ -6,111 +6,128 @@ using UnityEditor;
 
 public class RFX4_PerPlatformSettings : MonoBehaviour
 {
-    public bool DisableOnMobiles;
-    public bool RenderMobileDistortion;
-    [Range(0.1f, 1)] public float ParticleBudgetForMobiles = 0.5f;
-    // Use this for initialization
-    private bool isMobile;
+//    public bool DisableOnMobiles;
+//    public bool RenderMobileDistortion;
+//    [Range(0.1f, 1)] public float ParticleBudgetForMobiles = 0.5f;
+//    // Use this for initialization
+//    private bool isMobile;
 
-        void Awake()
-    {
-        isMobile = IsMobilePlatform();
-        if (isMobile)
-        {
-            if (DisableOnMobiles) gameObject.SetActive(false);
-            else
-            {
-                if(ParticleBudgetForMobiles < 0.99f) ChangeParticlesBudget(ParticleBudgetForMobiles);
-            }
-        }
-    }
+//    void Start()
+//    {
 
-    void OnEnable()
-    {
-        var cam = Camera.main;
-        Legacy_Rendering_Check(cam);
-    }
 
-    void Update()
-    {
-        var cam = Camera.main;
-        Legacy_Rendering_Check(cam);
-    }
+//    }
 
-    void Legacy_Rendering_Check(Camera cam)
-    {
+//    void Awake()
+//    {
+//        isMobile = IsMobilePlatform();
+//        if (isMobile)
+//        {
+//            if (DisableOnMobiles) gameObject.SetActive(false);
+//            else
+//            {
+//                ChangeParticlesBudget(ParticleBudgetForMobiles);
+//            }
+//        }
+//    }
 
-        if (cam == null) return;
-        if (RenderMobileDistortion && !DisableOnMobiles && isMobile)
-        {
-            var mobileDistortion = cam.GetComponent<RFX4_MobileDistortion>();
-            if (mobileDistortion == null) mobileDistortion = cam.gameObject.AddComponent<RFX4_MobileDistortion>();
-            mobileDistortion.IsActive = true;
+//    void OnEnable()
+//    {
+//        var cam = Camera.main;
 
-        }
+//        if (cam == null) return;
+//        if (RenderMobileDistortion && !DisableOnMobiles && isMobile)
+//        {
+//#if !KRIPTO_FX_LWRP_RENDERING && !KRIPTO_FX_HDRP_RENDERING
+//            var mobileDistortion = cam.GetComponent<RFX4_MobileDistortion>();
+//            if (mobileDistortion == null) cam.gameObject.AddComponent<RFX4_MobileDistortion>();
+//#endif
+//        }
 
-    }
+//        LWRP_Rendering();
+//    }
 
-    void OnDisable()
-    {
-        var cam = Camera.main;
-        if (cam == null) return;
-        if (RenderMobileDistortion && !DisableOnMobiles && isMobile)
-        {
+//    void Update()
+//    {
+//        LWRP_Rendering();
+//    }
 
-            var mobileDistortion = cam.GetComponent<RFX4_MobileDistortion>();
-            if (mobileDistortion != null) mobileDistortion.IsActive = false;
-        }
+//    void LWRP_Rendering()
+//    {
+//#if KRIPTO_FX_LWRP_RENDERING
+//        var cam = Camera.main;
+//        var mobileLwrpDistortion = cam.GetComponent<RFX4_RenderTransparentDistortion>();
+//        if (mobileLwrpDistortion == null) mobileLwrpDistortion = cam.gameObject.AddComponent<RFX4_RenderTransparentDistortion>();
+//        mobileLwrpDistortion.IsActive = true;
+//#endif
+//    }
 
-    }
+//    void OnDisable()
+//    {
+//        var cam = Camera.main;
+//        if (cam == null) return;
+//        if (RenderMobileDistortion && !DisableOnMobiles && isMobile)
+//        {
 
-    bool IsMobilePlatform()
-    {
-        bool isMobile = false;
-#if UNITY_EDITOR
-        if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.Android
-            || EditorUserBuildSettings.activeBuildTarget == BuildTarget.iOS
-            || EditorUserBuildSettings.activeBuildTarget == BuildTarget.WSAPlayer)
-            isMobile = true;
-#endif
-        if (Application.isMobilePlatform) isMobile = true;
-        return isMobile;
-    }
+//#if !KRIPTO_FX_LWRP_RENDERING && !KRIPTO_FX_HDRP_RENDERING
+//            var mobileDistortion = cam.GetComponent<RFX4_MobileDistortion>();
+//            if (mobileDistortion != null) DestroyImmediate(mobileDistortion);
+//#endif
+//        }
 
-    void ChangeParticlesBudget(float particlesMul)
-    {
-        var particles = GetComponent<ParticleSystem>();
-        if (particles == null) return;
+//#if KRIPTO_FX_LWRP_RENDERING
+//        var mobileLwrpDistortion = cam.GetComponent<RFX4_RenderTransparentDistortion>();
+//        if (mobileLwrpDistortion != null) mobileLwrpDistortion.IsActive = false;
+//#endif
+//    }
 
-        var main = particles.main;
-        main.maxParticles = Mathf.Max(1, (int)(main.maxParticles * particlesMul));
+//    bool IsMobilePlatform()
+//    {
+//        bool isMobile = false;
+//#if UNITY_EDITOR
+//        if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.Android
+//            || EditorUserBuildSettings.activeBuildTarget == BuildTarget.iOS
+//            || EditorUserBuildSettings.activeBuildTarget == BuildTarget.WSAPlayer)
+//            isMobile = true;
+//#endif
+//        if (Application.isMobilePlatform) isMobile = true;
+//        return isMobile;
+//    }
 
-        var emission = particles.emission;
-        if (!emission.enabled) return;
+//    void ChangeParticlesBudget(float particlesMul)
+//    {
+//        var particles = GetComponent<ParticleSystem>();
+//        if (particles == null) return;
 
-        var rateOverTime = emission.rateOverTime;
-        {
-            if (rateOverTime.constantMin > 1) rateOverTime.constantMin *= particlesMul;
-            if (rateOverTime.constantMax > 1) rateOverTime.constantMax *= particlesMul;
-            emission.rateOverTime = rateOverTime;
-        }
+//        var main = particles.main;
+//        main.maxParticles = Mathf.Max(1, (int)(main.maxParticles * particlesMul));
 
-        var rateOverDistance = emission.rateOverDistance;
-        if (rateOverDistance.constantMin > 1)
-        {
-            if (rateOverDistance.constantMin > 1) rateOverDistance.constantMin *= particlesMul;
-            if (rateOverDistance.constantMax > 1) rateOverDistance.constantMax *= particlesMul;
-            emission.rateOverDistance = rateOverDistance;
-        }
+//        var emission = particles.emission;
+//        if (!emission.enabled) return;
 
-        ParticleSystem.Burst[] burst = new ParticleSystem.Burst[emission.burstCount];
-        emission.GetBursts(burst);
-        for (var i = 0; i < burst.Length; i++)
-        {
+//        var rateOverTime = emission.rateOverTime;
+//        {
+//            if (rateOverTime.constantMin > 1) rateOverTime.constantMin *= particlesMul;
+//            if (rateOverTime.constantMax > 1) rateOverTime.constantMax *= particlesMul;
+//            emission.rateOverTime = rateOverTime;
+//        }
 
-            if (burst[i].minCount > 1) burst[i].minCount = (short)(burst[i].minCount * particlesMul);
-            if (burst[i].maxCount > 1) burst[i].maxCount = (short)(burst[i].maxCount * particlesMul);
-        }
-        emission.SetBursts(burst);
-    }
+//        var rateOverDistance = emission.rateOverDistance;
+//        if (rateOverDistance.constantMin > 1)
+//        {
+//            if (rateOverDistance.constantMin > 1) rateOverDistance.constantMin *= particlesMul;
+//            if (rateOverDistance.constantMax > 1) rateOverDistance.constantMax *= particlesMul;
+//            emission.rateOverDistance = rateOverDistance;
+//        }
+
+//        ParticleSystem.Burst[] burst = new ParticleSystem.Burst[emission.burstCount];
+//        emission.GetBursts(burst);
+//        for (var i = 0; i < burst.Length; i++)
+//        {
+
+//            if (burst[i].minCount > 1) burst[i].minCount = (short)(burst[i].minCount * particlesMul);
+//            if (burst[i].maxCount > 1) burst[i].maxCount = (short)(burst[i].maxCount * particlesMul);
+//        }
+//        emission.SetBursts(burst);
+//    }
 }

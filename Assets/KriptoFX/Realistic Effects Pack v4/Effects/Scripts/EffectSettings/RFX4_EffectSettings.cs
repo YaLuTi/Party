@@ -10,7 +10,7 @@ public class RFX4_EffectSettings : MonoBehaviour
 {
     [Range(0.1f, 1)] public float ParticlesBudget = 1;
     public bool UseLightShadows;
-    public bool UseFastFlatDecalsForMobiles = true;
+    public bool UseFastFlatDecals = false;
     public bool UseCustomColor;
     public Color EffectColor = Color.red;
 
@@ -47,7 +47,7 @@ public class RFX4_EffectSettings : MonoBehaviour
     {
         if(ParticlesBudget < 0.99f) ChangeParticlesBudget(ParticlesBudget);
         if(UseCustomColor) ChangeParticleColor();
-        if (UseFastFlatDecalsForMobiles && IsMobilePlatform()) SetFlatDecals();
+        if (UseFastFlatDecals) SetFlatDecals();
         if (!UseLightShadows || IsMobilePlatform()) DisableShadows();
     }
 
@@ -74,7 +74,7 @@ public class RFX4_EffectSettings : MonoBehaviour
             if (!emission.enabled) continue;
 
             var rateOverTime = emission.rateOverTime;
-
+            
             {
                 if (rateOverTime.constantMin > 1) rateOverTime.constantMin *= particlesMul;
                 if (rateOverTime.constantMax > 1) rateOverTime.constantMax *= particlesMul;

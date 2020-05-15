@@ -3,23 +3,24 @@ You can contact me for any questions.
 
 My English is not very good, and if there are any translation errors, you can let me know :)
 
+Current readme only for HDRP rendering!
 
 Pack includes prefabs of main effects (projectiles, aoe effect, etc) + collision effects (decals, particles, etc) + hand effects (like a particles attached to hands)
-This simple tutorial only for Default Legacy rendering.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Supported platforms:
+Using on PC:
 
-	All platforms (PC/Consoles/VR/Mobiles)
-	All effects tested on Oculus Rift CV1 with single/dual/instanced pass and works correcrly.
-	If you use URP rendering then you must import HDRP or URP patches "\Assets\KriptoFX\Realistic Effects Pack v4\HDRP and URP patches"
+	Unity changed bloom in volume postprocessing. Right now the bloom works correctly with very big emission intencity (x100 times more) and ACES tonemaping.
+	If you want effects which look like in the video you need use included postprocessing profile "Assets\KriptoFX\Realistic Effects Pack v4\PostEffects Profile.asset"
+
+	In unity 2019.3+ added new "Threshold" parameter for bloom and you need change bloom settings (because default behaviour of bloom intencity was changed again):
+
+	Threshold 1.5
+	Intencity 0.5
+	Scatter 0.9
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-For correct effects working you must:
 
-1) Use included postprocessing profile "\Assets\KriptoFX\Realistic Effects Pack v4\PostProcess Profile.asset" (If you want effects which look like in the video example)
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Using effects:
 
 Simple using (without characters):
@@ -65,10 +66,10 @@ All prefabs of effect have "EffectSetting" script with follow settings:
 ParticlesBudget (range 0 - 1, default 1)
 Allow change particles count of effect prefab. For example, particleBudget = 0.5 will reduce the number of particles in half
 
-UseLightShadows (does not work when used mobile build target)
+UseLightShadows
 Some effect can use shadows and you can disable this setting for optimisation. Disabled by default for mobiles.
 
-UseFastFlatDecalsForMobiles (works only when used mobile build target)
+UseFastFlatDecals
 If you use non-flat surfaces or  have z-fight problems you can use screen space decals instead of simple quad decals.
 Disabled parameter will use screen space decals but it required depth texture!
 
