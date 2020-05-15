@@ -124,19 +124,21 @@ public class RFX4_UberParticleGUI : ShaderGUI
             _SrcMode.floatValue = (int) UnityEngine.Rendering.BlendMode.SrcAlpha;
             _DstMode.floatValue = (int) UnityEngine.Rendering.BlendMode.One;
             // material.DisableKeyword("_ALPHABLEND_ON");
+            material.DisableKeyword("_Mul_ON");
             _FogColorMultiplier.vectorValue = new Vector4(0, 0, 0, 0);
         }
         if (Math.Abs(_BlendMode.floatValue - 1) < TOLERANCE)
         {
             _SrcMode.floatValue = (int)UnityEngine.Rendering.BlendMode.SrcAlpha;
             _DstMode.floatValue = (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha;
+            material.DisableKeyword("_Mul_ON");
             _FogColorMultiplier.vectorValue = new Vector4(0, 0, 0, 0);
         }
         if (Math.Abs(_BlendMode.floatValue - 2) < TOLERANCE)
         {
             _SrcMode.floatValue = (int)UnityEngine.Rendering.BlendMode.Zero;
             _DstMode.floatValue = (int)UnityEngine.Rendering.BlendMode.SrcColor;
-            // material.DisableKeyword("_ALPHABLEND_ON");
+             material.EnableKeyword("_Mul_ON");
             _FogColorMultiplier.vectorValue = new Vector4(1, 1, 1, 1);
         }
        

@@ -7,13 +7,15 @@ using UnityEngine;
 public class PlayerHitten : MonoBehaviour
 {
     RagdollControl_AF ragdollControl;
-    PlayerPickItem pickItem;
+    PlayerBehavior pickItem;
     public bool test;
+    public Transform Hips;
+    public Transform FaceWay;
     // Start is called before the first frame update
     void Start()
     {
         ragdollControl = GetComponentInChildren<RagdollControl_AF>();
-        pickItem = GetComponentInChildren<PlayerPickItem>();
+        pickItem = GetComponentInChildren<PlayerBehavior>();
     }
 
     // Update is called once per frame

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerPickItem : MonoBehaviour
+public class PlayerBehavior : MonoBehaviour
 {
     [Header("Game VFX")]
     public GameObject HitParticle;
@@ -11,8 +11,8 @@ public class PlayerPickItem : MonoBehaviour
 
     
 
-    bool IsHolding = false;
-    bool IsThrowing = false;
+    public bool IsHolding = false;
+    public bool IsThrowing = false;
 
     [Header("Game Value")]
     [SerializeField]
@@ -35,6 +35,11 @@ public class PlayerPickItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(itemHand.HoldingItem == null)
+        {
+            IsThrowing = false;
+            IsHolding = false;
+        }
         if (IsThrowing)
         {
             ThrowStrength += ThrowPower1 * Time.deltaTime;
@@ -61,6 +66,7 @@ public class PlayerPickItem : MonoBehaviour
 
     void OnPick()
     {
+        if (playerStatus.PlayerPick()) return;
         if (IsHolding)
         {
             playerStatus.PlayerItem_Aim();
@@ -78,6 +84,7 @@ public class PlayerPickItem : MonoBehaviour
                 foreach (Collider collider in colliders)
                 {
                     if (collider.gameObject.tag != "Item") continue;
+                    if (collider.gameObject.GetComponent<ItemBasic>().IsHolded) continue;
                     if (pick == null)
                     {
                         pick = collider;
@@ -123,6 +130,7 @@ public class PlayerPickItem : MonoBehaviour
     void SetMine()
     {
         IsHolding = false;
+        IsThrowing = false;
         itemHand.ThrowHoldingItem(0);
     }
 

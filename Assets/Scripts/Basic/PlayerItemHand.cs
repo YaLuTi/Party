@@ -20,7 +20,6 @@ public class PlayerItemHand : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     public void SetHoldingItem(GameObject item)
@@ -41,12 +40,14 @@ public class PlayerItemHand : MonoBehaviour
         HoldingItem.transform.parent = transform;
         HoldingItem.transform.localPosition = Vector3.zero;
         HoldingItem.transform.localRotation = Quaternion.identity;
+        HoldingItem.GetComponent<ItemBasic>().Hold();
         yield return null;
     }
 
     public void ThrowHoldingItem(float v)
     {
         HoldingItem.GetComponent<Collider>().isTrigger = false;
+        HoldingItem.GetComponent<ItemBasic>().IsHolded = false;
         Rigidbody rb = HoldingItem.GetComponent<Rigidbody>();
         rb.isKinematic = false;
         rb.useGravity = true;
@@ -63,6 +64,7 @@ public class PlayerItemHand : MonoBehaviour
     IEnumerator DropItem(Vector3 v)
     {
         HoldingItem.transform.parent = null;
+        HoldingItem.GetComponent<ItemBasic>().IsHolded = false;
         yield return new WaitForFixedUpdate();
         HoldingItem.GetComponent<Collider>().isTrigger = false;
         Rigidbody rb = HoldingItem.GetComponent<Rigidbody>();

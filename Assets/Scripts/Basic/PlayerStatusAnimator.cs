@@ -64,6 +64,11 @@ public class PlayerStatusAnimator : MonoBehaviour
         StatusUpdateHandler(this, status);
         StartCoroutine(_RemoveStatus(status, time));
     }
+
+    public bool PlayerPick()
+    {
+        return playerMove.inhibitMove;
+    }
     IEnumerator _RemoveStatus(StatusEventArgs statusEvent ,float time)
     {
         status.Add(statusEvent);

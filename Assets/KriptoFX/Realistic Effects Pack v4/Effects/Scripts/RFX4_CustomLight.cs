@@ -8,8 +8,6 @@ using UnityEngine.Rendering;
 [ExecuteInEditMode]
 public class RFX4_CustomLight : MonoBehaviour
 {
-    public Light[] ImportantLights;
-
     static int MaxLightsCount = 8;
     Texture2D PointLightAttenuation;
     List<Light> sceneLights;
@@ -32,7 +30,7 @@ public class RFX4_CustomLight : MonoBehaviour
         allLights = SortPointLightsByDistance(allLights);
         lightCount += FillPointLights(allLights, lightPositions, lightColors);
 
-        Shader.SetGlobalInt("RFX4_LightCount", Mathf.Min(MaxLightsCount,  lightCount));
+        Shader.SetGlobalInt("RFX4_LightCount", lightCount);
         Shader.SetGlobalVectorArray("RFX4_LightPositions", ListToArrayWithMaxCount(lightPositions, MaxLightsCount));
         Shader.SetGlobalVectorArray("RFX4_LightColors", ListToArrayWithMaxCount(lightColors, MaxLightsCount));
 
@@ -53,7 +51,7 @@ public class RFX4_CustomLight : MonoBehaviour
         var allLights = transform.root.GetComponentsInChildren<Light>().ToList();
         foreach (var sceneLight in sceneLights)
         {
-            if (sceneLight != null) allLights.Add(sceneLight);
+            if(sceneLight!=null) allLights.Add(sceneLight);
         }
         return allLights;
     }
@@ -116,14 +114,8 @@ public class RFX4_CustomLight : MonoBehaviour
         var dict = new SortedDictionary<float, Light>();
         foreach (var customLight in lights)
         {
-            if (customLight.type == LightType.Point && customLight.isActiveAndEnabled)
-            {
-                float distance = (pos - customLight.transform.position).magnitude;
-                if (ImportantLights.Contains(customLight)) distance = 0;
-                distance += Random.Range(-10000f, 10000f) / 1000000;
-
-                if (!dict.ContainsKey(distance)) dict.Add(distance , customLight);
-            }
+            float distance = (pos - customLight.transform.position).magnitude + Random.Range(-10000f, 10000f)/1000000;
+            if (!dict.ContainsKey(distance)) dict.Add(distance, customLight);
         }
 
         return dict.Values.ToList();

@@ -30,7 +30,7 @@ public class RFX4_LightCurves : MonoBehaviour
     {
         var time = Time.time - startTime;
         if (canUpdate) {
-            var eval = LightCurve.Evaluate(time / GraphTimeMultiplier) * GraphIntensityMultiplier;
+            var eval = LightCurve.Evaluate(time / GraphTimeMultiplier) * GraphIntensityMultiplier * 100;
             lightSource.intensity = eval;
             lightSource.shadows = UseShadowsIfPossible ? LightShadows.Soft : LightShadows.None;
         }

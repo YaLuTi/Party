@@ -90,28 +90,31 @@ public class RFX4_UberDecalGUI : ShaderGUI
         m.ShaderProperty(_UseFrameBlending, _UseFrameBlending.displayName);
 
         m.ShaderProperty(_BlendMode, _BlendMode.displayName);
-        
+        Material material = (Material)m.target;
         if (Math.Abs(_BlendMode.floatValue) < TOLERANCE)
         {
             _SrcMode.floatValue = (int) UnityEngine.Rendering.BlendMode.SrcAlpha;
             _DstMode.floatValue = (int) UnityEngine.Rendering.BlendMode.One;
+            material.DisableKeyword("_Mul_ON");
         }
         if (Math.Abs(_BlendMode.floatValue - 1) < TOLERANCE)
         {
             _SrcMode.floatValue = (int)UnityEngine.Rendering.BlendMode.SrcAlpha;
             _DstMode.floatValue = (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha;
+            material.DisableKeyword("_Mul_ON");
         }
         if (Math.Abs(_BlendMode.floatValue - 2) < TOLERANCE)
         {
             _SrcMode.floatValue = (int)UnityEngine.Rendering.BlendMode.Zero;
             _DstMode.floatValue = (int)UnityEngine.Rendering.BlendMode.SrcColor;
+            material.EnableKeyword("_Mul_ON");
         }
   
         m.RenderQueueField();
 
 #if UNITY_5_6_OR_NEWER
         m.EnableInstancingField();
-        Material material = (Material)m.target;
+     
         material.enableInstancing = true;
 #endif
     }

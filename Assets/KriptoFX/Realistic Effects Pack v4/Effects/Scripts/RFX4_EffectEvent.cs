@@ -15,7 +15,6 @@ public class RFX4_EffectEvent : MonoBehaviour
 
     public GameObject MainEffect;
     public Transform AttachPoint;
-    public Transform OverrideAttachPointToTarget;
     public float Effect_DestroyTime = 10;
     [Space]
 
@@ -26,11 +25,8 @@ public class RFX4_EffectEvent : MonoBehaviour
     [HideInInspector] public bool IsMobile;
     public void ActivateEffect()
     {
-
         if(MainEffect == null) return;
-        GameObject instance;
-        if (OverrideAttachPointToTarget == null) instance = Instantiate(MainEffect, AttachPoint.transform.position, AttachPoint.transform.rotation);
-        else instance = Instantiate(MainEffect, AttachPoint.transform.position, Quaternion.LookRotation(-(AttachPoint.position - OverrideAttachPointToTarget.position)));
+        var instance = Instantiate(MainEffect, AttachPoint.transform.position, AttachPoint.transform.rotation);
         UpdateEffectForMobileIsNeed(instance);
         if (Effect_DestroyTime > 0.01f) Destroy(instance, Effect_DestroyTime);
     }
@@ -54,7 +50,7 @@ public class RFX4_EffectEvent : MonoBehaviour
         UpdateEffectForMobileIsNeed(instance);
         if (CharacterEffect_DestroyTime > 0.01f) Destroy(instance, CharacterEffect_DestroyTime);
     }
-
+    
     public void ActivateCharacterEffect2()
     {
         if (CharacterEffect2 == null) return;

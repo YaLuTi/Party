@@ -564,7 +564,7 @@ GameObject:
   - component: {fileID: 561749207926382245}
   m_Layer: 0
   m_Name: Player Clean
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -750,6 +750,8 @@ MonoBehaviour:
     type: 3}
   PickUpParticle: {fileID: 2067121338997837400, guid: 762dd2cb93b39bb42b1204994427b691,
     type: 3}
+  IsHolding: 0
+  IsThrowing: 0
   PickRadius: 1.2
   ThrowPower1: 0.01
   ThrowPower2: 1
@@ -976,7 +978,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8879871389263994034}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.016, z: -0.119}
+  m_LocalPosition: {x: 0, y: 0.067, z: -0.119}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8879871389107737055}
@@ -2968,7 +2970,7 @@ GameObject:
   - component: {fileID: 8879871390262178134}
   m_Layer: 4
   m_Name: Player Rig
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3030,6 +3032,8 @@ MonoBehaviour:
   collisionSpeed: 0
   numberOfCollisions: 0
   shotByBullet: 0
+  orientate: 0
+  orientated: 1
   stayDeadOnHeadShot: 0
   shotInHead: 0
 --- !u!114 &8879871390262178134
@@ -3971,6 +3975,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   test: 0
+  Hips: {fileID: 8879871390054196629}
+  FaceWay: {fileID: 8879871389107737055}
 --- !u!114 &1498877514189085665
 MonoBehaviour:
   m_ObjectHideFlags: 0

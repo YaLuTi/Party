@@ -132,8 +132,8 @@ namespace AnimFollow
 		bool userNeedsToAssignStuff = false;	// If this is true then ....
 		bool delayedGetupDone = false;			// Used to delay setting gettingUp to false if still in contakt after get up state
 		bool localTorqUserSetting;				// Saves the user setting from AnimFollow
-		bool orientate = false;					// starts the process of matching the ragdoll to the master
-		bool orientated = true;					// starts the process of matching the ragdoll to the master
+		public bool orientate = false;					// starts the process of matching the ragdoll to the master
+		public bool orientated = true;					// starts the process of matching the ragdoll to the master
 		bool getupState = false;				// Not used in this version
 		bool isInTransitionToGetup = false;
 		bool wasInTransitionToGetup = false;

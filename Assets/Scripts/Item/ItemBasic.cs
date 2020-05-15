@@ -7,11 +7,16 @@ public class ItemBasic : MonoBehaviour
 {
     Rigidbody rb;
     bool IsThrowing = false;
+    public bool IsHolded = false;
     int PlayerID = -1;
 
     [Header("GameValue")]
     [SerializeField]
     public float Durability = 1;
+    [SerializeField]
+    Vector3 HoldedPosition;
+    [SerializeField]
+    Vector3 HoldedRotation;
 
     public string animation;
 
@@ -29,6 +34,13 @@ public class ItemBasic : MonoBehaviour
     public virtual string OnUse()
     {
         return animation;
+    }
+
+    public void Hold()
+    {
+        transform.localPosition = HoldedPosition;
+        transform.localRotation = Quaternion.Euler(HoldedRotation);
+        IsHolded = true;
     }
 
     public bool DurabilityCheck()
