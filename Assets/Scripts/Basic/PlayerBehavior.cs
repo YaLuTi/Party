@@ -147,6 +147,7 @@ public class PlayerBehavior : MonoBehaviour
             itemHand.DropHoldingItem(info.bulletForce);
             IsHolding = false;
             IsThrowing = false;
+            IsThrowing2 = false;
         }
     }
 }
