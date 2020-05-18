@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 8530885677772917443}
   - component: {fileID: 8248199013373534603}
   - component: {fileID: 5773285929009970974}
+  - component: {fileID: 3783861560363758326}
   m_Layer: 0
   m_Name: Pillar_low
   m_TagString: Untagged
@@ -98,7 +99,7 @@ MeshRenderer:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
+  m_ScaleInLightmap: 1.5
   m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
@@ -112,6 +113,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &3783861560363758326
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6022841613681546362}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.9860977, y: 0.9859284, z: 1.6528162}
+  m_Center: {x: 0.00007502735, y: 0.00012306868, z: -0.6918938}
 --- !u!1 &8317285643255028283
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,7 +191,7 @@ MeshRenderer:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
+  m_ScaleInLightmap: 1.5
   m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
@@ -268,6 +282,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5483839268707786110, guid: 251d9c66f5ce88a4cbacae0acd36f49e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5483839268708061822, guid: 251d9c66f5ce88a4cbacae0acd36f49e,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -332,6 +351,11 @@ PrefabInstance:
         type: 3}
       propertyPath: InitialModule.startLifetime.minScalar
       value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5483839268722289148, guid: 251d9c66f5ce88a4cbacae0acd36f49e,
+        type: 3}
+      propertyPath: autoRandomSeed
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5483839268722309940, guid: 251d9c66f5ce88a4cbacae0acd36f49e,
         type: 3}
