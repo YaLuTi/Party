@@ -13,6 +13,7 @@ public class PlayerBehavior : MonoBehaviour
 
     public bool IsHolding = false;
     public bool IsThrowing = false;
+    bool IsThrowing2 = false;
 
     [Header("Game Value")]
     [SerializeField]
@@ -67,12 +68,13 @@ public class PlayerBehavior : MonoBehaviour
     void OnPick()
     {
         if (playerStatus.PlayerPick()) return;
-        if (IsHolding)
+        if (IsHolding && !IsThrowing2)
         {
             playerStatus.PlayerItem_Aim();
             IsThrowing = true;
+            IsThrowing2 = true;
         }
-        else
+        else if(!IsHolding)
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, PickRadius);
 
@@ -115,14 +117,16 @@ public class PlayerBehavior : MonoBehaviour
         if (IsThrowing)
         {
             playerStatus.PlayerItem_Throw();
-            IsHolding = false;
+            IsThrowing = false;
         }
     }
 
     void ThrowItem()
     {
         itemHand.ThrowHoldingItem(ThrowStrength);
-        IsThrowing = false;
+        Debug.Log("T");
+        IsHolding = false;
+        IsThrowing2 = false;
         ThrowStrength = 0.1f;
         ThrowPower1 = 0.01f;
     }

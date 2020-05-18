@@ -8,6 +8,8 @@ public class Mine_Explosion : ItemMine
     [SerializeField]
     public GameObject ExplosionVFX;
     [SerializeField]
+    float CameraShakePower = 3;
+    [SerializeField]
     float ExplosionDelay = 0.05f;
     // Start is called before the first frame update
     void Start()
@@ -43,6 +45,7 @@ public class Mine_Explosion : ItemMine
     {
         yield return new WaitForSecondsRealtime(ExplosionDelay);
         Instantiate(ExplosionVFX, transform.position, Quaternion.identity);
+        CameraController.CameraShake(CameraShakePower);
         Destroy(this.gameObject);
         yield return 0;
     }

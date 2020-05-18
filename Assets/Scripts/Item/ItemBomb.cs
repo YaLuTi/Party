@@ -8,8 +8,10 @@ public class ItemBomb : ItemBasic
     MeshRenderer meshRenderer;
     float Pow = 80;
 
+    [Header("GameValue")]
     [SerializeField]
     public bool UseOnStart = false;
+    [Header("FX")]
     [SerializeField]
     public GameObject ExplosionVFX;
     [SerializeField]
@@ -18,6 +20,8 @@ public class ItemBomb : ItemBasic
     VisualEffect FuseVFX;
     [SerializeField]
     AudioSource FuseSFX;
+    [SerializeField]
+    float CameraShakePower = 0;
 
     public float delay;
     // Start is called before the first frame update
@@ -74,6 +78,7 @@ public class ItemBomb : ItemBasic
     {
         yield return new WaitForSecondsRealtime(delay);
         Instantiate(ExplosionVFX, transform.position, Quaternion.identity);
+        CameraController.CameraShake(CameraShakePower);
         Destroy(this.gameObject);
         yield return 0;
     }
