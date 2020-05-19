@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/PlayerControls.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/BigPong/Input/PlayerControls.inputactions'
 
 using System;
 using System.Collections;
