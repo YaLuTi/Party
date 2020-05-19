@@ -10,7 +10,9 @@ public class PlayerHitten : MonoBehaviour
     PlayerBehavior pickItem;
     public bool test;
     public Transform Hips;
+    public Transform foot;
     public Transform FaceWay;
+    public GameObject Decal;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +23,10 @@ public class PlayerHitten : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        Decal.transform.position = Hips.transform.position;
+        Vector3 v = Decal.transform.position;
+        v.y = foot.position.y;
+        Decal.transform.position = v;
     }
     public void OnHit(BulletHitInfo_AF info)
     {
