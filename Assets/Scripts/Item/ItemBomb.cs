@@ -73,10 +73,11 @@ public class ItemBomb : ItemBasic
         }
         return base.OnUse();
     }
-
+    
     IEnumerator Explosion()
     {
-        yield return new WaitForSecondsRealtime(delay);
+        float PauseTime = 0;
+        yield return new WaitForSeconds(delay);
         Instantiate(ExplosionVFX, transform.position, Quaternion.identity);
         CameraController.CameraShake(CameraShakePower);
         Destroy(this.gameObject);

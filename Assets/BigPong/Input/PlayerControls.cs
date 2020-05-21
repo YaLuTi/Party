@@ -57,6 +57,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""b26c138d-b7f2-4c75-8f81-05784d3351d6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -202,6 +210,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Throw"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b4c33382-9d8c-41d1-90f1-4cdf6da70a95"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -243,6 +262,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_GamePlay_Pick = m_GamePlay.FindAction("Pick", throwIfNotFound: true);
         m_GamePlay_Throw = m_GamePlay.FindAction("Throw", throwIfNotFound: true);
         m_GamePlay_Test = m_GamePlay.FindAction("Test", throwIfNotFound: true);
+        m_GamePlay_Pause = m_GamePlay.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -297,6 +317,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_GamePlay_Pick;
     private readonly InputAction m_GamePlay_Throw;
     private readonly InputAction m_GamePlay_Test;
+    private readonly InputAction m_GamePlay_Pause;
     public struct GamePlayActions
     {
         private @PlayerControls m_Wrapper;
@@ -306,6 +327,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Pick => m_Wrapper.m_GamePlay_Pick;
         public InputAction @Throw => m_Wrapper.m_GamePlay_Throw;
         public InputAction @Test => m_Wrapper.m_GamePlay_Test;
+        public InputAction @Pause => m_Wrapper.m_GamePlay_Pause;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -330,6 +352,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Test.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnTest;
                 @Test.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnTest;
                 @Test.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnTest;
+                @Pause.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_GamePlayActionsCallbackInterface = instance;
             if (instance != null)
@@ -349,6 +374,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Test.started += instance.OnTest;
                 @Test.performed += instance.OnTest;
                 @Test.canceled += instance.OnTest;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -378,5 +406,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnPick(InputAction.CallbackContext context);
         void OnThrow(InputAction.CallbackContext context);
         void OnTest(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

@@ -2,18 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.HighDefinition;
 
 public class PlayerIdentity : MonoBehaviour
 {
     [SerializeField]
     Material[] MaterialsArray;
     [SerializeField]
+    Material[] RingMaterialsArray;
+    [SerializeField]
+    DecalProjector RingDecal;
+    [SerializeField]
     Vector3[] SpawnPosition;
     [SerializeField]
     Vector3[] SpawnRotation;
 
-    public SkinnedMeshRenderer r;
-    public SkinnedMeshRenderer rr;
+    public SkinnedMeshRenderer BodyMeshRenderer1;
+    public SkinnedMeshRenderer BodyMeshRenderer2;
 
     Rigidbody[] rbs;
 
@@ -26,12 +31,14 @@ public class PlayerIdentity : MonoBehaviour
         PlayerID = playerInput.user.index;
         rbs = GetComponentsInChildren<Rigidbody>();
 
-        Material[] mats = r.materials;
+        Material[] mats = BodyMeshRenderer1.materials;
         mats[0] = MaterialsArray[PlayerID];
-        r.materials = mats;
-        mats = rr.materials;
+        BodyMeshRenderer1.materials = mats;
+        mats = BodyMeshRenderer2.materials;
         mats[0] = MaterialsArray[PlayerID];
-        rr.materials = mats;
+        BodyMeshRenderer2.materials = mats;
+
+        RingDecal.material = RingMaterialsArray[PlayerID];
 
         StartCoroutine(SpawnToPosition());
     }

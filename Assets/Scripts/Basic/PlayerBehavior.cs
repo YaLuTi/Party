@@ -121,6 +121,11 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
+    void OnPause()
+    {
+        StageController.Pause();
+    }
+
     void ThrowItem()
     {
         itemHand.ThrowHoldingItem(ThrowStrength);

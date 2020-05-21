@@ -432,10 +432,10 @@ namespace AnimFollow
 				}
 			}
 
-			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			
-			// Adjust player movements if ragdoll distortion is large, e.g. if we are walking into a wall
-			if (noContactTime < .1f && !(gettingUp || falling))
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            // Adjust player movements if ragdoll distortion is large, e.g. if we are walking into a wall                   gettingUp || 
+            if (noContactTime < .1f && !(falling))
             {
                 playerMovement.glideFree = new Vector3(-limbError.x, 0f, -limbError.z) * glideFree;
             }
