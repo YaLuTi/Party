@@ -7,6 +7,8 @@ using AnimFollow;
 [RequireComponent(typeof(NavMeshAgent))]
 public class CreatureBasic : MonoBehaviour
 {
+    [SerializeField]
+    float LifeTime;
     NavMeshAgent nav;
 
     GameObject[] players; 
@@ -14,26 +16,34 @@ public class CreatureBasic : MonoBehaviour
     void Start()
     {
         nav = GetComponent<NavMeshAgent>();
+        Destroy(this.gameObject, LifeTime);
     }
 
     // Update is called once per frame
     void Update()
     {
-        players = GameObject.FindGameObjectsWithTag("Player");
-        if (players.Length == 0) return;
-        GameObject cloest = null;
-        float distance = 100;
-        for(int i = 0; i < players.Length; i++)
+        if(FlagScore.id < 0)
         {
-            PlayerHitten playerHitten = players[i].GetComponent<PlayerHitten>();
-            float d = Vector3.Distance(transform.position, playerHitten.Hips.position);
-            if (d < distance)
+            players = GameObject.FindGameObjectsWithTag("Player");
+            if (players.Length == 0) return;
+            GameObject cloest = null;
+            float distance = 100;
+            for (int i = 0; i < players.Length; i++)
             {
-                cloest = players[i];
-                distance = d;
+                PlayerHitten playerHitten = players[i].GetComponent<PlayerHitten>();
+                float d = Vector3.Distance(transform.position, playerHitten.Hips.position);
+                if (d < distance)
+                {
+                    cloest = players[i];
+                    distance = d;
+                }
             }
+            nav.SetDestination(cloest.GetComponent<PlayerHitten>().Hips.position);
         }
-        nav.SetDestination(cloest.GetComponent<PlayerHitten>().Hips.position);
+        else
+        {
+            nav.SetDestination(FlagScore.follow.position);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

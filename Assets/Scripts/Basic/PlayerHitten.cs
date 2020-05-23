@@ -13,6 +13,8 @@ public class PlayerHitten : MonoBehaviour
     public Transform foot;
     public Transform FaceWay;
     public GameObject Decal;
+
+    public FlagScore Flag;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,8 +33,15 @@ public class PlayerHitten : MonoBehaviour
     public void OnHit(BulletHitInfo_AF info)
     {
         ragdollControl.shotByBullet = true;
+        if (Flag != null) Flag.Throw();
+        Flag = null;
         pickItem.OnHit(info);
         StartCoroutine(AddForceToLimb(info));
+    }
+
+    public bool IsGettingUp()
+    {
+        return ragdollControl.PlayerInhibit();
     }
 
     IEnumerator AddForceToLimb(BulletHitInfo_AF bulletHitInfo)

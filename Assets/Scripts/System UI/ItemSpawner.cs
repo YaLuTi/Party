@@ -20,13 +20,16 @@ public class ItemSpawner : MonoBehaviour
     float zMaxRange;
 
     [Header("SpawnEvent")]
+    [SerializeField]
     SpawnEvent[] spawnEvents;
+    int e = 0;
 
     public GameObject[] SpawnObject;
 
     List<GameObject> SpawnItem = new List<GameObject>();
 
     float CooldownCount;
+    bool CooldownEnbale = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +43,8 @@ public class ItemSpawner : MonoBehaviour
         if(CooldownCount > 140 + SpawnItem.Count * 10 && SpawnItem.Count < 25)
         {
             CooldownCount = 0;
+            CooldownEnbale = false;
+            StartCoroutine(RunSpawnEvent());
             /*float x = Random.Range(xMinRange, xMaxRange);
             float z = Random.Range(zMinRange, zMaxRange);
             Vector3 p = new Vector3(xOffset + x, yOffset, zOffset + z);
@@ -64,24 +69,56 @@ public class ItemSpawner : MonoBehaviour
             }
         }
 
+        if(CooldownEnbale)
         CooldownCount++;
     }
 
     IEnumerator RunSpawnEvent()
     {
-        for (int i = 0; i < spawnEvents[0].ItemQuantity; i++)
+        float x = Random.Range(spawnEvents[e].xDistanceMin, spawnEvents[e].xDistanceMax);
+        float z = Random.Range(spawnEvents[e].zDistanceMin, spawnEvents[e].zDistanceMax);
+
+
+        for (int i = 0; i < spawnEvents[e].ItemQuantity; i++)
         {
-            float x = Random.Range(spawnEvents[0].xDistanceMin, spawnEvents[0].xDistanceMax);
-            float z = Random.Range(spawnEvents[0].zDistanceMin, spawnEvents[0].zDistanceMax);
-            Vector3 p = spawnEvents[0].Offset + new Vector3(x, 0, z);
-            int r = Random.Range(0, spawnEvents[0].Items.Length);
-            SpawnItem.Add(Instantiate(spawnEvents[0].Items[r], p, Quaternion.identity));
-            yield return new WaitForSeconds(spawnEvents[0].DropDelay);
+            if (spawnEvents[e].IsAverage)
+            {
+                x = Mathf.Abs(x);
+                z = Mathf.Abs(z);
+                switch(i % 4)
+                {
+                    case 0:
+                        x *= -1;
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        z *= -1;
+                        break;
+                    case 3:
+                        x *= -1;
+                        z *= -1;
+                        break;
+                }
+            }
+            else
+            {
+                x = Random.Range(spawnEvents[e].xDistanceMin, spawnEvents[e].xDistanceMax);
+                z = Random.Range(spawnEvents[e].zDistanceMin, spawnEvents[e].zDistanceMax);
+            }
+            Vector3 p = spawnEvents[e].Offset + new Vector3(x, 0, z);
+            int r = Random.Range(0, spawnEvents[e].Items.Length);
+            SpawnItem.Add(Instantiate(spawnEvents[e].Items[r], p, Quaternion.identity));
+            yield return new WaitForSeconds(spawnEvents[e].DropDelay);
         }
+        CooldownEnbale = true;
+        e++;
+        if (e > spawnEvents.Length - 1) e = 0;
         yield return null;
     }
 }
 
+[System.Serializable]
 public class SpawnEvent
 {
     public int ItemQuantity;

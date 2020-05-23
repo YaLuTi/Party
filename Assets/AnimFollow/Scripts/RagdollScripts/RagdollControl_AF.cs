@@ -143,6 +143,11 @@ namespace AnimFollow
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        public bool PlayerInhibit()
+        {
+            return playerMovement.inhibitMove;
+        }
+
 		void Awake () // Initialize
 		{
 			if (!WeHaveAllTheStuff()) // Check
