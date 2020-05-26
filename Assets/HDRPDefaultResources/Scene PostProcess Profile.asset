@@ -116,7 +116,7 @@ MonoBehaviour:
     m_Value: 0.3
   contrast:
     m_OverrideState: 0
-    m_Value: 0
+    m_Value: -5
     min: -100
     max: 100
   colorFilter:
@@ -188,7 +188,7 @@ MonoBehaviour:
     min: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.129
+    m_Value: 0.174
     min: 0
     max: 1
   scatter:
@@ -218,6 +218,29 @@ MonoBehaviour:
   m_HighQualityFiltering:
     m_OverrideState: 0
     m_Value: 1
+--- !u!114 &-3065880894961659318
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da5ab44aadfb1804db5fd470983ac1b8, type: 3}
+  m_Name: LiftGammaGain
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  lift:
+    m_OverrideState: 1
+    m_Value: {x: 1, y: 0.9885738, z: 0.95429635, w: 0}
+  gamma:
+    m_OverrideState: 1
+    m_Value: {x: 0.9026084, y: 0.94898367, z: 1, w: 0}
+  gain:
+    m_OverrideState: 0
+    m_Value: {x: 0.8462526, y: 0.87533057, z: 1, w: 0}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,6 +265,7 @@ MonoBehaviour:
   - {fileID: -5236880759043309297}
   - {fileID: 1221853454798863671}
   - {fileID: 8259396985654365836}
+  - {fileID: -3065880894961659318}
 --- !u!114 &1221853454798863671
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -258,12 +282,12 @@ MonoBehaviour:
   m_AdvancedMode: 0
   distance:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.428
     min: 0
     max: 1
   cropToFit:
     m_OverrideState: 1
-    m_Value: 0.42
+    m_Value: 0.582
     min: 0
     max: 1
 --- !u!114 &3435053463774622932
@@ -440,7 +464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a6b00fcf518bb94a90b408492e07b44, type: 3}
   m_Name: FilmGrain
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   m_AdvancedMode: 0
   type:
     m_OverrideState: 1
@@ -474,23 +498,23 @@ MonoBehaviour:
   m_AdvancedMode: 0
   quality:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 2
   rayTracing:
     m_OverrideState: 0
     m_Value: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.35
+    m_Value: 1
     min: 0
     max: 4
   directLightingStrength:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.8
     min: 0
     max: 1
   radius:
     m_OverrideState: 1
-    m_Value: 0.25
+    m_Value: 0.3
     min: 0.25
     max: 5
   temporalAccumulation:
