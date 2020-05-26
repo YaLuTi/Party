@@ -56,6 +56,7 @@ public class PlayerIdentity : MonoBehaviour
 
     private void OnLevelWasLoaded(int level)
     {
+        stageInfo = GameObject.FindGameObjectWithTag("StageInfo").GetComponent<StageInfo>();
         StartCoroutine(SpawnToPosition());
     }
 
@@ -83,7 +84,8 @@ public class PlayerIdentity : MonoBehaviour
         {
             rb.isKinematic = true;
         }*/
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
         switch (PlayerID)
         {
             case 0:
@@ -101,7 +103,7 @@ public class PlayerIdentity : MonoBehaviour
             default:
                 break;
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         foreach (Rigidbody rb in rbs)
         {
             rb.velocity = Vector3.zero;

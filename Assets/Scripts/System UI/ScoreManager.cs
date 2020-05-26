@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ScoreManager : MonoBehaviour
 {
     static int[] scores = new int[4];
-    static Text[] texts = new Text[4];
+    static Text[] texts;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +23,7 @@ public class ScoreManager : MonoBehaviour
     public static void AddScore(int id, int score)
     {
         scores[id] += score;
-        for(int i =0; i < 4; i++)
+        for(int i =0; i < texts.Length; i++)
         {
             texts[i].text = scores[i].ToString();
         }
