@@ -15,7 +15,7 @@ namespace AnimFollow
 			if (!Physics.Raycast(rightFootPosition + Vector3.up * maxStepHeight, Vector3.down, out raycastHitRightFoot, raycastLength, layerMask))
 			{
 				raycastHitRightFoot.normal = Vector3.up;
-				raycastHitRightFoot.point = rightFoot.position - raycastLength * Vector3.up;
+				raycastHitRightFoot.point = rightFoot.position - (raycastLength * Vector3.up / 10);
 			}
 			footForward = rightToe.position - rightFoot.position;
 			footForward = new Vector3(footForward.x, 0f, footForward.z);
@@ -38,7 +38,7 @@ namespace AnimFollow
 			if (!Physics.Raycast(leftFootPosition + Vector3.up * maxStepHeight, Vector3.down, out raycastHitLeftFoot, raycastLength, layerMask))
 			{
 				raycastHitLeftFoot.normal = Vector3.up;	
-				raycastHitLeftFoot.point = leftFoot.position - raycastLength * Vector3.up;
+				raycastHitLeftFoot.point = leftFoot.position - (raycastLength * Vector3.up / 10);
 			}
 			footForward = leftToe.position - leftFoot.position;
 			footForward = new Vector3(footForward.x, 0f, footForward.z);

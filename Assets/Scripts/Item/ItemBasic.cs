@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using AnimFollow;
 
+[RequireComponent(typeof(AudioSource))]
 public class ItemBasic : MonoBehaviour
 {
     Rigidbody rb;
     bool IsThrowing = false;
     public bool IsHolded = false;
     int PlayerID = -1;
+
+    public GameObject HighLight;
+    public int PlayerSelecting = 0;
+
+    [Header("SFX")]
+    protected AudioSource audioSource;
+    public AudioClip[] UsingSound;
 
     [Header("GameValue")]
     [SerializeField]
@@ -20,19 +28,58 @@ public class ItemBasic : MonoBehaviour
 
     public string animation;
 
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
+        if(PlayerSelecting > 0)
+        {
+            HighLight.SetActive(true);
+        }
+        else
+        {
+            HighLight.SetActive(false);
+        }
+    }
+
+    public virtual void Throw()
+    {
+        StartCoroutine(ThrowEvent());
+    }
+
+    IEnumerator ThrowEvent()
+    {
+        yield return new WaitForSeconds(0.5f);
+        IsHolded = false;
+        yield return null;
+    }
+
+    public void PickHighlight()
+    {
+        PlayerSelecting++;
+    }
+
+    public void CancelHighlight()
+    {
+        PlayerSelecting--;
     }
 
     public virtual string OnUse()
     {
+        for(int i = 0; i < UsingSound.Length; i++)
+        {
+            audioSource.PlayOneShot(UsingSound[i]);
+        }
         return animation;
     }
 

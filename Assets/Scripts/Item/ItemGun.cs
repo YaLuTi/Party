@@ -15,9 +15,9 @@ public class ItemGun : ItemBasic
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
-        
+        base.Update();
     }
 
     public override string OnUse()
@@ -26,9 +26,11 @@ public class ItemGun : ItemBasic
         {
             GameObject b = Instantiate(bullet, muzzle.position, muzzle.rotation);
             b.GetComponent<Rigidbody>().AddForce(BulletVelocity * transform.root.GetComponent<PlayerHitten>().FaceWay.forward);
+            audioSource.PlayOneShot(UsingSound[0]);
         }
         else
         {
+            Destroy(this.gameObject);
             return "Empty";
         }
         return base.OnUse();

@@ -108,7 +108,7 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 8048870288576412449, guid: 8e5baa63d9fd55446835559a0b9f6729, type: 3}
@@ -124,11 +124,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eabb037c2aa7937458d3b1114d018fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsHolded: 1
+  HighLight: {fileID: 0}
+  PlayerSelecting: 0
+  UsingSound: []
   Durability: 1
+  HoldedPosition: {x: 0, y: 0, z: 0}
+  HoldedRotation: {x: 0, y: 0, z: 0}
   animation: 
   UseOnStart: 1
   ExplosionVFX: {fileID: 128207838734536533, guid: 56065e263fea52f4195d141622981017,
     type: 3}
   FuseParticle: {fileID: 0}
+  FuseVFX: {fileID: 0}
   FuseSFX: {fileID: 0}
+  CameraShakePower: 0
   delay: 1

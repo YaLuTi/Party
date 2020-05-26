@@ -5,10 +5,12 @@ using UnityEngine;
 public class ItemMine : ItemBasic
 {
     protected bool IsSetted = false;
+    [Header("MineValue")]
     [SerializeField]
     GameObject UnusedModel;
     [SerializeField]
     GameObject UsedModel;
+    [Header("GameValue")]
     [SerializeField]
     LayerMask layerMask;
     public float delay;
@@ -22,6 +24,7 @@ public class ItemMine : ItemBasic
     // Update is called once per frame
     public virtual void Update()
     {
+        base.Update();
         if (!IsSetted) return;
         SettedEvent();
     }

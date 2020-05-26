@@ -268,7 +268,7 @@ namespace AnimFollow
 					animFollow.drag = drag;
 				}
 
-                playerMovement.inhibitMove = true;
+                playerMovement.Hitten();
 				shotByBullet = false;
 				falling = true;
 				gettingUp = false;

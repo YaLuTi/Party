@@ -60,17 +60,18 @@ public class PlayerMove : MonoBehaviour
         playerStatus = GetComponent<PlayerStatusAnimator>();
         playerStatus.StatusUpdateHandler += OnStatusUpdate;
         rbs = GetComponentsInChildren<Rigidbody>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (rig.position.y < -5 || rig.position.y > 15)
+        /*if (rig.position.y < -5 || rig.position.y > 15)
         {
             Debug.Log("A");
             StartCoroutine(ReSpawn());
-        }
+        }*/
         if (inhibitMove) return;
 
         if (MoveEnable)
@@ -147,9 +148,30 @@ public class PlayerMove : MonoBehaviour
         v = value.Get<Vector2>().y;
     }
 
+    void OnPick()
+    {
+        if (inhibitMove)
+        {
+            anim.SetFloat("GetUpSpeedMultiplier", anim.GetFloat("GetUpSpeedMultiplier") + 0.2f);
+        }
+    }
+    void OnShoot()
+    {
+        if (inhibitMove)
+        {
+            anim.SetFloat("GetUpSpeedMultiplier", anim.GetFloat("GetUpSpeedMultiplier") + 0.2f);
+        }
+    }
+
     public void SetMoveEnable(bool b)
     {
         MoveEnable = b;
+    }
+
+    public void Hitten()
+    {
+        inhibitMove = true;
+        anim.SetFloat("GetUpSpeedMultiplier", 1);
     }
 
     void OnStatusUpdate(object sender, StatusEventArgs args)

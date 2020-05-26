@@ -25,6 +25,8 @@ public class PlayerBehavior : MonoBehaviour
 
     public float ThrowStrength = 0.1f;
 
+    GameObject HighlightObject = null;
+
     public PlayerItemHand itemHand;
     PlayerStatusAnimator playerStatus;
     // Start is called before the first frame update
@@ -46,6 +48,55 @@ public class PlayerBehavior : MonoBehaviour
             ThrowStrength += ThrowPower1 * Time.deltaTime;
             ThrowPower1 += ThrowPower2;
             ThrowStrength = Mathf.Min(ThrowStrength, 10f);
+        }
+        
+        Collider[] colliders = Physics.OverlapSphere(transform.position, PickRadius);
+        if (colliders.Length > 0)
+        {
+            float shortestDistance = 10;
+            Collider pick = null;
+
+            foreach (Collider collider in colliders)
+            {
+                if (collider.gameObject.tag != "Item") continue;
+                if (collider.gameObject.GetComponent<ItemBasic>().IsHolded) continue;
+                if (pick == null)
+                {
+                    pick = collider;
+                    shortestDistance = Vector3.Distance(this.gameObject.transform.position, pick.transform.position);
+                }
+                float distance = Vector3.Distance(this.gameObject.transform.position, pick.transform.position);
+                if (distance < shortestDistance)
+                {
+                    pick = collider;
+                    shortestDistance = distance;
+                }
+            }
+
+            if (pick != null)
+            {
+                if (IsHolding) return;
+                if(pick.gameObject == HighlightObject)
+                {
+                }
+                else
+                {
+                    if(HighlightObject != null)
+                    {
+                        HighlightObject.GetComponent<ItemBasic>().CancelHighlight();
+                    }
+                    HighlightObject = pick.gameObject;
+                    HighlightObject.GetComponent<ItemBasic>().PickHighlight();
+                }
+            }
+            else
+            {
+                if (HighlightObject != null)
+                {
+                    HighlightObject.GetComponent<ItemBasic>().CancelHighlight();
+                }
+                HighlightObject = null;
+            }
         }
     }
 

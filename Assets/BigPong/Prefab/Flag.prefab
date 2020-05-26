@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7401023953609629615}
   - component: {fileID: 4426282497821224423}
   - component: {fileID: 4402248947965127794}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 1971761070657798112}
   - component: {fileID: 181550151506478489}
   - component: {fileID: 5911325712132027828}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -247,9 +247,9 @@ GameObject:
   - component: {fileID: 8548723807094215462}
   - component: {fileID: 8548723807094215465}
   - component: {fileID: 8548723807094215460}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Flag
-  m_TagString: Item
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -299,6 +299,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPosition: {x: 0.5, y: 10, z: -8.85}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!65 &8548723807094215460
 BoxCollider:
   m_ObjectHideFlags: 0

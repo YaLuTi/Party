@@ -47,7 +47,7 @@ public class PlayerItemHand : MonoBehaviour
     public void ThrowHoldingItem(float v)
     {
         HoldingItem.GetComponent<Collider>().isTrigger = false;
-        HoldingItem.GetComponent<ItemBasic>().IsHolded = false;
+        HoldingItem.GetComponent<ItemBasic>().Throw();
         Rigidbody rb = HoldingItem.GetComponent<Rigidbody>();
         rb.isKinematic = false;
         rb.useGravity = true;

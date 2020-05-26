@@ -35,8 +35,9 @@ public class ItemBomb : ItemBasic
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
+        base.Update();
         if(Durability <= 0)
         {
             Pow -= Time.deltaTime * 45;
@@ -52,10 +53,6 @@ public class ItemBomb : ItemBasic
             if (FuseParticle != null)
             {
                 FuseParticle.Play();
-            }
-            if (FuseSFX != null)
-            {
-                FuseSFX.Play();
             }
             if(FuseVFX != null)
             {

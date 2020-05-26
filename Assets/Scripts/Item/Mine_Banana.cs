@@ -5,6 +5,7 @@ using AnimFollow;
 
 public class Mine_Banana : ItemMine
 {
+    public GameObject VFX;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +16,11 @@ public class Mine_Banana : ItemMine
     public override void Update()
     {
         base.Update();
+    }
+
+    public override void Throw()
+    {
+        OnUse();
     }
 
     public override void SettedEvent()
@@ -33,6 +39,7 @@ public class Mine_Banana : ItemMine
                     // bulletHitInfo.hitNormal = raycastHit.normal;
                     bulletHitInfo.hitPoint = rays[i].ClosestPoint(transform.position);
                     rays[i].gameObject.transform.root.GetComponent<PlayerHitten>().OnHit(bulletHitInfo);
+                    Destroy(Instantiate(VFX, transform.position, Quaternion.identity), 3f);
                     Destroy(this.gameObject);
                 }
             }
