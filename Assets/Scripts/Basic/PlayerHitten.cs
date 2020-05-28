@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class PlayerHitten : MonoBehaviour
 {
+    [SerializeField]
     RagdollControl_AF ragdollControl;
     PlayerBehavior pickItem;
     public bool test;
@@ -18,7 +19,6 @@ public class PlayerHitten : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ragdollControl = GetComponentInChildren<RagdollControl_AF>();
         pickItem = GetComponentInChildren<PlayerBehavior>();
     }
 

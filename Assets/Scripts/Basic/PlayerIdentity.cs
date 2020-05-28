@@ -106,7 +106,7 @@ public class PlayerIdentity : MonoBehaviour
             default:
                 break;
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
         foreach (Rigidbody rb in rbs)
         {
             rb.velocity = Vector3.zero;

@@ -52,7 +52,7 @@ public class StageManager : MonoBehaviour
     IEnumerator _LoadScene()
     {
         TransitionsPanel.DOAnchorPosY(0, 0.4f);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.5f);
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(1);
 
         // Wait until the asynchronous scene fully loads
