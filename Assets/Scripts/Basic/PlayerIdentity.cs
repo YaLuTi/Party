@@ -28,18 +28,23 @@ public class PlayerIdentity : MonoBehaviour
     public SkinnedMeshRenderer BodyMeshRenderer1;
     public SkinnedMeshRenderer BodyMeshRenderer2;
 
+    [SerializeField]
     Rigidbody[] rbs;
-    Collider[] colliders;
+    Collider[] colliders = new Collider[0];
 
     PlayerInput playerInput;
     public int PlayerID;
+
+    private void Awake()
+    {
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         playerInput = GetComponentInChildren<PlayerInput>();
         PlayerID = playerInput.user.index;
-        rbs = GetComponentsInChildren<Rigidbody>();
-        colliders = GetComponentsInChildren<Collider>();
+
         stageInfo = GameObject.FindGameObjectWithTag("StageInfo").GetComponent<StageInfo>();
 
         Material[] mats = BodyMeshRenderer1.materials;
@@ -57,7 +62,7 @@ public class PlayerIdentity : MonoBehaviour
     private void OnLevelWasLoaded(int level)
     {
         stageInfo = GameObject.FindGameObjectWithTag("StageInfo").GetComponent<StageInfo>();
-        StartCoroutine(SpawnToPosition());
+        StartCoroutine(SpawnToPositionLoad());
     }
 
     // Update is called once per frame
@@ -65,13 +70,16 @@ public class PlayerIdentity : MonoBehaviour
     {
     }
 
-    IEnumerator SpawnToPosition()
+    public void SetRagData()
+    {
+        playerRig.gameObject.SetActive(true);
+        colliders = GetComponentsInChildren<Collider>();
+        rbs = GetComponentsInChildren<Rigidbody>();
+    }
+
+    IEnumerator SpawnToPositionLoad()
     {
         footIK_AF.followTerrain = false;
-        /*foreach (Rigidbody rb in rbs)
-        {
-            rb.constraints = RigidbodyConstraints.FreezeAll;
-        }*/
         foreach (Rigidbody rb in rbs)
         {
             rb.velocity = Vector3.zero;
@@ -80,11 +88,6 @@ public class PlayerIdentity : MonoBehaviour
         {
             collider.isTrigger = true;
         }
-        /*foreach (Rigidbody rb in rbs)
-        {
-            rb.isKinematic = true;
-        }*/
-        yield return new WaitForFixedUpdate();
         yield return new WaitForFixedUpdate();
         switch (PlayerID)
         {
@@ -113,14 +116,47 @@ public class PlayerIdentity : MonoBehaviour
             collider.isTrigger = false;
         }
         footIK_AF.followTerrain = true;
-        /*foreach (Rigidbody rb in rbs)
+        yield return null;
+    }
+    IEnumerator SpawnToPosition()
+    {
+        footIK_AF.followTerrain = false;
+        foreach (Rigidbody rb in rbs)
         {
-            rb.isKinematic = false;
-        }*/
-        /*foreach (Rigidbody rb in rbs)
+            rb.velocity = Vector3.zero;
+        }
+        foreach (Collider collider in colliders)
         {
-            rb.constraints = RigidbodyConstraints.None;
-        }*/
+            collider.isTrigger = true;
+        }
+        switch (PlayerID)
+        {
+            case 0:
+                playerMove.transform.position = stageInfo.SpawnPosition[0];
+                playerMove.transform.eulerAngles = stageInfo.SpawnRotation[0];
+                break;
+            case 1:
+                playerMove.transform.position = stageInfo.SpawnPosition[1];
+                playerMove.transform.eulerAngles = stageInfo.SpawnRotation[1];
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                break;
+        }
+        foreach (Rigidbody rb in rbs)
+        {
+            rb.velocity = Vector3.zero;
+        }
+        foreach (Collider collider in colliders)
+        {
+            collider.isTrigger = false;
+        }
+        footIK_AF.followTerrain = true;
+        yield return new WaitForFixedUpdate();
+        BodyMeshRenderer2.enabled = true;
         yield return null;
     }
 }

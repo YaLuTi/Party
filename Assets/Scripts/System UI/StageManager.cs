@@ -42,6 +42,10 @@ public class StageManager : MonoBehaviour
 
     public void LoadScene()
     {
+        for(int i = 0; i < players.Count; i++)
+        {
+            players[i].GetComponent<PlayerIdentity>().SetRagData();
+        }
         StartCoroutine(_LoadScene());
     }
 

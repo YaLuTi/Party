@@ -331,11 +331,14 @@ namespace AnimFollow
 		{
 			if (userNeedsToAssignStuff)
 				return;
-			
+
 #if RAGDOLLCONTROL
-			ragdollControl.DoRagdollControl();
-			if (ragdollControl.stayDeadOnHeadShot && ragdollControl.shotInHead)
-				return;
+            if (ragdollControl != null)
+            {
+                ragdollControl.DoRagdollControl();
+                if (ragdollControl.stayDeadOnHeadShot && ragdollControl.shotInHead)
+                    return;
+            }
 #endif
 
 			totalTorqueError = Vector3.zero;
@@ -364,6 +367,7 @@ namespace AnimFollow
 
 			for (int i = 0; i < slaveRigidTransforms.Length; i++) // Do for all rigid bodies
 			{
+                if (slaveRigidbodies[i] == null) continue;
 				slaveRigidbodies[i].angularDrag = angularDrag; // Set rigidbody drag and angular drag in real-time
 				slaveRigidbodies[i].drag = drag;
 
