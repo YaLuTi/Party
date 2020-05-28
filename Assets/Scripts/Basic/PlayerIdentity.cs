@@ -46,6 +46,9 @@ public class PlayerIdentity : MonoBehaviour
         PlayerID = playerInput.user.index;
 
         stageInfo = GameObject.FindGameObjectWithTag("StageInfo").GetComponent<StageInfo>();
+        
+        colliders = GetComponentsInChildren<Collider>();
+        rbs = GetComponentsInChildren<Rigidbody>();
 
         Material[] mats = BodyMeshRenderer1.materials;
         mats[0] = MaterialsArray[PlayerID];
@@ -94,10 +97,14 @@ public class PlayerIdentity : MonoBehaviour
             case 0:
                 playerMove.transform.position = stageInfo.SpawnPosition[0];
                 playerMove.transform.eulerAngles = stageInfo.SpawnRotation[0];
+                playerRig.transform.position = stageInfo.SpawnPosition[0];
+                playerRig.transform.eulerAngles = stageInfo.SpawnRotation[0];
                 break;
             case 1:
                 playerMove.transform.position = stageInfo.SpawnPosition[1];
                 playerMove.transform.eulerAngles = stageInfo.SpawnRotation[1];
+                playerRig.transform.position = stageInfo.SpawnPosition[1];
+                playerRig.transform.eulerAngles = stageInfo.SpawnRotation[1];
                 break;
             case 2:
                 break;
@@ -129,15 +136,16 @@ public class PlayerIdentity : MonoBehaviour
         {
             collider.isTrigger = true;
         }
+        yield return new WaitForFixedUpdate();
         switch (PlayerID)
         {
             case 0:
-                playerMove.transform.position = stageInfo.SpawnPosition[0];
-                playerMove.transform.eulerAngles = stageInfo.SpawnRotation[0];
+                transform.position = stageInfo.SpawnPosition[0];
+                transform.eulerAngles = stageInfo.SpawnRotation[0];
                 break;
             case 1:
-                playerMove.transform.position = stageInfo.SpawnPosition[1];
-                playerMove.transform.eulerAngles = stageInfo.SpawnRotation[1];
+                transform.position = stageInfo.SpawnPosition[1];
+                transform.eulerAngles = stageInfo.SpawnRotation[1];
                 break;
             case 2:
                 break;
@@ -146,6 +154,7 @@ public class PlayerIdentity : MonoBehaviour
             default:
                 break;
         }
+        yield return new WaitForFixedUpdate();
         foreach (Rigidbody rb in rbs)
         {
             rb.velocity = Vector3.zero;
@@ -154,9 +163,12 @@ public class PlayerIdentity : MonoBehaviour
         {
             collider.isTrigger = false;
         }
+
         footIK_AF.followTerrain = true;
         yield return new WaitForFixedUpdate();
-        BodyMeshRenderer2.enabled = true;
+
+        // BodyMeshRenderer2.enabled = true;
+
         yield return null;
     }
 }
