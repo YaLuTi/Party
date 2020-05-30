@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class FlagScore : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class FlagScore : MonoBehaviour
     Vector3 spawnPosition;
     [SerializeField]
     LayerMask layerMask;
+    [SerializeField]
+    float RotateSpeed;
 
     public static int id = -1;
     public static Transform follow;
@@ -24,6 +27,8 @@ public class FlagScore : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        transform.eulerAngles += new Vector3(0, RotateSpeed, 0) * Time.deltaTime;
+
         if (transform.parent != null)
         {
             transform.position = follow.position + new Vector3(0, 2, 0);
