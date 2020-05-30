@@ -65,6 +65,22 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""UI_Up"",
+                    ""type"": ""Button"",
+                    ""id"": ""39b36c9d-b321-4af7-8418-fa1280169c31"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""UI_Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""2043ad6a-1557-462e-b38c-129ed837a476"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -217,8 +233,63 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a0855eb4-93b7-4bf0-a185-a9ff3086a3d8"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6af673b6-d4ed-411e-aa6b-c1bb31e223a3"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""UI_Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""261dbfb2-1a7e-47bc-b233-2f95fc2852bf"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""UI_Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1d55746f-f075-4527-a5b1-f903950ef32b"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""UI_Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7bdc31c6-8d45-47bc-ba8d-1e4cd9ae8124"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""UI_Down"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -263,6 +334,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_GamePlay_Throw = m_GamePlay.FindAction("Throw", throwIfNotFound: true);
         m_GamePlay_Test = m_GamePlay.FindAction("Test", throwIfNotFound: true);
         m_GamePlay_Pause = m_GamePlay.FindAction("Pause", throwIfNotFound: true);
+        m_GamePlay_UI_Up = m_GamePlay.FindAction("UI_Up", throwIfNotFound: true);
+        m_GamePlay_UI_Down = m_GamePlay.FindAction("UI_Down", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -318,6 +391,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_GamePlay_Throw;
     private readonly InputAction m_GamePlay_Test;
     private readonly InputAction m_GamePlay_Pause;
+    private readonly InputAction m_GamePlay_UI_Up;
+    private readonly InputAction m_GamePlay_UI_Down;
     public struct GamePlayActions
     {
         private @PlayerControls m_Wrapper;
@@ -328,6 +403,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Throw => m_Wrapper.m_GamePlay_Throw;
         public InputAction @Test => m_Wrapper.m_GamePlay_Test;
         public InputAction @Pause => m_Wrapper.m_GamePlay_Pause;
+        public InputAction @UI_Up => m_Wrapper.m_GamePlay_UI_Up;
+        public InputAction @UI_Down => m_Wrapper.m_GamePlay_UI_Down;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -355,6 +432,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Pause.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPause;
+                @UI_Up.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Up;
+                @UI_Up.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Up;
+                @UI_Up.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Up;
+                @UI_Down.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Down;
+                @UI_Down.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Down;
+                @UI_Down.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Down;
             }
             m_Wrapper.m_GamePlayActionsCallbackInterface = instance;
             if (instance != null)
@@ -377,6 +460,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @UI_Up.started += instance.OnUI_Up;
+                @UI_Up.performed += instance.OnUI_Up;
+                @UI_Up.canceled += instance.OnUI_Up;
+                @UI_Down.started += instance.OnUI_Down;
+                @UI_Down.performed += instance.OnUI_Down;
+                @UI_Down.canceled += instance.OnUI_Down;
             }
         }
     }
@@ -407,5 +496,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnThrow(InputAction.CallbackContext context);
         void OnTest(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnUI_Up(InputAction.CallbackContext context);
+        void OnUI_Down(InputAction.CallbackContext context);
     }
 }

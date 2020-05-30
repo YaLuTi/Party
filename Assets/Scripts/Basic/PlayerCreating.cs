@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerCreating : MonoBehaviour
 {
-    public GameObject PlayerCreatingUI;
+    public PlayerCraftingUI PlayerCreatingUI;
+
     // Start is called before the first frame update
     void Start()
     {
