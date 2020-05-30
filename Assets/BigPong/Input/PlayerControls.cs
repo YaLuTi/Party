@@ -81,6 +81,22 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""UI_Left"",
+                    ""type"": ""Button"",
+                    ""id"": ""a09874c5-db05-4d8d-b81d-0feaf234e8a3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""UI_Right"",
+                    ""type"": ""Button"",
+                    ""id"": ""50b8513b-073a-4948-ab49-10260f965bb8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -292,6 +308,50 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""UI_Down"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""84a104bd-e96a-4018-bd34-8cb5ba8f2b10"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""UI_Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""46218998-2b86-42b4-90cd-b9138d5efdfa"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""UI_Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""909c8135-cd40-47e4-9599-c78893e98bb9"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""UI_Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""27e305b6-46ef-4f47-bc72-095ff9a85821"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""UI_Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -336,6 +396,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_GamePlay_Pause = m_GamePlay.FindAction("Pause", throwIfNotFound: true);
         m_GamePlay_UI_Up = m_GamePlay.FindAction("UI_Up", throwIfNotFound: true);
         m_GamePlay_UI_Down = m_GamePlay.FindAction("UI_Down", throwIfNotFound: true);
+        m_GamePlay_UI_Left = m_GamePlay.FindAction("UI_Left", throwIfNotFound: true);
+        m_GamePlay_UI_Right = m_GamePlay.FindAction("UI_Right", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -393,6 +455,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_GamePlay_Pause;
     private readonly InputAction m_GamePlay_UI_Up;
     private readonly InputAction m_GamePlay_UI_Down;
+    private readonly InputAction m_GamePlay_UI_Left;
+    private readonly InputAction m_GamePlay_UI_Right;
     public struct GamePlayActions
     {
         private @PlayerControls m_Wrapper;
@@ -405,6 +469,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Pause => m_Wrapper.m_GamePlay_Pause;
         public InputAction @UI_Up => m_Wrapper.m_GamePlay_UI_Up;
         public InputAction @UI_Down => m_Wrapper.m_GamePlay_UI_Down;
+        public InputAction @UI_Left => m_Wrapper.m_GamePlay_UI_Left;
+        public InputAction @UI_Right => m_Wrapper.m_GamePlay_UI_Right;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -438,6 +504,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @UI_Down.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Down;
                 @UI_Down.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Down;
                 @UI_Down.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Down;
+                @UI_Left.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Left;
+                @UI_Left.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Left;
+                @UI_Left.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Left;
+                @UI_Right.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Right;
+                @UI_Right.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Right;
+                @UI_Right.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Right;
             }
             m_Wrapper.m_GamePlayActionsCallbackInterface = instance;
             if (instance != null)
@@ -466,6 +538,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @UI_Down.started += instance.OnUI_Down;
                 @UI_Down.performed += instance.OnUI_Down;
                 @UI_Down.canceled += instance.OnUI_Down;
+                @UI_Left.started += instance.OnUI_Left;
+                @UI_Left.performed += instance.OnUI_Left;
+                @UI_Left.canceled += instance.OnUI_Left;
+                @UI_Right.started += instance.OnUI_Right;
+                @UI_Right.performed += instance.OnUI_Right;
+                @UI_Right.canceled += instance.OnUI_Right;
             }
         }
     }
@@ -498,5 +576,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnPause(InputAction.CallbackContext context);
         void OnUI_Up(InputAction.CallbackContext context);
         void OnUI_Down(InputAction.CallbackContext context);
+        void OnUI_Left(InputAction.CallbackContext context);
+        void OnUI_Right(InputAction.CallbackContext context);
     }
 }
