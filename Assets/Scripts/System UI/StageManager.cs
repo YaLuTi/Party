@@ -8,12 +8,14 @@ using DG.Tweening;
 public class StageManager : MonoBehaviour
 {
     static StageManager instance;
-    public List<GameObject> players = new List<GameObject>();
+    public static List<GameObject> players = new List<GameObject>();
+    PlayerInputManager inputManager;
 
     public RectTransform TransitionsPanel;
     // Start is called before the first frame update
     void Start()
     {
+        inputManager = GetComponent<PlayerInputManager>();
         if(instance == null)
         {
             DontDestroyOnLoad(this.gameObject);
@@ -30,10 +32,14 @@ public class StageManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public static void StageStop()
     {
+        for (int i = 0; i < players.Count; i++)
+        {
+            players[i].GetComponent<PlayerIdentity>().InputCancel();
+        }
     }
+
     public void OnPlayerJoined(PlayerInput playerInput)
     {
         DontDestroyOnLoad(playerInput.transform.root.gameObject);
@@ -42,7 +48,8 @@ public class StageManager : MonoBehaviour
 
     public void LoadScene()
     {
-        for(int i = 0; i < players.Count; i++)
+        inputManager.enabled = false;
+        for (int i = 0; i < players.Count; i++)
         {
             players[i].GetComponent<PlayerIdentity>().SetRagData();
         }
@@ -60,8 +67,6 @@ public class StageManager : MonoBehaviour
         {
             yield return null;
         }
-        yield return new WaitForSeconds(1.5f);
-        TransitionsPanel.DOAnchorPosY(510, 0.4f);
         yield return null;
     }
 }

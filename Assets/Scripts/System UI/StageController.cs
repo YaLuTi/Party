@@ -32,24 +32,28 @@ public class StageController : MonoBehaviour
         // PausePanel.SetActive(false);
         AudioListener.pause = false;
 
-        foreach (AnimationState state in CameraAnimtion)
+        /*foreach (AnimationState state in CameraAnimtion)
         {
             animationStates.Add(state);
         }
         CameraAnimtion.Play(animationStates[AnimationCount].name);
-        AnimationCount++;
+        AnimationCount++;*/
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!CameraAnimtion.isPlaying && AnimationCount < animationStates.Count)
+        /*if (!CameraAnimtion.isPlaying && AnimationCount < animationStates.Count)
         {
             CameraAnimtion.Play(animationStates[AnimationCount].name);
             AnimationCount++;
-        }
+        }*/
     }
-
+    public void GameEnd()
+    {
+        Debug.Log("1");
+        StageManager.StageStop();
+    }
     public static void Pause()
     {
         if (IsPaused)
@@ -86,6 +90,11 @@ public class StageController : MonoBehaviour
     }
 
     public void Restart()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void BackToMenu()
     {
         SceneManager.LoadScene(0);
     }

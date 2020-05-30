@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 5134486949960621872}
   - component: {fileID: 5134486949960621873}
   - component: {fileID: 5134486949960621874}
+  - component: {fileID: 5581317546088455505}
   m_Layer: 5
-  m_Name: GridGroup
+  m_Name: ScoreGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,6 +78,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 726e1b0c059141a4fb0faa25583062f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _WinScore: 0
+--- !u!320 &5581317546088455505
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5134486949960621879}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: ca2dd85fea585cc4fa9b1e2214587c3a, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 4639826660906495144, guid: ca2dd85fea585cc4fa9b1e2214587c3a, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -1884387204466176119, guid: ca2dd85fea585cc4fa9b1e2214587c3a, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 2487163453123294366, guid: ca2dd85fea585cc4fa9b1e2214587c3a, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -5388793454339101309, guid: ca2dd85fea585cc4fa9b1e2214587c3a, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1001 &65302406515611667
 PrefabInstance:
   m_ObjectHideFlags: 0

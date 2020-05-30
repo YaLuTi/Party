@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Rendering.HighDefinition;
 using AnimFollow;
 
+// This scripts is controlled by StageManager. Deal with Scene change, win scene animation and so on. 
 public class PlayerIdentity : MonoBehaviour
 {
     [SerializeField]
@@ -17,6 +18,8 @@ public class PlayerIdentity : MonoBehaviour
     Transform playerMove;
     [SerializeField]
     Transform playerRig;
+    [SerializeField]
+    Transform playerRigHips;
     [SerializeField]
     SimpleFootIK_AF footIK_AF;
     StageInfo stageInfo;
@@ -73,11 +76,25 @@ public class PlayerIdentity : MonoBehaviour
     {
     }
 
+    public void InputCancel()
+    {
+        playerInput.enabled = false;
+    }
+
     public void SetRagData()
     {
+        StartCoroutine(_SetRagData());
+    }
+
+    IEnumerator _SetRagData()
+    {
+        playerRigHips.transform.position = playerMove.transform.position;
+        playerRigHips.transform.eulerAngles = playerMove.transform.eulerAngles;
+        yield return new WaitForFixedUpdate();
         playerRig.gameObject.SetActive(true);
         colliders = GetComponentsInChildren<Collider>();
         rbs = GetComponentsInChildren<Rigidbody>();
+        yield return null;
     }
 
     IEnumerator SpawnToPositionLoad()
@@ -97,14 +114,14 @@ public class PlayerIdentity : MonoBehaviour
             case 0:
                 playerMove.transform.position = stageInfo.SpawnPosition[0];
                 playerMove.transform.eulerAngles = stageInfo.SpawnRotation[0];
-                playerRig.transform.position = stageInfo.SpawnPosition[0];
-                playerRig.transform.eulerAngles = stageInfo.SpawnRotation[0];
+                playerRigHips.transform.position = stageInfo.SpawnPosition[0];
+                playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[0];
                 break;
             case 1:
                 playerMove.transform.position = stageInfo.SpawnPosition[1];
                 playerMove.transform.eulerAngles = stageInfo.SpawnRotation[1];
-                playerRig.transform.position = stageInfo.SpawnPosition[1];
-                playerRig.transform.eulerAngles = stageInfo.SpawnRotation[1];
+                playerRigHips.transform.position = stageInfo.SpawnPosition[1];
+                playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[1];
                 break;
             case 2:
                 break;
@@ -140,12 +157,16 @@ public class PlayerIdentity : MonoBehaviour
         switch (PlayerID)
         {
             case 0:
-                transform.position = stageInfo.SpawnPosition[0];
-                transform.eulerAngles = stageInfo.SpawnRotation[0];
+                playerMove.transform.position = stageInfo.SpawnPosition[0];
+                playerMove.transform.eulerAngles = stageInfo.SpawnRotation[0];
+                playerRigHips.transform.position = stageInfo.SpawnPosition[0];
+                playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[0];
                 break;
             case 1:
-                transform.position = stageInfo.SpawnPosition[1];
-                transform.eulerAngles = stageInfo.SpawnRotation[1];
+                playerMove.transform.position = stageInfo.SpawnPosition[1];
+                playerMove.transform.eulerAngles = stageInfo.SpawnRotation[1];
+                playerRigHips.transform.position = stageInfo.SpawnPosition[1];
+                playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[1];
                 break;
             case 2:
                 break;
@@ -167,7 +188,7 @@ public class PlayerIdentity : MonoBehaviour
         footIK_AF.followTerrain = true;
         yield return new WaitForFixedUpdate();
 
-        // BodyMeshRenderer2.enabled = true;
+        BodyMeshRenderer2.enabled = true;
 
         yield return null;
     }
