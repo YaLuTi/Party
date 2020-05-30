@@ -8,20 +8,22 @@ public class FlagScore : MonoBehaviour
     [SerializeField]
     Vector3 spawnPosition;
     [SerializeField]
-    LayerMask layerMask;
+    LayerMask PlayerLayerMask;
+    [SerializeField]
+    LayerMask GroundLayerMask;
     [SerializeField]
     float RotateSpeed;
 
+    float g = 0;
+
     public static int id = -1;
     public static Transform follow;
-
-    Rigidbody rb;
+    
     bool IsHolded = false;
     int cooldown = 0;
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -47,10 +49,27 @@ public class FlagScore : MonoBehaviour
 
         if (!IsHolded)
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, 1, layerMask);
+            // Gravity
+            RaycastHit raycastHit;
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out raycastHit, 1.2f, GroundLayerMask))
+            {
+                g = 0;
+                if (raycastHit.distance < 1.1f)
+                {
+                    transform.position += new Vector3(0, 0.5f, 0) * Time.deltaTime;
+                }
+            }
+            else
+            {
+                g += 0.1f;
+                transform.position -= new Vector3(0, g, 0) * Time.deltaTime;
+            }
+
+            // Get Player
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 1, PlayerLayerMask);
             foreach (Collider collider in colliders)
             {
-                if ((layerMask.value & 1 << collider.gameObject.layer) > 0)
+                if ((PlayerLayerMask.value & 1 << collider.gameObject.layer) > 0)
                 {
                     if (collider.transform.root.GetComponent<PlayerHitten>().IsGettingUp()) continue;
                     IsHolded = true;
@@ -58,7 +77,6 @@ public class FlagScore : MonoBehaviour
                     id = GetComponentInParent<PlayerIdentity>().PlayerID;
                     follow = GetComponentInParent<PlayerHitten>().Hips;
                     GetComponentInParent<PlayerHitten>().Flag = this;
-                    rb.isKinematic = true;
                     break;
                 }
             }
@@ -66,7 +84,7 @@ public class FlagScore : MonoBehaviour
 
         if (transform.position.y < -5 || transform.position.y > 15)
         {
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            g = 0;
             transform.rotation = Quaternion.identity;
             transform.position = spawnPosition;
         }
@@ -78,7 +96,6 @@ public class FlagScore : MonoBehaviour
         transform.parent = null;
         id = -1;
         follow = null;
-        rb.isKinematic = false;
     }
 
     /*private void OnTriggerEnter(Collider other)
@@ -104,7 +121,6 @@ public class FlagScore : MonoBehaviour
             id = GetComponentInParent<PlayerIdentity>().PlayerID;
             follow = GetComponentInParent<PlayerHitten>().Hips;
             GetComponentInParent<PlayerHitten>().Flag = this;
-            rb.isKinematic = true;
         }
     }
 }
