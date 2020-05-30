@@ -45,6 +45,7 @@ public class PlayerStatusAnimator : MonoBehaviour
     }
     public void PlayerItem_Aim()
     {
+        Debug.Log("4");
         animator.SetTrigger("Throw1");
         playerMove.SetMoveEnable(false);
     }

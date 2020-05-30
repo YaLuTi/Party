@@ -13,7 +13,7 @@ public class PlayerBehavior : MonoBehaviour
 
     public bool IsHolding = false;
     public bool IsThrowing = false;
-    bool IsThrowing2 = false;
+    public bool IsThrowing2 = false;
 
     [Header("Game Value")]
     [SerializeField]
@@ -42,6 +42,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             IsThrowing = false;
             IsHolding = false;
+            IsThrowing2 = false;
         }
         if (IsThrowing)
         {
@@ -118,9 +119,12 @@ public class PlayerBehavior : MonoBehaviour
 
     void OnPick()
     {
+        Debug.Log("1");
         if (playerStatus.PlayerPick()) return;
+        Debug.Log("2");
         if (IsHolding && !IsThrowing2)
         {
+            Debug.Log("3");
             playerStatus.PlayerItem_Aim();
             IsThrowing = true;
             IsThrowing2 = true;
@@ -191,6 +195,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         IsHolding = false;
         IsThrowing = false;
+        IsThrowing2 = false;
         itemHand.ThrowHoldingItem(0);
     }
 
