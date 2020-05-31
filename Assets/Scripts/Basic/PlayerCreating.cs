@@ -8,6 +8,7 @@ public class PlayerCreating : MonoBehaviour
     public List<GameObject> Hats = new List<GameObject>();
     public List<GameObject> RigHats = new List<GameObject>();
     int choosing = 0;
+    bool IsEnable = false;
 
     // Start is called before the first frame update
     void Start()
@@ -18,11 +19,12 @@ public class PlayerCreating : MonoBehaviour
     {
         Hats[0].SetActive(true);
         RigHats[0].SetActive(true);
+        IsEnable = true;
     }
 
     void OnUI_Right()
     {
-        if (!this.enabled) return;
+        if (!this.enabled || !IsEnable) return;
         Hats[choosing].SetActive(false);
         RigHats[choosing].SetActive(false);
         choosing++;
@@ -36,7 +38,7 @@ public class PlayerCreating : MonoBehaviour
     }
     void OnUI_Left()
     {
-        if (!this.enabled) return;
+        if (!this.enabled || !IsEnable) return;
         Hats[choosing].SetActive(false);
         RigHats[choosing].SetActive(false);
         choosing--;
@@ -50,7 +52,7 @@ public class PlayerCreating : MonoBehaviour
     }
     void OnShoot()
     {
-        if (!this.enabled) return;
+        if (!this.enabled || !IsEnable) return;
         StageManager.PlayerReady();
         this.enabled = false;
     }
