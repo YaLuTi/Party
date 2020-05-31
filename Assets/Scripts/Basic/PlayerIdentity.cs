@@ -30,6 +30,7 @@ public class PlayerIdentity : MonoBehaviour
 
     public SkinnedMeshRenderer BodyMeshRenderer1;
     public SkinnedMeshRenderer BodyMeshRenderer2;
+    public GameObject Decal;
 
     PlayerCreating playerCreating;
 
@@ -117,6 +118,7 @@ public class PlayerIdentity : MonoBehaviour
 
     IEnumerator _SetRagData()
     {
+        Decal.SetActive(true);
         playerRigHips.transform.position = playerMove.transform.position;
         playerRigHips.transform.eulerAngles = playerMove.transform.eulerAngles;
         yield return new WaitForFixedUpdate();

@@ -87,6 +87,7 @@ public class StageManager : MonoBehaviour
         if (Testing)
         {
             playerInput.transform.root.GetComponent<PlayerIdentity>().InputEnable();
+            playerInput.transform.root.GetComponent<PlayerIdentity>().SetRagData();
             Destroy(playerInput.transform.root.GetComponentInChildren<PlayerCreating>());
             players.Add((playerInput.transform.root.gameObject));
         }
@@ -95,8 +96,7 @@ public class StageManager : MonoBehaviour
             DontDestroyOnLoad(playerInput.transform.root.gameObject);
             players.Add((playerInput.transform.root.gameObject));
             GameObject g = Instantiate(PlayerCraftUI);
-            g.transform.parent = Canvas.transform;
-            g.GetComponent<RectTransform>().localPosition = new Vector3(-280 + ((players.Count - 1) * 185), 0, 0);
+            g.GetComponent<Transform>().localPosition = new Vector3(-1.15f + (players.Count - 1) * 2.25f, 3.11f, -0.6f);
             players[players.Count - 1].GetComponentInChildren<PlayerCreating>().playerCreatingUI = g.GetComponent<PlayerCraftingUI>();
         }
     }
