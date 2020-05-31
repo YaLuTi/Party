@@ -47,18 +47,13 @@ public class PlayerIdentity : MonoBehaviour
 
     private void Awake()
     {
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
         playerInput = GetComponentInChildren<PlayerInput>();
         PlayerID = playerInput.user.index;
 
         playerCreating = GetComponentInChildren<PlayerCreating>();
 
         stageInfo = GameObject.FindGameObjectWithTag("StageInfo").GetComponent<StageInfo>();
-        
+
         colliders = GetComponentsInChildren<Collider>();
         rbs = GetComponentsInChildren<Rigidbody>();
 
@@ -79,6 +74,11 @@ public class PlayerIdentity : MonoBehaviour
         StartCoroutine(SpawnToPosition());
     }
 
+    // Start is called before the first frame update
+    void Start()
+    {
+    }
+
     private void OnLevelWasLoaded(int level)
     {
         stageInfo = GameObject.FindGameObjectWithTag("StageInfo").GetComponent<StageInfo>();
@@ -97,10 +97,16 @@ public class PlayerIdentity : MonoBehaviour
 
     public void InputEnable()
     {
-        Debug.Log("A");
+        StartCoroutine(_InputEnable());
+    }
+
+    IEnumerator _InputEnable()
+    {
+        yield return new WaitForFixedUpdate();
         playerInput.enabled = true;
         _playerMove.enabled = true;
         _playerBehavior.enabled = true;
+        yield return null;
     }
 
     public void SetRagData()

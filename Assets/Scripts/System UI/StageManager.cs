@@ -15,6 +15,8 @@ public class StageManager : MonoBehaviour
 
     static bool TriggerLoadScene = false;
 
+    public bool Testing = false;
+
     public GameObject PlayerCraftUI;
     public GameObject Canvas;
     public RectTransform TransitionsPanel;
@@ -82,13 +84,21 @@ public class StageManager : MonoBehaviour
 
     public void OnPlayerJoined(PlayerInput playerInput)
     {
-        DontDestroyOnLoad(playerInput.transform.root.gameObject);
-        players.Add((playerInput.transform.root.gameObject));
-        GameObject g = Instantiate(PlayerCraftUI);
-        g.transform.parent = Canvas.transform;
-        //-280 -95
-        g.GetComponent<RectTransform>().localPosition = new Vector3(-280 + ((players.Count - 1) * 185), 0, 0);
-        players[players.Count - 1].GetComponentInChildren<PlayerCreating>().playerCreatingUI = g.GetComponent<PlayerCraftingUI>();
+        if (Testing)
+        {
+            playerInput.transform.root.GetComponent<PlayerIdentity>().InputEnable();
+            Destroy(playerInput.transform.root.GetComponentInChildren<PlayerCreating>());
+            players.Add((playerInput.transform.root.gameObject));
+        }
+        else
+        {
+            DontDestroyOnLoad(playerInput.transform.root.gameObject);
+            players.Add((playerInput.transform.root.gameObject));
+            GameObject g = Instantiate(PlayerCraftUI);
+            g.transform.parent = Canvas.transform;
+            g.GetComponent<RectTransform>().localPosition = new Vector3(-280 + ((players.Count - 1) * 185), 0, 0);
+            players[players.Count - 1].GetComponentInChildren<PlayerCreating>().playerCreatingUI = g.GetComponent<PlayerCraftingUI>();
+        }
     }
 
     public void LoadScene()
