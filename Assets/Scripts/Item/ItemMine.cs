@@ -40,6 +40,7 @@ public class ItemMine : ItemBasic
         {
             UnusedModel.SetActive(false);
             UsedModel.SetActive(true);
+            transform.parent = null;
             StartCoroutine(SetDelay());
         }
         else
@@ -51,7 +52,7 @@ public class ItemMine : ItemBasic
 
     IEnumerator SetDelay()
     {
-        transform.eulerAngles = Vector3.zero;
+        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
         yield return new WaitForSecondsRealtime(delay);
         IsSetted = true;
         yield return null;

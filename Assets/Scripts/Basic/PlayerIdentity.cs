@@ -37,7 +37,12 @@ public class PlayerIdentity : MonoBehaviour
     Rigidbody[] rbs;
     Collider[] colliders = new Collider[0];
 
+    // 亂寫的 要改
     PlayerInput playerInput;
+    PlayerMove _playerMove;
+    PlayerBehavior _playerBehavior;
+    // 亂寫的 要改
+
     public int PlayerID;
 
     private void Awake()
@@ -65,7 +70,12 @@ public class PlayerIdentity : MonoBehaviour
         BodyMeshRenderer2.materials = mats;
 
         RingDecal.material = RingMaterialsArray[PlayerID];
-        
+
+        _playerMove = GetComponentInChildren<PlayerMove>();
+        _playerMove.enabled = false;
+        _playerBehavior = GetComponentInChildren<PlayerBehavior>();
+        _playerBehavior.enabled = false;
+
         StartCoroutine(SpawnToPosition());
     }
 
@@ -83,6 +93,14 @@ public class PlayerIdentity : MonoBehaviour
     public void InputCancel()
     {
         playerInput.enabled = false;
+    }
+
+    public void InputEnable()
+    {
+        Debug.Log("A");
+        playerInput.enabled = true;
+        _playerMove.enabled = true;
+        _playerBehavior.enabled = true;
     }
 
     public void SetRagData()
@@ -114,27 +132,12 @@ public class PlayerIdentity : MonoBehaviour
             collider.isTrigger = true;
         }
         yield return new WaitForFixedUpdate();
-        switch (PlayerID)
-        {
-            case 0:
-                playerMove.transform.position = stageInfo.SpawnPosition[0];
-                playerMove.transform.eulerAngles = stageInfo.SpawnRotation[0];
-                playerRigHips.transform.position = stageInfo.SpawnPosition[0];
-                playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[0];
-                break;
-            case 1:
-                playerMove.transform.position = stageInfo.SpawnPosition[1];
-                playerMove.transform.eulerAngles = stageInfo.SpawnRotation[1];
-                playerRigHips.transform.position = stageInfo.SpawnPosition[1];
-                playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[1];
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            default:
-                break;
-        }
+
+        playerMove.transform.position = stageInfo.SpawnPosition[PlayerID];
+        playerMove.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID];
+        playerRigHips.transform.position = stageInfo.SpawnPosition[PlayerID];
+        playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID];
+
         yield return new WaitForSeconds(1.5f);
         foreach (Rigidbody rb in rbs)
         {
@@ -159,27 +162,12 @@ public class PlayerIdentity : MonoBehaviour
             collider.isTrigger = true;
         }
         yield return new WaitForFixedUpdate();
-        switch (PlayerID)
-        {
-            case 0:
-                playerMove.transform.position = stageInfo.SpawnPosition[0];
-                playerMove.transform.eulerAngles = stageInfo.SpawnRotation[0];
-                playerRigHips.transform.position = stageInfo.SpawnPosition[0];
-                playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[0];
-                break;
-            case 1:
-                playerMove.transform.position = stageInfo.SpawnPosition[1];
-                playerMove.transform.eulerAngles = stageInfo.SpawnRotation[1];
-                playerRigHips.transform.position = stageInfo.SpawnPosition[1];
-                playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[1];
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            default:
-                break;
-        }
+
+        playerMove.transform.position = stageInfo.SpawnPosition[PlayerID];
+        playerMove.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID];
+        playerRigHips.transform.position = stageInfo.SpawnPosition[PlayerID];
+        playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID];
+
         yield return new WaitForFixedUpdate();
         foreach (Rigidbody rb in rbs)
         {
@@ -194,6 +182,7 @@ public class PlayerIdentity : MonoBehaviour
         yield return new WaitForFixedUpdate();
 
         BodyMeshRenderer2.enabled = true;
+        playerCreating.Creat();
 
         yield return null;
     }

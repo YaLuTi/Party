@@ -27,6 +27,10 @@ public class ItemGun : ItemBasic
             GameObject b = Instantiate(bullet, muzzle.position, muzzle.rotation);
             b.GetComponent<Rigidbody>().AddForce(BulletVelocity * transform.root.GetComponent<PlayerHitten>().FaceWay.forward);
             audioSource.PlayOneShot(UsingSound[0]);
+            if(Durability == 0)
+            {
+                Destroy(this.gameObject);
+            }
         }
         else
         {

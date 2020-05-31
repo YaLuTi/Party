@@ -84,6 +84,10 @@ public class FlagScore : MonoBehaviour
 
         if (transform.position.y < -5 || transform.position.y > 15)
         {
+            IsHolded = false;
+            transform.parent = null;
+            id = -1;
+            follow = null;
             g = 0;
             transform.rotation = Quaternion.identity;
             transform.position = spawnPosition;

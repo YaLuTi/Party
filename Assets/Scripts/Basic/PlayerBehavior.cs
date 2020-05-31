@@ -30,9 +30,14 @@ public class PlayerBehavior : MonoBehaviour
     public PlayerItemHand itemHand;
     PlayerStatusAnimator playerStatus;
     // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
         playerStatus = GetComponent<PlayerStatusAnimator>();
+    }
+
+    void Start()
+    {
     }
 
     // Update is called once per frame
@@ -110,6 +115,10 @@ public class PlayerBehavior : MonoBehaviour
             {
 
             }
+            else if(animation == "SetMine")
+            {
+                SetMine();
+            }
             else
             {
                 playerStatus.PlayerItemAnimation(animation);
@@ -119,12 +128,9 @@ public class PlayerBehavior : MonoBehaviour
 
     void OnPick()
     {
-        Debug.Log("1");
         if (playerStatus.PlayerPick()) return;
-        Debug.Log("2");
         if (IsHolding && !IsThrowing2)
         {
-            Debug.Log("3");
             playerStatus.PlayerItem_Aim();
             IsThrowing = true;
             IsThrowing2 = true;
@@ -178,6 +184,7 @@ public class PlayerBehavior : MonoBehaviour
 
     void OnPause()
     {
+        if (!enabled) return;
         StageController.Pause();
     }
 
@@ -201,7 +208,7 @@ public class PlayerBehavior : MonoBehaviour
 
     public void OnHit(BulletHitInfo_AF info)
     {
-        Instantiate(HitParticle, info.hitPoint, Quaternion.identity);
+        Destroy(Instantiate(HitParticle, info.hitPoint, Quaternion.identity), 2f);
         // GetComponent<Rigidbody>().AddForce(info.bulletForce);
         if (IsHolding)
         {
@@ -211,4 +218,9 @@ public class PlayerBehavior : MonoBehaviour
             IsThrowing2 = false;
         }
     }
+}
+
+public class _playerItemStatus
+{
+
 }

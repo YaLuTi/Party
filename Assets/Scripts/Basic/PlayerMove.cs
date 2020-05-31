@@ -15,6 +15,10 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     Vector3 spawnPosition;
 
+    [Header("Game SFX")]
+    public AudioClip[] stepClips;
+    AudioSource audioSource;
+
     [Header("Game VFX")]
     [SerializeField]
     GameObject StepParticlePosition;
@@ -59,6 +63,7 @@ public class PlayerMove : MonoBehaviour
     {
         playerStatus = GetComponent<PlayerStatusAnimator>();
         playerStatus.StatusUpdateHandler += OnStatusUpdate;
+        audioSource = GetComponent<AudioSource>();
         rbs = GetComponentsInChildren<Rigidbody>();
         anim = GetComponent<Animator>();
     }
@@ -139,6 +144,8 @@ public class PlayerMove : MonoBehaviour
         StepCooldown = 0;
 
         GameObject g = Instantiate(StepParticle, StepParticlePosition.transform.position, Quaternion.identity);
+        int r = UnityEngine.Random.Range(0, stepClips.Length);
+        audioSource.PlayOneShot(stepClips[r]);
         Destroy(g, 1);
     }
 

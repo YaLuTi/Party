@@ -11,6 +11,12 @@ public class StageManager : MonoBehaviour
     public static List<GameObject> players = new List<GameObject>();
     PlayerInputManager inputManager;
 
+    static int PlayerReadyNum = 0;
+
+    static bool TriggerLoadScene = false;
+
+    public GameObject PlayerCraftUI;
+    public GameObject Canvas;
     public RectTransform TransitionsPanel;
     // Start is called before the first frame update
     void Start()
@@ -20,15 +26,26 @@ public class StageManager : MonoBehaviour
         {
             DontDestroyOnLoad(this.gameObject);
             instance = this;
-        }else if(this != instance)
+        }
+        else if(this != instance)
         {
             Destroy(this.gameObject);
-        }else if (this == instance)
+        }
+        else if (this == instance)
         {
             for (int i = 0; i < players.Count; i++)
             {
                 Instantiate(players[i]);
             }
+        }
+    }
+
+    private void Update()
+    {
+        if (TriggerLoadScene)
+        {
+            TriggerLoadScene = false;
+            LoadScene();
         }
     }
 
@@ -40,10 +57,38 @@ public class StageManager : MonoBehaviour
         }
     }
 
+    public void StageStart()
+    {
+        for (int i = 0; i < players.Count; i++)
+        {
+            players[i].GetComponent<PlayerIdentity>().InputEnable();
+        }
+    }
+
+    public static void PlayerReady()
+    {
+        Debug.Log(1);
+        PlayerReadyNum++;
+    }
+
+    public static void LoadSceneCheck()
+    {
+        Debug.Log(0);
+        if(PlayerReadyNum >= players.Count)
+        {
+            TriggerLoadScene = true;
+        }
+    }
+
     public void OnPlayerJoined(PlayerInput playerInput)
     {
         DontDestroyOnLoad(playerInput.transform.root.gameObject);
         players.Add((playerInput.transform.root.gameObject));
+        GameObject g = Instantiate(PlayerCraftUI);
+        g.transform.parent = Canvas.transform;
+        //-280 -95
+        g.GetComponent<RectTransform>().localPosition = new Vector3(-280 + ((players.Count - 1) * 185), 0, 0);
+        players[players.Count - 1].GetComponentInChildren<PlayerCreating>().playerCreatingUI = g.GetComponent<PlayerCraftingUI>();
     }
 
     public void LoadScene()
