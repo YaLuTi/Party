@@ -31,6 +31,8 @@ public class PlayerIdentity : MonoBehaviour
     public SkinnedMeshRenderer BodyMeshRenderer1;
     public SkinnedMeshRenderer BodyMeshRenderer2;
 
+    PlayerCreating playerCreating;
+
     [SerializeField]
     Rigidbody[] rbs;
     Collider[] colliders = new Collider[0];
@@ -47,6 +49,8 @@ public class PlayerIdentity : MonoBehaviour
     {
         playerInput = GetComponentInChildren<PlayerInput>();
         PlayerID = playerInput.user.index;
+
+        playerCreating = GetComponentInChildren<PlayerCreating>();
 
         stageInfo = GameObject.FindGameObjectWithTag("StageInfo").GetComponent<StageInfo>();
         
@@ -83,6 +87,7 @@ public class PlayerIdentity : MonoBehaviour
 
     public void SetRagData()
     {
+        Destroy(playerCreating);
         StartCoroutine(_SetRagData());
     }
 
