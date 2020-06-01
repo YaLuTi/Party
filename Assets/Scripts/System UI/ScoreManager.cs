@@ -9,7 +9,9 @@ public class ScoreManager : MonoBehaviour
 {
     public int _WinScore;
     public static int WinScore;
-    static int[] scores = new int[4];
+    static int[] scores = new int[4]; // 暫時弄成玩家名次
+    
+
     static TextMeshProUGUI[] texts;
     static bool IsEnd = false;
     static PlayableDirector playableDirector;
