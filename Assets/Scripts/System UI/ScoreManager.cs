@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Playables;
+using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
     public int _WinScore;
     public static int WinScore;
     static int[] scores = new int[4];
-    static Text[] texts;
+    static TextMeshProUGUI[] texts;
     static bool IsEnd = false;
     static PlayableDirector playableDirector;
     // Start is called before the first frame update
@@ -17,7 +18,7 @@ public class ScoreManager : MonoBehaviour
     {
         IsEnd = false;
         playableDirector = GetComponent<PlayableDirector>();
-        texts = GetComponentsInChildren<Text>();
+        texts = GetComponentsInChildren<TextMeshProUGUI>();
         for(int i = 0; i < scores.Length; i++)
         {
             scores[i] = 0;
@@ -42,6 +43,7 @@ public class ScoreManager : MonoBehaviour
         if(scores[id] >= WinScore)
         {
             IsEnd = true;
+
             playableDirector.Play();
         }
     }
