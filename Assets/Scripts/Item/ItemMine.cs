@@ -18,7 +18,6 @@ public class ItemMine : ItemBasic
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -34,8 +33,9 @@ public class ItemMine : ItemBasic
 
     }
 
-    public override string OnUse()
+    public override string OnUse(_playerItemStatus status)
     {
+        if (status.Throwing) return "Empty";
         if (DurabilityCheck())
         {
             UnusedModel.SetActive(false);
@@ -47,7 +47,7 @@ public class ItemMine : ItemBasic
         {
             return "Empty";
         }
-        return base.OnUse();
+        return base.OnUse(status);
     }
 
     IEnumerator SetDelay()

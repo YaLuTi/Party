@@ -51,7 +51,7 @@ public class StageController : MonoBehaviour
     }
     public void GameEnd()
     {
-        Debug.Log("1");
+        Debug.Log("A");
         StageManager.StageStop();
     }
     public static void Pause()

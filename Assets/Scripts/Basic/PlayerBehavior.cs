@@ -110,7 +110,9 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (IsHolding)
         {
-            string animation = itemHand.UseItem();
+            _playerItemStatus status = new _playerItemStatus();
+            status.Throwing = IsThrowing2;
+            string animation = itemHand.UseItem(status);
             if (animation == "Empty" || animation == "")
             {
 
@@ -222,5 +224,5 @@ public class PlayerBehavior : MonoBehaviour
 
 public class _playerItemStatus
 {
-
+    public bool Throwing;
 }

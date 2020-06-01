@@ -9,6 +9,7 @@ public class StageManager : MonoBehaviour
 {
     static StageManager instance;
     public static List<GameObject> players = new List<GameObject>();
+    public static int[] playerScore;
     PlayerInputManager inputManager;
 
     static int PlayerReadyNum = 0;
@@ -78,6 +79,7 @@ public class StageManager : MonoBehaviour
         Debug.Log(0);
         if(PlayerReadyNum >= players.Count)
         {
+            playerScore = new int[players.Count];
             TriggerLoadScene = true;
         }
     }

@@ -20,8 +20,9 @@ public class ItemGun : ItemBasic
         base.Update();
     }
 
-    public override string OnUse()
+    public override string OnUse(_playerItemStatus status)
     {
+        if (status.Throwing) return "Empty";
         if (DurabilityCheck())
         {
             GameObject b = Instantiate(bullet, muzzle.position, muzzle.rotation);
@@ -37,6 +38,6 @@ public class ItemGun : ItemBasic
             Destroy(this.gameObject);
             return "Empty";
         }
-        return base.OnUse();
+        return base.OnUse(status);
     }
 }

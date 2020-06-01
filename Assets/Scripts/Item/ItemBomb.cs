@@ -30,7 +30,8 @@ public class ItemBomb : ItemBasic
         meshRenderer = GetComponent<MeshRenderer>();
         if (UseOnStart)
         {
-            OnUse();
+            _playerItemStatus status = new _playerItemStatus();
+            OnUse(status);
         }
     }
 
@@ -46,7 +47,7 @@ public class ItemBomb : ItemBasic
         }
     }
 
-    public override string OnUse()
+    public override string OnUse(_playerItemStatus status)
     {
         if (DurabilityCheck())
         {
@@ -68,7 +69,7 @@ public class ItemBomb : ItemBasic
         {
             return "Empty";
         }
-        return base.OnUse();
+        return base.OnUse(status);
     }
     
     IEnumerator Explosion()

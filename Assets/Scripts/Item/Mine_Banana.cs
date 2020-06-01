@@ -2,25 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 using AnimFollow;
+using DG.Tweening;
 
 public class Mine_Banana : ItemMine
 {
     public GameObject VFX;
+    Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();   
     }
 
     // Update is called once per frame
     public override void Update()
     {
         base.Update();
+        if(rb.velocity.magnitude > 1)
+        {
+            transform.eulerAngles += new Vector3(0, 10 * rb.velocity.magnitude, 0) * Time.deltaTime;
+        }
     }
 
     public override void Throw()
     {
-        OnUse();
+        _playerItemStatus status = new _playerItemStatus();
+        OnUse(status);
     }
 
     public override void SettedEvent()

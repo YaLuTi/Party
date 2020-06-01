@@ -42,13 +42,16 @@ public class ItemBasic : MonoBehaviour
     // Update is called once per frame
     public virtual void Update()
     {
-        if(PlayerSelecting > 0)
+        if (HighLight != null)
         {
-            HighLight.SetActive(true);
-        }
-        else
-        {
-            HighLight.SetActive(false);
+            if (PlayerSelecting > 0)
+            {
+                HighLight.SetActive(true);
+            }
+            else
+            {
+                HighLight.SetActive(false);
+            }
         }
     }
 
@@ -74,7 +77,7 @@ public class ItemBasic : MonoBehaviour
         PlayerSelecting--;
     }
 
-    public virtual string OnUse()
+    public virtual string OnUse(_playerItemStatus status)
     {
         for(int i = 0; i < UsingSound.Length; i++)
         {
