@@ -104,17 +104,18 @@ public class StageManager : MonoBehaviour
     public void LoadScene()
     {
         inputManager.enabled = false;
-        for (int i = 0; i < players.Count; i++)
-        {
-            players[i].GetComponent<PlayerIdentity>().SetRagData();
-        }
         StartCoroutine(_LoadScene());
     }
 
     IEnumerator _LoadScene()
     {
         TransitionsPanel.DOAnchorPosY(0, 0.4f);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
+        for (int i = 0; i < players.Count; i++)
+        {
+            players[i].GetComponent<PlayerIdentity>().SetRagData();
+        }
+        yield return new WaitForSeconds(1.2f);
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(1);
 
         // Wait until the asynchronous scene fully loads

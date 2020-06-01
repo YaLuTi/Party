@@ -15,6 +15,7 @@ public class Object_Follow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Follow == null) return;
         Vector3 v = Follow.transform.position;
         if (!Y_Follow)
         {

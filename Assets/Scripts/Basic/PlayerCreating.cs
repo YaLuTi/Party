@@ -53,6 +53,7 @@ public class PlayerCreating : MonoBehaviour
     void OnShoot()
     {
         if (!this.enabled || !IsEnable) return;
+        playerCreatingUI.Ready();
         StageManager.PlayerReady();
         this.enabled = false;
     }

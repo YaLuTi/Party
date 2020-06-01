@@ -11,10 +11,12 @@ public class PlayerCraftingUI : MonoBehaviour
     Transform[] RightArrowArray;
     int Choosing = 0;
     int UILength = 0;
+    Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         UILength = transform.childCount;
         UIArray = new Transform[UILength];
         LeftArrowArray = new Transform[UILength - 1];
@@ -30,6 +32,11 @@ public class PlayerCraftingUI : MonoBehaviour
             RightArrowArray[i] = UIArray[i].GetChild(1).GetComponent<Transform>();
             LeftArrowArray[i] =  UIArray[i].GetChild(0).GetComponent<Transform>();
         }
+    }
+
+    public void Ready()
+    {
+        animator.SetTrigger("Play");
     }
 
     public void Right(string name)
