@@ -150,22 +150,18 @@ public class StageManager : MonoBehaviour
         Debug.Log(players.Count);
         for (int i = 0; i < players.Count; i++)
         {
-            if (i == players.Count - 1)
-            {
-                Debug.Log(i);
-                Debug.Log(scores.Length);
-                Debug.Log(players.Count);
-                Debug.Log(scores[i]);
-                players[scores[i]].GetComponent<PlayerIdentity>().SetToPosition(stageInfo.SpawnPosition[3]);
-                players[scores[i]].GetComponent<PlayerIdentity>().SetToRotation(stageInfo.SpawnRotation[3]);
-                players[scores[i]].GetComponentInChildren<Animator>().SetTrigger("Die");
-            }
-            else if(i == 0)
+            if (i == 0)
             {
                 players[scores[i]].GetComponent<PlayerIdentity>().SetToPosition(stageInfo.SpawnPosition[0]);
                 players[scores[i]].GetComponent<PlayerIdentity>().SetToRotation(stageInfo.SpawnRotation[0]);
                 players[scores[i]].GetComponent<PlayerIdentity>().SetKing();
                 players[scores[i]].GetComponentInChildren<Animator>().SetTrigger("Sit");
+            }
+            else if (i == players.Count - 1)
+            {
+                players[scores[i]].GetComponent<PlayerIdentity>().SetToPosition(stageInfo.SpawnPosition[3]);
+                players[scores[i]].GetComponent<PlayerIdentity>().SetToRotation(stageInfo.SpawnRotation[3]);
+                players[scores[i]].GetComponentInChildren<Animator>().SetTrigger("Die");
             }
             else
             {
