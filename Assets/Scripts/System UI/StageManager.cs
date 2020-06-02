@@ -24,6 +24,7 @@ public class StageManager : MonoBehaviour
     public GameObject PlayerCraftUI;
     public GameObject Canvas;
     public RectTransform TransitionsPanel;
+    public AudioSource TitleAudioSource;
     // Start is called before the first frame update
     void Start()
     {
@@ -186,6 +187,7 @@ public class StageManager : MonoBehaviour
     IEnumerator _LoadScene()
     {
         TransitionsPanel.DOAnchorPosY(0, 0.4f);
+        TitleAudioSource.PlayOneShot(TitleAudioSource.clip);
         yield return new WaitForSeconds(0.5f);
         for (int i = 0; i < players.Count; i++)
         {
