@@ -9,6 +9,9 @@ public class PlayerCraftingUI : MonoBehaviour
     Transform[] UIArray;
     Transform[] LeftArrowArray;
     Transform[] RightArrowArray;
+
+    public AudioSource UISound;
+
     int Choosing = 0;
     int UILength = 0;
     Animator animator;
@@ -21,7 +24,7 @@ public class PlayerCraftingUI : MonoBehaviour
         UIArray = new Transform[UILength];
         LeftArrowArray = new Transform[UILength - 1];
         RightArrowArray = new Transform[UILength - 1];
-
+        UISound = GetComponent<AudioSource>();
 
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -44,6 +47,7 @@ public class PlayerCraftingUI : MonoBehaviour
         UIArray[Choosing].GetComponentInChildren<TextMeshPro>().text = name;
         RightArrowArray[Choosing].DOComplete();
         RightArrowArray[Choosing].DOPunchScale(new Vector3(.3f, .3f, .3f), 0.3f, 2, 0.1f);
+        UISound.PlayOneShot(UISound.clip);
     }
 
     public void Left(string name)
@@ -51,6 +55,7 @@ public class PlayerCraftingUI : MonoBehaviour
         UIArray[Choosing].GetComponentInChildren<TextMeshPro>().text = name;
         LeftArrowArray[Choosing].DOComplete();
         LeftArrowArray[Choosing].DOPunchScale(new Vector3(.3f, .3f, .3f), 0.3f, 2, 0.1f);
+        UISound.PlayOneShot(UISound.clip);
     }
 
     /*public void ChangeChoosing(int change)

@@ -65,15 +65,15 @@ public class StageController : MonoBehaviour
         if (IsPaused)
         {
             Time.timeScale = 1;
-            IsPaused = false;
             PausePanel.SetActive(false);
+            IsPaused = false;
             AudioListener.pause = false;
         }
         else
         {
             Time.timeScale = 0;
-            IsPaused = true;
             PausePanel.SetActive(true);
+            IsPaused = true;
             AudioListener.pause = true;
         }
     }
