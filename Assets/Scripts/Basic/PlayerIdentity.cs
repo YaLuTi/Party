@@ -28,6 +28,9 @@ public class PlayerIdentity : MonoBehaviour
     [SerializeField]
     Vector3[] SpawnRotation;
 
+    public GameObject[] Helmet;
+    public GameObject Crown;
+
     public SkinnedMeshRenderer BodyMeshRenderer1;
     public SkinnedMeshRenderer BodyMeshRenderer2;
     public GameObject Decal;
@@ -82,6 +85,7 @@ public class PlayerIdentity : MonoBehaviour
 
     private void OnLevelWasLoaded(int level)
     {
+        if (level == 2) return;
         stageInfo = GameObject.FindGameObjectWithTag("StageInfo").GetComponent<StageInfo>();
         StartCoroutine(SpawnToPositionLoad());
     }
@@ -108,6 +112,41 @@ public class PlayerIdentity : MonoBehaviour
         _playerMove.enabled = true;
         _playerBehavior.enabled = true;
         yield return null;
+    }
+
+    public void SetKing()
+    {
+        for(int i = 0; i < Helmet.Length; i++)
+        {
+            Helmet[i].SetActive(false);
+        }
+        Crown.SetActive(true);
+    }
+
+    public void SetToAnimationMode()
+    {
+        playerInput.enabled = false;
+        _playerMove.enabled = false;
+        playerMove.localScale = new Vector3(2.6f, 2.6f, 2.6f);
+        _playerBehavior.enabled = false;
+        playerRig.gameObject.SetActive(false);
+        BodyMeshRenderer2.enabled = true;
+
+        MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
+        for(int i = 0; i < meshRenderers.Length; i++)
+        {
+            meshRenderers[i].enabled = true;
+        }
+
+        footIK_AF.enabled = false;
+    }
+    public void SetToPosition(Vector3 p)
+    {
+        playerMove.localPosition = p;
+    }
+    public void SetToRotation(Vector3 r)
+    {
+        playerMove.eulerAngles = r;
     }
 
     public void SetRagData()

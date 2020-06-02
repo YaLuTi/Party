@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +10,8 @@ public class ScoreManager : MonoBehaviour
 {
     public int _WinScore;
     public static int WinScore;
-    static int[] scores = new int[4]; // 暫時弄成玩家名次
+    static int[] scores = new int[4];
+    static int[] rank;
     
 
     static TextMeshProUGUI[] texts;
@@ -45,6 +47,18 @@ public class ScoreManager : MonoBehaviour
         if(scores[id] >= WinScore)
         {
             IsEnd = true;
+
+            rank = new int[StageManager.scores.Length];
+            for(int i = 0; i < rank.Length; i++)
+            {
+                rank[i] = i;
+            }
+            Array.Resize(ref scores, rank.Length);
+
+            Array.Sort(scores, rank);
+            Array.Reverse(rank);
+
+            StageManager.scores = rank;
 
             playableDirector.Play();
         }

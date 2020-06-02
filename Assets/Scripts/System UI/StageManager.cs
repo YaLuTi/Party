@@ -12,9 +12,12 @@ public class StageManager : MonoBehaviour
     public static int[] playerScore;
     PlayerInputManager inputManager;
 
+    public static int[] scores; // 暫時弄成玩家名次
+
     static int PlayerReadyNum = 0;
 
     static bool TriggerLoadScene = false;
+    static bool TriggerLoadEnd = false;
 
     public bool Testing = false;
 
@@ -50,8 +53,19 @@ public class StageManager : MonoBehaviour
             TriggerLoadScene = false;
             LoadScene();
         }
+        if (TriggerLoadEnd)
+        {
+            TriggerLoadEnd = false;
+            LoadEndScene();
+        }
     }
 
+    public static void SetEndScene()
+    {
+        // for(int i = 0)
+    }
+
+    // Player Stop Start
     public static void StageStop()
     {
         for (int i = 0; i < players.Count; i++)
@@ -67,19 +81,19 @@ public class StageManager : MonoBehaviour
             players[i].GetComponent<PlayerIdentity>().InputEnable();
         }
     }
-
+       
+    // Title UI
     public static void PlayerReady()
     {
-        Debug.Log(1);
         PlayerReadyNum++;
     }
 
     public static void LoadSceneCheck()
     {
-        Debug.Log(0);
         if(PlayerReadyNum >= players.Count)
         {
             playerScore = new int[players.Count];
+            scores = new int[players.Count];
             TriggerLoadScene = true;
         }
     }
@@ -103,6 +117,70 @@ public class StageManager : MonoBehaviour
         }
     }
 
+    // Load to end scene
+    public static void LoadEnd()
+    {
+        TriggerLoadEnd = true;
+    }
+
+    public void LoadEndScene()
+    {
+        StartCoroutine(_LoadEndScene());
+    }
+
+    IEnumerator _LoadEndScene()
+    {
+        for (int i = 0; i < players.Count; i++)
+        {
+            players[i].GetComponent<PlayerIdentity>().SetToAnimationMode();
+        }
+        yield return new WaitForSeconds(1.2f);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(2);
+
+        // Wait until the asynchronous scene fully loads
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+        yield return new WaitForFixedUpdate();
+
+        StageInfo stageInfo;
+        stageInfo = GameObject.FindGameObjectWithTag("StageInfo").GetComponent<StageInfo>();
+
+        Debug.Log(players.Count);
+        for (int i = 0; i < players.Count; i++)
+        {
+            if (i == players.Count - 1)
+            {
+                Debug.Log(i);
+                Debug.Log(scores.Length);
+                Debug.Log(players.Count);
+                Debug.Log(scores[i]);
+                players[scores[i]].GetComponent<PlayerIdentity>().SetToPosition(stageInfo.SpawnPosition[3]);
+                players[scores[i]].GetComponent<PlayerIdentity>().SetToRotation(stageInfo.SpawnRotation[3]);
+                players[scores[i]].GetComponentInChildren<Animator>().SetTrigger("Die");
+            }
+            else if(i == 0)
+            {
+                players[scores[i]].GetComponent<PlayerIdentity>().SetToPosition(stageInfo.SpawnPosition[0]);
+                players[scores[i]].GetComponent<PlayerIdentity>().SetToRotation(stageInfo.SpawnRotation[0]);
+                players[scores[i]].GetComponent<PlayerIdentity>().SetKing();
+                players[scores[i]].GetComponentInChildren<Animator>().SetTrigger("Sit");
+            }
+            else
+            {
+                players[scores[i]].GetComponent<PlayerIdentity>().SetToPosition(stageInfo.SpawnPosition[i]);
+                players[scores[i]].GetComponent<PlayerIdentity>().SetToRotation(stageInfo.SpawnRotation[i]);
+                players[scores[i]].GetComponentInChildren<Animator>().SetTrigger("Clap");
+            }
+        }
+        yield return null;
+    }
+
+    // Set End scene
+
+
+    // Load normal Scene
     public void LoadScene()
     {
         inputManager.enabled = false;

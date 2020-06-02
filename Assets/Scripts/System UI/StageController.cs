@@ -49,6 +49,12 @@ public class StageController : MonoBehaviour
             AnimationCount++;
         }*/
     }
+
+    public void LoadEndScene()
+    {
+        StageManager.LoadEnd();
+    }
+
     public void GameEnd()
     {
         Debug.Log("A");
