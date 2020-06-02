@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using UnityEngine.Playables;
 
 public class StageManager : MonoBehaviour
 {
@@ -21,10 +22,9 @@ public class StageManager : MonoBehaviour
 
     public bool Testing = false;
 
+    public PlayableDirector EndDirector;
     public GameObject PlayerCraftUI;
     public GameObject Canvas;
-    public RectTransform TransitionsPanel;
-    public AudioSource TitleAudioSource;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,7 +52,7 @@ public class StageManager : MonoBehaviour
         if (TriggerLoadScene)
         {
             TriggerLoadScene = false;
-            LoadScene();
+            EndDirector.Play();
         }
         if (TriggerLoadEnd)
         {
@@ -186,8 +186,8 @@ public class StageManager : MonoBehaviour
 
     IEnumerator _LoadScene()
     {
-        TransitionsPanel.DOAnchorPosY(0, 0.4f);
-        TitleAudioSource.PlayOneShot(TitleAudioSource.clip);
+        // TransitionsPanel.DOAnchorPosY(0, 0.4f);
+        // TitleAudioSource.PlayOneShot(TitleAudioSource.clip);
         yield return new WaitForSeconds(0.5f);
         for (int i = 0; i < players.Count; i++)
         {

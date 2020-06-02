@@ -72,11 +72,10 @@ public class PlayerMove : MonoBehaviour
     void Update()
     {
 
-        /*if (rig.position.y < -5 || rig.position.y > 15)
+        if (rig.position.y < -5 || rig.position.y > 15)
         {
-            Debug.Log("A");
             StartCoroutine(ReSpawn());
-        }*/
+        }
         if (inhibitMove) return;
 
         if (MoveEnable)
@@ -112,24 +111,12 @@ public class PlayerMove : MonoBehaviour
         
     }
 
+    // 亂寫的
     IEnumerator ReSpawn()
     {
-        inhibitMove = true;
-        foreach (Rigidbody rb in rbs)
-        {
-            rb.constraints = RigidbodyConstraints.FreezeAll;
-        }
-        yield return new WaitForFixedUpdate();
-        inhibitMove = false;
-        transform.rotation = Quaternion.identity;
-        transform.position = spawnPosition;
-        yield return new WaitForFixedUpdate();
-        yield return new WaitForFixedUpdate();
-        yield return new WaitForFixedUpdate();
-        foreach (Rigidbody rb in rbs)
-        {
-            rb.constraints = RigidbodyConstraints.None;
-        }
+        BulletHitInfo_AF bulletHitInfo_AF = new BulletHitInfo_AF();
+        transform.root.GetComponent<PlayerHitten>().OnHit(bulletHitInfo_AF);
+        transform.root.GetComponent<PlayerIdentity>().Respawn();
         yield return null;
     }
 

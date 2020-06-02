@@ -127,6 +127,7 @@ public class PlayerIdentity : MonoBehaviour
     {
         playerInput.enabled = false;
         _playerMove.enabled = false;
+        Decal.SetActive(false);
         playerMove.localScale = new Vector3(2.6f, 2.6f, 2.6f);
         _playerBehavior.enabled = false;
         playerRig.gameObject.SetActive(false);
@@ -167,6 +168,41 @@ public class PlayerIdentity : MonoBehaviour
         yield return null;
     }
 
+    public void Respawn()
+    {
+        StartCoroutine(SpawnToPositionOnDeath());
+    }
+
+    IEnumerator SpawnToPositionOnDeath()
+    {
+        footIK_AF.followTerrain = false;
+        foreach (Rigidbody rb in rbs)
+        {
+            rb.velocity = Vector3.zero;
+        }
+        foreach (Collider collider in colliders)
+        {
+            collider.isTrigger = true;
+        }
+        yield return new WaitForFixedUpdate();
+
+        playerMove.transform.position = stageInfo.SpawnPosition[PlayerID] + new Vector3(0, 10, 0);
+        playerMove.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID] + new Vector3(0, 10, 0);
+        playerRigHips.transform.position = stageInfo.SpawnPosition[PlayerID] + new Vector3(0, 10, 0);
+        playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID] + new Vector3(0, 10, 0);
+
+        yield return new WaitForSeconds(1.5f);
+        foreach (Rigidbody rb in rbs)
+        {
+            rb.velocity = Vector3.zero;
+        }
+        foreach (Collider collider in colliders)
+        {
+            collider.isTrigger = false;
+        }
+        footIK_AF.followTerrain = true;
+        yield return null;
+    }
     IEnumerator SpawnToPositionLoad()
     {
         footIK_AF.followTerrain = false;

@@ -47,7 +47,10 @@ public class PlayerHitten : MonoBehaviour
     IEnumerator AddForceToLimb(BulletHitInfo_AF bulletHitInfo)
     {
         yield return new WaitForFixedUpdate();
-        bulletHitInfo.hitTransform.GetComponent<Rigidbody>().AddForceAtPosition(bulletHitInfo.bulletForce, bulletHitInfo.hitPoint);
+        if (bulletHitInfo.hitPoint != null)
+        {
+            bulletHitInfo.hitTransform.GetComponent<Rigidbody>().AddForceAtPosition(bulletHitInfo.bulletForce, bulletHitInfo.hitPoint);
+        }
 
     }
 }
