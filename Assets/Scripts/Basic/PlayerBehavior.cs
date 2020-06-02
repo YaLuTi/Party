@@ -130,6 +130,7 @@ public class PlayerBehavior : MonoBehaviour
 
     void OnPick()
     {
+        if (!this.enabled) return;
         if (playerStatus.PlayerPick()) return;
         if (IsHolding && !IsThrowing2)
         {
