@@ -52,6 +52,7 @@ public class PlayerCreating : MonoBehaviour
     }
     void OnShoot()
     {
+        StageManager.LoadSceneCheck();
         if (!this.enabled || !IsEnable) return;
         playerCreatingUI.Ready();
         StageManager.PlayerReady();
@@ -60,7 +61,29 @@ public class PlayerCreating : MonoBehaviour
 
     void OnPause()
     {
-        StageManager.LoadSceneCheck();
+        GameObject PausePanel = null;
+        Transform[] objs = Resources.FindObjectsOfTypeAll<Transform>() as Transform[];
+        for (int i = 0; i < objs.Length; i++)
+        {
+            if (objs[i].hideFlags == HideFlags.None)
+            {
+                if (objs[i].CompareTag("Pause"))
+                {
+                    PausePanel = objs[i].gameObject;
+                    break;
+                }
+            }
+        }
+        if (PausePanel.activeSelf)
+        {
+            PausePanel.SetActive(false);
+        }
+        else
+        {
+            PausePanel.SetActive(true);
+        }
+
+        // StageManager.LoadSceneCheck();
     }
 
     // Update is called once per frame
