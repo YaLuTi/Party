@@ -70,7 +70,7 @@ public class ItemSpawner : MonoBehaviour
         }
 
         if(CooldownEnbale)
-        CooldownCount++;
+        CooldownCount += 60 * Time.deltaTime;
     }
 
     IEnumerator RunSpawnEvent()

@@ -20,7 +20,7 @@ public class FlagScore : MonoBehaviour
     public static Transform follow;
     
     bool IsHolded = false;
-    int cooldown = 0;
+    float cooldown = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,7 +39,7 @@ public class FlagScore : MonoBehaviour
                 cooldown = 0;
                 ScoreManager.AddScore(id, 1);
             }
-            cooldown++;
+            cooldown += 60 * Time.deltaTime;
         }
         else
         {
