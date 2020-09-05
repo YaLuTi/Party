@@ -136,10 +136,13 @@ public class PlayerMove : MonoBehaviour
         Destroy(g, 1);
     }
 
-    void OnMove(InputValue value)
+    void OnMoveX(InputValue value)
     {
-        h = value.Get<Vector2>().x;
-        v = value.Get<Vector2>().y;
+        h = value.Get<float>();
+    }
+    void OnMoveY(InputValue value)
+    {
+        v = value.Get<float>();
     }
 
     void OnPick()

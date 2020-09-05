@@ -29,6 +29,7 @@ public class StageManager : MonoBehaviour
     void Start()
     {
         inputManager = GetComponent<PlayerInputManager>();
+
         if(instance == null)
         {
             DontDestroyOnLoad(this.gameObject);
@@ -45,6 +46,8 @@ public class StageManager : MonoBehaviour
                 Instantiate(players[i]);
             }
         }
+        
+        SceneManager.LoadScene("TestMultiScene", LoadSceneMode.Additive);
     }
 
     private void Update()
@@ -59,6 +62,11 @@ public class StageManager : MonoBehaviour
             TriggerLoadEnd = false;
             LoadEndScene();
         }
+    }
+
+    public void JoinEnable()
+    {
+        inputManager.EnableJoining();
     }
 
     public static void SetEndScene()
@@ -89,6 +97,7 @@ public class StageManager : MonoBehaviour
         PlayerReadyNum++;
     }
 
+    // 這邊一團亂
     public static void LoadSceneCheck()
     {
         if(PlayerReadyNum >= players.Count)
