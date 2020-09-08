@@ -70,10 +70,10 @@ public class PlayerIdentity : MonoBehaviour
 
         RingDecal.material = RingMaterialsArray[PlayerID];
 
-        _playerMove = GetComponentInChildren<PlayerMove>();
+        /*_playerMove = GetComponentInChildren<PlayerMove>();
         _playerMove.enabled = false;
         _playerBehavior = GetComponentInChildren<PlayerBehavior>();
-        _playerBehavior.enabled = false;
+        _playerBehavior.enabled = false;*/
 
         StartCoroutine(SpawnToPosition());
     }
@@ -97,7 +97,7 @@ public class PlayerIdentity : MonoBehaviour
 
     public void InputCancel()
     {
-        playerInput.enabled = false;
+        // playerInput.enabled = false;
     }
 
     public void InputEnable()
@@ -125,11 +125,11 @@ public class PlayerIdentity : MonoBehaviour
 
     public void SetToAnimationMode()
     {
-        playerInput.enabled = false;
-        _playerMove.enabled = false;
+        // playerInput.enabled = false;
+        // _playerMove.enabled = false;
         Decal.SetActive(false);
         playerMove.localScale = new Vector3(2.6f, 2.6f, 2.6f);
-        _playerBehavior.enabled = false;
+        // _playerBehavior.enabled = false;
         playerRig.gameObject.SetActive(false);
         BodyMeshRenderer2.enabled = true;
 

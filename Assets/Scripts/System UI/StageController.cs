@@ -62,6 +62,7 @@ public class StageController : MonoBehaviour
     }
     public static void Pause()
     {
+        /*
         if (IsPaused)
         {
             Time.timeScale = 1;
@@ -75,7 +76,7 @@ public class StageController : MonoBehaviour
             PausePanel.SetActive(true);
             IsPaused = true;
             AudioListener.pause = true;
-        }
+        }*/
     }
     public void UI_Pause()
     {

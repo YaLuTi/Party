@@ -7,9 +7,14 @@ public class PlayerCreating : MonoBehaviour
 {
     public PlayerCraftingUI playerCreatingUI;
     PlayerInput playerInput;
-    public List<GameObject> Hats = new List<GameObject>();
-    public List<GameObject> RigHats = new List<GameObject>();
-    int choosing = 0;
+
+    public ClothDataArray[] clothDataArrays;
+    public Transform[] clothOffset; // 0 hat 1 face
+
+    int[] ClothArray;
+    GameObject[] ClothClone;
+    int choosingArray = 0;
+
     bool IsEnable = false;
 
     // Start is called before the first frame update
@@ -20,38 +25,41 @@ public class PlayerCreating : MonoBehaviour
 
     public void Creat()
     {
-        Hats[0].SetActive(true);
-        RigHats[0].SetActive(true);
+        //
+        ClothArray = new int[clothDataArrays.Length];
+
+        
+        ClothClone = new GameObject[clothDataArrays.Length];
+        /*
+        ClothClone[0] = Instantiate(clothDataArrays[0].clothDatas[0].cloth);
+        ClothClone[0].transform.parent = clothOffset[0];
+        ClothClone[0].transform.localScale = clothDataArrays[0].clothDatas[0].ScaleOffset;
+        ClothClone[0].transform.localPosition = clothDataArrays[0].clothDatas[0].PositionOffset;
+        ClothClone[0].transform.localRotation = Quaternion.Euler(clothDataArrays[0].clothDatas[0].RotationOffset);
+        */
+
         IsEnable = true;
     }
 
     void OnUI_Right()
     {
         if (!this.enabled || !IsEnable) return;
-        Hats[choosing].SetActive(false);
-        RigHats[choosing].SetActive(false);
-        choosing++;
-        if(choosing >= Hats.Count)
+        ClothArray[choosingArray]++;
+        if(ClothArray[choosingArray] >= clothDataArrays[choosingArray].clothDatas.Length)
         {
-            choosing = 0;
+            ClothArray[choosingArray] = 0;
         }
-        Hats[choosing].SetActive(true);
-        RigHats[choosing].SetActive(true);
-        playerCreatingUI.Right(Hats[choosing].name);
+        playerCreatingUI.Right(clothDataArrays[choosingArray].clothDatas[ClothArray[choosingArray]].name);
     }
     void OnUI_Left()
     {
         if (!this.enabled || !IsEnable) return;
-        Hats[choosing].SetActive(false);
-        RigHats[choosing].SetActive(false);
-        choosing--;
-        if (choosing < 0)
+        ClothArray[choosingArray]--;
+        if (ClothArray[choosingArray] < 0)
         {
-            choosing = Hats.Count - 1;
+            ClothArray[choosingArray] = clothDataArrays[choosingArray].clothDatas.Length - 1;
         }
-        Hats[choosing].SetActive(true);
-        RigHats[choosing].SetActive(true);
-        playerCreatingUI.Left(Hats[choosing].name);
+        playerCreatingUI.Left(clothDataArrays[choosingArray].clothDatas[ClothArray[choosingArray]].name);
     }
 
     // 這寫法目前不可逆 要再修正
@@ -89,14 +97,15 @@ public class PlayerCreating : MonoBehaviour
                 }
             }
         }
-        if (PausePanel.activeSelf)
+
+        /*if (PausePanel.activeSelf)
         {
             PausePanel.SetActive(false);
         }
         else
         {
             PausePanel.SetActive(true);
-        }
+        }*/
 
         // StageManager.LoadSceneCheck();
     }

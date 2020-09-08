@@ -47,7 +47,7 @@ public class StageManager : MonoBehaviour
             }
         }
         
-        SceneManager.LoadScene("TestMultiScene", LoadSceneMode.Additive);
+        // SceneManager.LoadScene("TestMultiScene", LoadSceneMode.Additive);
     }
 
     private void Update()
