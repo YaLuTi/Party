@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.HighDefinition;
 using AnimFollow;
 
 // This scripts is controlled by StageManager. Deal with Scene change, win scene animation and so on. 
@@ -12,8 +11,8 @@ public class PlayerIdentity : MonoBehaviour
     Material[] MaterialsArray;
     [SerializeField]
     Material[] RingMaterialsArray;
-    [SerializeField]
-    DecalProjector RingDecal;
+    /*[SerializeField]
+    DecalProjector RingDecal;*/
     [SerializeField]
     Transform playerMove;
     [SerializeField]
@@ -68,7 +67,7 @@ public class PlayerIdentity : MonoBehaviour
         mats[0] = MaterialsArray[PlayerID];
         BodyMeshRenderer2.materials = mats;
 
-        RingDecal.material = RingMaterialsArray[PlayerID];
+        // RingDecal.material = RingMaterialsArray[PlayerID];
 
         /*_playerMove = GetComponentInChildren<PlayerMove>();
         _playerMove.enabled = false;

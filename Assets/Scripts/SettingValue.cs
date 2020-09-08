@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.HighDefinition;
 
 public class SettingValue : MonoBehaviour
 {
@@ -10,12 +9,12 @@ public class SettingValue : MonoBehaviour
     public static float masterVolume = 1;
 
     public VolumeProfile processProfile;
-    ColorAdjustments colorAdjustments;
+    // ColorAdjustments colorAdjustments;
 
     private void Start()
     {
         DontDestroyOnLoad(this.gameObject);
-        processProfile.TryGet(out colorAdjustments);
+        // processProfile.TryGet(out colorAdjustments);
     }
 
     public void ChangeVolume(float f)
@@ -26,6 +25,6 @@ public class SettingValue : MonoBehaviour
 
     public void ChangeLight(float f)
     {
-        colorAdjustments.postExposure.value = f;
+        // colorAdjustments.postExposure.value = f;
     }
 }
