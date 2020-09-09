@@ -10,6 +10,5 @@ public enum RFX4_ShaderProperties
     _BumpAmt,
     _MainColor,
     _Distortion,
-    _FresnelColor,
-    _AlphaCutoff
+    _FresnelColor
 }

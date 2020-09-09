@@ -32,7 +32,7 @@ public class RFX4_TornadoParticles : MonoBehaviour
         if (materialID != -1)
             _twistScale = TornadoMaterial.GetVector(materialID);
 	}
-
+	
 	// Update is called once per frame
     private void Update()
     {
@@ -44,7 +44,7 @@ public class RFX4_TornadoParticles : MonoBehaviour
             for (int i = 0; i < numParticlesAlive; i++) {
                 var pos = particleArray[i].position;
 
-                var height = (pos.y - transform.position.y) * _twistScale.y;
+                var height = (pos.y) * _twistScale.y;
                 pos.x = Mathf.Sin(Time.time * _twistScale.z + pos.y * _twistScale.x) * height;
                 pos.z = Mathf.Sin(Time.time * _twistScale.z + pos.y * _twistScale.x + 3.1415f / 2) * height;
                 particleArray[i].position = pos;
@@ -59,7 +59,6 @@ public class RFX4_TornadoParticles : MonoBehaviour
             pos.z = Mathf.Sin(Time.time * _twistScale.z + pos.y * _twistScale.x + 3.1415f / 2) * height;
             transform.localPosition = pos;
         }
-        Shader.SetGlobalFloat("KW_CustomTime", Time.time);
     }
 
 }
