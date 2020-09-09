@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat_KnightHelmet
-  m_Shader: {fileID: 4800000, guid: 48861dc9537b6504f9a2488d669154e1, type: 3}
+  m_Name: Mat_Player_Two
+  m_Shader: {fileID: 4800000, guid: 4f5fd28ff3472ff4e8f7109ef3524e62, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
@@ -55,29 +55,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _TextureSample0:
-        m_Texture: {fileID: 2800000, guid: 85019fa457118be49af8bfc415b4fc75, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _texcoord:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _B_Fresnel_Bias: 0
-    - _B_Fresnel_Power: 5
-    - _B_Fresnel_Scale: 1
-    - _B_Metallic: 0
-    - _B_Smoothness: 0.5
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _G_Fresnel_Bias: 0
-    - _G_Fresnel_Power: 5
-    - _G_Fresnel_Scale: 1
-    - _G_Metallic: 0
-    - _G_Smoothness: 0.1
+    - _Fresnel_Bias: 0
+    - _Fresnel_Power: 5
+    - _Fresnel_Scale: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -85,11 +70,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _R_Fresnel_Bias: 0
-    - _R_Fresnel_Power: 5
-    - _R_Fresnel_Scale: 1
-    - _R_Metallic: 1
-    - _R_Smoothness: 0.6
+    - _Smoothness: 0.4
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -97,8 +78,5 @@ Material:
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
-    - _B_Color: {r: 0.9716981, g: 0.33459416, b: 0.33459416, a: 0}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 0.40864828, b: 0.36320752, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _G_Color: {r: 0.31132078, g: 0.31132078, b: 0.31132078, a: 0}
-    - _R_Color: {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 0}
