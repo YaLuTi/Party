@@ -50,7 +50,7 @@ public class StageManager : MonoBehaviour
             }
         }
         
-        // SceneManager.LoadScene("TestMultiScene", LoadSceneMode.Additive);
+        // SceneManager.LoadScene("CharacterChoose", LoadSceneMode.Additive);
     }
 
     private void Update()
@@ -214,6 +214,13 @@ public class StageManager : MonoBehaviour
         {
             yield return null;
         }
+
+        AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync("CharacterChoose");
+        while (!asyncUnload.isDone)
+        {
+            yield return null;
+        }
+
         OnBattleScene();
         yield return null;
     }
