@@ -82,11 +82,17 @@ public class PlayerIdentity : MonoBehaviour
     {
     }
 
-    private void OnLevelWasLoaded(int level)
+    /*private void OnLevelWasLoaded(int level)
     {
+        Debug.Log("XD");
         if (level == 2) return;
         stageInfo = GameObject.FindGameObjectWithTag("StageInfo").GetComponent<StageInfo>();
         StartCoroutine(SpawnToPositionLoad());
+    }*/
+
+    public void OnTest()
+    {
+        Debug.Log("HEHE");
     }
 
     // Update is called once per frame
@@ -108,8 +114,8 @@ public class PlayerIdentity : MonoBehaviour
     {
         yield return new WaitForFixedUpdate();
         playerInput.enabled = true;
-        _playerMove.enabled = true;
-        _playerBehavior.enabled = true;
+        // _playerMove.enabled = true;
+        // _playerBehavior.enabled = true;
         yield return null;
     }
 
