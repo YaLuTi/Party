@@ -6,8 +6,11 @@ using UnityEngine.SceneManagement;
 using DG.Tweening;
 using UnityEngine.Playables;
 
+public delegate void OnBattleScene();
+
 public class StageManager : MonoBehaviour
 {
+    public OnBattleScene OnBattleScene;
     static StageManager instance;
     public static List<GameObject> players = new List<GameObject>();
     public static int[] playerScore;
@@ -47,7 +50,7 @@ public class StageManager : MonoBehaviour
             }
         }
         
-        // SceneManager.LoadScene("TestMultiScene", LoadSceneMode.Additive);
+        // SceneManager.LoadScene("CharacterChoose", LoadSceneMode.Additive);
     }
 
     private void Update()
@@ -124,6 +127,7 @@ public class StageManager : MonoBehaviour
             GameObject g = Instantiate(PlayerCraftUI);
             g.GetComponent<Transform>().localPosition = new Vector3(-1.15f + (players.Count - 1) * 2.25f, 3.11f, -0.6f);
             players[players.Count - 1].GetComponentInChildren<PlayerCreating>().playerCreatingUI = g.GetComponent<PlayerCraftingUI>();
+            OnBattleScene += players[players.Count - 1].GetComponent<PlayerIdentity>().OnTest;
         }
     }
 
@@ -203,13 +207,21 @@ public class StageManager : MonoBehaviour
             players[i].GetComponent<PlayerIdentity>().SetRagData();
         }
         yield return new WaitForSeconds(1.2f);
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(1);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Stage01", LoadSceneMode.Additive);
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
+
+        AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync("CharacterChoose");
+        while (!asyncUnload.isDone)
+        {
+            yield return null;
+        }
+
+        OnBattleScene();
         yield return null;
     }
 }

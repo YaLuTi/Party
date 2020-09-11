@@ -28,7 +28,7 @@ public class ItemSpawner : MonoBehaviour
 
     List<GameObject> SpawnItem = new List<GameObject>();
 
-    float CooldownCount;
+    public float CooldownCount;
     bool CooldownEnbale = true;
     // Start is called before the first frame update
     void Start()
