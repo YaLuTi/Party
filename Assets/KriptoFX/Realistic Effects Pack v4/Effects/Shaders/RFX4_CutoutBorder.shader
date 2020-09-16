@@ -12,7 +12,7 @@ Shader "KriptoFX/RFX4/CutoutBorder"{
 	}
 	SubShader
 		{
-			Tags { "RenderType" = "Opaque" "Queue" = "Geometry+1"}
+			Tags { "RenderType" = "Opaque" "Queue" = "AlphaTest-1"}
 			LOD 100
 			//Cull Off
 			ZWrite On
@@ -74,7 +74,7 @@ Shader "KriptoFX/RFX4/CutoutBorder"{
 					for (int i = 0; i < lightCount; i++) {
 						float3 lightDir = RFX4_LightPositions[i].xyz - worldPos.xyz * RFX4_LightColors[i].w;
 						half normalizedDist = length(lightDir) / RFX4_LightPositions[i].w;
-						fixed attenuation = tex2Dlod(RFX4_PointLightAttenuation, half4(normalizedDist.xx, 0, 0));
+						half attenuation = saturate(1.0 / (1.0 + 25.0 * normalizedDist * normalizedDist) * saturate((1 - normalizedDist) * 5.0));
 						attenuation = lerp(1, attenuation, RFX4_LightColors[i].w);
 						float diff = max(0, dot(normalize(worldNormal), normalize(lightDir)));
 						lightColor += RFX4_LightColors[i].rgb * (diff * attenuation);
@@ -103,7 +103,7 @@ Shader "KriptoFX/RFX4/CutoutBorder"{
 					//return i.color;
 
 					half4 c = tex2D(_MainTex, i.uv) * _Color;
-					c.rgb = c.rgb * i.color.rgb;
+					c.rgb = c.rgb * i.color.rgb + i.color.rgb * 0.05;
 					half cutoff = _Cutoff + (1 - i.color.a);
 					clip(c.a - cutoff);
 					if (c.a < cutoff + _CutoutThickness) c.rgb += _BorderColor;
