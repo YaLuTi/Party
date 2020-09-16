@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat_Afro
-  m_Shader: {fileID: 4800000, guid: 4f5fd28ff3472ff4e8f7109ef3524e62, type: 3}
+  m_Name: Mat_EnergyShield
+  m_Shader: {fileID: 4800000, guid: 7a3ea91152d8d804980dcec8f7c29c54, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
@@ -55,14 +55,25 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _TextureSample0:
+        m_Texture: {fileID: 2800000, guid: 75c685866fd92cd4fb62caf098693e45, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
+    - _DepthOffset: 1
+    - _Depth_Distance: 0.35
+    - _Depth_Smoothstep_Max: 2
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _Fresnel_Bias: 0
-    - _Fresnel_Power: 5
-    - _Fresnel_Scale: 1
+    - _Fresnel_Power: 4
+    - _Fresnel_Scale: 2
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -70,7 +81,6 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Smoothness: 0.35
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -78,7 +88,7 @@ Material:
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
-    - _Color: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
-    - _Color_Base: {r: 0.3207547, g: 0.3207547, b: 0.3207547, a: 0}
-    - _Color_Fresnel: {r: 1, g: 1, b: 1, a: 0}
+    - _Color: {r: 0.2342265, g: 0.6619445, b: 2.1385899, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Panner_Speed_X_Y: {r: 0.05, g: 0.025, b: 0, a: 0}
+    - _Texture_Tiling_X_Y: {r: 1, g: 0.75, b: 0, a: 0}
