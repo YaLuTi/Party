@@ -5,7 +5,7 @@ Shader "KriptoFX/RFX4/Decal"
 	{
 		[Header(Main Settings)]
 	[Space]
-	[PerRendererData]	[HDR]_TintColor("Tint Color", Color) = (1,1,1,1)
+	[PerRendererData] [HDR] _TintColor("Tint Color", Color) = (1,1,1,1)
 		_MainTex("Main Texture", 2D) = "white" {}
 	[Toggle(USE_ALPHA_POW)] _UseAlphaPow("Use Alpha Pow", Int) = 0
 		_AlphaPow("Alpha pow", Float) = 1
@@ -46,7 +46,7 @@ Shader "KriptoFX/RFX4/Decal"
 		Tags{ "Queue" = "Geometry+1"  "IgnoreProjector" = "True" "RenderType" = "Transparent" }
 		Blend[_SrcMode][_DstMode]
 		Cull Front
-		ZTest [_ZTest1]
+		ZTest[_ZTest1]
 		ZWrite Off
 
 		SubShader{
@@ -72,19 +72,16 @@ Shader "KriptoFX/RFX4/Decal"
 
 #pragma shader_feature USE_WORLD_SPACE_UV
 #pragma shader_feature USE_FRAME_BLENDING
-#pragma shader_feature_local _Mul_ON
 
 #pragma multi_compile _BLENDMODE_ADD _BLENDMODE_BLEND _BLENDMODE_MUL
 
 #include "UnityCG.cginc"
 
- float4 _DepthPyramidScale;
-
 		sampler2D _MainTex;
 	sampler2D _NoiseTex;
 	sampler2D _CutoutTex;
 	sampler2D _CutoutRamp;
-	UNITY_DECLARE_TEX2DARRAY( _CameraDepthTexture);
+	sampler2D _CameraDepthTexture;
 
 
 	float4 _MainTex_ST;
@@ -156,8 +153,6 @@ Shader "KriptoFX/RFX4/Decal"
 		o.ray = UnityObjectToViewPos(v.vertex) * float3(-1, -1, 1);
 		o.screenUV = ComputeScreenPos(o.vertex);
 
-		o.screenUV.xy *= _DepthPyramidScale.xy;
-
 #if USE_QUAD_DECAL
 	#ifdef USE_WORLD_SPACE_UV
 			o.uv = mul(unity_ObjectToWorld, v.vertex).xz;
@@ -182,7 +177,7 @@ Shader "KriptoFX/RFX4/Decal"
 
 		i.ray *= (_ProjectionParams.z / i.ray.z); // Far clip dist/viewspace distance
 
-		float depth = Linear01Depth(UNITY_SAMPLE_TEX2DARRAY_LOD(_CameraDepthTexture, float4(i.screenUV.xy / i.screenUV.w, 0, 0), 0));
+		float depth = Linear01Depth(tex2Dproj(_CameraDepthTexture, i.screenUV));
 		float3 wpos = mul(unity_CameraToWorld, float4(i.ray * depth, 1)).xyz;
 		//float3 opos = mul(unity_WorldToObject, float4(wpos, 1)).xyz;
 		float3 opos = mul(UNITY_ACCESS_INSTANCED_PROP(_InverseTransformMatrix_arr, _InverseTransformMatrix), float4(wpos, 1)).xyz;
@@ -240,7 +235,8 @@ Shader "KriptoFX/RFX4/Decal"
 
 
 		half4 tintColor = UNITY_ACCESS_INSTANCED_PROP(_TintColor_arr, _TintColor);
-		tintColor.rgb = pow(tintColor.rgb * 8, 2.2);
+		tintColor.rgb = tintColor.rgb * tintColor.rgb * 2;
+
 		half4 res = tex * tintColor;
 		res.rgb *= 2;
 	#ifdef USE_CUTOUT
@@ -264,20 +260,17 @@ Shader "KriptoFX/RFX4/Decal"
 		res.rgb *= pow(res.a, _AlphaPow);
 	#endif
 
-	//#ifdef _BLENDMODE_ADD
-	//	UNITY_APPLY_FOG_COLOR(i.fogCoord, res, half4(0,0,0,0));
-	//#endif
-	//#ifdef _BLENDMODE_BLEND
-	//	UNITY_APPLY_FOG(i.fogCoord, res);
-	//#endif
-	//#ifdef _BLENDMODE_MUL
-	//	res = lerp(1, res, saturate(res.a * 2));
-	//	UNITY_APPLY_FOG_COLOR(i.fogCoord, res, half4(1,1,1,1)); // fog towards white due to our blend mode
-	//#endif
+	#ifdef _BLENDMODE_ADD
+		UNITY_APPLY_FOG_COLOR(i.fogCoord, res, half4(0,0,0,0));
+	#endif
+	#ifdef _BLENDMODE_BLEND
+		UNITY_APPLY_FOG(i.fogCoord, res);
+	#endif
+	#ifdef _BLENDMODE_MUL
+		res = lerp(1, res, saturate(res.a * 2));
+		UNITY_APPLY_FOG_COLOR(i.fogCoord, res, half4(1,1,1,1)); // fog towards white due to our blend mode
+	#endif
 
-#if _Mul_ON
-		res.rgb = lerp(1, res.rgb, res.a);
-#endif
 
 		return res;
 	}

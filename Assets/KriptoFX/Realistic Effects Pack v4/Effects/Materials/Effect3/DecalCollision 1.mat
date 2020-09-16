@@ -9,8 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: DecalCollision 1
   m_Shader: {fileID: 4800000, guid: d8f400148b999fe41bd30759b3a9126b, type: 3}
-  m_ShaderKeywords: USE_CUTOUT USE_CUTOUT_TEX USE_FRAME_BLENDING USE_SCRIPT_FRAMEBLENDING
-    _BLENDMODE_ADD
+  m_ShaderKeywords: USE_FRAME_BLENDING USE_SCRIPT_FRAMEBLENDING _BLENDMODE_ADD
   m_LightmapFlags: 5
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -29,8 +28,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _CutoutTex:
-        m_Texture: {fileID: 2800000, guid: a3559c42d9e864c418df28c1b4185a54, type: 3}
-        m_Scale: {x: 3, y: 3}
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
@@ -53,7 +52,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 8e542428ca5559c4bb4fb89b70135fb2, type: 3}
+        m_Texture: {fileID: 2800000, guid: e8ccd4c08dced06498e10974194597ac, type: 3}
         m_Scale: {x: 0.125, y: 0.125}
         m_Offset: {x: 0.875, y: 0}
     - _Mask:
@@ -81,11 +80,11 @@ Material:
     - _BlendMode: 0
     - _BumpScale: 1
     - _Cutoff: 0
-    - _Cutout: 1
+    - _Cutout: 1.1
     - _CutoutAlphaMul: 1
     - _CutoutThreshold: 0.015
     - _DetailNormalMapScale: 1
-    - _DistortScale: 0.03
+    - _DistortScale: 0.1
     - _DistortSpeed: 1
     - _DstBlend: 0
     - _DstMode: 1
@@ -102,8 +101,8 @@ Material:
     - _UVSec: 0
     - _UseAlphaPow: 0
     - _UseCustomLighting: 0
-    - _UseCutout: 1
-    - _UseCutoutTex: 1
+    - _UseCutout: 0
+    - _UseCutoutTex: 0
     - _UseCutoutThreshold: 0
     - _UseFrameBlending: 1
     - _UseNoiseDistortion: 0
@@ -115,4 +114,4 @@ Material:
     - _CutoutColor: {r: 1, g: 1, b: 1, a: 1}
     - _DistortionSpeedScale: {r: 0.5, g: 0, b: 0.01, a: 0.005}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TintColor: {r: 1.8, g: 0.5323331, b: 0.15882356, a: 1}
+    - _TintColor: {r: 2.134662, g: 0.5528238, b: 0.11076077, a: 1}

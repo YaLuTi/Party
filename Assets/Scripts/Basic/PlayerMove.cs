@@ -24,7 +24,7 @@ public class PlayerMove : MonoBehaviour
     GameObject StepParticlePosition;
     [SerializeField]
     GameObject StepParticle;
-    float StepCooldownValue = 12; // Step Particle Cooldown
+    float StepCooldownValue = 0.5f; // Step Particle Cooldown
     float StepCooldown = 0;
     
     Animator anim;          // Reference to the animator component.
@@ -90,15 +90,15 @@ public class PlayerMove : MonoBehaviour
         // rb.velocity = new Vector3(h, 0, v) * 2.5f;
 
         glideFree2 = Vector3.Lerp(glideFree2, glideFree, .01f);
-        transform.position += new Vector3(h, 0, v) * PlayerMoveSpeed * (1 + MoveMultiplier) * Time.deltaTime + (glideFree * Time.deltaTime);
 
         // 暫時將AnimatorSpeed的Update寫成二分法 之後將Smooth轉向引入後再改成數學判斷式
-        if (Mathf.Abs(h) + Mathf.Abs(v) > 0.8f)
+        if (Mathf.Abs(h) + Mathf.Abs(v) > 0f)
         {
             float angle = 0;
             angle = (Mathf.Atan2(-h, v) * Mathf.Rad2Deg * -1);
+            transform.position += new Vector3(h, 0, v) * PlayerMoveSpeed * (1 + MoveMultiplier) * Time.deltaTime + (glideFree * Time.deltaTime);
 
-            playerStatus.MoveSpeedUpdate(1);
+            playerStatus.MoveSpeedUpdate(Mathf.Abs(h) + Mathf.Abs(v));
             
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, angle, 0), 480 * Time.deltaTime);
             
@@ -125,7 +125,7 @@ public class PlayerMove : MonoBehaviour
         if (StepParticle == null) return;
         if(StepCooldown < StepCooldownValue)
         {
-            StepCooldown++;
+            StepCooldown += Time.deltaTime;
             return;
         }
         StepCooldown = 0;

@@ -43,7 +43,7 @@ public class ItemBomb : ItemBasic
         {
             Pow -= Time.deltaTime * 45;
             Pow = Mathf.Max(Pow, 1);
-            meshRenderer.material.SetFloat("Vector1_D1F6B343", Pow);
+            meshRenderer.material.SetFloat("_Noise_Power", Pow);
         }
     }
 
@@ -59,7 +59,7 @@ public class ItemBomb : ItemBasic
             {
                 FuseVFX.Play();
             }
-            meshRenderer.material.SetFloat("Vector1_D1F6B343", Pow);
+            meshRenderer.material.SetFloat("_Noise_Power", Pow);
             meshRenderer.material.SetFloat("Vector1_C2A513C5", 1);
 
 

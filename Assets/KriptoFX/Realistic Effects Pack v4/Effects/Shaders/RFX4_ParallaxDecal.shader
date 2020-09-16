@@ -170,7 +170,7 @@ Shader "KriptoFX/RFX4/Decal/ParallaxDecal" {
                         else {
                             lightDir = RFX4_LightPositions[idx].xyz;
                         }
-                        light += abs(dot(normal, normalize(lightDir))) * RFX4_LightColors[idx].rgb * attenuation * 0.1;
+                        light += abs(dot(normal, normalize(lightDir))) * RFX4_LightColors[idx].rgb * attenuation;
 
                     }
                     col.rgb *= light;
