@@ -126,7 +126,6 @@ public class PlayerMove : MonoBehaviour
         if(StepCooldown < StepCooldownValue)
         {
             StepCooldown += Time.deltaTime;
-            Debug.Log(StepCooldown);
             return;
         }
         StepCooldown = 0;
