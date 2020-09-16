@@ -4,223 +4,115 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Distort
   m_Shader: {fileID: 4800000, guid: 3b5eaa5a09e6b204085004ea02b03e38, type: 3}
   m_ShaderKeywords: USE_ALPHA_CLIPING _FADING_ON
   m_LightmapFlags: 5
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
+  disabledShaderPasses: []
   m_SavedProperties:
-    serializedVersion: 2
+    serializedVersion: 3
     m_TexEnvs:
-    - first:
-        name: _BumpMap
-      second:
+    - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - first:
-        name: _BumpTex
-      second:
+    - _BumpTex:
         m_Texture: {fileID: 2800000, guid: f54d5a4f0ea60b349b84ab225d1f2667, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - first:
-        name: _CutoutTex
-      second:
+    - _CutoutTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - first:
-        name: _DetailAlbedoMap
-      second:
+    - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - first:
-        name: _DetailMask
-      second:
+    - _DetailMask:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - first:
-        name: _DetailNormalMap
-      second:
+    - _DetailNormalMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - first:
-        name: _EmissionMap
-      second:
+    - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - first:
-        name: _HeightTex
-      second:
+    - _HeightTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - first:
-        name: _MainTex
-      second:
+    - _MainTex:
         m_Texture: {fileID: 2800000, guid: f54d5a4f0ea60b349b84ab225d1f2667, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - first:
-        name: _MetallicGlossMap
-      second:
+    - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - first:
-        name: _NormalTex
-      second:
+    - _NormalTex:
         m_Texture: {fileID: 2800000, guid: c4477239e0e452043a89cab27e89f19e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - first:
-        name: _OcclusionMap
-      second:
+    - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - first:
-        name: _ParallaxMap
-      second:
+    - _ParallaxMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - first:
-        name: _AlphaClip
-      second: 100
-    - first:
-        name: _BumpAmt
-      second: 30
-    - first:
-        name: _BumpScale
-      second: 1
-    - first:
-        name: _CullMode
-      second: 0
-    - first:
-        name: _Cutoff
-      second: 0.5
-    - first:
-        name: _Cutout
-      second: 1
-    - first:
-        name: _CutoutThreshold
-      second: 0.015
-    - first:
-        name: _DetailNormalMapScale
-      second: 1
-    - first:
-        name: _DistortScale
-      second: 0.5
-    - first:
-        name: _Distortion
-      second: 30
-    - first:
-        name: _DstBlend
-      second: 0
-    - first:
-        name: _FresnelDistort
-      second: 1500
-    - first:
-        name: _FresnelInvert
-      second: 1
-    - first:
-        name: _FresnelPow
-      second: 5
-    - first:
-        name: _FresnelR0
-      second: 0.04
-    - first:
-        name: _Glossiness
-      second: 0.5
-    - first:
-        name: _Height
-      second: 0.1
-    - first:
-        name: _InvFade
-      second: 3
-    - first:
-        name: _Metallic
-      second: 0
-    - first:
-        name: _Mode
-      second: 0
-    - first:
-        name: _OcclusionStrength
-      second: 1
-    - first:
-        name: _Parallax
-      second: 0.02
-    - first:
-        name: _RefractiveStrength
-      second: 0
-    - first:
-        name: _SrcBlend
-      second: 1
-    - first:
-        name: _TintDistortion
-      second: 1
-    - first:
-        name: _UVSec
-      second: 0
-    - first:
-        name: _UseAlphaCliping
-      second: 1
-    - first:
-        name: _UseBlending
-      second: 0
-    - first:
-        name: _UseCutout
-      second: 0
-    - first:
-        name: _UseFresnel
-      second: 0
-    - first:
-        name: _UseHeight
-      second: 0
-    - first:
-        name: _UseMainTex
-      second: 0
-    - first:
-        name: _UseRefractive
-      second: 0
-    - first:
-        name: _UseSoft
-      second: 1
-    - first:
-        name: _ZWrite
-      second: 1
-    - first:
-        name: _ZWriteMode
-      second: 0
+    - _AlphaClip: 100
+    - _BumpAmt: 30
+    - _BumpScale: 1
+    - _CullMode: 0
+    - _Cutoff: 0.5
+    - _Cutout: 1
+    - _CutoutThreshold: 0.015
+    - _DetailNormalMapScale: 1
+    - _DistortScale: 0.5
+    - _Distortion: 30
+    - _DstBlend: 0
+    - _FresnelDistort: 1500
+    - _FresnelInvert: 1
+    - _FresnelPow: 5
+    - _FresnelR0: 0.04
+    - _Glossiness: 0.5
+    - _Height: 0.1
+    - _InvFade: 3
+    - _Metallic: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _RefractiveStrength: 0
+    - _SrcBlend: 1
+    - _TintDistortion: 1
+    - _UVSec: 0
+    - _UseAlphaCliping: 1
+    - _UseBlending: 0
+    - _UseCutout: 0
+    - _UseFresnel: 0
+    - _UseHeight: 0
+    - _UseMainTex: 0
+    - _UseRefractive: 0
+    - _UseSoft: 1
+    - _ZWrite: 1
+    - _ZWriteMode: 0
     m_Colors:
-    - first:
-        name: _Color
-      second: {r: 1, g: 1, b: 1, a: 1}
-    - first:
-        name: _CutoutColor
-      second: {r: 1, g: 1, b: 1, a: 1}
-    - first:
-        name: _EmissionColor
-      second: {r: 0, g: 0, b: 0, a: 1}
-    - first:
-        name: _FresnelColor
-      second: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - first:
-        name: _HeightUVScrollDistort
-      second: {r: 8, g: 12, b: 0, a: 0}
-    - first:
-        name: _MainColor
-      second: {r: 1, g: 1, b: 1, a: 1}
-    - first:
-        name: _TintColor
-      second: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _CutoutColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FresnelColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _HeightUVScrollDistort: {r: 8, g: 12, b: 0, a: 0}
+    - _MainColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TintColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}

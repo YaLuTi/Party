@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Dragon
   m_Shader: {fileID: 4800000, guid: 3b5eaa5a09e6b204085004ea02b03e38, type: 3}
-  m_ShaderKeywords: USE_FRESNEL USE_HEIGHT USE_REFRACTIVE _ZWRITEMODE_ON
+  m_ShaderKeywords: USE_FRESNEL USE_HEIGHT _ZWRITEMODE_ON
   m_LightmapFlags: 5
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -56,7 +56,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTex:
-        m_Texture: {fileID: 2800000, guid: 1931425b86a63f445b9a37c1830a5699, type: 3}
+        m_Texture: {fileID: 2800000, guid: d6392ea2ae1a5154b818dda7eeb3c138, type: 3}
         m_Scale: {x: 1, y: 2}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -75,7 +75,7 @@ Material:
     - _AlphaClip: 10
     - _BumpAmt: 500
     - _BumpScale: 1
-    - _CullMode: 0
+    - _CullMode: 2
     - _Cutoff: 0.5
     - _Cutout: 1
     - _CutoutThreshold: 0.015
@@ -83,12 +83,12 @@ Material:
     - _Distortion: 500
     - _DstBlend: 0
     - _FPOW: 3
-    - _FresnelDistort: 500
+    - _FresnelDistort: 1500
     - _FresnelInvert: 1
-    - _FresnelPow: 4
-    - _FresnelR0: 0.01
+    - _FresnelPow: 3
+    - _FresnelR0: 0.05
     - _Glossiness: 0.5
-    - _Height: -0.1
+    - _Height: 0.1
     - _InvFade: 3
     - _IsDecal: 0
     - _Metallic: 1
@@ -106,7 +106,7 @@ Material:
     - _UseFresnel: 1
     - _UseHeight: 1
     - _UseMainTex: 0
-    - _UseRefractive: 1
+    - _UseRefractive: 0
     - _UseSoft: 0
     - _ZWrite: 1
     - _ZWriteMode: 1
@@ -115,9 +115,9 @@ Material:
     - _CutoutColor: {r: 1, g: 1, b: 1, a: 1}
     - _DropWavesScale: {r: 1, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FresnelColor: {r: 21.109287, g: 31.713985, b: 51.438717, a: 1}
+    - _FresnelColor: {r: 0.45588237, g: 0.75233257, b: 1, a: 1}
     - _HeightUVScrollDistort: {r: 5, g: 1, b: 0, a: 0}
-    - _MainColor: {r: 1.2962921, g: 1.4427084, b: 1.8952684, a: 1}
+    - _MainColor: {r: 1, g: 1, b: 1, a: 1}
     - _NoiseScale: {r: 0.5, g: 0.5, b: 0.1, a: 0.25}
     - _RimColor: {r: 0.13283955, g: 0.15775639, b: 0.19852942, a: 0.678}
     - _Speed: {r: 5, g: 1, b: 0, a: 0}

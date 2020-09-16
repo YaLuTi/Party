@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Decal 1
   m_Shader: {fileID: 4800000, guid: d8f400148b999fe41bd30759b3a9126b, type: 3}
-  m_ShaderKeywords: USE_CUSTOM_LIGHTING USE_CUTOUT _BLENDMODE_BLEND
+  m_ShaderKeywords: USE_CUSTOM_LIGHTING USE_CUTOUT _BLENDMODE_MUL
   m_LightmapFlags: 5
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -57,7 +57,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AlphaPow: 1
-    - _BlendMode: 1
+    - _BlendMode: 2
     - _BumpAmt: 400
     - _ClipRange: 0.76785713
     - _ColorStrength: 0.26785713
@@ -67,7 +67,7 @@ Material:
     - _CutoutThreshold: 0.015
     - _DistortScale: 0.012
     - _DistortSpeed: 0
-    - _DstMode: 10
+    - _DstMode: 3
     - _FPOW: 5
     - _LightStr: 1
     - _Metallic: 0.154
@@ -79,7 +79,7 @@ Material:
     - _RimPower: 8
     - _Shininess: 1
     - _Smoothness: 1
-    - _SrcMode: 5
+    - _SrcMode: 0
     - _UseAlphaPow: 0
     - _UseCustomLighting: 1
     - _UseCutout: 1
@@ -97,4 +97,4 @@ Material:
     - _ReflectColor: {r: 0.5043253, g: 0.54074705, b: 0.64705884, a: 1}
     - _RimColor: {r: 0.9381339, g: 0.9264706, b: 1, a: 0}
     - _SpecColor: {r: 0.9632353, g: 0.96653146, b: 1, a: 1}
-    - _TintColor: {r: 0.14818439, g: 0.15359113, b: 0.16981131, a: 0.5058824}
+    - _TintColor: {r: 1.0367647, g: 1.1549695, b: 1.5, a: 0.75}
