@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat_Bomb
-  m_Shader: {fileID: 4800000, guid: d2e974e045c5ca44fb39c5b14666fad4, type: 3}
+  m_Name: Mat_HighLight
+  m_Shader: {fileID: 4800000, guid: bbf237ae93485a14594dc812306bb0f6, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
@@ -55,22 +55,20 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _texcoord:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _Fresnel_Bias2: 0
+    - _Fresnel_Multiplier: 1
+    - _Fresnel_Power2: 5
+    - _Fresnel_Scale2: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
-    - _Noise_Power: 5
-    - _Noise_Scale: 10
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
@@ -81,7 +79,5 @@ Material:
     - __dirty: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color_Base: {r: 0.35849056, g: 0.35849056, b: 0.35849056, a: 0}
-    - _Color_Glow: {r: 170.89003, g: 40.262047, b: 0, a: 0}
+    - _Color_Glow: {r: 2, g: 2, b: 2, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Panner_Speed_X_Y: {r: 0.1, g: 0.05, b: 0, a: 0}
