@@ -41,8 +41,8 @@ public class ItemBomb : ItemBasic
         base.Update();
         if(Durability <= 0)
         {
-            Pow -= Time.deltaTime * 45;
-            Pow = Mathf.Max(Pow, 1);
+            Pow -= Time.deltaTime * 43;
+            Pow = Mathf.Max(Pow, 0);
             meshRenderer.material.SetFloat("_Noise_Power", Pow);
         }
     }
