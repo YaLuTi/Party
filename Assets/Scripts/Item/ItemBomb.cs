@@ -71,7 +71,32 @@ public class ItemBomb : ItemBasic
         }
         return base.OnUse(status);
     }
-    
+
+    public override void OnUse()
+    {
+        base.OnUse();
+        if (DurabilityCheck())
+        {
+            if (FuseParticle != null)
+            {
+                FuseParticle.Play();
+            }
+            if (FuseVFX != null)
+            {
+                FuseVFX.Play();
+            }
+            meshRenderer.material.SetFloat("_Noise_Power", Pow);
+            meshRenderer.material.SetFloat("Vector1_C2A513C5", 1);
+            StartCoroutine(Explosion());
+        }
+    }
+
+    public override void Throw()
+    {
+        base.Throw();
+        OnUse();
+    }
+
     IEnumerator Explosion()
     {
         float PauseTime = 0;
