@@ -79,11 +79,11 @@ public class ItemBasic : MonoBehaviour
 
     public virtual string OnUse(_playerItemStatus status)
     {
-        for(int i = 0; i < UsingSound.Length; i++)
-        {
-            audioSource.PlayOneShot(UsingSound[i]);
-        }
         return animation;
+    }
+
+    public virtual void OnUse()
+    {
     }
 
     public void Hold()
@@ -98,6 +98,10 @@ public class ItemBasic : MonoBehaviour
         if (Durability > 0)
         {
             Durability--;
+            for (int i = 0; i < UsingSound.Length; i++)
+            {
+                audioSource.PlayOneShot(UsingSound[i]);
+            }
             return true;
         }
         else

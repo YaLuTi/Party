@@ -208,7 +208,7 @@ public class StageManager : MonoBehaviour
             players[i].GetComponent<PlayerIdentity>().SetRagData();
         }
         yield return new WaitForSeconds(1.2f);
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Stage01", LoadSceneMode.Additive);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("CrownScene", LoadSceneMode.Additive);
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
