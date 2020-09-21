@@ -377,12 +377,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52f4e30810c54044a88bb95960552766, type: 3}
---- !u!1 &299261706 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2700275486487721297, guid: 427db36d1538f0e45a54fcc404a3005b,
-    type: 3}
-  m_PrefabInstance: {fileID: 755865033}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &492450237
 GameObject:
   m_ObjectHideFlags: 0
@@ -1646,34 +1640,6 @@ Transform:
   m_Father: {fileID: 3970686953671621797}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 3.611, y: -1.876, z: 98.62}
---- !u!114 &1812324243711038223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3970686953671621801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eabb037c2aa7937458d3b1114d018fe2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsHolded: 0
-  HighLight: {fileID: 3815849967387988240}
-  PlayerSelecting: 0
-  UsingSound:
-  - {fileID: 8300000, guid: 6fc9685342abd0a46b05f32fad97ad9d, type: 3}
-  Durability: 1
-  HoldedPosition: {x: 0, y: 0, z: 0}
-  HoldedRotation: {x: 0, y: 0, z: 0}
-  animation: 
-  UseOnStart: 0
-  ExplosionVFX: {fileID: 299261706}
-  FuseParticle: {fileID: 0}
-  FuseVFX: {fileID: 6999844514594843756}
-  FuseSFX: {fileID: 0}
-  CameraShakePower: 4
-  delay: 2
 --- !u!73398921 &2578461730140368233
 VFXRenderer:
   m_ObjectHideFlags: 2
@@ -1786,7 +1752,7 @@ GameObject:
   - component: {fileID: 3970686953671621797}
   - component: {fileID: 3970686953671621802}
   - component: {fileID: 3970686953671621803}
-  - component: {fileID: 1812324243711038223}
+  - component: {fileID: 3970686953671621804}
   - component: {fileID: 3970686953671621800}
   - component: {fileID: 3970686953671621796}
   - component: {fileID: 4131213095404293418}
@@ -1844,6 +1810,30 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &3970686953671621804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3970686953671621801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 218cb33a109d14246ac83b2fe69670df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsHolded: 0
+  HighLight: {fileID: 0}
+  PlayerSelecting: 0
+  UsingSound: []
+  Durability: 10
+  HoldedPosition: {x: 0, y: 0, z: 0}
+  HoldedRotation: {x: 0, y: 0, z: 0}
+  animation: Drink
+  UseOnStart: 0
+  ExplosionVFX: {fileID: 0}
+  FuseSFX: {fileID: 0}
+  delay: 0
 --- !u!82 &4131213095404293418
 AudioSource:
   m_ObjectHideFlags: 0
