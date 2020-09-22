@@ -116,10 +116,11 @@ public class StageManager : MonoBehaviour
         if (Testing)
         {
             playerInput.transform.root.GetComponent<PlayerIdentity>().InputEnable();
-            playerInput.transform.root.GetComponent<PlayerIdentity>().SetRagData();
             playerInput.SwitchCurrentActionMap("GamePlay");
             Destroy(playerInput.transform.root.GetComponentInChildren<PlayerCreating>());
             players.Add((playerInput.transform.root.gameObject));
+            LoadTestScene();
+            // playerInput.transform.root.GetComponent<PlayerIdentity>().SetRagData();
         }
         else
         {
@@ -190,6 +191,24 @@ public class StageManager : MonoBehaviour
 
     // Set End scene
 
+    // Load normal Scene
+    public void LoadTestScene()
+    {
+        inputManager.enabled = false;
+        StartCoroutine(_LoadTestScene());
+    }
+
+    IEnumerator _LoadTestScene()
+    {
+        // TransitionsPanel.DOAnchorPosY(0, 0.4f);
+        // TitleAudioSource.PlayOneShot(TitleAudioSource.clip);
+        yield return new WaitForSeconds(0.5f);
+        for (int i = 0; i < players.Count; i++)
+        {
+            players[i].GetComponent<PlayerIdentity>().SetRagData();
+        }
+        yield return null;
+    }
 
     // Load normal Scene
     public void LoadScene()

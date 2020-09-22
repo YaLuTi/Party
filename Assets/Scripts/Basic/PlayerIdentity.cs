@@ -92,7 +92,6 @@ public class PlayerIdentity : MonoBehaviour
 
     public void OnTest()
     {
-        Debug.Log("HEHE");
     }
 
     // Update is called once per frame
