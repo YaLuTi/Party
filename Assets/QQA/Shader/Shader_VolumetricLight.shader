@@ -55,7 +55,7 @@ Shader "Shader_VolumetricLight"
 			float distanceDepth5 = abs( ( screenDepth5 - LinearEyeDepth( ase_screenPosNorm.z ) ) / ( _Depth_Distance1 ) );
 			float smoothstepResult10 = smoothstep( 0.0 , _Depth_Smoothstep_Max1 , ( 1.0 - distanceDepth5 ));
 			float clampResult12 = clamp( smoothstepResult10 , 0.0 , 1.0 );
-			o.Alpha = ( ( ( 1.0 - fresnelNode13 ) + clampResult12 ) * _Transparent_Multiplier );
+			o.Alpha = ( ( fresnelNode13 + clampResult12 ) * _Transparent_Multiplier );
 		}
 
 		ENDCG
@@ -139,18 +139,17 @@ Shader "Shader_VolumetricLight"
 }
 /*ASEBEGIN
 Version=18000
-631;73;803;578;1359.24;460.1571;1.723221;True;False
+594;73;840;575;1363.054;235.7732;1.423221;True;False
 Node;AmplifyShaderEditor.RangedFloatNode;4;-1242.434,313.6852;Inherit;False;Property;_Depth_Distance1;Depth_Distance;4;0;Create;True;0;0;False;0;1;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.DepthFade;5;-1042.625,298.1664;Inherit;False;True;False;True;2;1;FLOAT3;0,0,0;False;0;FLOAT;0.1;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;6;-868.3169,429.1976;Inherit;False;Property;_Depth_Smoothstep_Max1;Depth_Smoothstep_Max;5;0;Create;True;0;0;False;0;1;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.OneMinusNode;7;-787.9714,311.1466;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;8;-909.9623,97.52391;Inherit;False;Property;_Fresnel_Scale1;Fresnel_Scale;2;0;Create;True;0;0;False;0;1;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;11;-909.9623,167.5239;Inherit;False;Property;_Fresnel_Power1;Fresnel_Power;3;0;Create;True;0;0;False;0;5;5;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;9;-910.9623,32.524;Inherit;False;Property;_Fresnel_Bias1;Fresnel_Bias;1;0;Create;True;0;0;False;0;0;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SmoothstepOpNode;10;-630.3727,313.0651;Inherit;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;1;False;1;FLOAT;0
-Node;AmplifyShaderEditor.FresnelNode;13;-719.1866,58.22389;Inherit;False;Standard;WorldNormal;ViewDir;False;False;5;0;FLOAT3;0,0,1;False;4;FLOAT3;0,0,0;False;1;FLOAT;0;False;2;FLOAT;1;False;3;FLOAT;5;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;8;-751.9848,97.52391;Inherit;False;Property;_Fresnel_Scale1;Fresnel_Scale;2;0;Create;True;0;0;False;0;1;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;11;-751.9848,167.5239;Inherit;False;Property;_Fresnel_Power1;Fresnel_Power;3;0;Create;True;0;0;False;0;5;5;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;9;-752.9848,32.524;Inherit;False;Property;_Fresnel_Bias1;Fresnel_Bias;1;0;Create;True;0;0;False;0;0;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.ClampOpNode;12;-454.1955,315.3676;Inherit;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;1;False;1;FLOAT;0
-Node;AmplifyShaderEditor.OneMinusNode;15;-473.0978,135.2639;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.FresnelNode;13;-561.209,58.22389;Inherit;False;Standard;WorldNormal;ViewDir;False;False;5;0;FLOAT3;0,0,1;False;4;FLOAT3;0,0,0;False;1;FLOAT;0;False;2;FLOAT;1;False;3;FLOAT;5;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;14;-296.9875,269.5331;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;17;-453.4424,452.6973;Inherit;False;Property;_Transparent_Multiplier;Transparent_Multiplier;6;0;Create;True;0;0;False;0;1;1;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.ColorNode;16;-302.4464,-140.971;Inherit;False;Property;_Color;Color;0;1;[HDR];Create;True;0;0;False;0;1,1,1,0;1,1,1,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
@@ -160,16 +159,15 @@ WireConnection;5;0;4;0
 WireConnection;7;0;5;0
 WireConnection;10;0;7;0
 WireConnection;10;2;6;0
+WireConnection;12;0;10;0
 WireConnection;13;1;9;0
 WireConnection;13;2;8;0
 WireConnection;13;3;11;0
-WireConnection;12;0;10;0
-WireConnection;15;0;13;0
-WireConnection;14;0;15;0
+WireConnection;14;0;13;0
 WireConnection;14;1;12;0
 WireConnection;19;0;14;0
 WireConnection;19;1;17;0
 WireConnection;0;2;16;0
 WireConnection;0;9;19;0
 ASEEND*/
-//CHKSM=60008729F0182AF6C1BC6367F7D6DED0B5055F05
+//CHKSM=F94CBCC339F82D3635079F732F9613E3A7B16C7A
