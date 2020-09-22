@@ -7,6 +7,7 @@ public class ItemBomb : ItemBasic
 {
     MeshRenderer meshRenderer;
     float Pow = 80;
+    float Scale = 1;
 
     [Header("GameValue")]
     [SerializeField]
@@ -42,8 +43,13 @@ public class ItemBomb : ItemBasic
         if(Durability <= 0)
         {
             Pow -= Time.deltaTime * 43;
-            Pow = Mathf.Max(Pow, 0);
+            Pow = Mathf.Max(Pow, 3);
+
+            Scale -= Time.deltaTime * 2;
+            Scale = Mathf.Max(Scale, 0);
+
             meshRenderer.material.SetFloat("_Noise_Power", Pow);
+            meshRenderer.material.SetFloat("_Noise_Scale", Scale);
         }
     }
 
@@ -60,7 +66,7 @@ public class ItemBomb : ItemBasic
                 FuseVFX.Play();
             }
             meshRenderer.material.SetFloat("_Noise_Power", Pow);
-            meshRenderer.material.SetFloat("Vector1_C2A513C5", 1);
+            meshRenderer.material.SetFloat("_Noise_Scale", Scale);
 
 
             StartCoroutine(Explosion());

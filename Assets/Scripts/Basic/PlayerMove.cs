@@ -24,7 +24,7 @@ public class PlayerMove : MonoBehaviour
     GameObject StepParticlePosition;
     [SerializeField]
     GameObject StepParticle;
-    float StepCooldownValue = 0.5f; // Step Particle Cooldown
+    float StepCooldownValue = 0.25f; // Step Particle Cooldown
     float StepCooldown = 0;
     
     Animator anim;          // Reference to the animator component.
