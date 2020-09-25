@@ -23,10 +23,16 @@ public class Item_Staff : ItemBasic
     public override string OnUse(_playerItemStatus status)
     {
         if (status.Throwing) return "Empty";
+        return base.OnUse(status);
+    }
+
+    public override void OnTrigger()
+    {
+        base.OnTrigger();
         if (DurabilityCheck())
         {
             GameObject b = Instantiate(bullet, muzzle.position, muzzle.rotation);
-            b.GetComponent<Rigidbody>().AddForce(BulletVelocity * transform.root.GetComponent<PlayerHitten>().FaceWay.forward);
+            // b.GetComponent<Rigidbody>().AddForce(BulletVelocity * transform.root.GetComponent<PlayerHitten>().FaceWay.forward);
             audioSource.PlayOneShot(UsingSound[0]);
             if (Durability == 0)
             {
@@ -36,8 +42,11 @@ public class Item_Staff : ItemBasic
         else
         {
             Destroy(this.gameObject);
-            return "Empty";
         }
-        return base.OnUse(status);
+    }
+
+    void StaffFire()
+    {
+        Debug.Log("X");
     }
 }

@@ -209,6 +209,11 @@ public class PlayerBehavior : MonoBehaviour
         itemHand.ThrowHoldingItem(0);
     }
 
+    void TriggerItem()
+    {
+        itemHand.TriggerItem();
+    }
+
     public void OnHit(BulletHitInfo_AF info)
     {
         Destroy(Instantiate(HitParticle, info.hitPoint, Quaternion.identity), 2f);

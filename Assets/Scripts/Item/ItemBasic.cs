@@ -86,6 +86,11 @@ public class ItemBasic : MonoBehaviour
     {
     }
 
+    public virtual void OnTrigger()
+    {
+
+    }
+
     public void Hold()
     {
         transform.localPosition = HoldedPosition;
