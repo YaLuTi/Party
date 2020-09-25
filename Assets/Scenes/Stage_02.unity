@@ -44,7 +44,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 1
+  m_GIWorkflowMode: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -197,7 +197,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6500
   m_UseColorTemperature: 1
-  m_BoundingSphereOverride: {x: 0, y: 3.4393e-41, z: 0, w: 8.25}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: -2.6022797}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -426,6 +426,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 436628e30d3ad92489d4ab0de9db231d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoadBattle: 0
+  LoadTitle: 0
+  Test: 0
 --- !u!1 &533681990
 GameObject:
   m_ObjectHideFlags: 19
@@ -1794,7 +1797,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: db98bfe633a96444da644f689d51c633,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.4
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: db98bfe633a96444da644f689d51c633,
         type: 3}
@@ -1804,7 +1807,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: db98bfe633a96444da644f689d51c633,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.687
+      value: 3.81
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: db98bfe633a96444da644f689d51c633,
         type: 3}
@@ -2215,6 +2218,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Main Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 5546974971495963534, guid: 278dc869125e60b45a811aabb091211f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5546974971495963535, guid: 278dc869125e60b45a811aabb091211f,
         type: 3}
