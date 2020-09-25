@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InfinityItemSpawner : MonoBehaviour
+public class InfinityeItemSpawner : MonoBehaviour
 {
     public GameObject SpawnItem;
     public GameObject Copy;
@@ -10,7 +10,7 @@ public class InfinityItemSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Copy = Instantiate(SpawnItem);
+        Copy = Instantiate(SpawnItem, transform.position, transform.rotation);
     }
 
     // Update is called once per frame
@@ -18,7 +18,7 @@ public class InfinityItemSpawner : MonoBehaviour
     {
         if(Copy.transform.parent != null)
         {
-
+            Copy = Instantiate(SpawnItem, transform.position, transform.rotation);
         }
     }
 }

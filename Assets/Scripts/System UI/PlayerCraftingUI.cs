@@ -6,13 +6,13 @@ using TMPro;
 
 public class PlayerCraftingUI : MonoBehaviour
 {
-    Transform[] UIArray;
+    public Transform[] UIArray;
     Transform[] LeftArrowArray;
     Transform[] RightArrowArray;
 
     public AudioSource UISound;
 
-    int Choosing = 0;
+    public int Choosing = 0;
     int UILength = 0;
     Animator animator;
 
@@ -56,6 +56,16 @@ public class PlayerCraftingUI : MonoBehaviour
         LeftArrowArray[Choosing].DOComplete();
         LeftArrowArray[Choosing].DOPunchScale(new Vector3(.3f, .3f, .3f), 0.3f, 2, 0.1f);
         UISound.PlayOneShot(UISound.clip);
+    }
+
+    public void Up()
+    {
+        Choosing--;
+    }
+
+    public void Down()
+    {
+        Choosing++;
     }
 
     /*public void ChangeChoosing(int change)
