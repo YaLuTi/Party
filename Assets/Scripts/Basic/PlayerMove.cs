@@ -43,6 +43,7 @@ public class PlayerMove : MonoBehaviour
     public Transform rig;
 
     bool MoveEnable = true;
+    bool RotateEnable = true;
 
     float MoveMultiplier = 0;
 
@@ -100,7 +101,7 @@ public class PlayerMove : MonoBehaviour
 
             playerStatus.MoveSpeedUpdate(Mathf.Abs(h) + Mathf.Abs(v));
             
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, angle, 0), 480 * Time.deltaTime);
+            if(RotateEnable)transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, angle, 0), 480 * Time.deltaTime);
             
             SpawnStepParticle();
         }
@@ -160,10 +161,30 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+    // 目前由Behavior啟動(丟東西時) StatusAnimator呼叫
     public void SetMoveEnable(bool b)
     {
         MoveEnable = b;
     }
+
+    // These is made for fucking Animator that Animator cannot send bool parameter. 
+    public void EnableMove()
+    {
+        MoveEnable = true;
+    }
+    public void DisableMove()
+    {
+        MoveEnable = false;
+    }
+    public void EnableRotate()
+    {
+        RotateEnable = true;
+    }
+    public void DisableRotate()
+    {
+        RotateEnable = false;
+    }
+    //
 
     public void Hitten()
     {

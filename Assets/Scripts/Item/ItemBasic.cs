@@ -53,6 +53,11 @@ public class ItemBasic : MonoBehaviour
                 HighLight.SetActive(false);
             }
         }
+
+        if(transform.position.y <= -30)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     public virtual void Throw()
@@ -77,6 +82,7 @@ public class ItemBasic : MonoBehaviour
         PlayerSelecting--;
     }
 
+    // 由ItemHand呼叫
     public virtual string OnUse(_playerItemStatus status)
     {
         return animation;

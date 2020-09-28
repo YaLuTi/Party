@@ -16,7 +16,7 @@ public class InfinityeItemSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Copy.transform.parent != null)
+        if(Copy == null || Copy.transform.parent != null)
         {
             Copy = Instantiate(SpawnItem, transform.position, transform.rotation);
         }

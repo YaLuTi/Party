@@ -9,5 +9,7 @@ namespace AnimFollow
 		public Vector3 hitPoint;
 		public Vector3 bulletForce;
 		public Vector3 hitNormal;
+        public float damage = 0;
+        
 	}
 }

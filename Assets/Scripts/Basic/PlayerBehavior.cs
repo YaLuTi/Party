@@ -220,7 +220,7 @@ public class PlayerBehavior : MonoBehaviour
         // GetComponent<Rigidbody>().AddForce(info.bulletForce);
         if (IsHolding)
         {
-            itemHand.DropHoldingItem(info.bulletForce);
+            itemHand.DropHoldingItem(info.bulletForce / 10);
             IsHolding = false;
             IsThrowing = false;
             IsThrowing2 = false;

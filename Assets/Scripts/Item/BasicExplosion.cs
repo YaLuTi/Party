@@ -6,6 +6,8 @@ using AnimFollow;
 public class BasicExplosion : MonoBehaviour
 {
     [SerializeField]
+    float damage;
+    [SerializeField]
     float radius;
     [SerializeField]
     float delay;
@@ -29,13 +31,15 @@ public class BasicExplosion : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(delay);
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius, layerMask);
-        foreach(Collider collider in colliders)
+
+        BulletHitInfo_AF bulletHitInfo = new BulletHitInfo_AF();
+        bulletHitInfo.damage = damage;
+        foreach (Collider collider in colliders)
         {
             if ((layerMask.value & 1 << collider.gameObject.layer) > 0)
             {
                 if (collider.gameObject.transform.root.GetComponent<PlayerHitten>())
                 {
-                    BulletHitInfo_AF bulletHitInfo = new BulletHitInfo_AF();
                     bulletHitInfo.hitTransform = collider.transform;
                     bulletHitInfo.bulletForce = (collider.ClosestPoint(transform.position) - transform.position).normalized * velocity;
                     // bulletHitInfo.hitNormal = raycastHit.normal;
@@ -51,7 +55,6 @@ public class BasicExplosion : MonoBehaviour
             {
                 if (collider.gameObject.transform.root.GetComponent<ItemBasic>())
                 {
-                    BulletHitInfo_AF bulletHitInfo = new BulletHitInfo_AF();
                     bulletHitInfo.hitTransform = collider.transform;
                     bulletHitInfo.bulletForce = (collider.ClosestPoint(transform.position) - transform.position).normalized * velocity;
                     bulletHitInfo.hitPoint = collider.ClosestPoint(transform.position);

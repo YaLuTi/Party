@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3693424829711854453}
   - component: {fileID: 6003831418836571507}
   - component: {fileID: 308089618843262073}
+  - component: {fileID: 4816617670284431141}
   m_Layer: 0
   m_Name: Handle01_low
   m_TagString: Untagged
@@ -79,6 +80,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &4816617670284431141
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540406613279211120}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.0917327, y: 2.641554, z: 0.3208223}
+  m_Center: {x: 0, y: -0.00000011920929, z: -0.000000029802322}
 --- !u!1 &1283409181833805572
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,9 +104,10 @@ GameObject:
   - component: {fileID: 6120348219295129853}
   - component: {fileID: 775037957612287654}
   - component: {fileID: 8557903528841964477}
-  m_Layer: 0
+  - component: {fileID: 4490466801657063563}
+  m_Layer: 11
   m_Name: Seat00_low
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -158,6 +173,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &4490466801657063563
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283409181833805572}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.484573, y: 0.19939196, z: 1.6627994}
+  m_Center: {x: 0, y: -0.000000059604645, z: 0}
 --- !u!1 &2218461455638562881
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,6 +392,8 @@ GameObject:
   - component: {fileID: 5537830035488984152}
   - component: {fileID: 269604739884103363}
   - component: {fileID: 68483798225071327}
+  - component: {fileID: 7624846219618492711}
+  - component: {fileID: 357983516967825913}
   m_Layer: 0
   m_Name: Handle00_low
   m_TagString: Untagged
@@ -432,6 +462,32 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &7624846219618492711
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7221987970485929821}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.32818687, y: 1.1448648, z: 1.8886867}
+  m_Center: {x: -0.9115179, y: -0.095454276, z: -0.0867157}
+--- !u!65 &357983516967825913
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7221987970485929821}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.32981092, y: 1.1448648, z: 1.8886867}
+  m_Center: {x: 0.91070616, y: -0.095454276, z: -0.0867157}
 --- !u!1 &7847374581232277387
 GameObject:
   m_ObjectHideFlags: 0
@@ -522,9 +578,10 @@ GameObject:
   - component: {fileID: 2984722883057759374}
   - component: {fileID: 672274604065702593}
   - component: {fileID: 5205687975021074913}
-  m_Layer: 0
+  - component: {fileID: 870149911461112270}
+  m_Layer: 11
   m_Name: Seat01_low
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -590,3 +647,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &870149911461112270
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9126366997496204730}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.4845731, y: 0.47575337, z: 1.5430917}
+  m_Center: {x: 0.000000029802322, y: 0.001766406, z: 0.0000004172325}
