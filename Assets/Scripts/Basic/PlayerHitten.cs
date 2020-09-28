@@ -46,9 +46,12 @@ public class PlayerHitten : MonoBehaviour
         UI_copy.GetComponent<PlayerUI>().SetUp(this);
 
         GameObject canvas = GameObject.FindGameObjectWithTag("Canvas");
-        UI_copy.transform.parent = canvas.transform;
-        UI_copy.transform.localScale = new Vector3(1, 1, 1);
-        UI_copy.GetComponent<RectTransform>().anchoredPosition = new Vector2(-270, 170);
+        if (canvas != null)
+        {
+            UI_copy.transform.parent = canvas.transform;
+            UI_copy.transform.localScale = new Vector3(1, 1, 1);
+            UI_copy.GetComponent<RectTransform>().anchoredPosition = new Vector2(-270, 170);
+        }
     }
 
     // Update is called once per frame
