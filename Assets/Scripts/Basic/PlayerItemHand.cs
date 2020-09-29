@@ -11,6 +11,7 @@ public class PlayerItemHand : MonoBehaviour
     public Transform way;
 
     public GameObject HoldingItem = null;
+    public GameObject HoldingRigItem = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +42,9 @@ public class PlayerItemHand : MonoBehaviour
         HoldingItem.transform.localPosition = Vector3.zero;
         HoldingItem.transform.localRotation = Quaternion.identity;
         HoldingItem.GetComponent<ItemBasic>().Hold();
+
+
+
         yield return null;
     }
 

@@ -47,7 +47,6 @@ public class BasicExplosion : MonoBehaviour
                     // bulletHitInfo.hitNormal = raycastHit.normal;
                     bulletHitInfo.hitPoint = collider.ClosestPoint(transform.position);
                     hitten.OnHit(bulletHitInfo);
-                    Debug.Log("EX");
 
                     if (!playerHittens.Contains(hitten))
                     {
