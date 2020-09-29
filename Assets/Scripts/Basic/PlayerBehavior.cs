@@ -134,9 +134,27 @@ public class PlayerBehavior : MonoBehaviour
         if (playerStatus.PlayerPick()) return;
         if (IsHolding && !IsThrowing2)
         {
-            playerStatus.PlayerItem_Aim();
+            if (IsHolding && playerStatus.CanAnimation())
+            {
+                _playerItemStatus status = new _playerItemStatus();
+                status.Throwing = IsThrowing2;
+                string animation = itemHand.UseItem(status);
+                if (animation == "Empty" || animation == "")
+                {
+
+                }
+                else if (animation == "SetMine")
+                {
+                    SetMine();
+                }
+                else
+                {
+                    playerStatus.PlayerItemAnimation(animation);
+                }
+            }
+            /*playerStatus.PlayerItem_Aim();
             IsThrowing = true;
-            IsThrowing2 = true;
+            IsThrowing2 = true;*/
         }
         else if(!IsHolding)
         {

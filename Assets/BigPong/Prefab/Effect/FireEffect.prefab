@@ -5346,8 +5346,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1.5
-      minScalar: 0.75
+      scalar: 0.6
+      minScalar: 0.3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -6256,7 +6256,7 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 1928
-        atime1: 8288
+        atime1: 37008
         atime2: 65535
         atime3: 65535
         atime4: 0
@@ -6418,7 +6418,7 @@ ParticleSystem:
     sprites:
     - sprite: {fileID: 0}
     flipU: 0
-    flipV: 0.5
+    flipV: 0
   VelocityModule:
     enabled: 0
     x:
@@ -9661,7 +9661,7 @@ ParticleSystemRenderer:
   m_ShadowBias: 0
   m_RenderAlignment: 0
   m_Pivot: {x: 0.2, y: 0, z: 0}
-  m_Flip: {x: 0, y: 0, z: 0}
+  m_Flip: {x: 0, y: 0.5, z: 0}
   m_UseCustomVertexStreams: 1
   m_EnableGPUInstancing: 0
   m_ApplyActiveColorSpace: 0
@@ -14432,7 +14432,7 @@ MonoBehaviour:
   ForceMode: 1
   AddRealtimeForce: {x: 0, y: 0, z: 0}
   MinSpeed: 7
-  ColliderRadius: 0.5
+  ColliderRadius: 0.7
   FreezeRotation: 0
   UseTargetPositionAfterCollision: 0
   EffectOnCollision: {fileID: 3127819895184369260, guid: 7fea0523ff7d6374fbde2eae16ef6522,

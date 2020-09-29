@@ -5,6 +5,7 @@ using UnityEngine;
 public class Item_Staff : ItemBasic
 {
     public GameObject bullet;
+    public float DestroyTime;
     public Transform muzzle;
     [SerializeField]
     float BulletVelocity;
@@ -32,6 +33,7 @@ public class Item_Staff : ItemBasic
         if (DurabilityCheck())
         {
             GameObject b = Instantiate(bullet, muzzle.position, muzzle.rotation);
+            Destroy(b, DestroyTime);
             // b.GetComponent<Rigidbody>().AddForce(BulletVelocity * transform.root.GetComponent<PlayerHitten>().FaceWay.forward);
             // audioSource.PlayOneShot(UsingSound[0]);
             if (Durability == 0)

@@ -35,6 +35,7 @@ namespace AnimFollow
 				if (!ignore)
 				{
 					ragdollControl.numberOfCollisions++;
+                    ragdollControl.TestgameObjects.Add(collision.collider);
 					ragdollControl.collisionSpeed = collision.relativeVelocity.magnitude;
 //					Debug.Log (collision.transform.name + "\nincreasing");
 				}
@@ -58,8 +59,9 @@ namespace AnimFollow
 				if (!ignore)
 				{
 					ragdollControl.numberOfCollisions--;
-	//				Debug.Log (collision.transform.name + "\ndecreasing");
-				}
+                    ragdollControl.TestgameObjects.Remove(collision.collider);
+                    //				Debug.Log (collision.transform.name + "\ndecreasing");
+                }
 			}
 		}
 	}

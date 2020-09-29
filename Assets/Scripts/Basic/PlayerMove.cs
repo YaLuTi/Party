@@ -12,6 +12,7 @@ public class PlayerMove : MonoBehaviour
     [Header("Game Value")]
     [SerializeField]
     float PlayerMoveSpeed; // Set by user
+    float MaxSpeed;
     [SerializeField]
     Vector3 spawnPosition;
 
@@ -67,6 +68,7 @@ public class PlayerMove : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         rbs = GetComponentsInChildren<Rigidbody>();
         anim = GetComponent<Animator>();
+        MaxSpeed = (11 / 2f) * 1.414f;
     }
 
     // Update is called once per frame
@@ -97,12 +99,23 @@ public class PlayerMove : MonoBehaviour
         {
             float angle = 0;
             angle = (Mathf.Atan2(-h, v) * Mathf.Rad2Deg * -1);
-            transform.position += new Vector3(h, 0, v) * PlayerMoveSpeed * (1 + MoveMultiplier) * Time.deltaTime + (glideFree * Time.deltaTime);
+
+            Vector3 speed = new Vector3(h, 0, v) * PlayerMoveSpeed * (1 + MoveMultiplier) * Time.deltaTime + (glideFree * Time.deltaTime);
+            if (Mathf.Abs(speed.x) + Mathf.Abs(speed.z) > (MaxSpeed * Time.deltaTime) * (1 + MoveMultiplier))
+            {
+                float m = (MaxSpeed * Time.deltaTime) / (Mathf.Abs(speed.x) + Mathf.Abs(speed.z));
+                speed.x = m * speed.x;
+                speed.z = m * speed.z;
+            }
+            transform.position +=speed;
+
+            Debug.Log(Mathf.Abs(speed.x) + Mathf.Abs(speed.z));
 
             playerStatus.MoveSpeedUpdate(Mathf.Abs(h) + Mathf.Abs(v));
             
-            if(RotateEnable)transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, angle, 0), 480 * Time.deltaTime);
-            
+            // if(RotateEnable)transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, angle, 0), 1000 * Time.deltaTime);
+            if (RotateEnable) transform.rotation =  Quaternion.Euler(0, angle, 0);
+
             SpawnStepParticle();
         }
         else
@@ -150,14 +163,14 @@ public class PlayerMove : MonoBehaviour
     {
         if (inhibitMove)
         {
-            anim.SetFloat("GetUpSpeedMultiplier", anim.GetFloat("GetUpSpeedMultiplier") + 0.2f);
+            // anim.SetFloat("GetUpSpeedMultiplier", anim.GetFloat("GetUpSpeedMultiplier") + 0.2f);
         }
     }
     void OnShoot()
     {
         if (inhibitMove)
         {
-            anim.SetFloat("GetUpSpeedMultiplier", anim.GetFloat("GetUpSpeedMultiplier") + 0.2f);
+            // anim.SetFloat("GetUpSpeedMultiplier", anim.GetFloat("GetUpSpeedMultiplier") + 0.2f);
         }
     }
 

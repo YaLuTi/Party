@@ -2,6 +2,7 @@
 #define SIMPLEFOOTIK
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace AnimFollow
 {
@@ -11,8 +12,9 @@ namespace AnimFollow
 		
 		public readonly int version = 7; // The version of this script
 
-	//	 This kind of a state machine that takes the character through the states: colliding, falling, matching the masters pose and getting back up
+        //	 This kind of a state machine that takes the character through the states: colliding, falling, matching the masters pose and getting back up
 
+        public List<Collider> TestgameObjects = new List<Collider>();
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		AnimFollow_AF animFollow;				// The script that controlls the muscles of the ragdoll
@@ -117,7 +119,7 @@ namespace AnimFollow
 		[HideInInspector]
 		public float orientateY = 0f;		// The world y-coordinate the master transform will be at after a fall. If you move your character vertically you want to set this to match
 		[HideInInspector] public float collisionSpeed;		// The relative speed of the colliding collider
-		[HideInInspector] public int numberOfCollisions;	// Number of colliders currently in contact with the ragdoll
+		public int numberOfCollisions;	// Number of colliders currently in contact with the ragdoll
 		float animatorSpeed;					// Read from the PlayerMovement script
 		int secondaryUpdateSet;					// Read from the AnimFollow script
 		float[] noIceDynFriction;				// To save user settings of friction
@@ -238,20 +240,19 @@ namespace AnimFollow
             //   || (limbErrorMagnitude > noGhostLimit2 && orientated)
             if (shotByBullet)
 			{
-                Debug.Log("G");
 				if (!falling)
 				{
 					// The initial strength immediately after the impact
 					if (!animator.GetCurrentAnimatorStateInfo(0).fullPathHash.Equals(hash.idle) && ! getupState) // If not in idle state
-					{
-						animFollow.maxTorque = residualTorque;
+                    {
+                        animFollow.maxTorque = residualTorque;
 						animFollow.maxForce = residualForce;
 						animFollow.maxJointTorque = residualJointTorque;
 						animFollow.SetJointTorque (residualJointTorque); // Do not wait for animfollow.secondaryUpdate
 					}
 					else // If was in Idle state
-					{
-						animFollow.maxTorque = residualTorque * residualIdleFactor;
+                    {
+                        animFollow.maxTorque = residualTorque * residualIdleFactor;
 						animFollow.maxForce = residualForce * residualIdleFactor;
 						animFollow.maxJointTorque = residualJointTorque * residualIdleFactor;
 						animFollow.SetJointTorque (animFollow.maxJointTorque); // Do not wait for animfollow.secondaryUpdate
@@ -276,7 +277,7 @@ namespace AnimFollow
 				orientated = false;
 				animator.speed = animatorSpeed;
 				delayedGetupDone = false;
-				fellOnSpeed = numberOfCollisions > 0 && collisionSpeed > graceSpeed; // For tuning. If you want to know if the fall was triggered by the speed of the collision
+				fellOnSpeed = TestgameObjects.Count > 0 && collisionSpeed > graceSpeed; // For tuning. If you want to know if the fall was triggered by the speed of the collision
 			}
 			else if (falling || gettingUp) // Code do not run in normal operation
 			{	
@@ -314,8 +315,8 @@ namespace AnimFollow
 						if (animFollow.maxTorque < wakeUpStrength) // Ease the ragdoll to the master pose. WakeUpStrength limit should be set so that the radoll just has reached the master pose
 						{
 							master.transform.Translate((ragdollRootBone.position - masterRootBone.position) * .5f, Space.World);
-
-							animator.speed = getup1AnimatorSpeedFactor * animatorSpeed; // Slow the animation briefly to give the ragdoll time to ease to master pose
+                            
+                            animator.speed = getup1AnimatorSpeedFactor * animatorSpeed; // Slow the animation briefly to give the ragdoll time to ease to master pose
 							animFollow.maxTorque = Mathf.Lerp(animFollow.maxTorque, contactTorque, getupLerp1 * Time.fixedDeltaTime); // We now start lerping the strength back to the ragdoll. Do until strength is wakeUpStrength. Animation is running wery slowly
 							animFollow.maxForce = Mathf.Lerp(animFollow.maxForce, contactForce, getupLerp1 * Time.fixedDeltaTime);
 							animFollow.maxJointTorque = Mathf.Lerp(animFollow.maxJointTorque, contactJointTorque, getupLerp1 * Time.fixedDeltaTime);
@@ -324,6 +325,7 @@ namespace AnimFollow
 						else if (!(isInTransitionToGetup || getupState)) // Getting up is done. We are back in Idle (if not delayed)
 						{
 							playerMovement.inhibitMove = false; // Master is able to move again
+                            playerMovement.EnableMove();
 #if SIMPLEFOOTIK
 							simpleFootIK.extraYLerp = 1f;
 #endif
@@ -351,8 +353,8 @@ namespace AnimFollow
 							}
 						}
 						else // Lerp the ragdoll to contact strength during get up
-						{
-							animator.speed = getup2AnimatorSpeedFactor * animatorSpeed; // Animation speed during get up state
+                        {
+                            animator.speed = getup2AnimatorSpeedFactor * animatorSpeed; // Animation speed during get up state
 							animFollow.maxTorque = Mathf.Lerp(animFollow.maxTorque, contactTorque, getupLerp2 * Time.fixedDeltaTime);
 							animFollow.maxForce = Mathf.Lerp(animFollow.maxForce, contactForce, getupLerp2 * Time.fixedDeltaTime);
 							animFollow.maxJointTorque = Mathf.Lerp(animFollow.maxJointTorque, contactJointTorque, getupLerp2 * Time.fixedDeltaTime);
@@ -366,17 +368,17 @@ namespace AnimFollow
 					}
 				}
 				else // Falling
-				{
-					// Lerp force to zero from residual values
-					animFollow.maxTorque = Mathf.Lerp(animFollow.maxTorque, 0f, fallLerp * Time.fixedDeltaTime);
+                {
+                    // Lerp force to zero from residual values
+                    animFollow.maxTorque = Mathf.Lerp(animFollow.maxTorque, 0f, fallLerp * Time.fixedDeltaTime);
 					animFollow.maxForce = Mathf.Lerp(animFollow.maxForce, 0f, fallLerp * Time.fixedDeltaTime);
 					animFollow.maxJointTorque = Mathf.Lerp(animFollow.maxJointTorque, 0f, fallLerp * Time.fixedDeltaTime);
 					animFollow.SetJointTorque (animFollow.maxJointTorque); // Do not wait for animfollow.secondaryUpdate
 
 					// Orientate master to ragdoll and start transition to getUp when settled on the ground. Falling is over, getting up commences
 					if (ragdollRootBone.GetComponent<Rigidbody>().velocity.magnitude < settledSpeed) // && contactTime + noContactTime > .4f)
-					{
-						gettingUp = true;
+                    {
+                        gettingUp = true;
 						orientate = true;
 						playerMovement.inhibitMove = true;
 						animator.speed = masterFallAnimatorSpeedFactor * animatorSpeed; // Animation speed during transition to get up state
@@ -411,15 +413,15 @@ namespace AnimFollow
 			// The code below is run also in normal operation (not falling or getting up)
 
 			// Check if we are in contact with other colliders
-			if (numberOfCollisions == 0) // Not in contact
+			if (TestgameObjects.Count == 0) // Not in contact
 			{
 				noContactTime += Time.fixedDeltaTime;
 				contactTime = 0f;
 
 				// When not in contact character has maxStrenth strength
 				if (!(gettingUp || falling) || delayedGetupDone)
-				{
-					animFollow.maxTorque = Mathf.Lerp(animFollow.maxTorque, maxTorque, fromContactLerp * Time.fixedDeltaTime);
+                {
+                    animFollow.maxTorque = Mathf.Lerp(animFollow.maxTorque, maxTorque, fromContactLerp * Time.fixedDeltaTime);
 					animFollow.maxForce = Mathf.Lerp(animFollow.maxForce, maxForce, fromContactLerp * Time.fixedDeltaTime);
 					animFollow.maxJointTorque = Mathf.Lerp(animFollow.maxJointTorque, maxJointTorque, fromContactLerp * Time.fixedDeltaTime);
 				}
@@ -431,8 +433,8 @@ namespace AnimFollow
 
 				// When in contact character has only contact strength
 				if (!(gettingUp || falling) || delayedGetupDone)
-				{
-					animFollow.maxTorque = Mathf.Lerp(animFollow.maxTorque, contactTorque, toContactLerp * Time.fixedDeltaTime);
+                {
+                    animFollow.maxTorque = Mathf.Lerp(animFollow.maxTorque, contactTorque, toContactLerp * Time.fixedDeltaTime);
 					animFollow.maxForce = Mathf.Lerp(animFollow.maxForce, contactForce, toContactLerp * Time.fixedDeltaTime);
 					animFollow.maxJointTorque = Mathf.Lerp(animFollow.maxJointTorque, contactJointTorque, toContactLerp * Time.fixedDeltaTime);
 				}
@@ -546,5 +548,10 @@ namespace AnimFollow
 
 			return(true);
 		}
-	}
+
+        private void Update()
+        {
+            TestgameObjects.RemoveAll(item => item == null);
+        }
+    }
 }

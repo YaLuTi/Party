@@ -16,6 +16,7 @@ public class RFX4_PhysicsMotion : MonoBehaviour
     public bool UseGravity = true;
     public ForceMode ForceMode = ForceMode.Impulse;
     public Vector3 AddRealtimeForce = Vector3.zero;
+    public Vector3 StartForce = Vector3.zero;
     public float MinSpeed = 0;
     public float ColliderRadius = 0.05f;
     public bool FreezeRotation;
@@ -29,6 +30,8 @@ public class RFX4_PhysicsMotion : MonoBehaviour
     public GameObject[] DeactivateObjectsAfterCollision;
 
     [HideInInspector] public float HUE = -1;
+
+    bool Spawn = false;
 
     public event EventHandler<RFX4_CollisionInfo> CollisionEnter;
 
@@ -55,7 +58,8 @@ public class RFX4_PhysicsMotion : MonoBehaviour
             }
         }
         currentSpeedOffset = Random.Range(-RandomSpeedOffset * 10000f, RandomSpeedOffset * 10000f) / 10000f;
-	    InitializeRigid();
+
+        InitializeRigid();
     }
 
     void InitializeRigid()
@@ -81,6 +85,7 @@ public class RFX4_PhysicsMotion : MonoBehaviour
         rigid.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         rigid.interpolation = RigidbodyInterpolation.Interpolate;
         rigid.AddForce(transform.forward * (effectSettings.Speed + currentSpeedOffset), ForceMode);
+        rigid.AddForce(StartForce);
         isInitializedForce = true;
     }
 
@@ -121,6 +126,7 @@ public class RFX4_PhysicsMotion : MonoBehaviour
                 if (LookAtNormal) instance.transform.LookAt(contact.point + contact.normal);
                 else instance.transform.rotation = transform.rotation;
                 if (!CollisionEffectInWorldSpace) instance.transform.parent = contact.otherCollider.transform.parent;
+                Spawn = true;
                 Destroy(instance, CollisionEffectDestroyAfter);
             }
         }
@@ -184,7 +190,7 @@ public class RFX4_PhysicsMotion : MonoBehaviour
         if (rigid != null) Destroy(rigid);
         if (collid != null) Destroy(collid);
 
-        if (EffectOnCollision != null)
+        if (EffectOnCollision != null && !Spawn)
         {
             var instance = Instantiate(EffectOnCollision, transform.position, new Quaternion()) as GameObject;
 
@@ -193,6 +199,7 @@ public class RFX4_PhysicsMotion : MonoBehaviour
             if (LookAtNormal) instance.transform.LookAt(transform.position + transform.forward);
             else instance.transform.rotation = transform.rotation;
             // if (!CollisionEffectInWorldSpace) instance.transform.parent = contact.otherCollider.transform.parent;
+            Spawn = true;
             Destroy(instance, CollisionEffectDestroyAfter);
         }
     }
