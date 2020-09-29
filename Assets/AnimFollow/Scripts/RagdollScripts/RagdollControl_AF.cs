@@ -17,6 +17,7 @@ namespace AnimFollow
 
 		AnimFollow_AF animFollow;				// The script that controlls the muscles of the ragdoll
 		public PlayerMove playerMovement;			// To tell the character controller to no move when we are dosed off after a collision.
+        public bool IsDead = false;
 		Animator animator;							// Reference to the animator component.
 		HashIDs_AF hash;							// Reference to the HashIDs.
 #if SIMPLEFOOTIK
@@ -279,7 +280,7 @@ namespace AnimFollow
 			}
 			else if (falling || gettingUp) // Code do not run in normal operation
 			{	
-				if (gettingUp)
+				if (gettingUp && !IsDead)
 				{
 					// Wait until transition to getUp is done so that the master animation is lying down before orientating the master to the ragdoll rotation and position
 					if (orientate && !isInTransitionToGetup && wasInTransitionToGetup)

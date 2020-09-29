@@ -5074,8 +5074,8 @@ MonoBehaviour:
   IsVisible: 1
   FadeoutTime: 1.5
   UseCollisionDetection: 1
-  LimitMaxDistance: 0
-  MaxDistnace: -1
+  LimitMaxDistance: 1
+  MaxDistnace: 10
   Mass: 1
   Speed: 35
   AirDrag: 3.35
@@ -14422,7 +14422,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UseCollisionDetect: 1
-  MaxDistnace: -1
+  MaxDistanceTrigger: 1
+  MaxDistnace: 2
   Mass: 1
   Speed: 35
   RandomSpeedOffset: 0
@@ -14434,7 +14435,8 @@ MonoBehaviour:
   ColliderRadius: 0.05
   FreezeRotation: 0
   UseTargetPositionAfterCollision: 0
-  EffectOnCollision: {fileID: 132858, guid: dcbbdee2152660b41822b2eb0ccb8767, type: 3}
+  EffectOnCollision: {fileID: 3127819895184369260, guid: 7fea0523ff7d6374fbde2eae16ef6522,
+    type: 3}
   CollisionEffectInWorldSpace: 1
   LookAtNormal: 1
   CollisionEffectDestroyAfter: 5

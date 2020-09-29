@@ -29303,7 +29303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20f409696d9de5c408318c995259242f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ForceRadius: 5
+  ForceRadius: 6
   ForceMultiplier: -50
   ForceCurve:
     serializedVersion: 2
@@ -29342,7 +29342,7 @@ MonoBehaviour:
   GraphTimeMultiplier: 0.5
   GraphIntensityMultiplier: 1
   IsLoop: 0
-  DestoryDistance: -1
+  DestoryDistance: 0.5
   UseDistanceScale: 1
   DistanceScaleCurve:
     serializedVersion: 2
@@ -29396,4 +29396,11 @@ MonoBehaviour:
   DragGraphTimeMultiplier: -1
   DragGraphIntensityMultiplier: -1
   AffectedName: 
+  ItemlayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  PlayerlayerMask:
+    serializedVersion: 2
+    m_Bits: 16
+  damage: 0.015
   forceAdditionalMultiplier: 1

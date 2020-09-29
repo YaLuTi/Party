@@ -126,7 +126,7 @@ public class PlayerMove : MonoBehaviour
         if (StepParticle == null) return;
         if(StepCooldown < StepCooldownValue)
         {
-            StepCooldown += Time.deltaTime;
+            StepCooldown += Time.deltaTime * MoveMultiplier;
             return;
         }
         StepCooldown = 0;

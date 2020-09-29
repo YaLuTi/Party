@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class RFX4_PhysicsForceCurves : MonoBehaviour
 {
-
+    [Header("Physic")]
     public float ForceRadius = 5;
     public float ForceMultiplier = 1;
     public AnimationCurve ForceCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
@@ -18,6 +18,14 @@ public class RFX4_PhysicsForceCurves : MonoBehaviour
     public AnimationCurve DragCurve = AnimationCurve.EaseInOut(0, 0, 0, 1);
     public float DragGraphTimeMultiplier = -1, DragGraphIntensityMultiplier = -1;
     public string AffectedName;
+
+    [Header("Game")]
+    [SerializeField]
+    LayerMask ItemlayerMask;
+    [SerializeField]
+    LayerMask PlayerlayerMask;
+    [SerializeField]
+    float damage;
 
     [HideInInspector] public float forceAdditionalMultiplier = 1;
     private bool canUpdate;
@@ -45,38 +53,49 @@ public class RFX4_PhysicsForceCurves : MonoBehaviour
             var hitColliders = Physics.OverlapSphere(t.position, ForceRadius);
             foreach (var hitCollider in hitColliders)
             {
-                var rig = hitCollider.GetComponent<Rigidbody>();
-                if (rig == null) continue;
-                if (AffectedName.Length > 0 && !hitCollider.name.Contains(AffectedName)) {
-                    
-                    continue;
-                }
-                
-                Vector3 distVector;
-                float dist;
-                if (UseUPVector)
+                if ((ItemlayerMask.value & 1 << hitCollider.gameObject.layer) > 0)
                 {
-                    distVector = Vector3.up;
-                    var pos = hitCollider.transform.position;
-                    dist = 1 - Mathf.Clamp01(pos.y - t.position.y);
-                    dist *= 1 - ((hitCollider.transform.position - t.position)).magnitude / ForceRadius;
+                    if (hitCollider.GetComponent<ItemBasic>().IsHolded) continue;
+                    var rig = hitCollider.GetComponent<Rigidbody>();
+                    if (rig == null) continue;
+                    if (AffectedName.Length > 0 && !hitCollider.name.Contains(AffectedName))
+                    {
+
+                        continue;
+                    }
+
+                    Vector3 distVector;
+                    float dist;
+                    if (UseUPVector)
+                    {
+                        distVector = Vector3.up;
+                        var pos = hitCollider.transform.position;
+                        dist = 1 - Mathf.Clamp01(pos.y - t.position.y);
+                        dist *= 1 - ((hitCollider.transform.position - t.position)).magnitude / ForceRadius;
+                    }
+                    else
+                    {
+                        distVector = (hitCollider.transform.position - t.position);
+                        dist = 1 - distVector.magnitude / ForceRadius;
+                    }
+                    if (UseDistanceScale) hitCollider.transform.localScale = DistanceScaleCurve.Evaluate(dist) * hitCollider.transform.localScale;
+
+                    if (DestoryDistance > 0 && distVector.magnitude < DestoryDistance)
+                    {
+                        Destroy(hitCollider.gameObject);
+                    }
+                    rig.AddForce(distVector.normalized * dist * ForceMultiplier * eval * forceAdditionalMultiplier, ForceMode);
+                    if (DragGraphTimeMultiplier > 0)
+                    {
+                        rig.drag = DragCurve.Evaluate(time / DragGraphTimeMultiplier) * DragGraphIntensityMultiplier;
+                        rig.angularDrag = rig.drag / 10;
+                    }
                 }
-                else {
-                    distVector = (hitCollider.transform.position - t.position);
-                    dist = 1 - distVector.magnitude / ForceRadius;
-                }
-                if(UseDistanceScale) hitCollider.transform.localScale = DistanceScaleCurve.Evaluate(dist) * hitCollider.transform.localScale;
-              
-                if (DestoryDistance > 0 && distVector.magnitude < DestoryDistance)
+
+                if ((PlayerlayerMask.value & 1 << hitCollider.gameObject.layer) > 0)
                 {
-                    Destroy(hitCollider.gameObject);
+                    hitCollider.transform.root.GetComponent<PlayerHitten>().OnDamaged(damage);
                 }
-                rig.AddForce(distVector.normalized * dist * ForceMultiplier * eval * forceAdditionalMultiplier, ForceMode);
-                if (DragGraphTimeMultiplier > 0) {
-                    rig.drag = DragCurve.Evaluate(time / DragGraphTimeMultiplier) * DragGraphIntensityMultiplier;
-                    rig.angularDrag = rig.drag / 10;
-                }
-                
             }
         }
         if (time >= GraphTimeMultiplier)

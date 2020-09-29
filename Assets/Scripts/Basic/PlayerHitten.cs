@@ -75,11 +75,18 @@ public class PlayerHitten : MonoBehaviour
 
         ragdollControl.shotByBullet = true;
         pickItem.OnHit(info);
-        float oldH = Health;
-        Health -= info.damage;
-        Health = Mathf.Max(0, Health);
-        OnHealthChanged?.Invoke(this, oldH, Health);
+    }
 
+    public void OnDamaged(float damage)
+    {
+        if (ragdollControl.shotByBullet) return;
+
+        float oldH = Health;
+        Health -= damage;
+        Health = Mathf.Max(0, Health);
+        if (Health == 0) ragdollControl.IsDead = true;
+
+        OnHealthChanged?.Invoke(this, oldH, Health);
     }
 
     public bool IsGettingUp()

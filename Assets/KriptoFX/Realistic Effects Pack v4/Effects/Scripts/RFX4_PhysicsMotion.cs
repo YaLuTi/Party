@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 public class RFX4_PhysicsMotion : MonoBehaviour
 {
     public bool UseCollisionDetect = true;
+    public bool MaxDistanceTrigger = false;
     public float MaxDistnace = -1;
     public float Mass = 1;
     public float Speed = 10;
@@ -179,8 +180,21 @@ public class RFX4_PhysicsMotion : MonoBehaviour
     void RemoveRigidbody()
     {
         isCollided = false;
+
         if (rigid != null) Destroy(rigid);
         if (collid != null) Destroy(collid);
+
+        if (EffectOnCollision != null)
+        {
+            var instance = Instantiate(EffectOnCollision, transform.position, new Quaternion()) as GameObject;
+
+            if (HUE > -0.9f) RFX4_ColorHelper.ChangeObjectColorByHUE(instance, HUE);
+
+            if (LookAtNormal) instance.transform.LookAt(transform.position + transform.forward);
+            else instance.transform.rotation = transform.rotation;
+            // if (!CollisionEffectInWorldSpace) instance.transform.parent = contact.otherCollider.transform.parent;
+            Destroy(instance, CollisionEffectDestroyAfter);
+        }
     }
 
     void OnDrawGizmosSelected()
