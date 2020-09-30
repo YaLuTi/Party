@@ -59,6 +59,8 @@ public class PlayerStatusAnimator : MonoBehaviour
     public void PlayerItemAnimation(string s)
     {
         animator.SetTrigger(s);
+        playerMove.SetMoveEnable(false);
+        // playerMove.DisableRotate();
     }
 
     public bool CanAnimation()

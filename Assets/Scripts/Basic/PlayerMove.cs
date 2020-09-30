@@ -12,7 +12,11 @@ public class PlayerMove : MonoBehaviour
     [Header("Game Value")]
     [SerializeField]
     float PlayerMoveSpeed; // Set by user
-    float MaxSpeed;
+    [SerializeField]
+    float PlayerRotateSpeed; // Set by user
+
+    public float MaxSpeed;
+
     [SerializeField]
     Vector3 spawnPosition;
 
@@ -38,6 +42,7 @@ public class PlayerMove : MonoBehaviour
     public bool inhibitMove = false; // Set from RagdollControl
     public Vector3 glideFree = Vector3.zero; // Set from RagdollControl
     Vector3 glideFree2 = Vector3.zero;
+    Vector3 speed;
     [HideInInspector] public bool inhibitRun = false; // Set from RagdollControl
 
     Rigidbody[] rbs; // 有重複的參數在PlayerIdentity被取得 之後要修
@@ -68,7 +73,7 @@ public class PlayerMove : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         rbs = GetComponentsInChildren<Rigidbody>();
         anim = GetComponent<Animator>();
-        MaxSpeed = (11 / 2f) * 1.414f;
+        MaxSpeed = (12 / 2f) * 1.414f;
     }
 
     // Update is called once per frame
@@ -88,6 +93,7 @@ public class PlayerMove : MonoBehaviour
         else
         {
             MoveMultiplier = -1f;
+            speed = Vector3.zero;
         }
 
         // rb.velocity = new Vector3(h, 0, v) * 2.5f;
@@ -100,20 +106,31 @@ public class PlayerMove : MonoBehaviour
             float angle = 0;
             angle = (Mathf.Atan2(-h, v) * Mathf.Rad2Deg * -1);
 
-            Vector3 speed = new Vector3(h, 0, v) * PlayerMoveSpeed * (1 + MoveMultiplier) * Time.deltaTime + (glideFree * Time.deltaTime);
-            if (Mathf.Abs(speed.x) + Mathf.Abs(speed.z) > (MaxSpeed * Time.deltaTime) * (1 + MoveMultiplier))
+            speed += new Vector3(h, 0, v) * PlayerMoveSpeed * (1 + MoveMultiplier);
+            Debug.Log(speed);
+            if (Mathf.Abs(speed.x) + Mathf.Abs(speed.z) > (MaxSpeed) * (1 + MoveMultiplier))
             {
-                float m = (MaxSpeed * Time.deltaTime) / (Mathf.Abs(speed.x) + Mathf.Abs(speed.z));
+                Debug.Log((MaxSpeed) * (1 + MoveMultiplier));
+                float m = (MaxSpeed) / (Mathf.Abs(speed.x) + Mathf.Abs(speed.z));
                 speed.x = m * speed.x;
                 speed.z = m * speed.z;
             }
-            transform.position +=speed;
 
-            Debug.Log(Mathf.Abs(speed.x) + Mathf.Abs(speed.z));
+            if (MoveEnable)
+            {
+                transform.position += speed * Time.deltaTime + (glideFree * Time.deltaTime);
+            }
+
+            if (Mathf.Abs(speed.x) + Mathf.Abs(speed.z) > 0)
+            {
+                // Debug.Log(Mathf.Abs(speed.x) + Mathf.Abs(speed.z));
+            }
+
+            speed *= 0.4f;
 
             playerStatus.MoveSpeedUpdate(Mathf.Abs(h) + Mathf.Abs(v));
             
-            // if(RotateEnable)transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, angle, 0), 1000 * Time.deltaTime);
+            // if(RotateEnable)transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, angle, 0), PlayerRotateSpeed * Time.deltaTime);
             if (RotateEnable) transform.rotation =  Quaternion.Euler(0, angle, 0);
 
             SpawnStepParticle();

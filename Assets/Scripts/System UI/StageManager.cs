@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 using UnityEngine.Playables;
+using Cinemachine;
 
 public delegate void OnBattleScene();
 
@@ -25,6 +26,7 @@ public class StageManager : MonoBehaviour
 
     public bool Testing = false;
 
+    CinemachineTargetGroup targetGroup;
     public PlayableDirector EndDirector;
     public GameObject PlayerCraftUI;
     List<GameObject> PlayerCraftUIList = new List<GameObject>();
@@ -51,7 +53,8 @@ public class StageManager : MonoBehaviour
             }
         }
 
-        if(Testing)GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Play();
+        targetGroup = GameObject.FindGameObjectWithTag("CineGroup").GetComponent<CinemachineTargetGroup>();
+        if (Testing)GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Play();
         // SceneManager.LoadScene("CharacterChoose", LoadSceneMode.Additive);
     }
 
@@ -121,6 +124,7 @@ public class StageManager : MonoBehaviour
             playerInput.SwitchCurrentActionMap("GamePlay");
             Destroy(playerInput.transform.root.GetComponentInChildren<PlayerCreating>());
             players.Add((playerInput.transform.root.gameObject));
+            targetGroup.AddMember(playerInput.transform, 1, 0);
             LoadTestScene();
             // playerInput.transform.root.GetComponent<PlayerIdentity>().SetRagData();
         }
@@ -204,7 +208,6 @@ public class StageManager : MonoBehaviour
     public void LoadTestScene()
     {
         if (inputManager == null) return; // Not sure why I need this
-        inputManager.enabled = false;
         StartCoroutine(_LoadTestScene());
     }
 
@@ -212,7 +215,7 @@ public class StageManager : MonoBehaviour
     {
         // TransitionsPanel.DOAnchorPosY(0, 0.4f);
         // TitleAudioSource.PlayOneShot(TitleAudioSource.clip);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < players.Count; i++)
         {
             players[i].GetComponent<PlayerIdentity>().SetRagData();

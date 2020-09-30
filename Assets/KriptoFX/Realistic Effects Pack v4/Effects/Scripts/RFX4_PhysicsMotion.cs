@@ -117,7 +117,7 @@ public class RFX4_PhysicsMotion : MonoBehaviour
             if (handler != null)
                 handler(this, new RFX4_CollisionInfo { HitPoint = contact.point, HitCollider = contact.otherCollider, HitGameObject = contact.otherCollider.gameObject});
 
-            if (EffectOnCollision != null)
+            if (EffectOnCollision != null && !Spawn)
             {
                 var instance = Instantiate(EffectOnCollision, contact.point, new Quaternion()) as GameObject;
 
