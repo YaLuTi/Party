@@ -25,6 +25,8 @@ public class PlayerHitten : MonoBehaviour
         return MaxHealth;
     }
 
+    public static int TestHP = 0;
+
     float Health;
 
     [SerializeField]
@@ -50,7 +52,16 @@ public class PlayerHitten : MonoBehaviour
         {
             UI_copy.transform.parent = canvas.transform;
             UI_copy.transform.localScale = new Vector3(1, 1, 1);
-            UI_copy.GetComponent<RectTransform>().anchoredPosition = new Vector2(-270, 170);
+            switch (TestHP)
+            {
+                case 0:
+                    UI_copy.GetComponent<RectTransform>().anchoredPosition = new Vector2(-270, 170);
+                    break;
+                case 1:
+                    UI_copy.GetComponent<RectTransform>().anchoredPosition = new Vector2(270, 170);
+                    break;
+            }
+            TestHP++;
         }
     }
 
@@ -64,7 +75,6 @@ public class PlayerHitten : MonoBehaviour
     }
     public void OnHit(BulletHitInfo_AF info)
     {
-
         if (Flag != null) Flag.Throw();
         Flag = null;
 
@@ -77,6 +87,21 @@ public class PlayerHitten : MonoBehaviour
         pickItem.OnHit(info);
     }
 
+    IEnumerator Respawn()
+    {
+        yield return new WaitForFixedUpdate();
+        BulletHitInfo_AF info = new BulletHitInfo_AF();
+        pickItem.OnHit(info);
+        yield return new WaitForFixedUpdate();
+        ragdollControl.shotByBullet = true;
+        ragdollControl.IsDead = true;
+        yield return new WaitForSeconds(2f);
+        GetComponent<PlayerIdentity>().Respawn();
+        Health = MaxHealth;
+        ragdollControl.IsDead = false;
+        yield return null;
+    }
+
     public void OnDamaged(float damage)
     {
         if (ragdollControl.shotByBullet) return;
@@ -84,7 +109,10 @@ public class PlayerHitten : MonoBehaviour
         float oldH = Health;
         Health -= damage;
         Health = Mathf.Max(0, Health);
-        if (Health == 0) ragdollControl.IsDead = true;
+        /*if (Health == 0)
+        {
+            StartCoroutine(Respawn());
+        }*/
 
         OnHealthChanged?.Invoke(this, oldH, Health);
     }

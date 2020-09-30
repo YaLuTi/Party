@@ -5077,7 +5077,7 @@ MonoBehaviour:
   LimitMaxDistance: 1
   MaxDistnace: 10
   Mass: 1
-  Speed: 60
+  Speed: 20
   AirDrag: 3.35
   UseGravity: 0
 --- !u!1 &2647360907171918592
@@ -14431,7 +14431,8 @@ MonoBehaviour:
   UseGravity: 0
   ForceMode: 1
   AddRealtimeForce: {x: 0, y: 0, z: 0}
-  MinSpeed: 7
+  StartForce: {x: 0, y: 0, z: 0}
+  MinSpeed: 10
   ColliderRadius: 0.7
   FreezeRotation: 0
   UseTargetPositionAfterCollision: 0
@@ -14442,6 +14443,12 @@ MonoBehaviour:
   CollisionEffectDestroyAfter: 5
   DeactivateObjectsAfterCollision: []
   HUE: -1
+  ItemlayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  PlayerlayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &2647360907172108952
 GameObject:
   m_ObjectHideFlags: 0

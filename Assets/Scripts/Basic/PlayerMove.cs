@@ -107,7 +107,6 @@ public class PlayerMove : MonoBehaviour
             angle = (Mathf.Atan2(-h, v) * Mathf.Rad2Deg * -1);
 
             speed += new Vector3(h, 0, v) * PlayerMoveSpeed * (1 + MoveMultiplier);
-            Debug.Log(speed);
             if (Mathf.Abs(speed.x) + Mathf.Abs(speed.z) > (MaxSpeed) * (1 + MoveMultiplier))
             {
                 Debug.Log((MaxSpeed) * (1 + MoveMultiplier));

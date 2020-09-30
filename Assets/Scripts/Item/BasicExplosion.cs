@@ -46,13 +46,14 @@ public class BasicExplosion : MonoBehaviour
                     bulletHitInfo.bulletForce = (collider.ClosestPoint(transform.position) - transform.position).normalized * velocity;
                     // bulletHitInfo.hitNormal = raycastHit.normal;
                     bulletHitInfo.hitPoint = collider.ClosestPoint(transform.position);
-                    hitten.OnHit(bulletHitInfo);
 
                     if (!playerHittens.Contains(hitten))
                     {
                         hitten.OnDamaged(damage);
                     }
 
+                    hitten.OnHit(bulletHitInfo);
+                    
                     playerHittens.Add(hitten);
                 }
                 else if (collider.gameObject.transform.root.GetComponent <CreatureBasic>())

@@ -124,7 +124,9 @@ public class StageManager : MonoBehaviour
             playerInput.SwitchCurrentActionMap("GamePlay");
             Destroy(playerInput.transform.root.GetComponentInChildren<PlayerCreating>());
             players.Add((playerInput.transform.root.gameObject));
-            targetGroup.AddMember(playerInput.transform, 1, 0);
+
+            if(targetGroup != null)targetGroup.AddMember(playerInput.transform, 1, 0);
+
             LoadTestScene();
             // playerInput.transform.root.GetComponent<PlayerIdentity>().SetRagData();
         }

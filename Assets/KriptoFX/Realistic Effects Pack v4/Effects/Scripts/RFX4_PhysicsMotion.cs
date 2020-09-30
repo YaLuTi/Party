@@ -46,6 +46,12 @@ public class RFX4_PhysicsMotion : MonoBehaviour
     float currentSpeedOffset;
     private RFX4_EffectSettings effectSettings;
 
+    [Header("Game")]
+    [SerializeField]
+    LayerMask ItemlayerMask;
+    [SerializeField]
+    LayerMask PlayerlayerMask;
+
     void OnEnable ()
     {
         effectSettings = GetComponentInParent<RFX4_EffectSettings>();
@@ -92,6 +98,7 @@ public class RFX4_PhysicsMotion : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if (isCollided && !effectSettings.UseCollisionDetection) return;
+        if ((ItemlayerMask.value & 1 << collision.gameObject.layer) > 0) return;
         foreach (ContactPoint contact in collision.contacts)
         {
             if (!isCollided)
