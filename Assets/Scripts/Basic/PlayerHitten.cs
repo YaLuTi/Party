@@ -60,6 +60,9 @@ public class PlayerHitten : MonoBehaviour
                 case 1:
                     UI_copy.GetComponent<RectTransform>().anchoredPosition = new Vector2(270, 170);
                     break;
+                case 2:
+                    UI_copy.GetComponent<RectTransform>().anchoredPosition = new Vector2(-270, -170);
+                    break;
             }
             TestHP++;
         }
@@ -109,10 +112,10 @@ public class PlayerHitten : MonoBehaviour
         float oldH = Health;
         Health -= damage;
         Health = Mathf.Max(0, Health);
-        /*if (Health == 0)
+        if (Health == 0)
         {
             StartCoroutine(Respawn());
-        }*/
+        }
 
         OnHealthChanged?.Invoke(this, oldH, Health);
     }

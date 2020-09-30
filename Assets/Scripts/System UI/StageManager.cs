@@ -54,7 +54,7 @@ public class StageManager : MonoBehaviour
         }
 
         targetGroup = GameObject.FindGameObjectWithTag("CineGroup").GetComponent<CinemachineTargetGroup>();
-        if (Testing)GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Play();
+        // if (Testing)GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Play();
         // SceneManager.LoadScene("CharacterChoose", LoadSceneMode.Additive);
     }
 
