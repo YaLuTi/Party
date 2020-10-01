@@ -41,10 +41,10 @@ GameObject:
   - component: {fileID: 2941529793907438080}
   - component: {fileID: 2941529793907438081}
   - component: {fileID: 2941529793907438094}
-  - component: {fileID: 2941529793907438092}
   - component: {fileID: 2941529793907438093}
   - component: {fileID: 2941529793907438095}
   - component: {fileID: 2941529793907438090}
+  - component: {fileID: 5192893221352721436}
   m_Layer: 10
   m_Name: Staff(Black)
   m_TagString: Item
@@ -114,19 +114,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &2941529793907438092
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2941529793907438091}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &2941529793907438093
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -263,3 +250,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!136 &5192893221352721436
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2941529793907438091}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.50000024
+  m_Height: 1.0000002
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}

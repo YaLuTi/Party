@@ -41,10 +41,10 @@ GameObject:
   - component: {fileID: 8159330006898230718}
   - component: {fileID: 8159330006898230719}
   - component: {fileID: 8159330006898230704}
-  - component: {fileID: 8159330006898230706}
   - component: {fileID: 8159330006898230707}
   - component: {fileID: 8159330006898230705}
   - component: {fileID: 8159330006898230708}
+  - component: {fileID: 5257134102636477549}
   m_Layer: 10
   m_Name: Staff(Fire)
   m_TagString: Item
@@ -114,19 +114,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &8159330006898230706
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8159330006898230709}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &8159330006898230707
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -263,3 +250,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!136 &5257134102636477549
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8159330006898230709}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.50000024
+  m_Height: 1.0000002
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
