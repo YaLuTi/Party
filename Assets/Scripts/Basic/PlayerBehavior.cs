@@ -233,6 +233,17 @@ public class PlayerBehavior : MonoBehaviour
             IsThrowing2 = false;
         }
     }
+    public void OnHit()
+    {
+        // GetComponent<Rigidbody>().AddForce(info.bulletForce);
+        if (IsHolding)
+        {
+            itemHand.DropHoldingItem();
+            IsHolding = false;
+            IsThrowing = false;
+            IsThrowing2 = false;
+        }
+    }
 }
 
 public class _playerItemStatus

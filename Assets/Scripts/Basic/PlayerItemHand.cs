@@ -98,6 +98,25 @@ public class PlayerItemHand : MonoBehaviour
         yield return null;
     }
 
+    public void DropHoldingItem()
+    {
+        StartCoroutine(DropItem());
+    }
+
+    IEnumerator DropItem()
+    {
+        HoldingItem.transform.parent = null;
+        HoldingItem.GetComponent<ItemBasic>().IsHolded = false;
+        yield return new WaitForFixedUpdate();
+        HoldingItem.GetComponent<Collider>().isTrigger = false;
+        Rigidbody rb = HoldingItem.GetComponent<Rigidbody>();
+        rb.isKinematic = false;
+        rb.useGravity = true;
+
+        HoldingItem = null;
+        yield return null;
+    }
+
     public void TriggerItem()
     {
         HoldingItem.GetComponent<ItemBasic>().OnTrigger();

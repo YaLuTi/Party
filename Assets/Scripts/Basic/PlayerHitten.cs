@@ -93,8 +93,7 @@ public class PlayerHitten : MonoBehaviour
     IEnumerator Respawn()
     {
         yield return new WaitForFixedUpdate();
-        BulletHitInfo_AF info = new BulletHitInfo_AF();
-        pickItem.OnHit(info);
+        pickItem.OnHit();
         yield return new WaitForFixedUpdate();
         ragdollControl.shotByBullet = true;
         ragdollControl.IsDead = true;
