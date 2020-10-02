@@ -125,7 +125,7 @@ Shader "Shader_SimpleType"
 }
 /*ASEBEGIN
 Version=18000
-594;73;840;575;1173.644;429.252;1.612689;True;False
+808;73;626;575;484.2822;335.9314;1.34559;False;False
 Node;AmplifyShaderEditor.RangedFloatNode;11;-651.6928,75.19522;Inherit;False;Property;_Fresnel_Bias;Fresnel_Bias;4;0;Create;True;0;0;False;0;0;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;13;-649.6928,143.1953;Inherit;False;Property;_Fresnel_Scale;Fresnel_Scale;5;0;Create;True;0;0;False;0;1;1;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;5;-649.6928,214.1953;Inherit;False;Property;_Fresnel_Power;Fresnel_Power;6;0;Create;True;0;0;False;0;5;5;0;0;0;1;FLOAT;0
@@ -146,4 +146,4 @@ WireConnection;0;2;31;0
 WireConnection;0;3;24;0
 WireConnection;0;4;29;0
 ASEEND*/
-//CHKSM=93CAB60CB725DC27F9E135F5339652462896C365
+//CHKSM=35DD297AB53846AD7AE9BEEC97ACA38048E2D9CE

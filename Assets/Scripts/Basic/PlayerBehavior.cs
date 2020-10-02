@@ -108,23 +108,12 @@ public class PlayerBehavior : MonoBehaviour
 
     void OnShoot()
     {
-        if (IsHolding)
+        if (playerStatus.PlayerPick()) return;
+        if (IsHolding && !IsThrowing2)
         {
-            _playerItemStatus status = new _playerItemStatus();
-            status.Throwing = IsThrowing2;
-            string animation = itemHand.UseItem(status);
-            if (animation == "Empty" || animation == "")
-            {
-
-            }
-            else if(animation == "SetMine")
-            {
-                SetMine();
-            }
-            else
-            {
-                playerStatus.PlayerItemAnimation(animation);
-            }
+            playerStatus.PlayerItem_Aim();
+            IsThrowing = true;
+            IsThrowing2 = true;
         }
     }
 
@@ -134,9 +123,27 @@ public class PlayerBehavior : MonoBehaviour
         if (playerStatus.PlayerPick()) return;
         if (IsHolding && !IsThrowing2)
         {
-            playerStatus.PlayerItem_Aim();
+            if (IsHolding && playerStatus.CanAnimation())
+            {
+                _playerItemStatus status = new _playerItemStatus();
+                status.Throwing = IsThrowing2;
+                string animation = itemHand.UseItem(status);
+                if (animation == "Empty" || animation == "")
+                {
+
+                }
+                else if (animation == "SetMine")
+                {
+                    SetMine();
+                }
+                else
+                {
+                    playerStatus.PlayerItemAnimation(animation);
+                }
+            }
+            /*playerStatus.PlayerItem_Aim();
             IsThrowing = true;
-            IsThrowing2 = true;
+            IsThrowing2 = true;*/
         }
         else if(!IsHolding)
         {
@@ -209,13 +216,29 @@ public class PlayerBehavior : MonoBehaviour
         itemHand.ThrowHoldingItem(0);
     }
 
+    void TriggerItem()
+    {
+        itemHand.TriggerItem();
+    }
+
     public void OnHit(BulletHitInfo_AF info)
     {
         Destroy(Instantiate(HitParticle, info.hitPoint, Quaternion.identity), 2f);
         // GetComponent<Rigidbody>().AddForce(info.bulletForce);
         if (IsHolding)
         {
-            itemHand.DropHoldingItem(info.bulletForce);
+            itemHand.DropHoldingItem(info.bulletForce / 10);
+            IsHolding = false;
+            IsThrowing = false;
+            IsThrowing2 = false;
+        }
+    }
+    public void OnHit()
+    {
+        // GetComponent<Rigidbody>().AddForce(info.bulletForce);
+        if (IsHolding)
+        {
+            itemHand.DropHoldingItem();
             IsHolding = false;
             IsThrowing = false;
             IsThrowing2 = false;

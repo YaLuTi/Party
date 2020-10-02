@@ -9,6 +9,7 @@ public class PlayerStatusAnimator : MonoBehaviour
     List<StatusEventArgs> status = new List<StatusEventArgs>();
 
     Animator animator;
+    AnimatorClipInfo[] CurrentClipInfo;
 
     float MoveSpeed;
     PlayerMove playerMove;
@@ -58,6 +59,18 @@ public class PlayerStatusAnimator : MonoBehaviour
     public void PlayerItemAnimation(string s)
     {
         animator.SetTrigger(s);
+        playerMove.SetMoveEnable(false);
+        // playerMove.DisableRotate();
+    }
+
+    public bool CanAnimation()
+    {
+        CurrentClipInfo = animator.GetCurrentAnimatorClipInfo(0);
+        if(CurrentClipInfo[0].clip.name == "PlayerRun" || CurrentClipInfo[0].clip.name == "PlayerIdle")
+        {
+            return true;
+        }
+        return false;
     }
 
     public void GetStatus(StatusEventArgs status, float time)

@@ -76,15 +76,35 @@ public class PlayerCreating : MonoBehaviour
         ChangeHat();
     }
 
+    void OnUI_Up()
+    {
+        choosingArray--;
+        playerCreatingUI.Up();
+    }
+
+    void OnUI_Down()
+    {
+        Debug.Log("D");
+        choosingArray++;
+        playerCreatingUI.Down();
+    }
+
     void ChangeHat()
     {
-        Destroy(ClothClone[choosingArray]);
+        if(ClothClone[choosingArray] != null)
+        {
+            Destroy(ClothClone[choosingArray]);
+        }
         ClothClone[choosingArray] = Instantiate(clothDataArrays[choosingArray].clothDatas[ClothArray[choosingArray]].cloth);
         ClothClone[choosingArray].transform.parent = clothOffset[choosingArray];
         ClothClone[choosingArray].transform.localScale = clothDataArrays[choosingArray].clothDatas[ClothArray[choosingArray]].ScaleOffset;
         ClothClone[choosingArray].transform.localPosition = clothDataArrays[choosingArray].clothDatas[ClothArray[choosingArray]].PositionOffset;
         ClothClone[choosingArray].transform.localRotation = Quaternion.Euler(clothDataArrays[choosingArray].clothDatas[ClothArray[choosingArray]].RotationOffset);
 
+        if (RigClothClone[choosingArray] != null)
+        {
+            Destroy(RigClothClone[choosingArray]);
+        }
         Destroy(RigClothClone[choosingArray]);
         RigClothClone[choosingArray] = Instantiate(clothDataArrays[choosingArray].clothDatas[ClothArray[choosingArray]].cloth);
         RigClothClone[choosingArray].transform.parent = RigclothOffset[choosingArray];

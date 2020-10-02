@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 public class RFX4_PhysicsMotion : MonoBehaviour
 {
     public bool UseCollisionDetect = true;
+    public bool MaxDistanceTrigger = false;
     public float MaxDistnace = -1;
     public float Mass = 1;
     public float Speed = 10;
@@ -15,6 +16,7 @@ public class RFX4_PhysicsMotion : MonoBehaviour
     public bool UseGravity = true;
     public ForceMode ForceMode = ForceMode.Impulse;
     public Vector3 AddRealtimeForce = Vector3.zero;
+    public Vector3 StartForce = Vector3.zero;
     public float MinSpeed = 0;
     public float ColliderRadius = 0.05f;
     public bool FreezeRotation;
@@ -29,6 +31,8 @@ public class RFX4_PhysicsMotion : MonoBehaviour
 
     [HideInInspector] public float HUE = -1;
 
+    bool Spawn = false;
+
     public event EventHandler<RFX4_CollisionInfo> CollisionEnter;
 
     Rigidbody rigid;
@@ -42,6 +46,12 @@ public class RFX4_PhysicsMotion : MonoBehaviour
     float currentSpeedOffset;
     private RFX4_EffectSettings effectSettings;
 
+    [Header("Game")]
+    [SerializeField]
+    LayerMask ItemlayerMask;
+    [SerializeField]
+    LayerMask PlayerlayerMask;
+
     void OnEnable ()
     {
         effectSettings = GetComponentInParent<RFX4_EffectSettings>();
@@ -54,7 +64,8 @@ public class RFX4_PhysicsMotion : MonoBehaviour
             }
         }
         currentSpeedOffset = Random.Range(-RandomSpeedOffset * 10000f, RandomSpeedOffset * 10000f) / 10000f;
-	    InitializeRigid();
+
+        InitializeRigid();
     }
 
     void InitializeRigid()
@@ -80,12 +91,14 @@ public class RFX4_PhysicsMotion : MonoBehaviour
         rigid.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         rigid.interpolation = RigidbodyInterpolation.Interpolate;
         rigid.AddForce(transform.forward * (effectSettings.Speed + currentSpeedOffset), ForceMode);
+        rigid.AddForce(StartForce);
         isInitializedForce = true;
     }
 
     void OnCollisionEnter(Collision collision)
     {
         if (isCollided && !effectSettings.UseCollisionDetection) return;
+        if ((ItemlayerMask.value & 1 << collision.gameObject.layer) > 0) return;
         foreach (ContactPoint contact in collision.contacts)
         {
             if (!isCollided)
@@ -111,7 +124,7 @@ public class RFX4_PhysicsMotion : MonoBehaviour
             if (handler != null)
                 handler(this, new RFX4_CollisionInfo { HitPoint = contact.point, HitCollider = contact.otherCollider, HitGameObject = contact.otherCollider.gameObject});
 
-            if (EffectOnCollision != null)
+            if (EffectOnCollision != null && !Spawn)
             {
                 var instance = Instantiate(EffectOnCollision, contact.point, new Quaternion()) as GameObject;
 
@@ -120,6 +133,7 @@ public class RFX4_PhysicsMotion : MonoBehaviour
                 if (LookAtNormal) instance.transform.LookAt(contact.point + contact.normal);
                 else instance.transform.rotation = transform.rotation;
                 if (!CollisionEffectInWorldSpace) instance.transform.parent = contact.otherCollider.transform.parent;
+                Spawn = true;
                 Destroy(instance, CollisionEffectDestroyAfter);
             }
         }
@@ -179,8 +193,22 @@ public class RFX4_PhysicsMotion : MonoBehaviour
     void RemoveRigidbody()
     {
         isCollided = false;
+
         if (rigid != null) Destroy(rigid);
         if (collid != null) Destroy(collid);
+
+        if (EffectOnCollision != null && !Spawn)
+        {
+            var instance = Instantiate(EffectOnCollision, transform.position, new Quaternion()) as GameObject;
+
+            if (HUE > -0.9f) RFX4_ColorHelper.ChangeObjectColorByHUE(instance, HUE);
+
+            if (LookAtNormal) instance.transform.LookAt(transform.position + transform.forward);
+            else instance.transform.rotation = transform.rotation;
+            // if (!CollisionEffectInWorldSpace) instance.transform.parent = contact.otherCollider.transform.parent;
+            Spawn = true;
+            Destroy(instance, CollisionEffectDestroyAfter);
+        }
     }
 
     void OnDrawGizmosSelected()

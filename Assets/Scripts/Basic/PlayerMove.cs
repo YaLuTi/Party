@@ -13,6 +13,11 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     float PlayerMoveSpeed; // Set by user
     [SerializeField]
+    float PlayerRotateSpeed; // Set by user
+
+    public float MaxSpeed;
+
+    [SerializeField]
     Vector3 spawnPosition;
 
     [Header("Game SFX")]
@@ -37,12 +42,14 @@ public class PlayerMove : MonoBehaviour
     public bool inhibitMove = false; // Set from RagdollControl
     public Vector3 glideFree = Vector3.zero; // Set from RagdollControl
     Vector3 glideFree2 = Vector3.zero;
+    Vector3 speed;
     [HideInInspector] public bool inhibitRun = false; // Set from RagdollControl
 
     Rigidbody[] rbs; // 有重複的參數在PlayerIdentity被取得 之後要修
     public Transform rig;
 
     bool MoveEnable = true;
+    bool RotateEnable = true;
 
     float MoveMultiplier = 0;
 
@@ -66,6 +73,7 @@ public class PlayerMove : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         rbs = GetComponentsInChildren<Rigidbody>();
         anim = GetComponent<Animator>();
+        MaxSpeed = (12 / 2f) * 1.414f;
     }
 
     // Update is called once per frame
@@ -85,6 +93,7 @@ public class PlayerMove : MonoBehaviour
         else
         {
             MoveMultiplier = -1f;
+            speed = Vector3.zero;
         }
 
         // rb.velocity = new Vector3(h, 0, v) * 2.5f;
@@ -96,12 +105,33 @@ public class PlayerMove : MonoBehaviour
         {
             float angle = 0;
             angle = (Mathf.Atan2(-h, v) * Mathf.Rad2Deg * -1);
-            transform.position += new Vector3(h, 0, v) * PlayerMoveSpeed * (1 + MoveMultiplier) * Time.deltaTime + (glideFree * Time.deltaTime);
+
+            speed += new Vector3(h, 0, v) * PlayerMoveSpeed * (1 + MoveMultiplier);
+            if (Mathf.Abs(speed.x) + Mathf.Abs(speed.z) > (MaxSpeed) * (1 + MoveMultiplier))
+            {
+                Debug.Log((MaxSpeed) * (1 + MoveMultiplier));
+                float m = (MaxSpeed) / (Mathf.Abs(speed.x) + Mathf.Abs(speed.z));
+                speed.x = m * speed.x;
+                speed.z = m * speed.z;
+            }
+
+            if (MoveEnable)
+            {
+                transform.position += speed * Time.deltaTime + (glideFree * Time.deltaTime);
+            }
+
+            if (Mathf.Abs(speed.x) + Mathf.Abs(speed.z) > 0)
+            {
+                // Debug.Log(Mathf.Abs(speed.x) + Mathf.Abs(speed.z));
+            }
+
+            speed *= 0.4f;
 
             playerStatus.MoveSpeedUpdate(Mathf.Abs(h) + Mathf.Abs(v));
             
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, angle, 0), 480 * Time.deltaTime);
-            
+            // if(RotateEnable)transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, angle, 0), PlayerRotateSpeed * Time.deltaTime);
+            if (RotateEnable) transform.rotation =  Quaternion.Euler(0, angle, 0);
+
             SpawnStepParticle();
         }
         else
@@ -125,7 +155,7 @@ public class PlayerMove : MonoBehaviour
         if (StepParticle == null) return;
         if(StepCooldown < StepCooldownValue)
         {
-            StepCooldown += Time.deltaTime;
+            StepCooldown += Time.deltaTime * MoveMultiplier;
             return;
         }
         StepCooldown = 0;
@@ -149,21 +179,41 @@ public class PlayerMove : MonoBehaviour
     {
         if (inhibitMove)
         {
-            anim.SetFloat("GetUpSpeedMultiplier", anim.GetFloat("GetUpSpeedMultiplier") + 0.2f);
+            // anim.SetFloat("GetUpSpeedMultiplier", anim.GetFloat("GetUpSpeedMultiplier") + 0.2f);
         }
     }
     void OnShoot()
     {
         if (inhibitMove)
         {
-            anim.SetFloat("GetUpSpeedMultiplier", anim.GetFloat("GetUpSpeedMultiplier") + 0.2f);
+            // anim.SetFloat("GetUpSpeedMultiplier", anim.GetFloat("GetUpSpeedMultiplier") + 0.2f);
         }
     }
 
+    // 目前由Behavior啟動(丟東西時) StatusAnimator呼叫
     public void SetMoveEnable(bool b)
     {
         MoveEnable = b;
     }
+
+    // These is made for fucking Animator that Animator cannot send bool parameter. 
+    public void EnableMove()
+    {
+        MoveEnable = true;
+    }
+    public void DisableMove()
+    {
+        MoveEnable = false;
+    }
+    public void EnableRotate()
+    {
+        RotateEnable = true;
+    }
+    public void DisableRotate()
+    {
+        RotateEnable = false;
+    }
+    //
 
     public void Hitten()
     {

@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 using UnityEngine.Playables;
+using Cinemachine;
 
 public delegate void OnBattleScene();
 
@@ -25,8 +26,10 @@ public class StageManager : MonoBehaviour
 
     public bool Testing = false;
 
+    CinemachineTargetGroup targetGroup;
     public PlayableDirector EndDirector;
     public GameObject PlayerCraftUI;
+    List<GameObject> PlayerCraftUIList = new List<GameObject>();
     public GameObject Canvas;
     // Start is called before the first frame update
     void Start()
@@ -49,7 +52,9 @@ public class StageManager : MonoBehaviour
                 Instantiate(players[i]);
             }
         }
-        
+
+        targetGroup = GameObject.FindGameObjectWithTag("CineGroup").GetComponent<CinemachineTargetGroup>();
+        // if (Testing)GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Play();
         // SceneManager.LoadScene("CharacterChoose", LoadSceneMode.Additive);
     }
 
@@ -116,10 +121,14 @@ public class StageManager : MonoBehaviour
         if (Testing)
         {
             playerInput.transform.root.GetComponent<PlayerIdentity>().InputEnable();
-            playerInput.transform.root.GetComponent<PlayerIdentity>().SetRagData();
             playerInput.SwitchCurrentActionMap("GamePlay");
             Destroy(playerInput.transform.root.GetComponentInChildren<PlayerCreating>());
             players.Add((playerInput.transform.root.gameObject));
+
+            if(targetGroup != null)targetGroup.AddMember(playerInput.transform, 1, 0);
+
+            LoadTestScene();
+            // playerInput.transform.root.GetComponent<PlayerIdentity>().SetRagData();
         }
         else
         {
@@ -129,7 +138,14 @@ public class StageManager : MonoBehaviour
             g.GetComponent<Transform>().localPosition = new Vector3(-1.15f + (players.Count - 1) * 2.25f, 3.11f, -0.6f);
             players[players.Count - 1].GetComponentInChildren<PlayerCreating>().playerCreatingUI = g.GetComponent<PlayerCraftingUI>();
             OnBattleScene += players[players.Count - 1].GetComponent<PlayerIdentity>().OnTest;
+            PlayerCraftUIList.Add(g);
         }
+    }
+
+    public void PlayBGM()
+    {
+        Debug.Log("a");
+        GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Play();
     }
 
     // Load to end scene
@@ -190,6 +206,24 @@ public class StageManager : MonoBehaviour
 
     // Set End scene
 
+    // Load normal Scene
+    public void LoadTestScene()
+    {
+        if (inputManager == null) return; // Not sure why I need this
+        StartCoroutine(_LoadTestScene());
+    }
+
+    IEnumerator _LoadTestScene()
+    {
+        // TransitionsPanel.DOAnchorPosY(0, 0.4f);
+        // TitleAudioSource.PlayOneShot(TitleAudioSource.clip);
+        yield return new WaitForSeconds(0.1f);
+        for (int i = 0; i < players.Count; i++)
+        {
+            players[i].GetComponent<PlayerIdentity>().SetRagData();
+        }
+        yield return null;
+    }
 
     // Load normal Scene
     public void LoadScene()
@@ -203,6 +237,12 @@ public class StageManager : MonoBehaviour
         // TransitionsPanel.DOAnchorPosY(0, 0.4f);
         // TitleAudioSource.PlayOneShot(TitleAudioSource.clip);
         yield return new WaitForSeconds(0.5f);
+
+        foreach(GameObject g in PlayerCraftUIList)
+        {
+            Destroy(g);
+        }
+
         for (int i = 0; i < players.Count; i++)
         {
             players[i].GetComponent<PlayerIdentity>().SetRagData();
