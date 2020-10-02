@@ -21,7 +21,7 @@ namespace AnimFollow
 		void OnCollisionEnter(Collision collision)
 		{
 			bool ignore = false;
-			if (!(collision.transform.name == "Terrain") && collision.transform.root != this.transform.root)
+			if (!(collision.transform.name == "Terrain" || collision.transform.name == "Environment") && collision.transform.root != this.transform.root)
 			{
 				foreach (string ignoreTag in ignoreCollidersWithTag)
 				{

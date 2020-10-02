@@ -93,10 +93,9 @@ public class PlayerHitten : MonoBehaviour
     IEnumerator Respawn()
     {
         yield return new WaitForFixedUpdate();
-        pickItem.OnHit();
-        yield return new WaitForFixedUpdate();
         ragdollControl.shotByBullet = true;
         ragdollControl.IsDead = true;
+        pickItem.OnHit();
         yield return new WaitForSeconds(2f);
         GetComponent<PlayerIdentity>().Respawn();
         Health = MaxHealth;
@@ -113,6 +112,8 @@ public class PlayerHitten : MonoBehaviour
         Health = Mathf.Max(0, Health);
         if (Health == 0)
         {
+            if (Flag != null) Flag.Throw();
+            Flag = null;
             StartCoroutine(Respawn());
         }
 

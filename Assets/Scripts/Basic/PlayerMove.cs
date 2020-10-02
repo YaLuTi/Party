@@ -13,7 +13,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     float PlayerMoveSpeed; // Set by user
     [SerializeField]
-    float PlayerRotateSpeed; // Set by user
+    float PlayerRotateSpeed = 1200; // Set by user
 
     public float MaxSpeed;
 
@@ -109,7 +109,6 @@ public class PlayerMove : MonoBehaviour
             speed += new Vector3(h, 0, v) * PlayerMoveSpeed * (1 + MoveMultiplier);
             if (Mathf.Abs(speed.x) + Mathf.Abs(speed.z) > (MaxSpeed) * (1 + MoveMultiplier))
             {
-                Debug.Log((MaxSpeed) * (1 + MoveMultiplier));
                 float m = (MaxSpeed) / (Mathf.Abs(speed.x) + Mathf.Abs(speed.z));
                 speed.x = m * speed.x;
                 speed.z = m * speed.z;
@@ -129,8 +128,8 @@ public class PlayerMove : MonoBehaviour
 
             playerStatus.MoveSpeedUpdate(Mathf.Abs(h) + Mathf.Abs(v));
             
-            // if(RotateEnable)transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, angle, 0), PlayerRotateSpeed * Time.deltaTime);
-            if (RotateEnable) transform.rotation =  Quaternion.Euler(0, angle, 0);
+            if(RotateEnable)transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, angle, 0), PlayerRotateSpeed * Time.deltaTime);
+            // if (RotateEnable) transform.rotation =  Quaternion.Euler(0, angle, 0);
 
             SpawnStepParticle();
         }

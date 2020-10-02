@@ -354,6 +354,7 @@ namespace AnimFollow
 						}
 						else // Lerp the ragdoll to contact strength during get up
                         {
+                            Debug.Log(3);
                             animator.speed = getup2AnimatorSpeedFactor * animatorSpeed; // Animation speed during get up state
 							animFollow.maxTorque = Mathf.Lerp(animFollow.maxTorque, contactTorque, getupLerp2 * Time.fixedDeltaTime);
 							animFollow.maxForce = Mathf.Lerp(animFollow.maxForce, contactForce, getupLerp2 * Time.fixedDeltaTime);
@@ -370,6 +371,7 @@ namespace AnimFollow
 				else // Falling
                 {
                     // Lerp force to zero from residual values
+                    Debug.Log(2);
                     animFollow.maxTorque = Mathf.Lerp(animFollow.maxTorque, 0f, fallLerp * Time.fixedDeltaTime);
 					animFollow.maxForce = Mathf.Lerp(animFollow.maxForce, 0f, fallLerp * Time.fixedDeltaTime);
 					animFollow.maxJointTorque = Mathf.Lerp(animFollow.maxJointTorque, 0f, fallLerp * Time.fixedDeltaTime);
@@ -382,6 +384,7 @@ namespace AnimFollow
 						orientate = true;
 						playerMovement.inhibitMove = true;
 						animator.speed = masterFallAnimatorSpeedFactor * animatorSpeed; // Animation speed during transition to get up state
+                        Debug.Log(1);
 						animFollow.maxTorque = 0f; // These strengths shold be zero to avoid twitching during orientation
 						animFollow.maxForce = 0f;
 						animFollow.maxJointTorque = 0f;
