@@ -43,6 +43,7 @@ public class PlayerMove : MonoBehaviour
     public Vector3 glideFree = Vector3.zero; // Set from RagdollControl
     Vector3 glideFree2 = Vector3.zero;
     Vector3 speed;
+    Vector3 ForceSpeed;
     [HideInInspector] public bool inhibitRun = false; // Set from RagdollControl
 
     Rigidbody[] rbs; // 有重複的參數在PlayerIdentity被取得 之後要修
@@ -84,6 +85,8 @@ public class PlayerMove : MonoBehaviour
         {
             StartCoroutine(ReSpawn());
         }
+        transform.position += ForceSpeed * Time.deltaTime / 10;
+        ForceSpeed *= 0.9f;
         if (inhibitMove) return;
 
         if (MoveEnable)
@@ -218,6 +221,11 @@ public class PlayerMove : MonoBehaviour
     {
         inhibitMove = true;
         anim.SetFloat("GetUpSpeedMultiplier", 1);
+    }
+
+    public void AddForceSpeed(Vector3 v)
+    {
+        ForceSpeed += v;
     }
 
     void OnStatusUpdate(object sender, StatusEventArgs args)

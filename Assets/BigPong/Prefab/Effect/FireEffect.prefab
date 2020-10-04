@@ -5072,10 +5072,10 @@ MonoBehaviour:
   UseCustomColor: 0
   EffectColor: {r: 1, g: 0, b: 0, a: 1}
   IsVisible: 1
-  FadeoutTime: 1.5
+  FadeoutTime: 0.2
   UseCollisionDetection: 1
   LimitMaxDistance: 1
-  MaxDistnace: 10
+  MaxDistnace: 7
   Mass: 1
   Speed: 20
   AirDrag: 3.35
@@ -5195,8 +5195,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1.7
-      minScalar: 1.3
+      scalar: 0.8
+      minScalar: 0.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9820,8 +9820,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
-      minScalar: 0.7
+      scalar: 0.5
+      minScalar: 0.2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -14421,7 +14421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9320f3afef659b64cb7316ce3c0bfbab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseCollisionDetect: 1
+  UseCollisionDetect: 0
   MaxDistanceTrigger: 1
   MaxDistnace: 2
   Mass: 1
@@ -14432,13 +14432,13 @@ MonoBehaviour:
   ForceMode: 1
   AddRealtimeForce: {x: 0, y: 0, z: 0}
   StartForce: {x: 0, y: 0, z: 0}
-  MinSpeed: 10
-  ColliderRadius: 0.7
+  MinSpeed: 16
+  ColliderRadius: 0.5
   FreezeRotation: 0
   UseTargetPositionAfterCollision: 0
   EffectOnCollision: {fileID: 3127819895184369260, guid: 7fea0523ff7d6374fbde2eae16ef6522,
     type: 3}
-  CollisionEffectInWorldSpace: 1
+  CollisionEffectInWorldSpace: 0
   LookAtNormal: 1
   CollisionEffectDestroyAfter: 5
   DeactivateObjectsAfterCollision: []

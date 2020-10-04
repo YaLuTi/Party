@@ -23,7 +23,7 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField]
     float ThrowPower2 = 0.01f;
 
-    public float ThrowStrength = 0.1f;
+    public float ThrowStrength = 6f;
 
     GameObject HighlightObject = null;
 
@@ -53,7 +53,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             ThrowStrength += ThrowPower1 * Time.deltaTime;
             ThrowPower1 += ThrowPower2;
-            ThrowStrength = Mathf.Min(ThrowStrength, 10f);
+            ThrowStrength = Mathf.Min(ThrowStrength, 13f);
         }
         
         Collider[] colliders = Physics.OverlapSphere(transform.position, PickRadius);
@@ -115,13 +115,49 @@ public class PlayerBehavior : MonoBehaviour
             IsThrowing = true;
             IsThrowing2 = true;
         }
+        else if (!IsHolding)
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, PickRadius);
+
+            if (colliders.Length > 0)
+            {
+                float shortestDistance = 10;
+                Collider pick = null;
+
+                foreach (Collider collider in colliders)
+                {
+                    if (collider.gameObject.tag != "Item") continue;
+                    if (collider.gameObject.GetComponent<ItemBasic>().IsHolded) continue;
+                    if (pick == null)
+                    {
+                        pick = collider;
+                        shortestDistance = Vector3.Distance(this.gameObject.transform.position, pick.transform.position);
+                    }
+                    float distance = Vector3.Distance(this.gameObject.transform.position, pick.transform.position);
+                    if (distance < shortestDistance)
+                    {
+                        pick = collider;
+                        shortestDistance = distance;
+                    }
+                }
+
+                if (pick != null)
+                {
+                    IsHolding = true;
+                    itemHand.SetHoldingItem(pick.gameObject);
+                    GameObject g = Instantiate(PickUpParticle, transform.position, Quaternion.identity);
+                    g.transform.parent = this.gameObject.transform;
+                    Destroy(g, 1);
+                }
+            }
+        }
     }
 
     void OnPick()
     {
         if (!this.enabled) return;
         if (playerStatus.PlayerPick()) return;
-        if (IsHolding && !IsThrowing2)
+        if (IsHolding)
         {
             if (IsHolding && playerStatus.CanAnimation())
             {
@@ -204,7 +240,7 @@ public class PlayerBehavior : MonoBehaviour
         Debug.Log("T");
         IsHolding = false;
         IsThrowing2 = false;
-        ThrowStrength = 0.1f;
+        ThrowStrength = 3f;
         ThrowPower1 = 0.01f;
     }
 
@@ -223,7 +259,7 @@ public class PlayerBehavior : MonoBehaviour
 
     public void OnHit(BulletHitInfo_AF info)
     {
-        Destroy(Instantiate(HitParticle, info.hitPoint, Quaternion.identity), 2f);
+        // Destroy(Instantiate(HitParticle, info.hitPoint, Quaternion.identity), 2f);
         // GetComponent<Rigidbody>().AddForce(info.bulletForce);
         if (IsHolding)
         {

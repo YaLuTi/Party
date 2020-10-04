@@ -48,18 +48,18 @@ public class PlayerStatusAnimator : MonoBehaviour
     {
         Debug.Log("4");
         animator.SetTrigger("Throw1");
-        playerMove.SetMoveEnable(false);
+        // playerMove.SetMoveEnable(false);
     }
     public void PlayerItem_Throw()
     {
         animator.SetTrigger("Throw2");
-        playerMove.SetMoveEnable(true);
+        // playerMove.SetMoveEnable(true);
     }
 
     public void PlayerItemAnimation(string s)
     {
         animator.SetTrigger(s);
-        playerMove.SetMoveEnable(false);
+        // playerMove.SetMoveEnable(false);
         // playerMove.DisableRotate();
     }
 
