@@ -133,7 +133,10 @@ public class StageManager : MonoBehaviour
 
             if(targetGroup != null)targetGroup.AddMember(playerInput.transform, 1, 0);
 
-            OnPlayerJoin(playerInput.gameObject, players.Count-1);
+            if(OnPlayerJoin != null)
+            {
+                OnPlayerJoin(playerInput.gameObject, players.Count - 1);
+            }
             LoadTestScene();
             // playerInput.transform.root.GetComponent<PlayerIdentity>().SetRagData();
         }
