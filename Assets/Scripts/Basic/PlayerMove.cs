@@ -46,6 +46,8 @@ public class PlayerMove : MonoBehaviour
     Vector3 ForceSpeed;
     [HideInInspector] public bool inhibitRun = false; // Set from RagdollControl
 
+    public float StairRotation = 0;
+
     Rigidbody[] rbs; // 有重複的參數在PlayerIdentity被取得 之後要修
     public Transform rig;
 
@@ -104,7 +106,7 @@ public class PlayerMove : MonoBehaviour
         glideFree2 = Vector3.Lerp(glideFree2, glideFree, .01f);
 
         // 暫時將AnimatorSpeed的Update寫成二分法 之後將Smooth轉向引入後再改成數學判斷式
-        if (Mathf.Abs(h) + Mathf.Abs(v) > 0f)
+        if (Mathf.Abs(h) + Mathf.Abs(v) > 0.4f)
         {
             float angle = 0;
             angle = (Mathf.Atan2(-h, v) * Mathf.Rad2Deg * -1);
@@ -130,9 +132,19 @@ public class PlayerMove : MonoBehaviour
             speed *= 0.4f;
 
             playerStatus.MoveSpeedUpdate(Mathf.Abs(h) + Mathf.Abs(v));
-            
-            if(RotateEnable)transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, angle, 0), PlayerRotateSpeed * Time.deltaTime);
+
+            // if(RotateEnable)transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, angle, 0), PlayerRotateSpeed * Time.deltaTime);
+            transform.Rotate(new Vector3(0, angle - transform.eulerAngles.y, 0));
             // if (RotateEnable) transform.rotation =  Quaternion.Euler(0, angle, 0);
+
+            while (StairRotation > 0)
+            {
+                StairRotation -= 45;
+            }
+            StairRotation *= -1;
+            Vector3 test = -StairRotation * transform.right;
+            Vector3 test2 = StairRotation * transform.right;
+            transform.DORotate(new Vector3(test.x, transform.eulerAngles.y, test2.z), 0.3f);
 
             SpawnStepParticle();
         }

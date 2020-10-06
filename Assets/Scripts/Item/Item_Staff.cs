@@ -32,7 +32,7 @@ public class Item_Staff : ItemBasic
         base.OnTrigger();
         if (DurabilityCheck())
         {
-            GameObject b = Instantiate(bullet, muzzle.position, muzzle.rotation);
+            GameObject b = Instantiate(bullet, FollowTransform.GetComponent<PlayerItemHand>().way.position + new Vector3(0,1,0) + -1.5f * transform.forward, FollowTransform.GetComponent<PlayerItemHand>().way.rotation);
             Destroy(b, DestroyTime);
             // b.GetComponent<Rigidbody>().AddForce(BulletVelocity * transform.root.GetComponent<PlayerHitten>().FaceWay.forward);
             // audioSource.PlayOneShot(UsingSound[0]);

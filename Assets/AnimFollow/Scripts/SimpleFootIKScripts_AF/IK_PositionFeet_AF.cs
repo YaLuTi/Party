@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 namespace AnimFollow
 {
@@ -29,8 +30,8 @@ namespace AnimFollow
 			rightFootTargetNormal = Vector3.Lerp(Vector3.up, raycastHitRightFoot.normal, footIKWeight);
 			rightFootTargetNormal = Vector3.Lerp(lastRightFootTargetNormal, rightFootTargetNormal, footNormalLerp * deltaTime);
 			lastRightFootTargetNormal = rightFootTargetNormal;
-			
-			leftFootTargetPos = raycastHitLeftFoot.point;
+
+            leftFootTargetPos = raycastHitLeftFoot.point;
 			leftFootTargetPos = Vector3.Lerp(lastLeftFootTargetPos, leftFootTargetPos, footTargetLerp * deltaTime);
 			lastLeftFootTargetPos = leftFootTargetPos;
 			leftFootTargetPos = Vector3.Lerp(leftFoot.position, leftFootTargetPos + leftFootTargetNormal * footHeight + leftFootElevationInAnim * Vector3.up, footIKWeight);
@@ -73,8 +74,22 @@ namespace AnimFollow
 			
 			leftFootPosition = leftFoot.position; // - leftFootTargetNormal * footHeight;
 			rightFootPosition = rightFoot.position; // - rightFootTargetNormal * footHeight;
-			
-			leftFoot.rotation = Quaternion.FromToRotation(transform.up, leftFootTargetNormal) * leftFootRotation;
+
+            //Test
+            if(raycastHitRightFoot.transform == null)
+            {
+                transform.GetComponent<PlayerMove>().StairRotation = 0;
+            }
+            else
+            {
+                transform.GetComponent<PlayerMove>().StairRotation = raycastHitRightFoot.transform.eulerAngles.x;
+                // transform.DORotate(new Vector3(raycastHitRightFoot.transform.eulerAngles.x, transform.eulerAngles.y, 0), 0);
+            }
+            // Debug.Log(raycastHitRightFoot.transform.gameObject.name);
+
+
+
+            leftFoot.rotation = Quaternion.FromToRotation(transform.up, leftFootTargetNormal) * leftFootRotation;
 			rightFoot.rotation = Quaternion.FromToRotation(transform.up, rightFootTargetNormal) * rightFootRotation;
 		}
 	}
