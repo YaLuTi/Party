@@ -31,6 +31,12 @@ public class StageManager : MonoBehaviour
     public GameObject PlayerCraftUI;
     List<GameObject> PlayerCraftUIList = new List<GameObject>();
     public GameObject Canvas;
+
+
+    public delegate void PlayerJoinHandler(GameObject player, int num);
+    public event PlayerJoinHandler OnPlayerJoin;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -127,6 +133,10 @@ public class StageManager : MonoBehaviour
 
             if(targetGroup != null)targetGroup.AddMember(playerInput.transform, 1, 0);
 
+            if(OnPlayerJoin != null)
+            {
+                OnPlayerJoin(playerInput.gameObject, players.Count - 1);
+            }
             LoadTestScene();
             // playerInput.transform.root.GetComponent<PlayerIdentity>().SetRagData();
         }
@@ -138,6 +148,7 @@ public class StageManager : MonoBehaviour
             g.GetComponent<Transform>().localPosition = new Vector3(-1.15f + (players.Count - 1) * 2.25f, 3.11f, -0.6f);
             players[players.Count - 1].GetComponentInChildren<PlayerCreating>().playerCreatingUI = g.GetComponent<PlayerCraftingUI>();
             OnBattleScene += players[players.Count - 1].GetComponent<PlayerIdentity>().OnTest;
+            OnPlayerJoin(playerInput.gameObject, players.Count - 1);
             PlayerCraftUIList.Add(g);
         }
     }

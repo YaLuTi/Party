@@ -187,6 +187,7 @@ public class RFX4_PhysicsMotion : MonoBehaviour
     {
         transform.localPosition = Vector3.zero;
         transform.localRotation = new Quaternion();
+        Spawn = true;
         RemoveRigidbody();
     }
 

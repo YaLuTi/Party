@@ -10,6 +10,7 @@ public class PlayerHitten : MonoBehaviour
     RagdollControl_AF ragdollControl;
 
     PlayerBehavior pickItem;
+    PlayerMove playerMove;
 
     public bool test;
     public Transform Hips;
@@ -28,6 +29,12 @@ public class PlayerHitten : MonoBehaviour
     public static int TestHP = 0;
 
     float Health;
+    bool Dead = false;
+    bool Respawnable = true;
+    public void SetRespawnable(bool b)
+    {
+        Respawnable = b;
+    }
 
     [SerializeField]
     GameObject PlayerUI;
@@ -36,13 +43,19 @@ public class PlayerHitten : MonoBehaviour
     public delegate void PlayerHealthChangedHandler(PlayerHitten source, float oldHealth, float newHealth);
     public event PlayerHealthChangedHandler OnHealthChanged;
 
+    public delegate void PlayerDeathHandler(PlayerHitten source);
+    public event PlayerDeathHandler OnDeath;
+
     public FlagScore Flag;
     // Start is called before the first frame update
     void Start()
     {
         pickItem = GetComponentInChildren<PlayerBehavior>();
+        playerMove = GetComponentInChildren<PlayerMove>();
 
         Health = MaxHealth;
+        Dead = false;
+        Respawnable = true;
 
         UI_copy = Instantiate(PlayerUI);
         UI_copy.GetComponent<PlayerUI>().SetUp(this);
@@ -62,6 +75,9 @@ public class PlayerHitten : MonoBehaviour
                     break;
                 case 2:
                     UI_copy.GetComponent<RectTransform>().anchoredPosition = new Vector2(-270, -170);
+                    break;
+                case 3:
+                    UI_copy.GetComponent<RectTransform>().anchoredPosition = new Vector2(270, -170);
                     break;
             }
             TestHP++;
@@ -86,7 +102,14 @@ public class PlayerHitten : MonoBehaviour
 
         if (ragdollControl.shotByBullet) return;
 
-        ragdollControl.shotByBullet = true;
+        if (info.IsShot)
+        {
+            ragdollControl.shotByBullet = true;
+        }
+        else
+        {
+
+        }
         pickItem.OnHit(info);
     }
 
@@ -97,15 +120,20 @@ public class PlayerHitten : MonoBehaviour
         ragdollControl.IsDead = true;
         pickItem.OnHit();
         yield return new WaitForSeconds(2f);
-        GetComponent<PlayerIdentity>().Respawn();
-        Health = MaxHealth;
-        ragdollControl.IsDead = false;
+        if (Respawnable)
+        {
+            GetComponent<PlayerIdentity>().Respawn();
+            Health = MaxHealth;
+            OnHealthChanged?.Invoke(this, 0, Health);
+            ragdollControl.IsDead = false;
+            Dead = false;
+        }
         yield return null;
     }
 
     public void OnDamaged(float damage)
     {
-        if (ragdollControl.shotByBullet) return;
+        if (ragdollControl.shotByBullet || Dead) return;
 
         float oldH = Health;
         Health -= damage;
@@ -115,6 +143,8 @@ public class PlayerHitten : MonoBehaviour
             if (Flag != null) Flag.Throw();
             Flag = null;
             StartCoroutine(Respawn());
+            OnDeath?.Invoke(this);
+            Dead = true;
         }
 
         OnHealthChanged?.Invoke(this, oldH, Health);
@@ -132,6 +162,6 @@ public class PlayerHitten : MonoBehaviour
         {
             bulletHitInfo.hitTransform.GetComponent<Rigidbody>().AddForceAtPosition(bulletHitInfo.bulletForce, bulletHitInfo.hitPoint);
         }
-
+        playerMove.AddForceSpeed(bulletHitInfo.bulletForce / 100f);
     }
 }

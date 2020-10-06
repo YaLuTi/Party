@@ -73,6 +73,9 @@ public class PlayerIdentity : MonoBehaviour
         _playerMove.enabled = false;
         _playerBehavior = GetComponentInChildren<PlayerBehavior>();
         _playerBehavior.enabled = false;*/
+        mats = Decal.GetComponent<MeshRenderer>().materials;
+        mats[0] = RingMaterialsArray[PlayerID];
+        Decal.GetComponent<MeshRenderer>().materials = mats;
 
         StartCoroutine(SpawnToPosition());
     }
@@ -190,10 +193,10 @@ public class PlayerIdentity : MonoBehaviour
         }
         yield return new WaitForFixedUpdate();
 
-        playerMove.transform.position = stageInfo.SpawnPosition[PlayerID] + new Vector3(0, 10, 0);
-        playerMove.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID] + new Vector3(0, 10, 0);
-        playerRigHips.transform.position = stageInfo.SpawnPosition[PlayerID] + new Vector3(0, 10, 0);
-        playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID] + new Vector3(0, 10, 0);
+        playerMove.transform.position = stageInfo.SpawnPosition[PlayerID] + new Vector3(0, 2, 0);
+        playerMove.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID] + new Vector3(0, 2, 0);
+        playerRigHips.transform.position = stageInfo.SpawnPosition[PlayerID] + new Vector3(0, 2, 0);
+        playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID] + new Vector3(0, 2, 0);
 
         yield return new WaitForSeconds(1.5f);
         foreach (Rigidbody rb in rbs)

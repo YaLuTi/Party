@@ -21,11 +21,6 @@ public class PlayerItemHand : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(HoldingItem != null)
-        {
-            HoldingItem.transform.position = transform.position;
-            HoldingItem.transform.rotation = transform.rotation;
-        }
     }
 
     public void SetHoldingItem(GameObject item)
@@ -61,7 +56,8 @@ public class PlayerItemHand : MonoBehaviour
         /*HoldingItem.transform.parent = transform;
         HoldingItem.transform.localPosition = Vector3.zero;
         HoldingItem.transform.localRotation = Quaternion.identity;*/
-        HoldingItem.GetComponent<ItemBasic>().Hold();
+        HoldingItem.GetComponent<ItemBasic>().Hold(this.transform);
+        HoldingItem.GetComponent<ItemBasic>().FollowTransform = this.transform;
 
         yield return null;
     }

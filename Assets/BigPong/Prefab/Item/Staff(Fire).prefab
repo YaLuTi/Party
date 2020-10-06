@@ -23,13 +23,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8159330006745605394}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 0.97, z: -0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -0, y: -0.03, z: -0.581}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8159330006898230718}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &8159330006898230709
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,14 +59,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8159330006898230709}
-  m_LocalRotation: {x: 0.67950964, y: -0.00000033692402, z: 0.0000000028442688, w: 0.73366666}
-  m_LocalPosition: {x: 3.57, y: 1.22, z: -2.66}
-  m_LocalScale: {x: 0.08069471, y: 1, z: 0.0809244}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.9, y: 1.22, z: -2.66}
+  m_LocalScale: {x: 0.08069471, y: 0.0863649, z: 1.1719471}
   m_Children:
   - {fileID: 8159330006745605393}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 85.61101, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8159330006898230719
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -93,7 +93,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 02518c5c202076f40bf8dc4200415dcd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -146,9 +146,9 @@ MonoBehaviour:
   HighLight: {fileID: 0}
   PlayerSelecting: 0
   UsingSound: []
-  Durability: 10
-  HoldedPosition: {x: 0, y: 0, z: 0}
-  HoldedRotation: {x: 0, y: 0, z: 0}
+  Durability: 2
+  HoldedPosition: {x: 0, y: 0.14, z: 0}
+  HoldedRotation: {x: 81.4, y: -83.8, z: -44}
   animation: StaffAttack
   bullet: {fileID: 2647360907171915608, guid: 811de8ce1117363438ccd023ba05c04e, type: 3}
   DestroyTime: 10
@@ -262,5 +262,5 @@ CapsuleCollider:
   m_Enabled: 1
   m_Radius: 0.50000024
   m_Height: 1.0000002
-  m_Direction: 1
+  m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}

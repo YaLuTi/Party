@@ -9,6 +9,7 @@ public class ItemBasic : MonoBehaviour
     Rigidbody rb;
     bool IsThrowing = false;
     public bool IsHolded = false;
+    public Transform FollowTransform;
     int PlayerID = -1;
 
     public GameObject HighLight;
@@ -58,6 +59,12 @@ public class ItemBasic : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        /*if (IsHolded)
+        {
+            transform.position = FollowTransform.position + HoldedPosition;
+            transform.rotation = Quaternion.Euler(HoldedRotation) * FollowTransform.rotation;
+        }*/
     }
 
     public virtual void Throw()
@@ -67,6 +74,7 @@ public class ItemBasic : MonoBehaviour
 
     IEnumerator ThrowEvent()
     {
+        transform.parent = null;
         yield return new WaitForSeconds(0.5f);
         IsHolded = false;
         yield return null;
@@ -97,8 +105,9 @@ public class ItemBasic : MonoBehaviour
 
     }
 
-    public void Hold()
+    public void Hold(Transform t)
     {
+        transform.parent = t;
         transform.localPosition = HoldedPosition;
         transform.localRotation = Quaternion.Euler(HoldedRotation);
         IsHolded = true;
