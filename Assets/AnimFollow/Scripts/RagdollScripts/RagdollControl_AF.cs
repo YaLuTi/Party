@@ -311,10 +311,10 @@ namespace AnimFollow
 					}
 
 					if (orientated)
-					{
-						if (animFollow.maxTorque < wakeUpStrength) // Ease the ragdoll to the master pose. WakeUpStrength limit should be set so that the radoll just has reached the master pose
-						{
-							master.transform.Translate((ragdollRootBone.position - masterRootBone.position) * .5f, Space.World);
+                    {
+                        if (animFollow.maxTorque < wakeUpStrength) // Ease the ragdoll to the master pose. WakeUpStrength limit should be set so that the radoll just has reached the master pose
+                        {
+                            // master.transform.Translate((ragdollRootBone.position - masterRootBone.position) * .5f, Space.World);
                             
                             animator.speed = getup1AnimatorSpeedFactor * animatorSpeed; // Slow the animation briefly to give the ragdoll time to ease to master pose
 							animFollow.maxTorque = Mathf.Lerp(animFollow.maxTorque, contactTorque, getupLerp1 * Time.fixedDeltaTime); // We now start lerping the strength back to the ragdoll. Do until strength is wakeUpStrength. Animation is running wery slowly
@@ -323,8 +323,9 @@ namespace AnimFollow
 							animFollow.secondaryUpdate = 20;
 						}
 						else if (!(isInTransitionToGetup || getupState)) // Getting up is done. We are back in Idle (if not delayed)
-						{
-							playerMovement.inhibitMove = false; // Master is able to move again
+                        {
+                            Debug.Log("3");
+                            playerMovement.inhibitMove = false; // Master is able to move again
                             playerMovement.EnableMove();
                             playerMovement.EnableRotate();
 #if SIMPLEFOOTIK
