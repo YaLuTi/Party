@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerBehavior : MonoBehaviour
 {
     [Header("Game VFX")]
-    public GameObject HitParticle;
+    // public GameObject HitParticle;
     public GameObject PickUpParticle;
 
     
@@ -259,7 +259,6 @@ public class PlayerBehavior : MonoBehaviour
 
     public void OnHit(BulletHitInfo_AF info)
     {
-        // Destroy(Instantiate(HitParticle, info.hitPoint, Quaternion.identity), 2f);
         // GetComponent<Rigidbody>().AddForce(info.bulletForce);
         if (IsHolding)
         {
