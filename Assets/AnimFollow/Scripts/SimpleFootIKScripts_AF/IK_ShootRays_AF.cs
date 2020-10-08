@@ -87,7 +87,7 @@ namespace AnimFollow
                 }
                 else if(!TestR && !TestL)
                 {
-                    G += 0.5f;
+                    G += 0.75f;
                     transform.position -= new Vector3(0, G, 0) * Time.deltaTime;
                 }
                 else

@@ -182,7 +182,6 @@ public class PlayerIdentity : MonoBehaviour
 
     IEnumerator SpawnToPositionOnDeath()
     {
-        footIK_AF.followTerrain = false;
         foreach (Rigidbody rb in rbs)
         {
             rb.velocity = Vector3.zero;
@@ -193,12 +192,13 @@ public class PlayerIdentity : MonoBehaviour
         }
         yield return new WaitForFixedUpdate();
 
-        playerMove.transform.position = stageInfo.SpawnPosition[PlayerID] + new Vector3(0, 2, 0);
-        playerMove.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID] + new Vector3(0, 2, 0);
-        playerRigHips.transform.position = stageInfo.SpawnPosition[PlayerID] + new Vector3(0, 2, 0);
-        playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID] + new Vector3(0, 2, 0);
+        playerMove.transform.position = stageInfo.SpawnPosition[PlayerID] + new Vector3(0, 7, 0);
+        playerMove.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID] + new Vector3(0, 7, 0);
+        playerRigHips.transform.position = stageInfo.SpawnPosition[PlayerID] + new Vector3(0, 7, 0);
+        playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID] + new Vector3(0, 7, 0);
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForFixedUpdate();
+        // yield return new WaitForSeconds(1.5f);
         foreach (Rigidbody rb in rbs)
         {
             rb.velocity = Vector3.zero;
