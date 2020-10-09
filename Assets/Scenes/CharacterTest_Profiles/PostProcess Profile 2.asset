@@ -99,8 +99,8 @@ MonoBehaviour:
     overrideState: 0
     value: 1
   temperature:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: -7
   tint:
     overrideState: 0
     value: 0
@@ -151,13 +151,13 @@ MonoBehaviour:
     value: 100
   lift:
     overrideState: 1
-    value: {x: 0.96817803, y: 1, z: 0.9893594, w: -0.016105525}
+    value: {x: 0.9482529, y: 0.97777176, z: 1, w: -0.035447884}
   gamma:
     overrideState: 1
-    value: {x: 0.89672834, y: 0.95678705, z: 1, w: 0.057803355}
+    value: {x: 0.97237223, y: 0.95442575, z: 1, w: 0.057803355}
   gain:
     overrideState: 1
-    value: {x: 0.9632215, y: 1, z: 0.84755987, w: 0.03770029}
+    value: {x: 0.96316105, y: 1, z: 0.9870969, w: 0.03770029}
   masterCurve:
     overrideState: 0
     value:
@@ -1378,6 +1378,7 @@ MonoBehaviour:
   - {fileID: -8796514387931470945}
   - {fileID: 3882961394025389026}
   - {fileID: 5564970082301737925}
+  - {fileID: 4246149518820581060}
 --- !u!114 &1400282329726327533
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1448,6 +1449,28 @@ MonoBehaviour:
   opacity:
     overrideState: 0
     value: 1
+--- !u!114 &4246149518820581060
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b94fcd11afffcb142908bfcb1e261fba, type: 3}
+  m_Name: MotionBlur
+  m_EditorClassIdentifier: 
+  active: 0
+  enabled:
+    overrideState: 1
+    value: 1
+  shutterAngle:
+    overrideState: 1
+    value: 270
+  sampleCount:
+    overrideState: 1
+    value: 10
 --- !u!114 &5564970082301737925
 MonoBehaviour:
   m_ObjectHideFlags: 3

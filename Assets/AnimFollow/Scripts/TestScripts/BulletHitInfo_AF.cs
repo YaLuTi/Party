@@ -7,9 +7,9 @@ namespace AnimFollow
 	{
 		public Transform hitTransform;
         public bool IsShot = false;
-		public Vector3 hitPoint;
-		public Vector3 bulletForce;
-		public Vector3 hitNormal;
+		public Vector3 hitPoint = Vector3.zero;
+		public Vector3 bulletForce = Vector3.zero;
+		public Vector3 hitNormal = Vector3.zero;
         
 	}
 }

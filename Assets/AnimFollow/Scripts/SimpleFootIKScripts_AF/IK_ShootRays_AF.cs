@@ -19,7 +19,6 @@ namespace AnimFollow
 
 			if (!Physics.Raycast(rightFootPosition + Vector3.up * maxStepHeight, Vector3.down, out raycastHitRightFoot, raycastLength, layerMask))
             {
-                Debug.Log("?");
                 raycastHitRightFoot.normal = Vector3.up;
 				raycastHitRightFoot.point = rightFoot.position - (raycastLength * Vector3.up / 10);
                 TestR = false;
@@ -29,14 +28,12 @@ namespace AnimFollow
 			footForward = Quaternion.FromToRotation(Vector3.up, raycastHitRightFoot.normal) * footForward;
 			if (!Physics.Raycast(rightFootPosition + footForward + Vector3.up * maxStepHeight, Vector3.down, out raycastHitToe, maxStepHeight * 2, layerMask))
 			{
-                Debug.Log("X");
                 raycastHitToe.normal = raycastHitRightFoot.normal;
 				raycastHitToe.point = raycastHitRightFoot.point; // + footfoward
                 TestR = false;
             }
 			else
             {
-                Debug.Log("O");
                 if (raycastHitRightFoot.point.y < raycastHitToe.point.y - footForward.y)
 					raycastHitRightFoot.point = new Vector3(raycastHitRightFoot.point.x, raycastHitToe.point.y - footForward.y, raycastHitRightFoot.point.z);
 				
@@ -90,7 +87,7 @@ namespace AnimFollow
                 }
                 else if(!TestR && !TestL)
                 {
-                    G += 0.5f;
+                    G += 0.75f;
                     transform.position -= new Vector3(0, G, 0) * Time.deltaTime;
                 }
                 else

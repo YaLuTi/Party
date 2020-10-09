@@ -17,6 +17,7 @@ public class PlayerHitten : MonoBehaviour
     public Transform foot;
     public Transform FaceWay;
     public GameObject Decal;
+    public GameObject HitFx;
 
     [Header("Health & UI")]
     [SerializeField]
@@ -101,6 +102,7 @@ public class PlayerHitten : MonoBehaviour
         StartCoroutine(AddForceToLimb(info));
 
         if (ragdollControl.shotByBullet) return;
+        // Destroy(Instantiate(HitFx, info.hitPoint, Quaternion.identity), 2f);
 
         if (info.IsShot)
         {
