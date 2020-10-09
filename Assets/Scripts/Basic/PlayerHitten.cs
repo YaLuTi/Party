@@ -184,8 +184,8 @@ public class PlayerHitten : MonoBehaviour
         // 最好設成一個Global Ienumertor 比較方便
         if(gamepad != null)
         {
-            gamepad.SetMotorSpeeds(0.3f, 0.6f);
-            yield return new WaitForSeconds(0.3f);
+            gamepad.SetMotorSpeeds(0.8f, 1f);
+            yield return new WaitForSeconds(0.2f);
             gamepad.PauseHaptics();
         }
     }
