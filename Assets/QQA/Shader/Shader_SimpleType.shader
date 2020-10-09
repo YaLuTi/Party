@@ -125,7 +125,7 @@ Shader "QQA/Shader_SimpleType"
 }
 /*ASEBEGIN
 Version=18000
-637;148;480;546;386.0541;312.3836;1.34559;False;False
+813;73;621;575;1005.319;597.0302;2.861239;False;False
 Node;AmplifyShaderEditor.RangedFloatNode;11;-651.6928,75.19522;Inherit;False;Property;_Fresnel_Bias;Fresnel_Bias;4;0;Create;True;0;0;False;0;0;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;13;-649.6928,143.1953;Inherit;False;Property;_Fresnel_Scale;Fresnel_Scale;5;0;Create;True;0;0;False;0;1;1;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;5;-649.6928,214.1953;Inherit;False;Property;_Fresnel_Power;Fresnel_Power;6;0;Create;True;0;0;False;0;5;5;0;0;0;1;FLOAT;0
@@ -146,4 +146,4 @@ WireConnection;0;2;31;0
 WireConnection;0;3;24;0
 WireConnection;0;4;29;0
 ASEEND*/
-//CHKSM=08C8D6070A6E5A83972F41AA3758F4D464FBEBAE
+//CHKSM=6D71B965B53E32471C7EC32A9BAAE4F8925ABAAD
