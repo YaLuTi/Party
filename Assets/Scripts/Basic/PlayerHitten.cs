@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.DualShock;
+using UnityEngine.InputSystem.Haptics;
 
 public class PlayerHitten : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class PlayerHitten : MonoBehaviour
 
     PlayerBehavior pickItem;
     PlayerMove playerMove;
+    PlayerInput playerInput;
 
     public bool test;
     public Transform Hips;
@@ -48,9 +51,11 @@ public class PlayerHitten : MonoBehaviour
     public event PlayerDeathHandler OnDeath;
 
     public FlagScore Flag;
+    Gamepad gamepad;
     // Start is called before the first frame update
     void Start()
     {
+        playerInput = GetComponentInChildren<PlayerInput>();
         pickItem = GetComponentInChildren<PlayerBehavior>();
         playerMove = GetComponentInChildren<PlayerMove>();
 
@@ -83,11 +88,20 @@ public class PlayerHitten : MonoBehaviour
             }
             TestHP++;
         }
+
+        for(int i = 0; i < Gamepad.all.Count; i++)
+        {
+            if(Gamepad.all[i].name == playerInput.devices[0].name)
+            {
+                gamepad = Gamepad.all[i];
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+
         Decal.transform.position = Hips.transform.position;
         Vector3 v = Decal.transform.position;
         v.y = foot.position.y;
@@ -137,10 +151,11 @@ public class PlayerHitten : MonoBehaviour
     {
         if (ragdollControl.shotByBullet || Dead) return;
 
+
         float oldH = Health;
         Health -= damage;
         Health = Mathf.Max(0, Health);
-        if (Health == 0)
+        if (Health <= 0)
         {
             if (Flag != null) Flag.Throw();
             Flag = null;
@@ -160,10 +175,18 @@ public class PlayerHitten : MonoBehaviour
     IEnumerator AddForceToLimb(BulletHitInfo_AF bulletHitInfo)
     {
         yield return new WaitForFixedUpdate();
-        if (bulletHitInfo.hitPoint != null)
+        if (bulletHitInfo.hitTransform != null)
         {
-            bulletHitInfo.hitTransform.GetComponent<Rigidbody>().AddForceAtPosition(bulletHitInfo.bulletForce, bulletHitInfo.hitPoint);
+            if(bulletHitInfo.hitTransform.GetComponent<Rigidbody>() != null) bulletHitInfo.hitTransform.GetComponent<Rigidbody>().AddForceAtPosition(bulletHitInfo.bulletForce, bulletHitInfo.hitPoint);
         }
         playerMove.AddForceSpeed(bulletHitInfo.bulletForce / 100f);
+
+        // 最好設成一個Global Ienumertor 比較方便
+        if(gamepad != null)
+        {
+            gamepad.SetMotorSpeeds(0.3f, 0.6f);
+            yield return new WaitForSeconds(0.3f);
+            gamepad.PauseHaptics();
+        }
     }
 }

@@ -184,10 +184,12 @@ public class PlayerIdentity : MonoBehaviour
     {
         foreach (Rigidbody rb in rbs)
         {
+            if (rb == null) continue;
             rb.velocity = Vector3.zero;
         }
         foreach (Collider collider in colliders)
         {
+            if (collider == null) continue;
             collider.isTrigger = true;
         }
         yield return new WaitForFixedUpdate();
@@ -201,10 +203,12 @@ public class PlayerIdentity : MonoBehaviour
         // yield return new WaitForSeconds(1.5f);
         foreach (Rigidbody rb in rbs)
         {
+            if (rb == null) continue;
             rb.velocity = Vector3.zero;
         }
         foreach (Collider collider in colliders)
         {
+            if (collider == null) continue;
             collider.isTrigger = false;
         }
         footIK_AF.followTerrain = true;

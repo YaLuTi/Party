@@ -82,7 +82,6 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (rig.position.y < -5 || rig.position.y > 15)
         {
             StartCoroutine(ReSpawn());
@@ -169,11 +168,10 @@ public class PlayerMove : MonoBehaviour
         if (StepParticle == null) return;
         if(StepCooldown < StepCooldownValue)
         {
-            StepCooldown += Time.deltaTime * MoveMultiplier;
+            StepCooldown += Time.deltaTime * (MoveMultiplier + 1);
             return;
         }
         StepCooldown = 0;
-
         GameObject g = Instantiate(StepParticle, StepParticlePosition.transform.position, Quaternion.identity);
         int r = UnityEngine.Random.Range(0, stepClips.Length);
         audioSource.PlayOneShot(stepClips[r]);
