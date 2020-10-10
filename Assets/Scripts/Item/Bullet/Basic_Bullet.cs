@@ -24,6 +24,7 @@ public class Basic_Bullet : MonoBehaviour
 
     public float MaxDistnace = -1;
     public float MinSpeed = 0;
+    bool IsEnable = true;
     
     List<PlayerHitten> playerHittens = new List<PlayerHitten>();
     // Start is called before the first frame update
@@ -43,6 +44,7 @@ public class Basic_Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!IsEnable) return;
         if (!((TargetMask.value & 1 << other.gameObject.layer) > 0)) return;
 
         BulletHitInfo_AF bulletHitInfo = new BulletHitInfo_AF();
@@ -70,5 +72,6 @@ public class Basic_Bullet : MonoBehaviour
 
         Destroy(this.gameObject, DestroyAfterCollision);
         rb.isKinematic = true;
+        IsEnable = false;
     }
 }

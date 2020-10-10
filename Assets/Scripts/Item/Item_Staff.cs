@@ -32,8 +32,17 @@ public class Item_Staff : ItemBasic
         base.OnTrigger();
         if (DurabilityCheck())
         {
-            GameObject b = Instantiate(bullet, FollowTransform.GetComponent<PlayerItemHand>().way.position + new Vector3(0,1,0) + -1.5f * transform.forward, FollowTransform.GetComponent<PlayerItemHand>().way.rotation);
+            /*for(int i = 0; i < 1; i++)
+            {
+                GameObject b = Instantiate(bullet, FollowTransform.GetComponent<PlayerItemHand>().way.position + new Vector3((i - 1), 1, 0) + -1.5f * transform.forward, FollowTransform.GetComponent<PlayerItemHand>().way.rotation);
+                b.transform.eulerAngles += new Vector3(0, (i - 1) * -30, 0);
+                Destroy(b, DestroyTime);
+            }*/
+
+            GameObject b = Instantiate(bullet, FollowTransform.GetComponent<PlayerItemHand>().way.position + new Vector3(0, 1, 0) + -1.5f * transform.forward, FollowTransform.GetComponent<PlayerItemHand>().way.rotation);
+            // b.transform.eulerAngles += new Vector3(0, (i - 1) * -30, 0);
             Destroy(b, DestroyTime);
+
             // b.GetComponent<Rigidbody>().AddForce(BulletVelocity * transform.root.GetComponent<PlayerHitten>().FaceWay.forward);
             // audioSource.PlayOneShot(UsingSound[0]);
             if (Durability == 0)
