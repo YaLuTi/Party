@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using AnimFollow;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,9 @@ public class Basic_Bullet : MonoBehaviour
     [Header("Setting")]
     public float DestroyAfterCollision;
     public LayerMask TargetMask;
+    public LayerMask PlayerMask;
+    public float velocity = 0;
+    public float damage = 0;
 
     [Header("Physics")]
     [SerializeField]
@@ -20,6 +24,8 @@ public class Basic_Bullet : MonoBehaviour
 
     public float MaxDistnace = -1;
     public float MinSpeed = 0;
+    
+    List<PlayerHitten> playerHittens = new List<PlayerHitten>();
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +44,30 @@ public class Basic_Bullet : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!((TargetMask.value & 1 << other.gameObject.layer) > 0)) return;
+
+        BulletHitInfo_AF bulletHitInfo = new BulletHitInfo_AF();
+
+        if ((PlayerMask.value & 1 << other.gameObject.layer) > 0)
+        {
+            if (other.gameObject.transform.root.GetComponent<PlayerHitten>())
+            {
+                PlayerHitten hitten = other.gameObject.transform.root.GetComponent<PlayerHitten>();
+                bulletHitInfo.hitTransform = other.transform;
+                bulletHitInfo.bulletForce = (other.ClosestPoint(transform.position) - transform.position).normalized * velocity;
+                // bulletHitInfo.hitNormal = raycastHit.normal;
+                bulletHitInfo.hitPoint = other.ClosestPoint(transform.position);
+
+                if (!playerHittens.Contains(hitten))
+                {
+                    hitten.OnDamaged(damage);
+                }
+
+                hitten.OnHit(bulletHitInfo);
+
+                playerHittens.Add(hitten);
+            }
+        }
+
         Destroy(this.gameObject, DestroyAfterCollision);
         rb.isKinematic = true;
     }

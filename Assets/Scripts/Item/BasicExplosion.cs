@@ -64,6 +64,7 @@ public class BasicExplosion : MonoBehaviour
 
             if(collider.gameObject.tag == "Item")
             {
+                Debug.Log(collider.gameObject.name);
                 if (collider.gameObject.GetComponent<ItemBasic>())
                 {
                     ItemBasic itemBasic = collider.gameObject.GetComponent<ItemBasic>();
