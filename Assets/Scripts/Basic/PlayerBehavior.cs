@@ -12,6 +12,7 @@ public class PlayerBehavior : MonoBehaviour
     
 
     public bool IsHolding = false;
+    public bool IsCharging = false;
     public bool IsThrowing = false;
     public bool IsThrowing2 = false;
 
@@ -106,17 +107,40 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
-    void OnShoot()
+
+    void OnRelease()
     {
+        if (!this.enabled) return;
         if (playerStatus.PlayerPick()) return;
-        if (IsHolding && !IsThrowing2)
+        if (IsHolding)
         {
-            playerStatus.PlayerItem_Aim();
-            IsThrowing = true;
-            IsThrowing2 = true;
+            if (IsHolding)
+            {
+                _playerItemStatus status = new _playerItemStatus();
+                status.Throwing = IsThrowing2;
+                string animation = itemHand.ReleaseItem(status);
+                if (animation == "Empty" || animation == "")
+                {
+
+                }
+                else if (animation == "SetMine")
+                {
+                    SetMine();
+                }
+                else
+                {
+                    if (IsThrowing) return;
+                    if (IsCharging)
+                    {
+                        playerStatus.PlayerItemAnimation("_Interupt");
+                        playerStatus.PlayerItemAnimation(animation);
+                    }
+                }
+            }
         }
     }
 
+    // Pick & Shoot
     void OnPick()
     {
         if (!this.enabled) return;
@@ -138,7 +162,16 @@ public class PlayerBehavior : MonoBehaviour
                 }
                 else
                 {
-                    playerStatus.PlayerItemAnimation(animation);
+                    if (IsThrowing) return;
+                    if (animation[0] == '_')
+                    {
+                        IsCharging = true;
+                        playerStatus.PlayerItemAnimationBool(animation, true);
+                    }
+                    else
+                    {
+                        playerStatus.PlayerItemAnimation(animation);
+                    }
                 }
             }
             /*playerStatus.PlayerItem_Aim();
@@ -183,12 +216,24 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
+    // Throw
     void OnThrow()
     {
         if (IsThrowing)
         {
             playerStatus.PlayerItem_Throw();
             IsThrowing = false;
+        }
+    }
+    // Throw
+    void OnShoot()
+    {
+        if (playerStatus.PlayerPick()) return;
+        if (IsHolding && !IsThrowing2)
+        {
+            playerStatus.PlayerItem_Aim();
+            IsThrowing = true;
+            IsThrowing2 = true;
         }
     }
 
@@ -224,6 +269,7 @@ public class PlayerBehavior : MonoBehaviour
     public void OnHit(BulletHitInfo_AF info)
     {
         // GetComponent<Rigidbody>().AddForce(info.bulletForce);
+        playerStatus.PlayerItemAnimation("_Interupt");
         if (IsHolding)
         {
             itemHand.DropHoldingItem(info.bulletForce / 10);
@@ -235,6 +281,7 @@ public class PlayerBehavior : MonoBehaviour
     public void OnHit()
     {
         // GetComponent<Rigidbody>().AddForce(info.bulletForce);
+        playerStatus.PlayerItemAnimation("_Interupt");
         if (IsHolding)
         {
             itemHand.DropHoldingItem();

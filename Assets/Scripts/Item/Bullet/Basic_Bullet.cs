@@ -11,6 +11,7 @@ public class Basic_Bullet : MonoBehaviour
     public LayerMask PlayerMask;
     public float velocity = 0;
     public float damage = 0;
+    public float CollisionDelay = 0;
 
     [Header("Physics")]
     [SerializeField]
@@ -38,12 +39,12 @@ public class Basic_Bullet : MonoBehaviour
     void Update()
     {
         rb.AddForce(transform.forward * AddSpeed * SpeedCurve.Evaluate(time));
-        Debug.Log(SpeedCurve.Evaluate(time));
         time += Time.deltaTime;
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (time < CollisionDelay) return;
         if (!IsEnable) return;
         if (!((TargetMask.value & 1 << other.gameObject.layer) > 0)) return;
 

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8521291786416065380
+--- !u!1 &8413915769448227616
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,13 +8,13 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4619264280106006903}
-  - component: {fileID: 4414067343057044289}
-  - component: {fileID: 7961629357403455416}
-  - component: {fileID: 8521291786416065376}
-  - component: {fileID: 8521291786416065379}
-  - component: {fileID: 8521291786416065378}
-  - component: {fileID: 8521291786416065381}
+  - component: {fileID: 4800663517245083955}
+  - component: {fileID: 4594908260076432133}
+  - component: {fileID: 7852287483589351420}
+  - component: {fileID: 8413915769448227620}
+  - component: {fileID: 8413915769448227622}
+  - component: {fileID: 8413915769448227617}
+  - component: {fileID: 4426976870104276476}
   m_Layer: 10
   m_Name: IceLanceBook
   m_TagString: Item
@@ -22,35 +22,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4619264280106006903
+--- !u!4 &4800663517245083955
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8521291786416065380}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_GameObject: {fileID: 8413915769448227616}
+  m_LocalRotation: {x: 0.70299315, y: -0.70041585, z: 0.07614076, w: -0.09706151}
   m_LocalPosition: {x: 2.73886, y: 0.5475879, z: -0.8894172}
   m_LocalScale: {x: 2.3000007, y: 2.3000004, z: 2.3000011}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4414067343057044289
+  m_LocalEulerAnglesHint: {x: -178.292, y: -14.070984, z: -270}
+--- !u!33 &4594908260076432133
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8521291786416065380}
+  m_GameObject: {fileID: 8413915769448227616}
   m_Mesh: {fileID: 8088140820178147437, guid: 6a56b5f7d6185694a95b9b85c25c5052, type: 3}
---- !u!23 &7961629357403455416
+--- !u!23 &7852287483589351420
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8521291786416065380}
+  m_GameObject: {fileID: 8413915769448227616}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -83,13 +83,13 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!82 &8521291786416065376
+--- !u!82 &8413915769448227620
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8521291786416065380}
+  m_GameObject: {fileID: 8413915769448227616}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -179,51 +179,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8521291786416065379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8521291786416065380}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f41081c503e2d6344a62f623178cdadd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsHolded: 0
-  FollowTransform: {fileID: 0}
-  HighLight: {fileID: 0}
-  PlayerSelecting: 0
-  UsingSound: []
-  Durability: 4
-  HoldedPosition: {x: 0, y: 0.14, z: 0}
-  HoldedRotation: {x: 81.4, y: -83.8, z: -44}
-  animation: StaffAttack
-  bullet: {fileID: 3780011044116398394, guid: ba6c3dcbda0223f49b362337e7b32f71, type: 3}
-  DestroyTime: 10
-  muzzle: {fileID: 0}
-  BulletVelocity: 0
---- !u!65 &8521291786416065378
+--- !u!65 &8413915769448227622
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8521291786416065380}
+  m_GameObject: {fileID: 8413915769448227616}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.0658586, y: 0.24560314, z: 0.35215402}
   m_Center: {x: -0.0000000024731093, y: 0.000000006594958, z: 0.14752677}
---- !u!54 &8521291786416065381
+--- !u!54 &8413915769448227617
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8521291786416065380}
+  m_GameObject: {fileID: 8413915769448227616}
   serializedVersion: 2
   m_Mass: 0.5
   m_Drag: 0
@@ -233,3 +208,32 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4426976870104276476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8413915769448227616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a56a35869d91272409d3c7bedacf8c47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsHolded: 0
+  FollowTransform: {fileID: 0}
+  HighLight: {fileID: 0}
+  PlayerSelecting: 0
+  UsingSound: []
+  Durability: 10
+  HoldedPosition: {x: 0, y: 0.14, z: 0}
+  HoldedRotation: {x: 81.4, y: -83.8, z: -44}
+  animation: _SpellCharge
+  Releaseanimation: StaffAttack
+  bullet: {fileID: 3780011044116398394, guid: ba6c3dcbda0223f49b362337e7b32f71, type: 3}
+  DestroyTime: 5
+  muzzle: {fileID: 0}
+  BulletVelocity: 0
+  charge: 1
+  MaxCharge: 4
+  ChargeSpeed: 3

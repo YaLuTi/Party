@@ -63,6 +63,11 @@ public class PlayerStatusAnimator : MonoBehaviour
         // playerMove.DisableRotate();
     }
 
+    public void PlayerItemAnimationBool(string s, bool b)
+    {
+        animator.SetBool(s, b);
+    }
+
     public bool CanAnimation()
     {
         CurrentClipInfo = animator.GetCurrentAnimatorClipInfo(0);

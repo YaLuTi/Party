@@ -40,7 +40,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""id"": ""9f135245-1434-49d6-8130-6db1f22c10c6"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press""
                 },
                 {
                     ""name"": ""Pick"",
@@ -49,6 +49,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Release"",
+                    ""type"": ""Button"",
+                    ""id"": ""dec73cab-0f4a-466c-976a-1743f5822c84"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=1)""
                 },
                 {
                     ""name"": ""Throw"",
@@ -382,6 +390,28 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""MoveX"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""195ebf66-6ff2-48ce-b49e-277dac2d5620"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Release"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b73ff779-7182-43b2-b1ae-b2ad439da9a5"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Release"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -610,6 +640,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_GamePlay_MoveX = m_GamePlay.FindAction("MoveX", throwIfNotFound: true);
         m_GamePlay_Shoot = m_GamePlay.FindAction("Shoot", throwIfNotFound: true);
         m_GamePlay_Pick = m_GamePlay.FindAction("Pick", throwIfNotFound: true);
+        m_GamePlay_Release = m_GamePlay.FindAction("Release", throwIfNotFound: true);
         m_GamePlay_Throw = m_GamePlay.FindAction("Throw", throwIfNotFound: true);
         m_GamePlay_Test = m_GamePlay.FindAction("Test", throwIfNotFound: true);
         m_GamePlay_Pause = m_GamePlay.FindAction("Pause", throwIfNotFound: true);
@@ -678,6 +709,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_GamePlay_MoveX;
     private readonly InputAction m_GamePlay_Shoot;
     private readonly InputAction m_GamePlay_Pick;
+    private readonly InputAction m_GamePlay_Release;
     private readonly InputAction m_GamePlay_Throw;
     private readonly InputAction m_GamePlay_Test;
     private readonly InputAction m_GamePlay_Pause;
@@ -693,6 +725,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @MoveX => m_Wrapper.m_GamePlay_MoveX;
         public InputAction @Shoot => m_Wrapper.m_GamePlay_Shoot;
         public InputAction @Pick => m_Wrapper.m_GamePlay_Pick;
+        public InputAction @Release => m_Wrapper.m_GamePlay_Release;
         public InputAction @Throw => m_Wrapper.m_GamePlay_Throw;
         public InputAction @Test => m_Wrapper.m_GamePlay_Test;
         public InputAction @Pause => m_Wrapper.m_GamePlay_Pause;
@@ -721,6 +754,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Pick.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPick;
                 @Pick.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPick;
                 @Pick.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPick;
+                @Release.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnRelease;
+                @Release.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnRelease;
+                @Release.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnRelease;
                 @Throw.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnThrow;
                 @Throw.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnThrow;
                 @Throw.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnThrow;
@@ -758,6 +794,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Pick.started += instance.OnPick;
                 @Pick.performed += instance.OnPick;
                 @Pick.canceled += instance.OnPick;
+                @Release.started += instance.OnRelease;
+                @Release.performed += instance.OnRelease;
+                @Release.canceled += instance.OnRelease;
                 @Throw.started += instance.OnThrow;
                 @Throw.performed += instance.OnThrow;
                 @Throw.canceled += instance.OnThrow;
@@ -880,6 +919,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnMoveX(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnPick(InputAction.CallbackContext context);
+        void OnRelease(InputAction.CallbackContext context);
         void OnThrow(InputAction.CallbackContext context);
         void OnTest(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);

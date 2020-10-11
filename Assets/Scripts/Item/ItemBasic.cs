@@ -28,6 +28,7 @@ public class ItemBasic : MonoBehaviour
     Vector3 HoldedRotation;
 
     public string animation;
+    public string Releaseanimation;
 
     private void Awake()
     {
@@ -98,6 +99,16 @@ public class ItemBasic : MonoBehaviour
 
     public virtual void OnUse()
     {
+    }
+
+    public virtual string OnRelease(_playerItemStatus status)
+    {
+        return Releaseanimation;
+    }
+
+    public virtual void OnRelease()
+    {
+
     }
 
     public virtual void OnTrigger()

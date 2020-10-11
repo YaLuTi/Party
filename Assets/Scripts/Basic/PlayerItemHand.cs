@@ -122,4 +122,9 @@ public class PlayerItemHand : MonoBehaviour
     {
         return HoldingItem.GetComponent<ItemBasic>().OnUse(status);
     }
+
+    public string ReleaseItem(_playerItemStatus status)
+    {
+        return HoldingItem.GetComponent<ItemBasic>().OnRelease(status);
+    }
 }
