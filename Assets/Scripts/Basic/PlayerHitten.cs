@@ -133,6 +133,9 @@ public class PlayerHitten : MonoBehaviour
         ragdollControl.shotByBullet = true;
         ragdollControl.IsDead = true;
         pickItem.OnHit();
+        yield return new WaitForFixedUpdate();
+        if (Flag != null) Flag.Throw();
+        Flag = null;
         yield return new WaitForSeconds(2f);
         if (Respawnable)
         {
@@ -155,8 +158,7 @@ public class PlayerHitten : MonoBehaviour
         Health = Mathf.Max(0, Health);
         if (Health <= 0)
         {
-            if (Flag != null) Flag.Throw();
-            Flag = null;
+            Debug.Log("???");
             StartCoroutine(Respawn());
             OnDeath?.Invoke(this);
             Dead = true;

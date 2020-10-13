@@ -19,7 +19,7 @@ public class FlagScore : MonoBehaviour
     public static int id = -1;
     public static Transform follow;
     
-    bool IsHolded = false;
+    public bool IsHolded = false;
     float cooldown = 0;
     // Start is called before the first frame update
     void Start()
@@ -96,6 +96,7 @@ public class FlagScore : MonoBehaviour
 
     public void Throw()
     {
+        Debug.Log("????");
         IsHolded = false;
         transform.parent = null;
         id = -1;
@@ -120,6 +121,7 @@ public class FlagScore : MonoBehaviour
         if (IsHolded) return;
         if (collision.transform.root.tag == "Player")
         {
+            Debug.Log("Shit");
             if (collision.transform.root.GetComponent<PlayerHitten>().Dead) return;
             IsHolded = true;
             transform.parent = collision.transform.root;

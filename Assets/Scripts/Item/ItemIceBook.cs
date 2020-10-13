@@ -49,7 +49,7 @@ public class ItemIceBook : Item_Staff
         for (int i = 0; i < num; i++)
         {
             GameObject b = Instantiate(bullet, p + new Vector3(0, 1, 0) + -1.5f * forward, quaternion);
-            b.transform.eulerAngles += new Vector3(0, Random.Range(4, -4), 0);
+            // b.transform.eulerAngles += new Vector3(0, Random.Range(4, -4), 0);
             Destroy(b, DestroyTime);
             yield return new WaitForSeconds(0.1f);
         }
