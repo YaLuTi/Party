@@ -12,7 +12,7 @@ public delegate void OnBattleScene();
 public class StageManager : MonoBehaviour
 {
     public OnBattleScene OnBattleScene;
-    static StageManager instance;
+    public static StageManager instance;
     public static List<GameObject> players = new List<GameObject>();
     public static int[] playerScore;
     PlayerInputManager inputManager;
@@ -26,7 +26,7 @@ public class StageManager : MonoBehaviour
 
     public bool Testing = false;
 
-    CinemachineTargetGroup targetGroup;
+    public static CinemachineTargetGroup targetGroup;
     public PlayableDirector EndDirector;
     public GameObject PlayerCraftUI;
     List<GameObject> PlayerCraftUIList = new List<GameObject>();
@@ -38,7 +38,7 @@ public class StageManager : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         inputManager = GetComponent<PlayerInputManager>();
 
@@ -153,7 +153,7 @@ public class StageManager : MonoBehaviour
         }
     }
 
-    public void PlayBGM()
+    public static void PlayBGM()
     {
         Debug.Log("a");
         GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Play();
@@ -177,13 +177,14 @@ public class StageManager : MonoBehaviour
             players[i].GetComponent<PlayerIdentity>().SetToAnimationMode();
         }
         yield return new WaitForSeconds(1.2f);
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(2);
+        // AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(2);
 
         // Wait until the asynchronous scene fully loads
-        while (!asyncLoad.isDone)
+        /*while (!asyncLoad.isDone)
         {
             yield return null;
-        }
+        }*/
+
         yield return new WaitForFixedUpdate();
 
         StageInfo stageInfo;
@@ -275,5 +276,15 @@ public class StageManager : MonoBehaviour
 
         OnBattleScene();
         yield return null;
+    }
+
+    public static void ClearPlayer()
+    {
+        players.Clear();
+    }
+
+    public static void LoadNewScene()
+    {
+        targetGroup = GameObject.FindGameObjectWithTag("CineGroup").GetComponent<CinemachineTargetGroup>();
     }
 }

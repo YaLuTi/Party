@@ -7,6 +7,7 @@ public class Basic_Bullet : MonoBehaviour
 {
     [Header("Setting")]
     public float DestroyAfterCollision;
+    public GameObject CollisionEffect;
     public LayerMask TargetMask;
     public LayerMask PlayerMask;
     public float velocity = 0;
@@ -70,7 +71,8 @@ public class Basic_Bullet : MonoBehaviour
                 playerHittens.Add(hitten);
             }
         }
-
+        GameObject g = Instantiate(CollisionEffect, transform.position, transform.rotation);
+        Destroy(g, 2f);
         Destroy(this.gameObject, DestroyAfterCollision);
         rb.isKinematic = true;
         IsEnable = false;

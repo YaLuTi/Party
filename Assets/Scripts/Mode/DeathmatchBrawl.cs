@@ -8,12 +8,18 @@ public class DeathmatchBrawl : MonoBehaviour
     public GameObject UI;
     public List<PlayerHitten> playerHittens = new List<PlayerHitten>();
     public List<GameObject> UIs = new List<GameObject>();
-    public List<int> Lifes = new List<int>(); 
+    public List<int> Lifes = new List<int>();
+
+    static bool First = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>().OnPlayerJoin += PlayerJoin;
+        if (!First)
+        {
+            StageManager.instance.OnPlayerJoin += PlayerJoin;
+            First = true;
+        }
         for(int i = 0; i < StageManager.players.Count; i++)
         {
             StageManager.players[i].GetComponent<PlayerHitten>().OnDeath += OnPlayerDeath;
@@ -51,6 +57,7 @@ public class DeathmatchBrawl : MonoBehaviour
 
     void PlayerJoin(GameObject player, int num)
     {
+        Debug.Log(num);
         StageManager.players[num].GetComponent<PlayerHitten>().OnDeath += OnPlayerDeath;
         playerHittens.Add(StageManager.players[num].GetComponent<PlayerHitten>());
         Lifes.Add(3);

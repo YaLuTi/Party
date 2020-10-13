@@ -120,6 +120,7 @@ public class FlagScore : MonoBehaviour
         if (IsHolded) return;
         if (collision.transform.root.tag == "Player")
         {
+            if (collision.transform.root.GetComponent<PlayerHitten>().Dead) return;
             IsHolded = true;
             transform.parent = collision.transform.root;
             id = GetComponentInParent<PlayerIdentity>().PlayerID;

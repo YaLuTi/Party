@@ -56,6 +56,11 @@ public class PlayerStatusAnimator : MonoBehaviour
         // playerMove.SetMoveEnable(true);
     }
 
+    public void CancelThrow()
+    {
+        animator.ResetTrigger("Throw2");
+    }
+
     public void PlayerItemAnimation(string s)
     {
         animator.SetTrigger(s);

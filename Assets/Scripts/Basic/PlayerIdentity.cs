@@ -199,6 +199,8 @@ public class PlayerIdentity : MonoBehaviour
         playerRigHips.transform.position = stageInfo.SpawnPosition[PlayerID] + new Vector3(0, 7, 0);
         playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID] + new Vector3(0, 7, 0);
 
+        GlobalAudioPlayer.PlayRespawn();
+
         yield return new WaitForFixedUpdate();
         // yield return new WaitForSeconds(1.5f);
         foreach (Rigidbody rb in rbs)

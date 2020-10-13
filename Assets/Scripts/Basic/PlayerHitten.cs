@@ -33,7 +33,7 @@ public class PlayerHitten : MonoBehaviour
     public static int TestHP = 0;
 
     float Health;
-    bool Dead = false;
+    public bool Dead = false;
     bool Respawnable = true;
     public void SetRespawnable(bool b)
     {
@@ -109,8 +109,6 @@ public class PlayerHitten : MonoBehaviour
     }
     public void OnHit(BulletHitInfo_AF info)
     {
-        if (Flag != null) Flag.Throw();
-        Flag = null;
 
 
         StartCoroutine(AddForceToLimb(info));

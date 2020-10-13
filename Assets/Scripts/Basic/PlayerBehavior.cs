@@ -132,6 +132,7 @@ public class PlayerBehavior : MonoBehaviour
                     if (IsThrowing) return;
                     if (IsCharging)
                     {
+                        IsCharging = false;
                         playerStatus.PlayerItemAnimation("_Interupt");
                         playerStatus.PlayerItemAnimation(animation);
                     }
@@ -215,7 +216,7 @@ public class PlayerBehavior : MonoBehaviour
             }
         }
     }
-
+    
     // Throw
     void OnThrow()
     {
@@ -223,17 +224,20 @@ public class PlayerBehavior : MonoBehaviour
         {
             playerStatus.PlayerItem_Throw();
             IsThrowing = false;
+            IsCharging = false;
         }
     }
+
     // Throw
     void OnShoot()
     {
-        if (playerStatus.PlayerPick()) return;
+        if (playerStatus.PlayerPick() || !playerStatus.CanAnimation() || IsCharging) return;
         if (IsHolding && !IsThrowing2)
         {
             playerStatus.PlayerItem_Aim();
             IsThrowing = true;
             IsThrowing2 = true;
+            IsCharging = true;
         }
     }
 
@@ -246,7 +250,6 @@ public class PlayerBehavior : MonoBehaviour
     void ThrowItem()
     {
         itemHand.ThrowHoldingItem(ThrowStrength);
-        Debug.Log("T");
         IsHolding = false;
         IsThrowing2 = false;
         ThrowStrength = 3f;
@@ -269,7 +272,16 @@ public class PlayerBehavior : MonoBehaviour
     public void OnHit(BulletHitInfo_AF info)
     {
         // GetComponent<Rigidbody>().AddForce(info.bulletForce);
-        playerStatus.PlayerItemAnimation("_Interupt");
+
+        if (IsCharging)
+        {
+            playerStatus.PlayerItemAnimation("_Interupt");
+            IsCharging = false;
+        }
+        if (IsThrowing)
+        {
+            playerStatus.CancelThrow();
+        }
         if (IsHolding)
         {
             itemHand.DropHoldingItem(info.bulletForce / 10);
@@ -281,7 +293,16 @@ public class PlayerBehavior : MonoBehaviour
     public void OnHit()
     {
         // GetComponent<Rigidbody>().AddForce(info.bulletForce);
-        playerStatus.PlayerItemAnimation("_Interupt");
+
+        if (IsCharging)
+        {
+            playerStatus.PlayerItemAnimation("_Interupt");
+            IsCharging = false;
+        }
+        if (IsThrowing)
+        {
+            playerStatus.CancelThrow();
+        }
         if (IsHolding)
         {
             itemHand.DropHoldingItem();
