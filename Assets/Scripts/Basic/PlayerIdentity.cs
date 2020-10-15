@@ -46,6 +46,8 @@ public class PlayerIdentity : MonoBehaviour
     PlayerBehavior _playerBehavior;
     // 亂寫的 要改
 
+    Coroutine respawn = null;
+
     public int PlayerID;
 
     private void Awake()
@@ -177,7 +179,10 @@ public class PlayerIdentity : MonoBehaviour
 
     public void Respawn()
     {
-        StartCoroutine(SpawnToPositionOnDeath());
+        if(respawn == null)
+        {
+            respawn = StartCoroutine(SpawnToPositionOnDeath());
+        }
     }
 
     IEnumerator SpawnToPositionOnDeath()
@@ -214,6 +219,7 @@ public class PlayerIdentity : MonoBehaviour
             collider.isTrigger = false;
         }
         footIK_AF.followTerrain = true;
+        respawn = null;
         yield return null;
     }
     IEnumerator SpawnToPositionLoad()

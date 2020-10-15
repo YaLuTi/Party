@@ -127,7 +127,7 @@ public class PlayerHitten : MonoBehaviour
         pickItem.OnHit(info);
     }
 
-    IEnumerator Respawn()
+    IEnumerator Respawn(float time)
     {
         yield return new WaitForFixedUpdate();
         ragdollControl.shotByBullet = true;
@@ -136,7 +136,7 @@ public class PlayerHitten : MonoBehaviour
         yield return new WaitForFixedUpdate();
         if (Flag != null) Flag.Throw();
         Flag = null;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(time);
         if (Respawnable)
         {
             GetComponent<PlayerIdentity>().Respawn();
@@ -158,12 +158,21 @@ public class PlayerHitten : MonoBehaviour
         Health = Mathf.Max(0, Health);
         if (Health <= 0)
         {
-            StartCoroutine(Respawn());
+            StartCoroutine(Respawn(2));
             OnDeath?.Invoke(this);
             Dead = true;
         }
 
         OnHealthChanged?.Invoke(this, oldH, Health);
+    }
+
+    // Testing
+    public void AddtionalDeath()
+    {
+        if (Dead) return;
+        StartCoroutine(Respawn(0.1f));
+        OnDeath?.Invoke(this);
+        Dead = true;
     }
 
     public bool IsGettingUp()

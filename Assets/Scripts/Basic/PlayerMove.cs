@@ -157,9 +157,12 @@ public class PlayerMove : MonoBehaviour
     // 亂寫的
     IEnumerator ReSpawn()
     {
-        BulletHitInfo_AF bulletHitInfo_AF = new BulletHitInfo_AF();
-        transform.root.GetComponent<PlayerHitten>().OnHit(bulletHitInfo_AF);
-        transform.root.GetComponent<PlayerIdentity>().Respawn();
+        if (!transform.root.GetComponent<PlayerHitten>().Dead)
+        {
+            BulletHitInfo_AF bulletHitInfo_AF = new BulletHitInfo_AF();
+            transform.root.GetComponent<PlayerHitten>().OnHit(bulletHitInfo_AF);
+            transform.root.GetComponent<PlayerHitten>().AddtionalDeath();
+        }
         yield return null;
     }
 

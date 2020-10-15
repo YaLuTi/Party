@@ -286,6 +286,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             itemHand.DropHoldingItem(info.bulletForce / 10);
             IsHolding = false;
+            ThrowStrength = 3f;
             IsThrowing = false;
             IsThrowing2 = false;
         }
