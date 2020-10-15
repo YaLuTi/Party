@@ -158,7 +158,6 @@ public class PlayerHitten : MonoBehaviour
         Health = Mathf.Max(0, Health);
         if (Health <= 0)
         {
-            Debug.Log("???");
             StartCoroutine(Respawn());
             OnDeath?.Invoke(this);
             Dead = true;
