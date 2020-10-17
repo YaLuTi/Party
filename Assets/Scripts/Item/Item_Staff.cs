@@ -32,7 +32,7 @@ public class Item_Staff : ItemBasic
         base.OnTrigger();
         if (DurabilityCheck())
         {
-            GameObject b = Instantiate(bullet, FollowTransform.GetComponent<PlayerItemHand>().way.position + new Vector3(0, 1, 0) + -1.5f * transform.forward, FollowTransform.GetComponent<PlayerItemHand>().way.rotation);
+            GameObject b = Instantiate(bullet, FollowTransform.GetComponent<PlayerItemHand>().way.position + 1.2f * FollowTransform.GetComponent<PlayerItemHand>().way.transform.forward, FollowTransform.GetComponent<PlayerItemHand>().way.rotation);
             Destroy(b, DestroyTime);
             
             if (Durability == 0)

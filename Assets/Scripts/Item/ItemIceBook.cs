@@ -43,12 +43,12 @@ public class ItemIceBook : Item_Staff
         charge = 1;
 
         Vector3 p = FollowTransform.GetComponent<PlayerItemHand>().way.position;
-        Vector3 forward = transform.forward;
+        Vector3 forward = FollowTransform.GetComponent<PlayerItemHand>().way.transform.forward;
         Quaternion quaternion = FollowTransform.GetComponent<PlayerItemHand>().way.rotation;
 
         for (int i = 0; i < num; i++)
         {
-            GameObject b = Instantiate(bullet, p + new Vector3(0, 1, 0) + -1.5f * forward, quaternion);
+            GameObject b = Instantiate(bullet, p + 1.2f * forward, quaternion);
             // b.transform.eulerAngles += new Vector3(0, Random.Range(4, -4), 0);
             Destroy(b, DestroyTime);
             yield return new WaitForSeconds(0.1f);

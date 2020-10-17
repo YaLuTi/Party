@@ -1,55 +1,41 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class ItemSpawner : MonoBehaviour
 {
-    [SerializeField]
-    float xOffset;
-    [SerializeField]
-    float yOffset;
-    [SerializeField]
-    float zOffset;
-    [SerializeField]
-    float xMinRange;
-    [SerializeField]
-    float xMaxRange;
-    [SerializeField]
-    float zMinRange;
-    [SerializeField]
-    float zMaxRange;
 
     [Header("SpawnEvent")]
-    [SerializeField]
-    SpawnEvent[] spawnEvents;
+    [HideInInspector]
+    public List<SpawnEvent> spawnEvents = new List<SpawnEvent>();
     int e = 0;
 
+    [HideInInspector]
     public GameObject[] SpawnObject;
 
     List<GameObject> SpawnItem = new List<GameObject>();
 
+    [HideInInspector]
     public float CooldownCount;
     bool CooldownEnbale = true;
+
+    RoamingAI roamingAI;
+ 
     // Start is called before the first frame update
     void Start()
     {
-        
+        roamingAI = GetComponent<RoamingAI>();
     }
 
     // Update is called once per frame
     void Update()
     {
         if (StageController.IsPaused) return;
-        if(CooldownCount > 140 + SpawnItem.Count * 10 && SpawnItem.Count < 25)
+        if(CooldownCount > 30 + SpawnItem.Count * 20f/* && SpawnItem.Count < 25*/)
         {
             CooldownCount = 0;
-            CooldownEnbale = false;
-            StartCoroutine(RunSpawnEvent());
-            /*float x = Random.Range(xMinRange, xMaxRange);
-            float z = Random.Range(zMinRange, zMaxRange);
-            Vector3 p = new Vector3(xOffset + x, yOffset, zOffset + z);
-            int i = Random.Range(0, SpawnObject.Length);
-            SpawnItem.Add(Instantiate(SpawnObject[i], p, Quaternion.identity));*/
+            RunSpawnItem();
         }
 
         // 高耗能寫法  只用在測試時
@@ -68,66 +54,229 @@ public class ItemSpawner : MonoBehaviour
                 SpawnItem.RemoveAt(delete[i]);
             }
         }
-
-        if(CooldownEnbale)
+        
         CooldownCount += 60 * Time.deltaTime;
     }
 
-    IEnumerator RunSpawnEvent()
+    void RunSpawnItem()
     {
-        float x = Random.Range(spawnEvents[e].xDistanceMin, spawnEvents[e].xDistanceMax);
-        float z = Random.Range(spawnEvents[e].zDistanceMin, spawnEvents[e].zDistanceMax);
+        float range = 0;
+        for (int i = 0; i < spawnEvents.Count; i++)
+            range += spawnEvents[i].Weights;
 
+        float rand = Random.Range(0, range);
+        float top = 0;
 
+        for (int i = 0; i < spawnEvents.Count; i++)
+        {
+            top += spawnEvents[i].Weights;
+            if (rand < top)
+            {
+                Vector3 p = roamingAI.PickNewDestination();
+                p.y = 10;
+                SpawnItem.Add(Instantiate(spawnEvents[i].Item, p, spawnEvents[i].Item.transform.rotation));
+                return;
+            }
+        }
+    }
+
+    /*IEnumerator RunSpawnEvent()
+    {
         for (int i = 0; i < spawnEvents[e].ItemQuantity; i++)
         {
-            if (spawnEvents[e].IsAverage)
-            {
-                x = Mathf.Abs(x);
-                z = Mathf.Abs(z);
-                switch(i % 4)
-                {
-                    case 0:
-                        x *= -1;
-                        break;
-                    case 1:
-                        break;
-                    case 2:
-                        z *= -1;
-                        break;
-                    case 3:
-                        x *= -1;
-                        z *= -1;
-                        break;
-                }
-            }
-            else
-            {
-                x = Random.Range(spawnEvents[e].xDistanceMin, spawnEvents[e].xDistanceMax);
-                z = Random.Range(spawnEvents[e].zDistanceMin, spawnEvents[e].zDistanceMax);
-            }
-            Vector3 p = spawnEvents[e].Offset + new Vector3(x, 0, z);
+            Vector3 p = Vector3.zero;
             int r = Random.Range(0, spawnEvents[e].Items.Length);
             SpawnItem.Add(Instantiate(spawnEvents[e].Items[r], p, Quaternion.identity));
             yield return new WaitForSeconds(spawnEvents[e].DropDelay);
         }
         CooldownEnbale = true;
         e++;
-        if (e > spawnEvents.Length - 1) e = 0;
+        if (e > spawnEvents.Count - 1) e = 0;
         yield return null;
-    }
+    }*/
 }
 
 [System.Serializable]
 public class SpawnEvent
 {
-    public int ItemQuantity;
-    public GameObject[] Items;
-    public float DropDelay;
-    public bool IsAverage;
-    public float xDistanceMin;
-    public float xDistanceMax;
-    public float zDistanceMin;
-    public float zDistanceMax;
-    public Vector3 Offset;
+    public float Weights;
+    public GameObject Item;
 }
+
+[CustomEditor(typeof(ItemSpawner))]
+[CanEditMultipleObjects]
+public class ItemSpawnerEditor : Editor
+{
+    ItemSpawner m_Target;
+
+    public override void OnInspectorGUI()
+    {
+        m_Target = (ItemSpawner)target;
+        DrawDefaultInspector();
+        DrawTypesInspector();
+    }
+    void DrawTypesInspector()
+    {
+        GUILayout.Space(5);
+        GUILayout.Label("Item List", EditorStyles.boldLabel);
+
+        for (int i = 0; i < m_Target.spawnEvents.Count; i++)
+        {
+            GUILayout.Space(3);
+            DrawType(i);
+        }
+
+        DrawAddTypeButton();
+    }
+
+    void DrawType(int index)
+    {
+        if (index < 0 || index >= m_Target.spawnEvents.Count)
+            return;
+
+        GUILayout.BeginHorizontal();
+        {
+
+            // BeginChangeCheck() 用來檢查在 BeginChangeCheck() 和 EndChangeCheck() 之間是否有 Inspector 變數改變
+            EditorGUI.BeginChangeCheck();
+            EditorGUIUtility.labelWidth = 30.0f;
+            GameObject newGameobject = (GameObject)EditorGUILayout.ObjectField("Item", m_Target.spawnEvents[index].Item, typeof(GameObject), true, GUILayout.Width(260));
+            GUILayout.Label("Weights", EditorStyles.label, GUILayout.Width(50));
+            float newWeights = EditorGUILayout.FloatField(m_Target.spawnEvents[index].Weights, GUILayout.Width(50));
+
+            m_Target.spawnEvents[index].Weights = newWeights;
+            m_Target.spawnEvents[index].Item = newGameobject;
+
+            // 如果 Inspector 變數有改變，EndChangeCheck() 會回傳 True，才有必要去做變數存取
+            if (EditorGUI.EndChangeCheck())
+            {
+                // 在修改之前建立 Undo/Redo 記錄步驟
+                Undo.RecordObject(m_Target, "Modify Types");
+
+                m_Target.spawnEvents[index].Weights = newWeights;
+                m_Target.spawnEvents[index].Item = newGameobject;
+
+                // 每當直接修改 Inspector 變數，而不是使用 serializedObject 修改時，必須要告訴 Unity 這個 Compoent 已經修改過了
+                // 在下一次存檔時，必須要儲存這個變數
+                EditorUtility.SetDirty(m_Target);
+            }
+
+            if (GUILayout.Button("Remove"))
+            {
+                // 系統會 "登" 一聲
+                EditorApplication.Beep();
+
+                // 顯示對話框功能(帶有 OK 和 Cancel 兩個按鈕)
+                if (EditorUtility.DisplayDialog("Really?", "Do you really want to remove the state '" + m_Target.spawnEvents[index].Item.name + "'?", "Yes", "No") == true)
+                {
+                    m_Target.spawnEvents.RemoveAt(index);
+                    EditorUtility.SetDirty(m_Target);
+                }
+
+            }
+        }
+        GUILayout.EndHorizontal();
+    }
+
+    void DrawAddTypeButton()
+    {
+        if (GUILayout.Button("Add new Item", GUILayout.Height(30)))
+        {
+            Undo.RecordObject(m_Target, "Add new Type");
+
+            m_Target.spawnEvents.Add(new SpawnEvent { Weights = 0 });
+            EditorUtility.SetDirty(m_Target);
+        }
+    }
+}
+
+
+/*
+[CustomEditor(typeof(BlockController))]
+public class BlockControllerEditor : Editor
+{
+    BlockController m_Target;
+
+    public override void OnInspectorGUI()
+    {
+        m_Target = (BlockController)target;
+
+        // DrawDefaultInspector() 會將原本 Inspector 上有的東西先畫出來。
+        // 這麼一來可能會造成 Inspector 中的 Types 欄位被畫兩次(Default一次，下面 Editor Script 又會在畫一次)
+        // 因此，你可以在原先 public List<BrickType> Types 的欄位前加入 [HideInInspector]，把 Default Inspector 關掉
+        DrawDefaultInspector();
+        DrawTypesInspector();
+    }
+
+    void DrawTypesInspector()
+    {
+        GUILayout.Space(5);
+        GUILayout.Label("State", EditorStyles.boldLabel);
+
+        for (int i = 0; i < m_Target.Types.Count; i++)
+        {
+            DrawType(i);
+        }
+
+        DrawAddTypeButton();
+    }
+
+    void DrawType(int index)
+    {
+        if (index < 0 || index >= m_Target.Types.Count)
+            return;
+
+        GUILayout.BeginHorizontal();
+        {
+            GUILayout.Label("Name", EditorStyles.label, GUILayout.Width(50));
+
+            // BeginChangeCheck() 用來檢查在 BeginChangeCheck() 和 EndChangeCheck() 之間是否有 Inspector 變數改變
+            EditorGUI.BeginChangeCheck();
+            string newName = GUILayout.TextField(m_Target.Types[index].Name, GUILayout.Width(120));
+            Color newColor = EditorGUILayout.ColorField(m_Target.Types[index].HitColor);
+
+            m_Target.Types[index].Name = newName;
+            m_Target.Types[index].HitColor = newColor;
+
+            // 如果 Inspector 變數有改變，EndChangeCheck() 會回傳 True，才有必要去做變數存取
+            if (EditorGUI.EndChangeCheck())
+            {
+                // 在修改之前建立 Undo/Redo 記錄步驟
+                Undo.RecordObject(m_Target, "Modify Types");
+
+                m_Target.Types[index].Name = newName;
+                m_Target.Types[index].HitColor = newColor;
+
+                // 每當直接修改 Inspector 變數，而不是使用 serializedObject 修改時，必須要告訴 Unity 這個 Compoent 已經修改過了
+                // 在下一次存檔時，必須要儲存這個變數
+                EditorUtility.SetDirty(m_Target);
+            }
+
+            if (GUILayout.Button("Remove"))
+            {
+                // 系統會 "登" 一聲
+                EditorApplication.Beep();
+
+                // 顯示對話框功能(帶有 OK 和 Cancel 兩個按鈕)
+                if (EditorUtility.DisplayDialog("Really?", "Do you really want to remove the state '" + m_Target.Types[index].Name + "'?", "Yes", "No") == true)
+                {
+                    m_Target.Types.RemoveAt(index);
+                    EditorUtility.SetDirty(m_Target);
+                }
+
+            }
+        }
+        GUILayout.EndHorizontal();
+    }
+
+    void DrawAddTypeButton()
+    {
+        if (GUILayout.Button("Add new State", GUILayout.Height(30)))
+        {
+            Undo.RecordObject(m_Target, "Add new Type");
+
+            m_Target.Types.Add(new BrickType { Name = "New State" });
+            EditorUtility.SetDirty(m_Target);
+        }
+    }
+}*/

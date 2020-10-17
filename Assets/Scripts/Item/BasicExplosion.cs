@@ -68,6 +68,10 @@ public class BasicExplosion : MonoBehaviour
                 if (collider.gameObject.GetComponent<ItemBasic>())
                 {
                     ItemBasic itemBasic = collider.gameObject.GetComponent<ItemBasic>();
+
+                    // 記得取消
+                    // itemBasic.OnUse();
+
                     if (itemBasic.IsHolded) continue;
                     bulletHitInfo.hitTransform = collider.transform;
                     bulletHitInfo.bulletForce = (collider.ClosestPoint(transform.position) - transform.position).normalized * velocity;
