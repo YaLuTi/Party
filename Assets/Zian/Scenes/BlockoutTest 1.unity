@@ -198,7 +198,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6500
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1.1482e-41, y: 1.01e-43, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 6e-45}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -11185,6 +11185,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4016300570142754893, guid: 0b4d5fcb09374fa48a93b1d379755f9d,
         type: 3}
+      propertyPath: spawnEvents.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4016300570142754893, guid: 0b4d5fcb09374fa48a93b1d379755f9d,
+        type: 3}
       propertyPath: spawnEvents.Array.data[0].Weights
       value: 30
       objectReference: {fileID: 0}
@@ -11192,6 +11197,17 @@ PrefabInstance:
         type: 3}
       propertyPath: spawnEvents.Array.data[2].Weights
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4016300570142754893, guid: 0b4d5fcb09374fa48a93b1d379755f9d,
+        type: 3}
+      propertyPath: spawnEvents.Array.data[3].Item
+      value: 
+      objectReference: {fileID: 6841611707172173667, guid: a22b01242bd90074ea2e5f6cf146ea6e,
+        type: 3}
+    - target: {fileID: 4016300570142754893, guid: 0b4d5fcb09374fa48a93b1d379755f9d,
+        type: 3}
+      propertyPath: spawnEvents.Array.data[3].Weights
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b4d5fcb09374fa48a93b1d379755f9d, type: 3}

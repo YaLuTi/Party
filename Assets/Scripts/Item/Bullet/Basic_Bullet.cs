@@ -16,28 +16,28 @@ public class Basic_Bullet : MonoBehaviour
 
     [Header("Physics")]
     [SerializeField]
-    float StartSpeed = 0;
+    protected float StartSpeed = 0;
     [SerializeField]
-    float AddSpeed = 0;
-    Rigidbody rb;
+    protected float AddSpeed = 0;
+    protected Rigidbody rb;
 
     public AnimationCurve SpeedCurve;
-    float time = 0;
+    protected float time = 0;
 
     public float MaxDistnace = -1;
     public float MinSpeed = 0;
-    bool IsEnable = true;
+    protected bool IsEnable = true;
     
     List<PlayerHitten> playerHittens = new List<PlayerHitten>();
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * StartSpeed);
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         rb.AddForce(transform.forward * AddSpeed * SpeedCurve.Evaluate(time));
         time += Time.deltaTime;

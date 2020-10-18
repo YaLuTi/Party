@@ -34,18 +34,37 @@ public class PlayerCreating : MonoBehaviour
         ClothClone = new GameObject[clothDataArrays.Length];
         
         ClothClone[0] = Instantiate(clothDataArrays[0].clothDatas[0].cloth);
+
+        Vector3 v = ClothClone[0].transform.position;
+        Quaternion q = ClothClone[0].transform.rotation;
+        Vector3 s = ClothClone[0].transform.localScale;
+
         ClothClone[0].transform.parent = clothOffset[0];
-        ClothClone[0].transform.localScale = clothDataArrays[0].clothDatas[0].ScaleOffset;
+
+        ClothClone[0].transform.localPosition = v;
+        ClothClone[0].transform.localRotation = q;
+        ClothClone[0].transform.localScale = s;
+        /*ClothClone[0].transform.localScale = clothDataArrays[0].clothDatas[0].ScaleOffset;
         ClothClone[0].transform.localPosition = clothDataArrays[0].clothDatas[0].PositionOffset;
-        ClothClone[0].transform.localRotation = Quaternion.Euler(clothDataArrays[0].clothDatas[0].RotationOffset);
+        ClothClone[0].transform.localRotation = Quaternion.Euler(clothDataArrays[0].clothDatas[0].RotationOffset);*/
         
         RigClothClone = new GameObject[clothDataArrays.Length];
 
         RigClothClone[choosingArray] = Instantiate(clothDataArrays[choosingArray].clothDatas[ClothArray[choosingArray]].cloth);
+        
+        v = RigClothClone[choosingArray].transform.position;
+        q = RigClothClone[choosingArray].transform.rotation;
+        s = RigClothClone[choosingArray].transform.localScale;
+
         RigClothClone[choosingArray].transform.parent = RigclothOffset[choosingArray];
-        RigClothClone[choosingArray].transform.localScale = clothDataArrays[choosingArray].clothDatas[ClothArray[choosingArray]].ScaleOffset;
+
+        RigClothClone[choosingArray].transform.localPosition = v;
+        RigClothClone[choosingArray].transform.localRotation = q;
+        RigClothClone[choosingArray].transform.localScale = s;
+
+        /*RigClothClone[choosingArray].transform.localScale = clothDataArrays[choosingArray].clothDatas[ClothArray[choosingArray]].ScaleOffset;
         RigClothClone[choosingArray].transform.localPosition = clothDataArrays[choosingArray].clothDatas[ClothArray[choosingArray]].PositionOffset;
-        RigClothClone[choosingArray].transform.localRotation = Quaternion.Euler(clothDataArrays[choosingArray].clothDatas[ClothArray[choosingArray]].RotationOffset);
+        RigClothClone[choosingArray].transform.localRotation = Quaternion.Euler(clothDataArrays[choosingArray].clothDatas[ClothArray[choosingArray]].RotationOffset);*/
 
         IsEnable = true;
     }
