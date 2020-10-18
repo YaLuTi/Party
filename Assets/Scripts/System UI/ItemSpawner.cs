@@ -18,6 +18,8 @@ public class ItemSpawner : MonoBehaviour
 
     [HideInInspector]
     public float CooldownCount;
+    public float CooldownValue = 30;
+    public float CooldownValuePerItem = 20;
     bool CooldownEnbale = true;
 
     RoamingAI roamingAI;
@@ -32,7 +34,7 @@ public class ItemSpawner : MonoBehaviour
     void Update()
     {
         if (StageController.IsPaused) return;
-        if(CooldownCount > 30 + SpawnItem.Count * 20f/* && SpawnItem.Count < 25*/)
+        if(CooldownCount > CooldownValue + SpawnItem.Count * CooldownValuePerItem/* && SpawnItem.Count < 25*/)
         {
             CooldownCount = 0;
             RunSpawnItem();

@@ -43,8 +43,21 @@ public class Basic_Bullet : MonoBehaviour
         time += Time.deltaTime;
     }
 
+    private void FixedUpdate()
+    {
+        if (MaxDistnace > 0 && transform.localPosition.magnitude > MaxDistnace)
+        {
+            GameObject g = Instantiate(CollisionEffect, transform.position, transform.rotation);
+            Destroy(g, 2f);
+            Destroy(this.gameObject, DestroyAfterCollision);
+            rb.isKinematic = true;
+            IsEnable = false;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject.name);
         if (time < CollisionDelay) return;
         if (!IsEnable) return;
         if (!((TargetMask.value & 1 << other.gameObject.layer) > 0)) return;

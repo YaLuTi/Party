@@ -53,7 +53,7 @@ public class PlayerIdentity : MonoBehaviour
     private void Awake()
     {
         playerInput = GetComponentInChildren<PlayerInput>();
-        PlayerID = playerInput.user.index;
+        if(playerInput != null) PlayerID = playerInput.user.index;
 
         playerCreating = GetComponentInChildren<PlayerCreating>();
 

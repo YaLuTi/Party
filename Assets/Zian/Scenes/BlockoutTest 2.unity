@@ -198,7 +198,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6500
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 4.7e-43, y: 3.1339e-41, z: 0, w: -1}
+  m_BoundingSphereOverride: {x: 0, y: 49.959198, z: 4.47e-43, w: 4.5551453}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -323,7 +323,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9075618}
   m_LocalRotation: {x: 0.46174863, y: 0, z: 0, w: 0.8870109}
-  m_LocalPosition: {x: 0, y: 10.735758, z: -7.0187383}
+  m_LocalPosition: {x: 0, y: 10.735757, z: -7.0187387}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1160670692}
@@ -2810,6 +2810,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4016300570142754893, guid: 0b4d5fcb09374fa48a93b1d379755f9d,
+        type: 3}
+      propertyPath: CooldownValue
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4016300570142754893, guid: 0b4d5fcb09374fa48a93b1d379755f9d,
+        type: 3}
+      propertyPath: CooldownValuePerItem
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b4d5fcb09374fa48a93b1d379755f9d, type: 3}
@@ -6021,7 +6031,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.46174863, y: 0, z: 0, w: 0.8870109}
-  m_LocalPosition: {x: 0, y: 10.735758, z: -7.0187383}
+  m_LocalPosition: {x: 0, y: 10.735757, z: -7.018739}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -6435,7 +6445,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2356
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: -56.47516, z: 4.7e-43, w: -6.408928}
+  m_BoundingSphereOverride: {x: 0, y: 7.5586e-41, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -14295,7 +14305,7 @@ GameObject:
   - component: {fileID: 1965043120}
   - component: {fileID: 1965043118}
   m_Layer: 0
-  m_Name: Terrain
+  m_Name: Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14309,7 +14319,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1965043116}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8388612, y: -1.2945075, z: 1.0825624}
+  m_LocalPosition: {x: 0.8388612, y: -1.62, z: 1.0825624}
   m_LocalScale: {x: 0.8448087, y: 1, z: 0.7581501}
   m_Children: []
   m_Father: {fileID: 1933446284}

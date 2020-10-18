@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6668249144230587886}
   - component: {fileID: 3010884855923891854}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 7093673167505153961}
   - component: {fileID: 7487827654126046081}
   - component: {fileID: 7521591513471951554}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Collision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,25 +227,25 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16
   velocity: 500
-  damage: 7.5
-  CollisionDelay: 0.35
-  StartSpeed: 0
-  AddSpeed: 200
+  damage: 14
+  CollisionDelay: 0
+  StartSpeed: 3000
+  AddSpeed: 150
   SpeedCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0.32623178
-      outSlope: 0.32623178
+      time: 0.0073165894
+      value: 1.0010872
+      inSlope: 0.55936223
+      outSlope: 0.55936223
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.190242
-      value: 0.062062986
+      time: 0.060977176
+      value: 1.0311029
       inSlope: -0.35991794
       outSlope: -0.35991794
       tangentMode: 0
@@ -253,8 +253,8 @@ MonoBehaviour:
       inWeight: 0.5731707
       outWeight: 0.085091665
     - serializedVersion: 3
-      time: 0.25937417
-      value: 1.0431916
+      time: 0.10815957
+      value: 1.0512139
       inSlope: 0.44411168
       outSlope: 0.44411168
       tangentMode: 0
@@ -264,8 +264,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: -0.05831764
-      outSlope: -0.05831764
+      inSlope: -0.057424914
+      outSlope: -0.057424914
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -301,10 +301,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.29281878
-  m_Height: 1.1424936
+  m_Radius: 0.32690775
+  m_Height: 0.83357966
   m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.029999971, z: 0.14082879}
 --- !u!82 &7521591513471951554
 AudioSource:
   m_ObjectHideFlags: 0
@@ -317,7 +317,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 59abf03d42997414c94dd3a411bffa2a, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.322
+  m_Volume: 0.194
   m_Pitch: 2
   Loop: 0
   Mute: 0
@@ -412,7 +412,7 @@ GameObject:
   - component: {fileID: 7971658048801386540}
   - component: {fileID: 7813843239086587338}
   - component: {fileID: 7814383412905010962}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TinyShards
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5071,7 +5071,7 @@ GameObject:
   - component: {fileID: 7971689799752851074}
   - component: {fileID: 7813827322670406796}
   - component: {fileID: 7815347643483083092}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Mist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9847,7 +9847,7 @@ GameObject:
   - component: {fileID: 7971473323322978074}
   - component: {fileID: 7814238818034971482}
   - component: {fileID: 7815002947066775498}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: IceLance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10122,8 +10122,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.8
-      minScalar: 0.6
+      scalar: 0.6
+      minScalar: 0.4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10871,7 +10871,7 @@ ParticleSystem:
     curve:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 2.5
+      scalar: 4
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -10886,7 +10886,7 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.06610076
+          time: 0.04984863
           value: 1
           inSlope: -1.1731132
           outSlope: -1.1731132
@@ -11199,8 +11199,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 1, g: 1, b: 1, a: 0}
+        key0: {r: 1, g: 1, b: 1, a: 0}
+        key1: {r: 1, g: 1, b: 1, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -11215,9 +11215,9 @@ ParticleSystem:
         ctime5: 0
         ctime6: 0
         ctime7: 0
-        atime0: 23130
-        atime1: 65535
-        atime2: 0
+        atime0: 0
+        atime1: 2313
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -11225,7 +11225,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 2
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -14684,7 +14684,7 @@ GameObject:
   - component: {fileID: 7971416776983445142}
   - component: {fileID: 7814033599144390804}
   - component: {fileID: 7815790136264731240}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MistTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
