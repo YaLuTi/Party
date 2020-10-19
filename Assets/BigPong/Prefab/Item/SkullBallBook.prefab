@@ -1,5 +1,84 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4075022399445170285
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7293171436159130165}
+  - component: {fileID: 1265219124927432539}
+  - component: {fileID: 7626111643258065119}
+  m_Layer: 10
+  m_Name: FireBallBook
+  m_TagString: Item
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &7293171436159130165
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4075022399445170285}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7541576924627223920}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &1265219124927432539
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4075022399445170285}
+  m_Mesh: {fileID: -8455615989492338928, guid: e6eb07a215bdfbb48bb891dffef172bf, type: 3}
+--- !u!23 &7626111643258065119
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4075022399445170285}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: eb4ed1af1d20cb44bab6147e7e685f50, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &6841611707172173667
 GameObject:
   m_ObjectHideFlags: 0
@@ -32,7 +111,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -0.08, y: 0.5315768, z: 0.62}
   m_LocalScale: {x: 2.3, y: 2.3, z: 2.3}
-  m_Children: []
+  m_Children:
+  - {fileID: 7293171436159130165}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
@@ -43,7 +123,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6841611707172173667}
-  m_Mesh: {fileID: 2006423443529439350, guid: 3b926ffc118ca734c90578d6e088a784, type: 3}
+  m_Mesh: {fileID: -8455615989492338928, guid: e6eb07a215bdfbb48bb891dffef172bf, type: 3}
 --- !u!23 &5102190893859111871
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -62,7 +142,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d0fc79175050a6c44a718e088a024851, type: 2}
+  - {fileID: 2100000, guid: ae2f309404ff1da4d9c63d41376482eb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -193,7 +273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsHolded: 0
   FollowTransform: {fileID: 0}
-  HighLight: {fileID: 0}
+  HighLight: {fileID: 4075022399445170285}
   PlayerSelecting: 0
   UsingSound: []
   Durability: 3
@@ -216,8 +296,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.05000006, y: 0.24560311, z: 0.3521539}
-  m_Center: {x: 0.0000000011034825, y: -4.2717516e-10, z: 0.1481069}
+  m_Size: {x: 0.05000006, y: 0.24560313, z: 0.35063425}
+  m_Center: {x: 0.0000000016196915, y: 3.4525854e-24, z: 0.17327626}
 --- !u!54 &6841611707172173671
 Rigidbody:
   m_ObjectHideFlags: 0

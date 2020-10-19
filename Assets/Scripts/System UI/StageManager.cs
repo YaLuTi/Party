@@ -124,8 +124,10 @@ public class StageManager : MonoBehaviour
 
     public void OnPlayerJoined(PlayerInput playerInput)
     {
+        if (instance != this) return;
         if (Testing)
         {
+            Debug.Log("Add");
             playerInput.transform.root.GetComponent<PlayerIdentity>().InputEnable();
             playerInput.SwitchCurrentActionMap("GamePlay");
             Destroy(playerInput.transform.root.GetComponentInChildren<PlayerCreating>());
@@ -142,14 +144,15 @@ public class StageManager : MonoBehaviour
         }
         else
         {
+            Debug.Log("Add");
             DontDestroyOnLoad(playerInput.transform.root.gameObject);
             players.Add((playerInput.transform.root.gameObject));
             GameObject g = Instantiate(PlayerCraftUI);
             g.GetComponent<Transform>().localPosition = new Vector3(-1.15f + (players.Count - 1) * 2.25f, 3.11f, -0.6f);
             players[players.Count - 1].GetComponentInChildren<PlayerCreating>().playerCreatingUI = g.GetComponent<PlayerCraftingUI>();
             OnBattleScene += players[players.Count - 1].GetComponent<PlayerIdentity>().OnTest;
-            OnPlayerJoin(playerInput.gameObject, players.Count - 1);
             PlayerCraftUIList.Add(g);
+            OnPlayerJoin(playerInput.gameObject, players.Count - 1);
         }
     }
 
@@ -260,7 +263,7 @@ public class StageManager : MonoBehaviour
             players[i].GetComponent<PlayerIdentity>().SetRagData();
         }
         yield return new WaitForSeconds(1.2f);
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("CrownScene", LoadSceneMode.Additive);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("DeathMatchBrawl", LoadSceneMode.Additive);
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
@@ -272,6 +275,16 @@ public class StageManager : MonoBehaviour
         while (!asyncUnload.isDone)
         {
             yield return null;
+        }
+
+        // TARGET LOCK
+        targetGroup = GameObject.FindGameObjectWithTag("CineGroup").GetComponent<CinemachineTargetGroup>();
+        if(targetGroup != null)
+        {
+            for(int i = 0; i < players.Count; i++)
+            {
+                targetGroup.AddMember(players[i].GetComponentInChildren<PlayerInput>().transform, 1, 0);
+            }
         }
 
         OnBattleScene();
@@ -286,5 +299,13 @@ public class StageManager : MonoBehaviour
     public static void LoadNewScene()
     {
         targetGroup = GameObject.FindGameObjectWithTag("CineGroup").GetComponent<CinemachineTargetGroup>();
+        if (targetGroup != null)
+        {
+            for (int i = 0; i < players.Count; i++)
+            {
+                Debug.Log("TYTYTYRH");
+                targetGroup.AddMember(players[i].GetComponentInChildren<PlayerInput>().transform, 1, 0);
+            }
+        }
     }
 }

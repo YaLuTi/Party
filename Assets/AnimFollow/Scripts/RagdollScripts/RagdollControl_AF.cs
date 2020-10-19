@@ -324,7 +324,6 @@ namespace AnimFollow
 						}
 						else if (!(isInTransitionToGetup || getupState)) // Getting up is done. We are back in Idle (if not delayed)
                         {
-                            Debug.Log("3");
                             playerMovement.inhibitMove = false; // Master is able to move again
                             playerMovement.EnableMove();
                             playerMovement.EnableRotate();
