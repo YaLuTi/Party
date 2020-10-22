@@ -198,7 +198,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6500
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 8.83e-43, y: 9.4e-44, z: 0, w: 2.1304417}
+  m_BoundingSphereOverride: {x: 0, y: 2.9892e-41, z: 0, w: 1.1689055e-19}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -323,7 +323,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9075618}
   m_LocalRotation: {x: 0.46174863, y: 0, z: 0, w: 0.8870109}
-  m_LocalPosition: {x: 0, y: 10.735758, z: -7.018739}
+  m_LocalPosition: {x: 0, y: 10.735757, z: -7.0187387}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1160670692}
@@ -6427,7 +6427,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: -0.23362468, y: -0.2360346, z: 0.0675281, w: -0.97488564}
+  m_LocalRotation: {x: -0.26400667, y: -0.26673, z: 0.07630988, w: -0.92375994}
   m_LocalPosition: {x: -8.378449, y: 11.663955, z: -12.128338}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -6842,7 +6842,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2356
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 2.9394e-41, z: 0, w: -1}
+  m_BoundingSphereOverride: {x: 0, y: 2.9349e-41, z: 0, w: 3.09485e+27}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -11486,6 +11486,50 @@ Transform:
   m_Father: {fileID: 1197681531}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: -13.048, z: 0}
+--- !u!1 &1550824145
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1550824147}
+  - component: {fileID: 1550824146}
+  m_Layer: 0
+  m_Name: AudioMixer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1550824146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550824145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6afd2e5079cf26a4eb841b6ea54c778d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: d41ad09bd1916d148b0ba199d6dbdbac, type: 2}
+--- !u!4 &1550824147
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550824145}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 17.17163, y: 16.302826, z: 7.654518}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 22
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1553145229
 GameObject:
   m_ObjectHideFlags: 0
@@ -12640,9 +12684,10 @@ AudioSource:
   m_GameObject: {fileID: 1684318039}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: d41ad09bd1916d148b0ba199d6dbdbac,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: d6592a0848305497b87dc2b6e7b3ae95, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 0.113
   m_Pitch: 1.2
   Loop: 1
@@ -14456,7 +14501,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2356
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 1.4473e-41, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 3.1131e-41, z: 0, w: -9.875}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -14992,15 +15037,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Events:
     m_Signals:
-    - {fileID: 0}
     - {fileID: 11400000, guid: bc7ec9269d1feb947a0f25359705787d, type: 2}
     m_Events:
     - m_PersistentCalls:
-        m_Calls: []
-    - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1930906587}
-          m_MethodName: Stop
+          m_MethodName: Pause
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
