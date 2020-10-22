@@ -11,6 +11,254 @@ using System.IO;
 
 namespace AmplifyShaderEditor
 {
+	[CustomEditor( typeof( TextureArrayCreatorAsset ) )]
+	public class TextureArrayCreatorAssetEditor : Editor
+	{
+		private string[] m_sizesStr = { "32", "64", "128", "256", "512", "1024", "2048", "4096", "8192" };
+		private int[] m_sizes = { 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192 };
+
+		private const string ArrayFilename = "NewTextureArray";
+		private const string Texture3DFilename = "NewTexture3D";
+
+		private GUIContent m_pathButtonContent = new GUIContent();
+		private GUIStyle m_pathButtonStyle = null;
+
+		public TextureArrayCreatorAsset Instance;
+
+		private DragAndDropTool m_dragAndDropTool;
+
+		SerializedObject m_so;
+		SerializedProperty m_selectedSize;
+		SerializedProperty m_lockRatio;
+		SerializedProperty m_sizeX;
+		SerializedProperty m_sizeY;
+		SerializedProperty m_tex3DMode;
+		SerializedProperty m_linearMode;
+		SerializedProperty m_mipMaps;
+		SerializedProperty m_wrapMode;
+		SerializedProperty m_filterMode;
+		SerializedProperty m_anisoLevel;
+		SerializedProperty m_selectedFormatEnum;
+		SerializedProperty m_quality;
+		SerializedProperty m_folderPath;
+		SerializedProperty m_fileName;
+		SerializedProperty m_filenameChanged;
+		SerializedProperty m_allTextures;
+
+		[SerializeField]
+		private ReorderableList m_listTextures = null;
+
+		[SerializeField]
+		private int m_previewSize;
+
+		public void OnEnable()
+		{
+			Instance = (TextureArrayCreatorAsset)target;
+
+			m_so = serializedObject;
+			m_selectedSize = m_so.FindProperty( "m_selectedSize" );
+			m_lockRatio = m_so.FindProperty( "m_lockRatio" );
+			m_sizeX = m_so.FindProperty( "m_sizeX" );
+			m_sizeY = m_so.FindProperty( "m_sizeY" );
+			m_tex3DMode = m_so.FindProperty( "m_tex3DMode" );
+			m_linearMode = m_so.FindProperty( "m_linearMode" );
+			m_mipMaps = m_so.FindProperty( "m_mipMaps" );
+			m_wrapMode = m_so.FindProperty( "m_wrapMode" );
+			m_filterMode = m_so.FindProperty( "m_filterMode" );
+			m_anisoLevel = m_so.FindProperty( "m_anisoLevel" );
+			m_selectedFormatEnum = m_so.FindProperty( "m_selectedFormatEnum" );
+			m_quality = m_so.FindProperty( "m_quality" );
+			m_folderPath = m_so.FindProperty( "m_folderPath" );
+			m_fileName = m_so.FindProperty( "m_fileName" );
+			m_filenameChanged = m_so.FindProperty( "m_filenameChanged" );
+			m_allTextures = m_so.FindProperty( "m_allTextures" );
+
+			if( m_listTextures == null )
+			{
+				m_listTextures = new ReorderableList( m_so, m_allTextures, true, true, true, true );
+				m_listTextures.elementHeight = 16;
+
+				m_listTextures.drawElementCallback = ( Rect rect, int index, bool isActive, bool isFocused ) =>
+				{
+					m_allTextures.GetArrayElementAtIndex( index ).objectReferenceValue = (Texture2D)EditorGUI.ObjectField( rect, "Texture " + index, m_allTextures.GetArrayElementAtIndex( index ).objectReferenceValue, typeof( Texture2D ), false );
+				};
+
+				m_listTextures.drawHeaderCallback = ( Rect rect ) =>
+				{
+					m_previewSize = EditorGUI.IntSlider( rect, "Texture List", m_previewSize, 16, 64 );
+					if( (float)m_previewSize != m_listTextures.elementHeight )
+						m_listTextures.elementHeight = m_previewSize;
+				};
+
+				m_listTextures.onAddCallback = ( list ) =>
+				{
+					m_allTextures.InsertArrayElementAtIndex( m_allTextures.arraySize );
+					m_allTextures.GetArrayElementAtIndex( m_allTextures.arraySize - 1 ).objectReferenceValue = null;
+				};
+
+				m_listTextures.onRemoveCallback = ( list ) =>
+				{
+					m_allTextures.GetArrayElementAtIndex( list.index ).objectReferenceValue = null;
+					m_allTextures.DeleteArrayElementAtIndex( list.index );
+				};
+			}
+
+			m_dragAndDropTool = new DragAndDropTool();
+			m_dragAndDropTool.OnValidDropObjectEvt += OnValidObjectsDropped;
+		}
+
+		public void OnValidObjectsDropped( UnityEngine.Object[] droppedObjs )
+		{
+			for( int objIdx = 0; objIdx < droppedObjs.Length; objIdx++ )
+			{
+				Texture2D tex = droppedObjs[ objIdx ] as Texture2D;
+				if( tex != null )
+				{
+					m_allTextures.InsertArrayElementAtIndex( m_allTextures.arraySize );
+					m_allTextures.GetArrayElementAtIndex( m_allTextures.arraySize - 1 ).objectReferenceValue = tex;
+					m_so.ApplyModifiedProperties();
+				}
+				else
+				{
+					DefaultAsset asset = droppedObjs[ objIdx ] as DefaultAsset;
+					if( asset != null )
+					{
+						string path = AssetDatabase.GetAssetPath( asset );
+						if( AssetDatabase.IsValidFolder( path ) )
+						{
+							string[] pathArr = { path };
+							string[] texInDir = AssetDatabase.FindAssets( "t:Texture2D", pathArr );
+							for( int texIdx = 0; texIdx < texInDir.Length; texIdx++ )
+							{
+								Texture2D internalTex = AssetDatabase.LoadAssetAtPath<Texture2D>( AssetDatabase.GUIDToAssetPath( texInDir[ texIdx ] ) );
+								if( internalTex != null )
+								{
+									m_allTextures.InsertArrayElementAtIndex( m_allTextures.arraySize );
+									m_allTextures.GetArrayElementAtIndex( m_allTextures.arraySize - 1 ).objectReferenceValue = internalTex;
+									m_so.ApplyModifiedProperties();
+								}
+							}
+						}
+					}
+				}
+			}
+
+			Instance.AllTextures.Sort( ( x, y ) => string.Compare( x.name, y.name ) );
+			m_so.Update();
+		}
+
+		private void OnDestroy()
+		{
+			m_dragAndDropTool.Destroy();
+			m_dragAndDropTool = null;
+		}
+
+		public override void OnInspectorGUI()
+		{
+			m_so.Update();
+
+			if( m_pathButtonStyle == null )
+				m_pathButtonStyle = "minibutton";
+
+			EditorGUILayout.BeginHorizontal();
+			var cache = EditorGUIUtility.labelWidth;
+			EditorGUILayout.PrefixLabel( "Size" );
+			EditorGUIUtility.labelWidth = 16;
+			if( m_lockRatio.boolValue )
+			{
+				m_selectedSize.intValue = EditorGUILayout.Popup( "X", m_selectedSize.intValue, m_sizesStr );
+				EditorGUI.BeginDisabledGroup( m_lockRatio.boolValue );
+				EditorGUILayout.Popup( "Y", m_selectedSize.intValue, m_sizesStr );
+				EditorGUI.EndDisabledGroup();
+			}
+			else
+			{
+				EditorGUILayout.PropertyField( m_sizeX, new GUIContent( "X" ) );
+				EditorGUILayout.PropertyField( m_sizeY, new GUIContent( "Y" ) );
+			}
+			EditorGUIUtility.labelWidth = 100;
+#if UNITY_2017_1_OR_NEWER
+			m_lockRatio.boolValue = GUILayout.Toggle( m_lockRatio.boolValue, "L", "minibutton", GUILayout.Width( 18 ) );
+#else
+			GUILayout.Toggle( m_lockRatio.boolValue, "L", "minibutton", GUILayout.Width( 18 ) );
+			m_lockRatio.boolValue = true;
+#endif
+			if( m_lockRatio.boolValue )
+			{
+				m_sizeX.intValue = m_sizes[ m_selectedSize.intValue ];
+				m_sizeY.intValue = m_sizes[ m_selectedSize.intValue ];
+			}
+			EditorGUIUtility.labelWidth = cache;
+			EditorGUILayout.EndHorizontal();
+			EditorGUI.BeginChangeCheck();
+			EditorGUILayout.PropertyField( m_tex3DMode, new GUIContent( "Texture 3D" ) );
+			if( EditorGUI.EndChangeCheck() )
+			{
+				if( !m_filenameChanged.boolValue )
+				{
+					m_fileName.stringValue = m_tex3DMode.boolValue ? Texture3DFilename : ArrayFilename;
+				}
+			}
+			EditorGUILayout.PropertyField( m_linearMode, new GUIContent( "Linear" ) );
+			EditorGUILayout.PropertyField( m_mipMaps );
+			EditorGUILayout.PropertyField( m_wrapMode );
+			EditorGUILayout.PropertyField( m_filterMode );
+			m_anisoLevel.intValue = EditorGUILayout.IntSlider( "Aniso Level", m_anisoLevel.intValue, 0, 16 );
+			EditorGUILayout.PropertyField( m_selectedFormatEnum, new GUIContent( "Format" ) );
+
+			if( m_selectedFormatEnum.intValue == (int)TextureFormat.DXT1Crunched )
+			{
+				m_selectedFormatEnum.intValue = (int)TextureFormat.DXT1;
+				Debug.Log( "Texture Array does not support crunched DXT1 format. Changing to DXT1..." );
+			}
+			else if( m_selectedFormatEnum.intValue == (int)TextureFormat.DXT5Crunched )
+			{
+				m_selectedFormatEnum.intValue = (int)TextureFormat.DXT5;
+				Debug.Log( "Texture Array does not support crunched DXT5 format. Changing to DXT5..." );
+			}
+
+			m_quality.intValue = EditorGUILayout.IntSlider( "Format Quality", m_quality.intValue, 0, 100 );
+			EditorGUILayout.Separator();
+
+			EditorGUILayout.LabelField( "Path and Name" );
+			EditorGUILayout.BeginHorizontal();
+			m_pathButtonContent.text = m_folderPath.stringValue;
+			Vector2 buttonSize = m_pathButtonStyle.CalcSize( m_pathButtonContent );
+			if( GUILayout.Button( m_pathButtonContent, m_pathButtonStyle, GUILayout.MaxWidth( Mathf.Min( Screen.width * 0.5f, buttonSize.x ) ) ) )
+			{
+				string folderpath = EditorUtility.OpenFolderPanel( "Save Texture Array to folder", "Assets/", "" );
+				folderpath = FileUtil.GetProjectRelativePath( folderpath );
+				if( string.IsNullOrEmpty( folderpath ) )
+					m_folderPath.stringValue = "Assets/";
+				else
+					m_folderPath.stringValue = folderpath + "/";
+			}
+			EditorGUI.BeginChangeCheck();
+			m_fileName.stringValue = EditorGUILayout.TextField( m_fileName.stringValue, GUILayout.ExpandWidth( true ) );
+			if( EditorGUI.EndChangeCheck() )
+			{
+				m_filenameChanged.boolValue = m_fileName.stringValue == ArrayFilename ? false : true;
+			}
+			EditorGUILayout.LabelField( ".asset", GUILayout.MaxWidth( 40 ) );
+			EditorGUILayout.EndHorizontal();
+			EditorGUILayout.Separator();
+
+			if( GUILayout.Button( "Clear" ) )
+			{
+				m_allTextures.ClearArray();
+			}
+
+			if( m_listTextures != null )
+				m_listTextures.DoLayoutList();
+
+			EditorGUILayout.Separator();
+
+			m_dragAndDropTool.TestDragAndDrop( new Rect( 0, 0, Screen.width, Screen.height ) );
+
+			m_so.ApplyModifiedProperties();
+		}
+	}
+
 	public class ASETextureArrayCreator : EditorWindow
 	{
 		[MenuItem( "Window/Amplify Shader Editor/Texture Array Creator", false, 1001 )]
@@ -29,148 +277,78 @@ namespace AmplifyShaderEditor
 		private const string ArrayFilename = "NewTextureArray";
 		private const string Texture3DFilename = "NewTexture3D";
 
-		private DragAndDropTool m_dragAndDropTool;
-		private Rect m_draggableArea;
+		TextureArrayCreatorAssetEditor m_editor;
 
 		[SerializeField]
-		private List<Texture2D> m_allTextures;
+		private TextureArrayCreatorAsset m_asset;
 
 		[SerializeField]
-		private ReorderableList m_listTextures = null;
+		private TextureArrayCreatorAsset m_dummyAsset;
 
-		[SerializeField]
-		private bool m_tex3DMode = false;
-
-		[SerializeField]
-		private bool m_linearMode = false;
-
-		[SerializeField]
-		private string m_folderPath = "Assets/";
-
-		[SerializeField]
-		private string m_fileName = "NewTextureArray";
-
-		[SerializeField]
-		private bool m_filenameChanged = false;
-
-		[SerializeField]
-		private TextureWrapMode m_wrapMode = TextureWrapMode.Repeat;
-
-		[SerializeField]
-		private FilterMode m_filterMode = FilterMode.Bilinear;
-
-		[SerializeField]
-		private int m_anisoLevel = 1;
-
-		[SerializeField]
-		private int m_previewSize = 16;
-
-		[SerializeField]
-		private bool m_mipMaps = true;
-
-		[SerializeField]
-		private int m_selectedSizeX = 4;
-
-		[SerializeField]
-		private int m_selectedSizeY = 4;
-
-		[SerializeField]
-		private TextureFormat m_selectedFormatEnum = TextureFormat.ARGB32;
-
-		[SerializeField]
-		private int m_quality = 100;
-
-		private int[] m_sizes = { 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192 };
-		private string[] m_sizesStr = { "32", "64", "128", "256", "512", "1024", "2048", "4096", "8192" };
-		private static Dictionary<int, int> MipCount = new Dictionary<int, int>() { { 32, 6 }, { 64, 7 }, { 128, 8 }, { 256, 9 }, { 512, 10 }, { 1024, 11 }, { 2048, 12 }, { 4096, 13 }, { 8192, 14 } };
-		private static List<TextureFormat> UncompressedFormats = new List<TextureFormat>() { TextureFormat.ARGB32, TextureFormat.RGBA32, TextureFormat.RGB24, TextureFormat.Alpha8 };
+		private static List<TextureFormat> UncompressedFormats = new List<TextureFormat>() 
+		{
+			TextureFormat.RGBAFloat,
+			TextureFormat.RGBAHalf,
+			TextureFormat.ARGB32, 
+			TextureFormat.RGBA32, 
+			TextureFormat.RGB24, 
+			TextureFormat.Alpha8 
+		};
 
 		private GUIStyle m_contentStyle = null;
-		private GUIStyle m_pathButtonStyle = null;
-		private GUIContent m_pathButtonContent = new GUIContent();
 
 		private Vector2 m_scrollPos;
 		private Texture m_lastSaved;
-		private bool m_lockRatio = true;
 		private string m_message = string.Empty;
 
 		private void OnEnable()
 		{
-			m_draggableArea = new Rect( 0, 0, 1, 1 );
-			m_dragAndDropTool = new DragAndDropTool();
-			m_dragAndDropTool.OnValidDropObjectEvt += OnValidObjectsDropped;
-
 			if( m_contentStyle == null )
 			{
 				m_contentStyle = new GUIStyle( GUIStyle.none );
 				m_contentStyle.margin = new RectOffset( 6, 4, 5, 5 );
 			}
-
-			m_pathButtonStyle = null;
-
-			if( m_allTextures == null )
-				m_allTextures = new List<Texture2D>();
-
-			if( m_listTextures == null )
-			{
-				m_listTextures = new ReorderableList( m_allTextures, typeof( Texture2D ), true, true, true, true );
-				m_listTextures.elementHeight = 16;
-
-				m_listTextures.drawElementCallback = ( Rect rect, int index, bool isActive, bool isFocused ) =>
-				{
-					m_allTextures[ index ] = (Texture2D)EditorGUI.ObjectField( rect, "Texture " + index, m_allTextures[ index ], typeof( Texture2D ), false );
-				};
-
-				m_listTextures.drawHeaderCallback = ( Rect rect ) =>
-				{
-					m_previewSize = EditorGUI.IntSlider( rect, "Texture List", m_previewSize, 16, 64 );
-					if( (float)m_previewSize != m_listTextures.elementHeight )
-						m_listTextures.elementHeight = m_previewSize;
-				};
-				m_listTextures.onAddCallback = ( list ) =>
-				{
-					m_allTextures.Add( null );
-				};
-
-				m_listTextures.onRemoveCallback = ( list ) =>
-				{
-					m_allTextures.RemoveAt( list.index );
-				};
-			}
 		}
 
 		private void OnDestroy()
 		{
-			m_dragAndDropTool.Destroy();
-			m_dragAndDropTool = null;
-
-			if( m_allTextures != null )
-			{
-				m_allTextures.Clear();
-				m_allTextures = null;
-			}
+			DestroyImmediate( m_editor );
+			if( m_dummyAsset != null && m_dummyAsset != m_asset )
+				DestroyImmediate( m_dummyAsset );
 		}
 
 		void OnGUI()
 		{
-			if( m_pathButtonStyle == null )
-				m_pathButtonStyle = "minibutton";
+			TextureArrayCreatorAsset currentAsset = null;
+			if( m_asset != null )
+			{
+				currentAsset = m_asset;
+			}
+			else
+			{
+				if( m_dummyAsset == null )
+				{
+					m_dummyAsset = ScriptableObject.CreateInstance<TextureArrayCreatorAsset>();
+					m_dummyAsset.name = "Dummy";
+				}
+				currentAsset = m_dummyAsset;
+			}
 
 			m_scrollPos = EditorGUILayout.BeginScrollView( m_scrollPos, GUILayout.Height( position.height ) );
 			float cachedWidth = EditorGUIUtility.labelWidth;
 			EditorGUIUtility.labelWidth = 100;
 			EditorGUILayout.BeginVertical( m_contentStyle );
 
-			string buildButtonStr = m_tex3DMode ? BuildTexture3DMessage : BuildArrayMessage;
+			string buildButtonStr = currentAsset.Tex3DMode ? BuildTexture3DMessage : BuildArrayMessage;
 			// build button
 			EditorGUILayout.BeginHorizontal();
-			EditorGUI.BeginDisabledGroup( m_allTextures.Count <= 0 );
+			EditorGUI.BeginDisabledGroup( currentAsset.AllTextures.Count <= 0 );
 			if( GUILayout.Button( buildButtonStr, "prebutton", GUILayout.Height( 20 ) ) )
 			{
 				bool showWarning = false;
-				for( int i = 0; i < m_allTextures.Count; i++ )
+				for( int i = 0; i < currentAsset.AllTextures.Count; i++ )
 				{
-					if( m_allTextures[ i ].width != m_sizes[ m_selectedSizeX ] || m_allTextures[ i ].height != m_sizes[ m_selectedSizeY ] )
+					if( currentAsset.AllTextures[ i ].width != currentAsset.SizeX || currentAsset.AllTextures[ i ].height != currentAsset.SizeY )
 					{
 						showWarning = true;
 					}
@@ -179,18 +357,18 @@ namespace AmplifyShaderEditor
 				if( !showWarning )
 				{
 					m_message = string.Empty;
-					if( m_tex3DMode )
-						BuildTexture3D();
+					if( currentAsset.Tex3DMode )
+						BuildTexture3D( currentAsset );
 					else
-						BuildArray();
+						BuildArray( currentAsset );
 				}
 				else if( EditorUtility.DisplayDialog( "Warning!", "Some textures need to be resized to fit the selected size. Do you want to continue?", "Yes", "No" ) )
 				{
 					m_message = string.Empty;
-					if( m_tex3DMode )
-						BuildTexture3D();
+					if( currentAsset.Tex3DMode )
+						BuildTexture3D( currentAsset );
 					else
-						BuildArray();
+						BuildArray( currentAsset );
 				}
 			}
 			EditorGUI.EndDisabledGroup();
@@ -208,123 +386,67 @@ namespace AmplifyShaderEditor
 				if( GUILayout.Button( "BUILD REPORT (click to hide):\n\n" + m_message, "helpbox" ) )
 					m_message = string.Empty;
 
-			// options
+			// asset
 			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.PrefixLabel( "Size" );
-			EditorGUIUtility.labelWidth = 16;
-			m_selectedSizeX = EditorGUILayout.Popup( "X", m_selectedSizeX, m_sizesStr );
-			EditorGUI.BeginDisabledGroup( m_lockRatio );
-			m_selectedSizeY = EditorGUILayout.Popup( "Y", m_lockRatio ? m_selectedSizeX : m_selectedSizeY, m_sizesStr );
-			EditorGUI.EndDisabledGroup();
-			EditorGUIUtility.labelWidth = 100;
-			m_lockRatio = GUILayout.Toggle( m_lockRatio, "L", "minibutton", GUILayout.Width( 18 ) );
-			EditorGUILayout.EndHorizontal();
-			EditorGUI.BeginChangeCheck();
-			m_tex3DMode = EditorGUILayout.Toggle( "Texture 3D", m_tex3DMode );
-			if( EditorGUI.EndChangeCheck() )
+			m_asset = EditorGUILayout.ObjectField( "Asset Preset", m_asset, typeof( TextureArrayCreatorAsset ), false ) as TextureArrayCreatorAsset;
+			if( GUILayout.Button( m_asset != null ? "Save" : "Create", "minibutton", GUILayout.Width( 50 ) ) )
 			{
-				if( !m_filenameChanged )
+				string defaultName = "ArrayPreset";
+				if( m_asset != null )
+					defaultName = m_asset.name;
+
+				string path = EditorUtility.SaveFilePanelInProject( "Save as", defaultName, "asset", string.Empty );
+				if( !string.IsNullOrEmpty( path ) )
 				{
-					m_fileName = m_tex3DMode ? Texture3DFilename:ArrayFilename;
+					TextureArrayCreatorAsset outfile = AssetDatabase.LoadMainAssetAtPath( path ) as TextureArrayCreatorAsset;
+					if( outfile != null )
+					{
+						EditorUtility.CopySerialized( currentAsset, outfile );
+						AssetDatabase.SaveAssets();
+						Selection.activeObject = outfile;
+						EditorGUIUtility.PingObject( outfile );
+					}
+					else
+					{
+						if( m_asset != null )
+						{
+							currentAsset = ScriptableObject.CreateInstance<TextureArrayCreatorAsset>();
+							EditorUtility.CopySerialized( m_asset, currentAsset );
+						}
+						AssetDatabase.CreateAsset( currentAsset, path );
+						Selection.activeObject = currentAsset;
+						EditorGUIUtility.PingObject( currentAsset );
+						m_asset = currentAsset;
+					}
 				}
 			}
-			
-			m_linearMode = EditorGUILayout.Toggle( "Linear", m_linearMode );
-			m_mipMaps = EditorGUILayout.Toggle( "Mip Maps", m_mipMaps );
-			m_wrapMode = (TextureWrapMode)EditorGUILayout.EnumPopup( "Wrap Mode", m_wrapMode );
-			m_filterMode = (FilterMode)EditorGUILayout.EnumPopup( "Filter Mode", m_filterMode );
-			m_anisoLevel = EditorGUILayout.IntSlider( "Aniso Level", m_anisoLevel, 0, 16 );
-
-			m_selectedFormatEnum = (TextureFormat)EditorGUILayout.EnumPopup( "Format", m_selectedFormatEnum );
-			if( m_selectedFormatEnum == TextureFormat.DXT1Crunched )
-			{
-				m_selectedFormatEnum = TextureFormat.DXT1;
-				Debug.Log( "Texture Array does not support crunched DXT1 format. Changing to DXT1..." );
-			}
-			else if( m_selectedFormatEnum == TextureFormat.DXT5Crunched )
-			{
-				m_selectedFormatEnum = TextureFormat.DXT5;
-				Debug.Log( "Texture Array does not support crunched DXT5 format. Changing to DXT5..." );
-			}
-
-			m_quality = EditorGUILayout.IntSlider( "Format Quality", m_quality, 0, 100 );
-			EditorGUILayout.Separator();
-			EditorGUILayout.LabelField( "Path and Name" );
-			EditorGUILayout.BeginHorizontal();
-			m_pathButtonContent.text = m_folderPath;
-			Vector2 buttonSize = m_pathButtonStyle.CalcSize( m_pathButtonContent );
-			if( GUILayout.Button( m_pathButtonContent, m_pathButtonStyle, GUILayout.MaxWidth( Mathf.Min( position.width * 0.5f, buttonSize.x ) ) ) )
-			{
-				string folderpath = EditorUtility.OpenFolderPanel( "Save Texture Array to folder", "Assets/", "" );
-				folderpath = FileUtil.GetProjectRelativePath( folderpath );
-				if( string.IsNullOrEmpty( folderpath ) )
-					m_folderPath = "Assets/";
-				else
-					m_folderPath = folderpath + "/";
-			}
-			EditorGUI.BeginChangeCheck();
-			m_fileName = EditorGUILayout.TextField( m_fileName, GUILayout.ExpandWidth( true ) );
-			if( EditorGUI.EndChangeCheck() )
-			{
-				m_filenameChanged = true;
-			}
-			EditorGUILayout.LabelField( ".asset", GUILayout.MaxWidth( 40 ) );
 			EditorGUILayout.EndHorizontal();
 			EditorGUILayout.Separator();
 
-			// list
-			EditorGUILayout.Separator();
-			if( GUILayout.Button( ClearButtonStr ) )
+			if( Event.current.type == EventType.Layout )
 			{
-				m_allTextures.Clear();
+				if( m_editor == null )
+				{
+					m_editor = Editor.CreateEditor( currentAsset, typeof( TextureArrayCreatorAssetEditor ) ) as TextureArrayCreatorAssetEditor;
+				}
+				else
+				{
+					if( m_editor.Instance != currentAsset )
+					{
+						DestroyImmediate( m_editor );
+						m_editor = Editor.CreateEditor( currentAsset, typeof( TextureArrayCreatorAssetEditor ) ) as TextureArrayCreatorAssetEditor;
+					}
+				}
 			}
-
-			if( m_listTextures != null )
-				m_listTextures.DoLayoutList();
+			if( m_editor != null )
+				m_editor.OnInspectorGUI();
 
 			GUILayout.Space( 20 );
 			EditorGUILayout.EndVertical();
 			EditorGUIUtility.labelWidth = cachedWidth;
 			EditorGUILayout.EndScrollView();
-			m_draggableArea.size = position.size;
-			m_dragAndDropTool.TestDragAndDrop( m_draggableArea );
 		}
 
-		public void OnValidObjectsDropped( UnityEngine.Object[] droppedObjs )
-		{
-			for( int objIdx = 0; objIdx < droppedObjs.Length; objIdx++ )
-			{
-				Texture2D tex = droppedObjs[ objIdx ] as Texture2D;
-				if( tex != null )
-				{
-					m_allTextures.Add( tex );
-				}
-				else
-				{
-					DefaultAsset asset = droppedObjs[ objIdx ] as DefaultAsset;
-					if( asset != null )
-					{
-						string path = AssetDatabase.GetAssetPath( asset );
-						if( AssetDatabase.IsValidFolder( path ) )
-						{
-							string[] pathArr = { path };
-							string[] texInDir = AssetDatabase.FindAssets( TextureFilter, pathArr );
-							for( int texIdx = 0; texIdx < texInDir.Length; texIdx++ )
-							{
-								Texture2D internalTex = AssetDatabase.LoadAssetAtPath<Texture2D>( AssetDatabase.GUIDToAssetPath( texInDir[ texIdx ] ));
-								if( internalTex != null )
-								{
-									m_allTextures.Add( internalTex );
-								}
-							}
-						}
-					}
-				}
-			}
-
-			m_allTextures.Sort( ( x, y ) => string.Compare( x.name, y.name ) );
-		}
-		
 		private void CopyToArray( ref Texture2D from, ref Texture2DArray to, int arrayIndex, int mipLevel, bool compressed = true )
 		{
 			if( compressed )
@@ -339,49 +461,49 @@ namespace AmplifyShaderEditor
 		}
 
 #if NEW_TEXTURE_3D_METHOD
-		private void BuildTexture3D()
+		private void BuildTexture3D( TextureArrayCreatorAsset asset )
 		{
-			int sizeX = m_sizes[ m_selectedSizeX ];
-			int sizeY = m_sizes[ m_selectedSizeY ];
+			int sizeX = asset.SizeX;
+			int sizeY = asset.SizeY;
 
-			Texture3D texture3D = new Texture3D( sizeX, sizeY, m_allTextures.Count, m_selectedFormatEnum, m_mipMaps );
-			texture3D.wrapMode = m_wrapMode;
-			texture3D.filterMode = m_filterMode;
-			texture3D.anisoLevel = m_anisoLevel;
+			Texture3D texture3D = new Texture3D( sizeX, sizeY, asset.AllTextures.Count, asset.SelectedFormatEnum, asset.MipMaps );
+			texture3D.wrapMode = asset.WrapMode;
+			texture3D.filterMode = asset.FilterMode;
+			texture3D.anisoLevel = asset.AnisoLevel;
 			//texture3D.Apply( false );
 			RenderTexture cache = RenderTexture.active;
 			RenderTexture rt = new RenderTexture( sizeX, sizeY, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default );
 			rt.Create();
-			List<Texture2D> textures = new List<Texture2D>( m_allTextures.Count );
+			List<Texture2D> textures = new List<Texture2D>( asset.AllTextures.Count );
 
-			for( int i = 0; i < m_allTextures.Count; i++ )
+			for( int i = 0; i < asset.AllTextures.Count; i++ )
 			{
 				// build report
-				int widthChanges = m_allTextures[ i ].width < sizeX ? -1 : m_allTextures[ i ].width > sizeX ? 1 : 0;
-				int heightChanges = m_allTextures[ i ].height < sizeY ? -1 : m_allTextures[ i ].height > sizeY ? 1 : 0;
+				int widthChanges = asset.AllTextures[ i ].width < sizeX ? -1 : asset.AllTextures[ i ].width > sizeX ? 1 : 0;
+				int heightChanges = asset.AllTextures[ i ].height < sizeY ? -1 : asset.AllTextures[ i ].height > sizeY ? 1 : 0;
 				if( ( widthChanges < 0 && heightChanges <= 0 ) || ( widthChanges <= 0 && heightChanges < 0 ) )
-					m_message += m_allTextures[ i ].name + " was upscaled\n";
+					m_message += asset.AllTextures[ i ].name + " was upscaled\n";
 				else if( ( widthChanges > 0 && heightChanges >= 0 ) || ( widthChanges >= 0 && heightChanges > 0 ) )
-					m_message += m_allTextures[ i ].name + " was downscaled\n";
+					m_message += asset.AllTextures[ i ].name + " was downscaled\n";
 				else if( ( widthChanges > 0 && heightChanges < 0 ) || ( widthChanges < 0 && heightChanges > 0 ) )
-					m_message += m_allTextures[ i ].name + " changed dimensions\n";
+					m_message += asset.AllTextures[ i ].name + " changed dimensions\n";
 
 				// blit image to upscale or downscale the image to any size
 				RenderTexture.active = rt;
 
 				bool cachedsrgb = GL.sRGBWrite;
-				GL.sRGBWrite = !m_linearMode;
-				Graphics.Blit( m_allTextures[ i ], rt );
+				GL.sRGBWrite = !asset.LinearMode;
+				Graphics.Blit( asset.AllTextures[ i ], rt );
 				GL.sRGBWrite = cachedsrgb;
 
-				textures.Add( new Texture2D( sizeX, sizeY, TextureFormat.ARGB32, m_mipMaps, m_linearMode ));
-				textures[ i ].ReadPixels( new Rect( 0, 0, sizeX, sizeY ), 0, 0, m_mipMaps );
+				textures.Add( new Texture2D( sizeX, sizeY, TextureFormat.ARGB32, asset.MipMaps, asset.LinearMode ) );
+				textures[ i ].ReadPixels( new Rect( 0, 0, sizeX, sizeY ), 0, 0, asset.MipMaps );
 				RenderTexture.active = null;
 
-				bool isCompressed = UncompressedFormats.FindIndex( x => x.Equals( m_selectedFormatEnum ) ) < 0;
+				bool isCompressed = UncompressedFormats.FindIndex( x => x.Equals( asset.SelectedFormatEnum ) ) < 0;
 				if( isCompressed )
 				{
-					EditorUtility.CompressTexture( textures[ i ], m_selectedFormatEnum, m_quality );
+					EditorUtility.CompressTexture( textures[ i ], asset.SelectedFormatEnum, asset.Quality );
 					//	t2d.Apply( false );
 				}
 				textures[ i ].Apply( false );
@@ -410,7 +532,7 @@ namespace AmplifyShaderEditor
 			texture3D.SetPixels( colors );
 			texture3D.Apply();
 
-			string path = m_folderPath + m_fileName + ".asset";
+			string path = asset.FolderPath + asset.FileName + ".asset";
 			Texture3D outfile = AssetDatabase.LoadMainAssetAtPath( path ) as Texture3D;
 			if( outfile != null )
 			{
@@ -427,22 +549,23 @@ namespace AmplifyShaderEditor
 			}
 		}
 #else
-		private void BuildTexture3D()
+		private void BuildTexture3D( TextureArrayCreatorAsset asset )
 		{
-			int sizeX = m_sizes[ m_selectedSizeX ];
-			int sizeY = m_sizes[ m_selectedSizeY ];
-			int mipCount = m_mipMaps ? MipCount[ Mathf.Max( sizeX, sizeY ) ] : 1;
+			int sizeX = asset.SizeX;
+			int sizeY = asset.SizeY;
+			int numLevels = 1 + (int)Mathf.Floor( Mathf.Log( Mathf.Max( sizeX, sizeY ), 2 ) );
+			int mipCount = asset.MipMaps ? numLevels : 1;
 
-			Texture3D texture3D = new Texture3D( sizeX, sizeY, m_allTextures.Count, m_selectedFormatEnum, m_mipMaps );
-			texture3D.wrapMode = m_wrapMode;
-			texture3D.filterMode = m_filterMode;
-			texture3D.anisoLevel = m_anisoLevel;
+			Texture3D texture3D = new Texture3D( sizeX, sizeY, asset.AllTextures.Count, asset.SelectedFormatEnum, asset.MipMaps );
+			texture3D.wrapMode = asset.WrapMode;
+			texture3D.filterMode = asset.FilterMode;
+			texture3D.anisoLevel = asset.AnisoLevel;
 			texture3D.Apply( false );
 			RenderTexture cache = RenderTexture.active;
-			RenderTexture rt = new RenderTexture( sizeX, sizeY, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default );
+			RenderTexture rt = new RenderTexture( sizeX, sizeY, 0, RenderTextureFormat.ARGBFloat, RenderTextureReadWrite.Default );
 			rt.Create();
 			List<List<Color>> mipColor = new List<List<Color>>();
-			if( m_mipMaps )
+			if( asset.MipMaps )
 			{
 				for( int i = 0; i < mipCount; i++ )
 				{
@@ -454,39 +577,40 @@ namespace AmplifyShaderEditor
 				mipColor.Add( new List<Color>() );
 			}
 
-			for( int i = 0; i < m_allTextures.Count; i++ )
+			for( int i = 0; i < asset.AllTextures.Count; i++ )
 			{
 				// build report
-				int widthChanges = m_allTextures[ i ].width < sizeX ? -1 : m_allTextures[ i ].width > sizeX ? 1 : 0;
-				int heightChanges = m_allTextures[ i ].height < sizeY ? -1 : m_allTextures[ i ].height > sizeY ? 1 : 0;
+				int widthChanges = asset.AllTextures[ i ].width < sizeX ? -1 : asset.AllTextures[ i ].width > sizeX ? 1 : 0;
+				int heightChanges = asset.AllTextures[ i ].height < sizeY ? -1 : asset.AllTextures[ i ].height > sizeY ? 1 : 0;
 				if( ( widthChanges < 0 && heightChanges <= 0 ) || ( widthChanges <= 0 && heightChanges < 0 ) )
-					m_message += m_allTextures[ i ].name + " was upscaled\n";
+					m_message += asset.AllTextures[ i ].name + " was upscaled\n";
 				else if( ( widthChanges > 0 && heightChanges >= 0 ) || ( widthChanges >= 0 && heightChanges > 0 ) )
-					m_message += m_allTextures[ i ].name + " was downscaled\n";
+					m_message += asset.AllTextures[ i ].name + " was downscaled\n";
 				else if( ( widthChanges > 0 && heightChanges < 0 ) || ( widthChanges < 0 && heightChanges > 0 ) )
-					m_message += m_allTextures[ i ].name + " changed dimensions\n";
+					m_message += asset.AllTextures[ i ].name + " changed dimensions\n";
 
 				// blit image to upscale or downscale the image to any size
 				RenderTexture.active = rt;
 
 				bool cachedsrgb = GL.sRGBWrite;
-				GL.sRGBWrite = !m_linearMode;
-				Graphics.Blit( m_allTextures[ i ], rt );
+				GL.sRGBWrite = !asset.LinearMode;
+				Graphics.Blit( asset.AllTextures[ i ], rt );
 				GL.sRGBWrite = cachedsrgb;
 
-				Texture2D t2d = new Texture2D( sizeX, sizeY, TextureFormat.ARGB32, m_mipMaps, m_linearMode );
-				t2d.ReadPixels( new Rect( 0, 0, sizeX, sizeY ), 0, 0, m_mipMaps );
+				bool isCompressed = UncompressedFormats.FindIndex( x => x.Equals( asset.SelectedFormatEnum ) ) < 0;
+				TextureFormat validReadPixelsFormat = isCompressed ? TextureFormat.RGBAFloat : asset.SelectedFormatEnum;
+				Texture2D t2d = new Texture2D( sizeX, sizeY, validReadPixelsFormat, asset.MipMaps, asset.LinearMode );
+				t2d.ReadPixels( new Rect( 0, 0, sizeX, sizeY ), 0, 0, asset.MipMaps );
 				RenderTexture.active = null;
 
-				bool isCompressed = UncompressedFormats.FindIndex( x => x.Equals( m_selectedFormatEnum ) ) < 0;
 				if( isCompressed )
 				{
-					EditorUtility.CompressTexture( t2d, m_selectedFormatEnum, m_quality );
+					EditorUtility.CompressTexture( t2d, asset.SelectedFormatEnum, asset.Quality );
 					//	t2d.Apply( false );
 				}
 				t2d.Apply( false );
 
-				if( m_mipMaps )
+				if( asset.MipMaps )
 				{
 					for( int mip = 0; mip < mipCount; mip++ )
 					{
@@ -512,7 +636,7 @@ namespace AmplifyShaderEditor
 
 			texture3D.Apply( false );
 
-			string path = m_folderPath + m_fileName + ".asset";
+			string path = asset.FolderPath + asset.FileName + ".asset";
 			Texture3D outfile = AssetDatabase.LoadMainAssetAtPath( path ) as Texture3D;
 			if( outfile != null )
 			{
@@ -529,49 +653,50 @@ namespace AmplifyShaderEditor
 			}
 		}
 #endif
-		private void BuildTexture3DAutoMips()
+		private void BuildTexture3DAutoMips( TextureArrayCreatorAsset asset )
 		{
-			int sizeX = m_sizes[ m_selectedSizeX ];
-			int sizeY = m_sizes[ m_selectedSizeY ];
+			int sizeX = asset.SizeX;
+			int sizeY = asset.SizeY;
 
-			Texture3D texture3D = new Texture3D( sizeX, sizeY, m_allTextures.Count, m_selectedFormatEnum, m_mipMaps );
-			texture3D.wrapMode = m_wrapMode;
-			texture3D.filterMode = m_filterMode;
-			texture3D.anisoLevel = m_anisoLevel;
+			Texture3D texture3D = new Texture3D( sizeX, sizeY, asset.AllTextures.Count, asset.SelectedFormatEnum, asset.MipMaps );
+			texture3D.wrapMode = asset.WrapMode;
+			texture3D.filterMode = asset.FilterMode;
+			texture3D.anisoLevel = asset.AnisoLevel;
 			texture3D.Apply( false );
 			RenderTexture cache = RenderTexture.active;
-			RenderTexture rt = new RenderTexture( sizeX, sizeY, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default );
+			RenderTexture rt = new RenderTexture( sizeX, sizeY, 0, RenderTextureFormat.ARGBFloat, RenderTextureReadWrite.Default );
 			rt.Create();
 			List<Color> texColors = new List<Color>();
-			
-			for( int i = 0; i < m_allTextures.Count; i++ )
+
+			for( int i = 0; i < asset.AllTextures.Count; i++ )
 			{
 				// build report
-				int widthChanges = m_allTextures[ i ].width < sizeX ? -1 : m_allTextures[ i ].width > sizeX ? 1 : 0;
-				int heightChanges = m_allTextures[ i ].height < sizeY ? -1 : m_allTextures[ i ].height > sizeY ? 1 : 0;
+				int widthChanges = asset.AllTextures[ i ].width < sizeX ? -1 : asset.AllTextures[ i ].width > sizeX ? 1 : 0;
+				int heightChanges = asset.AllTextures[ i ].height < sizeY ? -1 : asset.AllTextures[ i ].height > sizeY ? 1 : 0;
 				if( ( widthChanges < 0 && heightChanges <= 0 ) || ( widthChanges <= 0 && heightChanges < 0 ) )
-					m_message += m_allTextures[ i ].name + " was upscaled\n";
+					m_message += asset.AllTextures[ i ].name + " was upscaled\n";
 				else if( ( widthChanges > 0 && heightChanges >= 0 ) || ( widthChanges >= 0 && heightChanges > 0 ) )
-					m_message += m_allTextures[ i ].name + " was downscaled\n";
+					m_message += asset.AllTextures[ i ].name + " was downscaled\n";
 				else if( ( widthChanges > 0 && heightChanges < 0 ) || ( widthChanges < 0 && heightChanges > 0 ) )
-					m_message += m_allTextures[ i ].name + " changed dimensions\n";
+					m_message += asset.AllTextures[ i ].name + " changed dimensions\n";
 
 				// blit image to upscale or downscale the image to any size
 				RenderTexture.active = rt;
 
 				bool cachedsrgb = GL.sRGBWrite;
-				GL.sRGBWrite = !m_linearMode;
-				Graphics.Blit( m_allTextures[ i ], rt );
+				GL.sRGBWrite = !asset.LinearMode;
+				Graphics.Blit( asset.AllTextures[ i ], rt );
 				GL.sRGBWrite = cachedsrgb;
 
-				Texture2D t2d = new Texture2D( sizeX, sizeY, TextureFormat.ARGB32, m_mipMaps, m_linearMode );
-				t2d.ReadPixels( new Rect( 0, 0, sizeX, sizeY ), 0, 0, m_mipMaps );
+				bool isCompressed = UncompressedFormats.FindIndex( x => x.Equals( asset.SelectedFormatEnum ) ) < 0;
+				TextureFormat validReadPixelsFormat = isCompressed ? TextureFormat.RGBAFloat : asset.SelectedFormatEnum;
+				Texture2D t2d = new Texture2D( sizeX, sizeY, validReadPixelsFormat, asset.MipMaps, asset.LinearMode );
+				t2d.ReadPixels( new Rect( 0, 0, sizeX, sizeY ), 0, 0, asset.MipMaps );
 				RenderTexture.active = null;
 
-				bool isCompressed = UncompressedFormats.FindIndex( x => x.Equals( m_selectedFormatEnum ) ) < 0;
 				if( isCompressed )
 				{
-					EditorUtility.CompressTexture( t2d, m_selectedFormatEnum, m_quality );
+					EditorUtility.CompressTexture( t2d, asset.SelectedFormatEnum, asset.Quality );
 					t2d.Apply( false );
 				}
 				texColors.AddRange( t2d.GetPixels() );
@@ -586,7 +711,7 @@ namespace AmplifyShaderEditor
 			texture3D.SetPixels( texColors.ToArray() );
 			texture3D.Apply();
 
-			string path = m_folderPath + m_fileName + ".asset";
+			string path = asset.FolderPath + asset.FileName + ".asset";
 			Texture3D outfile = AssetDatabase.LoadMainAssetAtPath( path ) as Texture3D;
 			if( outfile != null )
 			{
@@ -603,54 +728,56 @@ namespace AmplifyShaderEditor
 			}
 		}
 
-		private void BuildArray()
+		private void BuildArray( TextureArrayCreatorAsset asset )
 		{
-			int sizeX = m_sizes[ m_selectedSizeX ];
-			int sizeY = m_sizes[ m_selectedSizeY ];
+			int sizeX = asset.SizeX;
+			int sizeY = asset.SizeY;
 
-			Texture2DArray textureArray = new Texture2DArray( sizeX, sizeY, m_allTextures.Count, m_selectedFormatEnum, m_mipMaps, m_linearMode );
-			textureArray.wrapMode = m_wrapMode;
-			textureArray.filterMode = m_filterMode;
-			textureArray.anisoLevel = m_anisoLevel;
+			Texture2DArray textureArray = new Texture2DArray( sizeX, sizeY, asset.AllTextures.Count, asset.SelectedFormatEnum, asset.MipMaps, asset.LinearMode );
+			textureArray.wrapMode = asset.WrapMode;
+			textureArray.filterMode = asset.FilterMode;
+			textureArray.anisoLevel = asset.AnisoLevel;
 			textureArray.Apply( false );
 			RenderTexture cache = RenderTexture.active;
-			RenderTexture rt = new RenderTexture( sizeX, sizeY, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default );
+			RenderTexture rt = new RenderTexture( sizeX, sizeY, 0, RenderTextureFormat.ARGBFloat, RenderTextureReadWrite.Default );
 			rt.Create();
-			for( int i = 0; i < m_allTextures.Count; i++ )
+			for( int i = 0; i < asset.AllTextures.Count; i++ )
 			{
 				// build report
-				int widthChanges = m_allTextures[ i ].width < sizeX ? -1 : m_allTextures[ i ].width > sizeX ? 1 : 0;
-				int heightChanges = m_allTextures[ i ].height < sizeY ? -1 : m_allTextures[ i ].height > sizeY ? 1 : 0;
+				int widthChanges = asset.AllTextures[ i ].width < sizeX ? -1 : asset.AllTextures[ i ].width > sizeX ? 1 : 0;
+				int heightChanges = asset.AllTextures[ i ].height < sizeY ? -1 : asset.AllTextures[ i ].height > sizeY ? 1 : 0;
 				if( ( widthChanges < 0 && heightChanges <= 0 ) || ( widthChanges <= 0 && heightChanges < 0 ) )
-					m_message += m_allTextures[ i ].name + " was upscaled\n";
+					m_message += asset.AllTextures[ i ].name + " was upscaled\n";
 				else if( ( widthChanges > 0 && heightChanges >= 0 ) || ( widthChanges >= 0 && heightChanges > 0 ) )
-					m_message += m_allTextures[ i ].name + " was downscaled\n";
+					m_message += asset.AllTextures[ i ].name + " was downscaled\n";
 				else if( ( widthChanges > 0 && heightChanges < 0 ) || ( widthChanges < 0 && heightChanges > 0 ) )
-					m_message += m_allTextures[ i ].name + " changed dimensions\n";
+					m_message += asset.AllTextures[ i ].name + " changed dimensions\n";
 
 				// blit image to upscale or downscale the image to any size
 				RenderTexture.active = rt;
 
 				bool cachedsrgb = GL.sRGBWrite;
-				GL.sRGBWrite = !m_linearMode;
-				Graphics.Blit( m_allTextures[ i ], rt );
+				GL.sRGBWrite = !asset.LinearMode;
+				Graphics.Blit( asset.AllTextures[ i ], rt );
 				GL.sRGBWrite = cachedsrgb;
 
-				Texture2D t2d = new Texture2D( sizeX, sizeY, TextureFormat.ARGB32, m_mipMaps, m_linearMode );
-				t2d.ReadPixels( new Rect( 0, 0, sizeX, sizeY ), 0, 0, m_mipMaps );
+				bool isCompressed = UncompressedFormats.FindIndex( x => x.Equals( asset.SelectedFormatEnum ) ) < 0;
+				TextureFormat validReadPixelsFormat = isCompressed ? TextureFormat.RGBAFloat : asset.SelectedFormatEnum;
+				Texture2D t2d = new Texture2D( sizeX, sizeY, validReadPixelsFormat, asset.MipMaps, asset.LinearMode );
+				t2d.ReadPixels( new Rect( 0, 0, sizeX, sizeY ), 0, 0, asset.MipMaps );
 				RenderTexture.active = null;
 
-				bool isCompressed = UncompressedFormats.FindIndex( x => x.Equals( m_selectedFormatEnum ) ) < 0;
 				if( isCompressed )
 				{
-					EditorUtility.CompressTexture( t2d, m_selectedFormatEnum, m_quality );
+					EditorUtility.CompressTexture( t2d, asset.SelectedFormatEnum, asset.Quality );
 					t2d.Apply( false );
 				}
 
-				if( m_mipMaps )
+				if( asset.MipMaps )
 				{
 					int maxSize = Mathf.Max( sizeX, sizeY );
-					for( int mip = 0; mip < MipCount[ maxSize ]; mip++ )
+					int numLevels = 1 + (int)Mathf.Floor( Mathf.Log( maxSize, 2 ) );
+					for( int mip = 0; mip < numLevels; mip++ )
 					{
 						CopyToArray( ref t2d, ref textureArray, i, mip, isCompressed );
 					}
@@ -666,7 +793,7 @@ namespace AmplifyShaderEditor
 			if( m_message.Length > 0 )
 				m_message = m_message.Substring( 0, m_message.Length - 1 );
 
-			string path = m_folderPath + m_fileName + ".asset";
+			string path = asset.FolderPath + asset.FileName + ".asset";
 			Texture2DArray outfile = AssetDatabase.LoadMainAssetAtPath( path ) as Texture2DArray;
 			if( outfile != null )
 			{

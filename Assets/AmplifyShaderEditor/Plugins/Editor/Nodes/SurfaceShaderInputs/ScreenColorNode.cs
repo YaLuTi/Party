@@ -666,7 +666,7 @@ namespace AmplifyShaderEditor
 
 		public override void CheckIfAutoRegister( ref MasterNodeDataCollector dataCollector )
 		{
-			if( m_autoRegister && m_connStatus != NodeConnectionStatus.Connected )
+			if( m_autoRegister && (m_connStatus != NodeConnectionStatus.Connected  || InsideShaderFunction ))
 			{
 				RegisterProperty( ref dataCollector );
 				string propertyName = CurrentPropertyReference;

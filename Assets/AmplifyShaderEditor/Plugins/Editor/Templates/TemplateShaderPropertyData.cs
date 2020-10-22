@@ -18,7 +18,12 @@ namespace AmplifyShaderEditor
 		public string ReplacementValueHelper;
 		public string Identation;
 
-		public TemplateShaderPropertyData(  int index, string fullValue,string identation, string propertyInspectorName, string propertyName, WirePortDataType propertyDataType , PropertyType propertyType )
+		public bool IsMacro;
+
+		public int SubShaderId;
+		public int PassId;
+
+		public TemplateShaderPropertyData( int index, string fullValue, string identation, string propertyInspectorName, string propertyName, WirePortDataType propertyDataType, PropertyType propertyType,int subShaderId, int passId, bool isMacro = false )
 		{
 			Index = index;
 			FullValue = fullValue;
@@ -29,6 +34,9 @@ namespace AmplifyShaderEditor
 			PropertyType = propertyType;
 			int idx = FullValue.LastIndexOf( "=" );
 			ReplacementValueHelper = ( idx >= 0 ) ? FullValue.Substring( 0, idx + 1 ) +" ": FullValue + " = ";
+			IsMacro = isMacro;
+			SubShaderId = subShaderId;
+			PassId = passId;
 		}
 
 		public string CreatePropertyForValue( string value )

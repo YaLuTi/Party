@@ -758,6 +758,12 @@ namespace AmplifyShaderEditor
 			}
 		}
 
+		public override void PropagateNodeData( NodeData nodeData, ref MasterNodeDataCollector dataCollector )
+		{
+			if( m_inputPorts[ m_currentSelectedInput ].IsConnected )
+				m_inputPorts[ m_currentSelectedInput ].GetOutputNode().PropagateNodeData( nodeData, ref dataCollector );
+		}
+
 		public override string GenerateShaderForOutput( int outputId, ref MasterNodeDataCollector dataCollector, bool ignoreLocalvar )
 		{
 			return m_inputPorts[ m_currentSelectedInput ].GeneratePortInstructions( ref dataCollector );

@@ -53,7 +53,9 @@ namespace AmplifyShaderEditor
 				{
 					string data = string.Empty;
 					string connection = string.Empty;
+					System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 					masterNodes[ i ].FullWriteToString( ref data, ref connection );
+					System.Threading.Thread.CurrentThread.CurrentCulture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 					ClipboardData clipboardData = new ClipboardData( data, connection, masterNodes[ i ].UniqueId );
 					m_multiPassMasterNodeData.Add( masterNodes[ i ].PassUniqueName, clipboardData );
 				}
@@ -69,7 +71,9 @@ namespace AmplifyShaderEditor
 				{
 					ClipboardData nodeData = m_multiPassMasterNodeData[ masterNodes[ i ].PassUniqueName ];
 					string[] nodeParams = nodeData.Data.Split( IOUtils.FIELD_SEPARATOR );
+					System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 					masterNodes[ i ].FullReadFromString( ref nodeParams );
+					System.Threading.Thread.CurrentThread.CurrentCulture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 				}
 			}
 

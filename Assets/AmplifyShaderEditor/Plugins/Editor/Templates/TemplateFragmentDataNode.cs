@@ -26,6 +26,12 @@ namespace AmplifyShaderEditor
 		private bool m_fetchDataId = false;
 		private UpperLeftWidgetHelper m_upperLeftWidgetHelper = new UpperLeftWidgetHelper();
 
+		protected override void CommonInit( int uniqueId )
+		{
+			base.CommonInit( uniqueId );
+			m_autoWrapProperties = true;
+		}
+
 		void FetchDataId()
 		{
 			if( m_interpolatorData != null )

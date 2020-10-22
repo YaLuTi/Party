@@ -84,6 +84,8 @@ namespace AmplifyShaderEditor
 		public static readonly string InstancedPropertiesElement = "UNITY_DEFINE_INSTANCED_PROP({0}, {1})";
 		public static readonly string InstancedPropertiesData = "UNITY_ACCESS_INSTANCED_PROP({0})";
 
+		public static readonly string DotsInstancedPropertiesData = "\tUNITY_DOTS_INSTANCED_PROP({0}, {1})";
+		public static readonly string DotsInstancedDefinesData = "#define {1} UNITY_ACCESS_DOTS_INSTANCED_PROP_FROM_MACRO({0} , Metadata_{1})";
 
 		public static readonly string LWSRPInstancedPropertiesBegin = "UNITY_INSTANCING_BUFFER_START({0})";
 		public static readonly string LWSRPInstancedPropertiesEnd = "UNITY_INSTANCING_BUFFER_END({0})";

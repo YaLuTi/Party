@@ -19,10 +19,31 @@ namespace AmplifyShaderEditor
 		private TemplatesBlendModule m_blendOpHelper = new TemplatesBlendModule();
 
 		[SerializeField]
+		private TemplatesBlendModule m_blendOpHelper1 = new TemplatesBlendModule();
+
+		[SerializeField]
+		private TemplatesBlendModule m_blendOpHelper2 = new TemplatesBlendModule();
+
+		[SerializeField]
+		private TemplatesBlendModule m_blendOpHelper3 = new TemplatesBlendModule();
+
+		[SerializeField]
+		private TemplateAlphaToMaskModule m_alphaToMaskHelper = new TemplateAlphaToMaskModule();
+
+		[SerializeField]
 		private TemplateCullModeModule m_cullModeHelper = new TemplateCullModeModule();
 
 		[SerializeField]
 		private TemplateColorMaskModule m_colorMaskHelper = new TemplateColorMaskModule();
+
+		[SerializeField]
+		private TemplateColorMaskModule m_colorMaskHelper1 = new TemplateColorMaskModule();
+
+		[SerializeField]
+		private TemplateColorMaskModule m_colorMaskHelper2 = new TemplateColorMaskModule();
+
+		[SerializeField]
+		private TemplateColorMaskModule m_colorMaskHelper3 = new TemplateColorMaskModule();
 
 		[SerializeField]
 		private TemplatesStencilBufferModule m_stencilBufferHelper = new TemplatesStencilBufferModule();
@@ -63,6 +84,26 @@ namespace AmplifyShaderEditor
 				m_blendOpHelper.CopyFrom( other.BlendOpHelper, true );
 			}
 
+			if( other.BlendOpHelper1.IsDirty )
+			{
+				m_blendOpHelper1.CopyFrom( other.BlendOpHelper1, true );
+			}
+
+			if( other.BlendOpHelper2.IsDirty )
+			{
+				m_blendOpHelper2.CopyFrom( other.BlendOpHelper2, true );
+			}
+
+			if( other.BlendOpHelper3.IsDirty )
+			{
+				m_blendOpHelper3.CopyFrom( other.BlendOpHelper3, true );
+			}
+
+			if( other.AlphaToMaskHelper.IsDirty )
+			{
+				m_alphaToMaskHelper.CopyFrom( other.AlphaToMaskHelper, true );
+			}
+
 			if( other.CullModeHelper.IsDirty )
 			{
 				m_cullModeHelper.CopyFrom( other.CullModeHelper , true );
@@ -71,6 +112,21 @@ namespace AmplifyShaderEditor
 			if( other.ColorMaskHelper.IsDirty )
 			{
 				m_colorMaskHelper.CopyFrom( other.ColorMaskHelper , true);
+			}
+
+			if( other.ColorMaskHelper1.IsDirty )
+			{
+				m_colorMaskHelper1.CopyFrom( other.ColorMaskHelper1, true );
+			}
+
+			if( other.ColorMaskHelper2.IsDirty )
+			{
+				m_colorMaskHelper2.CopyFrom( other.ColorMaskHelper2, true );
+			}
+
+			if( other.ColorMaskHelper3.IsDirty )
+			{
+				m_colorMaskHelper3.CopyFrom( other.ColorMaskHelper3, true );
 			}
 
 			if( other.StencilBufferHelper.IsDirty )
@@ -102,6 +158,26 @@ namespace AmplifyShaderEditor
 				m_blendOpHelper.CopyFrom( other.BlendOpHelper, false );
 			}
 
+			if( m_blendOpHelper1.ValidData && other.BlendOpHelper1.ValidData )
+			{
+				m_blendOpHelper1.CopyFrom( other.BlendOpHelper1, false );
+			}
+
+			if( m_blendOpHelper2.ValidData && other.BlendOpHelper2.ValidData )
+			{
+				m_blendOpHelper2.CopyFrom( other.BlendOpHelper2, false );
+			}
+
+			if( m_blendOpHelper3.ValidData && other.BlendOpHelper3.ValidData )
+			{
+				m_blendOpHelper3.CopyFrom( other.BlendOpHelper3, false );
+			}
+
+			if( m_alphaToMaskHelper.ValidData && other.AlphaToMaskHelper.ValidData )
+			{
+				m_alphaToMaskHelper.CopyFrom( other.AlphaToMaskHelper, false );
+			}
+
 			if( m_cullModeHelper.ValidData && other.CullModeHelper.ValidData )
 			{
 				m_cullModeHelper.CopyFrom( other.CullModeHelper, false );
@@ -110,6 +186,21 @@ namespace AmplifyShaderEditor
 			if( m_colorMaskHelper.ValidData && other.ColorMaskHelper.ValidData )
 			{
 				m_colorMaskHelper.CopyFrom( other.ColorMaskHelper , false );
+			}
+
+			if( m_colorMaskHelper1.ValidData && other.ColorMaskHelper1.ValidData )
+			{
+				m_colorMaskHelper1.CopyFrom( other.ColorMaskHelper1, false );
+			}
+
+			if( m_colorMaskHelper2.ValidData && other.ColorMaskHelper2.ValidData )
+			{
+				m_colorMaskHelper2.CopyFrom( other.ColorMaskHelper2, false );
+			}
+
+			if( m_colorMaskHelper3.ValidData && other.ColorMaskHelper3.ValidData )
+			{
+				m_colorMaskHelper3.CopyFrom( other.ColorMaskHelper3, false );
 			}
 
 			if( m_stencilBufferHelper.ValidData && other.StencilBufferHelper.ValidData )
@@ -161,6 +252,30 @@ namespace AmplifyShaderEditor
 				m_hasValidData = true;
 			}
 
+			m_blendOpHelper1.ConfigureFromTemplateData( module.BlendData1 );
+			if( module.BlendData1.DataCheck == TemplateDataCheck.Valid )
+			{
+				m_hasValidData = true;
+			}
+
+			m_blendOpHelper2.ConfigureFromTemplateData( module.BlendData2 );
+			if( module.BlendData2.DataCheck == TemplateDataCheck.Valid )
+			{
+				m_hasValidData = true;
+			}
+
+			m_blendOpHelper3.ConfigureFromTemplateData( module.BlendData3 );
+			if( module.BlendData3.DataCheck == TemplateDataCheck.Valid )
+			{
+				m_hasValidData = true;
+			}
+
+			m_alphaToMaskHelper.ConfigureFromTemplateData( module.AlphaToMaskData );
+			if( module.AlphaToMaskData.DataCheck == TemplateDataCheck.Valid )
+			{
+				m_hasValidData = true;
+			}
+
 			m_cullModeHelper.ConfigureFromTemplateData( module.CullModeData );
 			if( module.CullModeData.DataCheck == TemplateDataCheck.Valid )
 			{
@@ -169,6 +284,24 @@ namespace AmplifyShaderEditor
 
 			m_colorMaskHelper.ConfigureFromTemplateData( module.ColorMaskData );
 			if( module.ColorMaskData.DataCheck == TemplateDataCheck.Valid )
+			{
+				m_hasValidData = true;
+			}
+
+			m_colorMaskHelper1.ConfigureFromTemplateData( module.ColorMaskData1 );
+			if( module.ColorMaskData1.DataCheck == TemplateDataCheck.Valid )
+			{
+				m_hasValidData = true;
+			}
+
+			m_colorMaskHelper2.ConfigureFromTemplateData( module.ColorMaskData2 );
+			if( module.ColorMaskData2.DataCheck == TemplateDataCheck.Valid )
+			{
+				m_hasValidData = true;
+			}
+
+			m_colorMaskHelper3.ConfigureFromTemplateData( module.ColorMaskData3 );
+			if( module.ColorMaskData3.DataCheck == TemplateDataCheck.Valid )
 			{
 				m_hasValidData = true;
 			}
@@ -221,6 +354,26 @@ namespace AmplifyShaderEditor
 
 			m_isDirty = m_isDirty || m_colorMaskHelper.IsDirty;
 
+			if( currentModule.ColorMaskData1.DataCheck == TemplateDataCheck.Valid )
+				m_colorMaskHelper1.Draw( owner );
+
+			m_isDirty = m_isDirty || m_colorMaskHelper1.IsDirty;
+
+			if( currentModule.ColorMaskData2.DataCheck == TemplateDataCheck.Valid )
+				m_colorMaskHelper2.Draw( owner );
+
+			m_isDirty = m_isDirty || m_colorMaskHelper2.IsDirty;
+
+			if( currentModule.ColorMaskData3.DataCheck == TemplateDataCheck.Valid )
+				m_colorMaskHelper3.Draw( owner );
+
+			m_isDirty = m_isDirty || m_colorMaskHelper3.IsDirty;
+
+			if( currentModule.AlphaToMaskData.DataCheck == TemplateDataCheck.Valid )
+				m_alphaToMaskHelper.Draw( owner );
+
+			m_isDirty = m_isDirty || m_alphaToMaskHelper.IsDirty;
+
 			if( currentModule.DepthData.DataCheck == TemplateDataCheck.Valid )
 				m_depthOphelper.Draw( owner, false );
 
@@ -230,6 +383,21 @@ namespace AmplifyShaderEditor
 				m_blendOpHelper.Draw( owner, false );
 
 			m_isDirty = m_isDirty || m_blendOpHelper.IsDirty;
+
+			if( currentModule.BlendData1.DataCheck == TemplateDataCheck.Valid )
+				m_blendOpHelper1.Draw( owner, false );
+
+			m_isDirty = m_isDirty || m_blendOpHelper1.IsDirty;
+
+			if( currentModule.BlendData2.DataCheck == TemplateDataCheck.Valid )
+				m_blendOpHelper2.Draw( owner, false );
+
+			m_isDirty = m_isDirty || m_blendOpHelper2.IsDirty;
+
+			if( currentModule.BlendData3.DataCheck == TemplateDataCheck.Valid )
+				m_blendOpHelper3.Draw( owner, false );
+
+			m_isDirty = m_isDirty || m_blendOpHelper3.IsDirty;
 
 
 			if( currentModule.StencilData.DataCheck == TemplateDataCheck.Valid )
@@ -272,9 +440,19 @@ namespace AmplifyShaderEditor
 		{
 			m_shaderModelHelper = null;
 			m_blendOpHelper = null;
+			m_blendOpHelper1 = null;
+			m_blendOpHelper2 = null;
+			m_blendOpHelper3 = null;
 			m_cullModeHelper = null;
+			m_alphaToMaskHelper = null;
 			m_colorMaskHelper.Destroy();
 			m_colorMaskHelper = null;
+			m_colorMaskHelper1.Destroy();
+			m_colorMaskHelper1 = null;
+			m_colorMaskHelper2.Destroy();
+			m_colorMaskHelper2 = null;
+			m_colorMaskHelper3.Destroy();
+			m_colorMaskHelper3 = null;
 			m_stencilBufferHelper.Destroy();
 			m_stencilBufferHelper = null;
 			m_tagsHelper.Destroy();
@@ -307,11 +485,8 @@ namespace AmplifyShaderEditor
 
 			}
 
-			if( !BlendOpHelper.AlphaToMaskIndependent )
-			{
-				if( BlendOpHelper.ValidAlphaToMask && BlendOpHelper.AlphaToMaskValue )
-					moduleBody += BlendOpHelper.CurrentAlphaToMask + "\n";
-			}
+			if( !AlphaToMaskHelper.IndependentModule )
+				moduleBody += AlphaToMaskHelper.GenerateShaderData( isSubShader ) + "\n";
 
 			if( !CullModeHelper.IndependentModule )
 				moduleBody += CullModeHelper.GenerateShaderData( isSubShader ) + "\n";
@@ -346,6 +521,41 @@ namespace AmplifyShaderEditor
 			{
 				Debug.LogException( e );
 			}
+			if( UIUtils.CurrentShaderVersion() > 18103 )
+			{
+				try
+				{
+					m_blendOpHelper1.ReadFromString( ref index, ref nodeParams );
+				}
+				catch( Exception e )
+				{
+					Debug.LogException( e );
+				}
+				try
+				{
+					m_blendOpHelper2.ReadFromString( ref index, ref nodeParams );
+				}
+				catch( Exception e )
+				{
+					Debug.LogException( e );
+				}
+				try
+				{
+					m_blendOpHelper3.ReadFromString( ref index, ref nodeParams );
+				}
+				catch( Exception e )
+				{
+					Debug.LogException( e );
+				}
+				try
+				{
+					m_alphaToMaskHelper.ReadFromString( ref index, ref nodeParams );
+				}
+				catch( Exception e )
+				{
+					Debug.LogException( e );
+				}
+			}
 			try
 			{
 				m_cullModeHelper.ReadFromString( ref index, ref nodeParams );
@@ -361,6 +571,33 @@ namespace AmplifyShaderEditor
 			catch( Exception e )
 			{
 				Debug.LogException( e );
+			}
+			if( UIUtils.CurrentShaderVersion() > 18103 )
+			{
+				try
+				{
+					m_colorMaskHelper1.ReadFromString( ref index, ref nodeParams );
+				}
+				catch( Exception e )
+				{
+					Debug.LogException( e );
+				}
+				try
+				{
+					m_colorMaskHelper2.ReadFromString( ref index, ref nodeParams );
+				}
+				catch( Exception e )
+				{
+					Debug.LogException( e );
+				}
+				try
+				{
+					m_colorMaskHelper3.ReadFromString( ref index, ref nodeParams );
+				}
+				catch( Exception e )
+				{
+					Debug.LogException( e );
+				}
 			}
 			try
 			{
@@ -444,8 +681,15 @@ namespace AmplifyShaderEditor
 		public void WriteToString( ref string nodeInfo )
 		{
 			m_blendOpHelper.WriteToString( ref nodeInfo );
+			m_blendOpHelper1.WriteToString( ref nodeInfo );
+			m_blendOpHelper2.WriteToString( ref nodeInfo );
+			m_blendOpHelper3.WriteToString( ref nodeInfo );
+			m_alphaToMaskHelper.WriteToString( ref nodeInfo );
 			m_cullModeHelper.WriteToString( ref nodeInfo );
 			m_colorMaskHelper.WriteToString( ref nodeInfo );
+			m_colorMaskHelper1.WriteToString( ref nodeInfo );
+			m_colorMaskHelper2.WriteToString( ref nodeInfo );
+			m_colorMaskHelper3.WriteToString( ref nodeInfo );
 			m_stencilBufferHelper.WriteToString( ref nodeInfo );
 			m_depthOphelper.WriteToString( ref nodeInfo );
 			m_tagsHelper.WriteToString( ref nodeInfo );
@@ -459,8 +703,15 @@ namespace AmplifyShaderEditor
 		}
 
 		public TemplatesBlendModule BlendOpHelper { get { return m_blendOpHelper; } }
+		public TemplatesBlendModule BlendOpHelper1 { get { return m_blendOpHelper1; } }
+		public TemplatesBlendModule BlendOpHelper2 { get { return m_blendOpHelper2; } }
+		public TemplatesBlendModule BlendOpHelper3 { get { return m_blendOpHelper3; } }
+		public TemplateAlphaToMaskModule AlphaToMaskHelper { get { return m_alphaToMaskHelper; } }
 		public TemplateCullModeModule CullModeHelper { get { return m_cullModeHelper; } }
 		public TemplateColorMaskModule ColorMaskHelper { get { return m_colorMaskHelper; } }
+		public TemplateColorMaskModule ColorMaskHelper1 { get { return m_colorMaskHelper1; } }
+		public TemplateColorMaskModule ColorMaskHelper2 { get { return m_colorMaskHelper2; } }
+		public TemplateColorMaskModule ColorMaskHelper3 { get { return m_colorMaskHelper3; } }
 		public TemplatesStencilBufferModule StencilBufferHelper { get { return m_stencilBufferHelper; } }
 		public TemplateDepthModule DepthOphelper { get { return m_depthOphelper; } }
 		public TemplateTagsModule TagsHelper { get { return m_tagsHelper; } }
@@ -480,8 +731,15 @@ namespace AmplifyShaderEditor
 				if( !value )
 				{
 					m_blendOpHelper.IsDirty = false;
+					m_blendOpHelper1.IsDirty = false;
+					m_blendOpHelper2.IsDirty = false;
+					m_blendOpHelper3.IsDirty = false;
 					m_cullModeHelper.IsDirty = false;
+					m_alphaToMaskHelper.IsDirty = false;
 					m_colorMaskHelper.IsDirty = false;
+					m_colorMaskHelper1.IsDirty = false;
+					m_colorMaskHelper2.IsDirty = false;
+					m_colorMaskHelper3.IsDirty = false;
 					m_stencilBufferHelper.IsDirty = false;
 					m_tagsHelper.IsDirty = false;
 					m_shaderModelHelper.IsDirty = false;

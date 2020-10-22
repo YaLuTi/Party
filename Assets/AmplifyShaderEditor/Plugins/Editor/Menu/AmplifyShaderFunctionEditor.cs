@@ -103,6 +103,22 @@ namespace AmplifyShaderEditor
 				}
 				EditorGUILayout.EndHorizontal();
 			}
+
+			if( m_dependencies.Count > 0 )
+			{
+				List<string> assetPaths = new List<string>();
+				for( int i = 0; i < m_dependencies.Count; i++ )
+				{
+					assetPaths.Add( m_dependencies[ i ].AssetPath );
+				}
+
+				if( GUILayout.Button( "Open and Save All" ) )
+				{
+					bool doit = EditorUtility.DisplayDialog( "Open and Save All", "This will try to open all shader function and shaders that use this shader function and save them in quick succession, this may irreversibly break your files if something goes wrong. Are you sure you want to try?", "Yes, I'll take the risk", "No, I'll do it myself" );
+					if( doit )
+						AmplifyShaderEditorWindow.LoadAndSaveList( assetPaths.ToArray() );
+				}
+			}
 		}
 
 		public void SelectAtPath( string path )

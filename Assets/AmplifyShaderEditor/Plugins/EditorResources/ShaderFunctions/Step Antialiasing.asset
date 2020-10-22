@@ -12,15 +12,29 @@ MonoBehaviour:
   m_Name: Step Antialiasing
   m_EditorClassIdentifier: 
   m_functionInfo: "// Made with Amplify Shader Editor\n// Available at the Unity Asset
-    Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=14402\n487;595;979;423;1184.914;257.4179;1.312046;True;False\nNode;AmplifyShaderEditor.FWidthOpNode;4;-464,64;Float;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;1;-832,48;Float;False;A;1;0;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;2;-832,-32;Float;False;B;1;1;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleSubtractOpNode;3;-640,0;Float;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SaturateNode;6;-160,0;Float;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleDivideOpNode;5;-304,0;Float;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;0;0,0;Float;False;True;;0;False;1;0;FLOAT;0;False;1;FLOAT;0\nWireConnection;4;0;3;0\nWireConnection;3;0;2;0\nWireConnection;3;1;1;0\nWireConnection;6;0;5;0\nWireConnection;5;0;3;0\nWireConnection;5;1;4;0\nWireConnection;0;0;6;0\nASEEND*/\n//CHKSM=CEE60F123DADF4170FDE560D2BD03F012DC8D775"
+    Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=18403\n351;92;1482;1034;1514.894;658.248;1.312046;True;False\nNode;AmplifyShaderEditor.SimpleSubtractOpNode;3;-640,0;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SaturateNode;6;-160,0;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleDivideOpNode;5;-304,0;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FWidthOpNode;4;-464,64;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;1;-832,48;Inherit;False;A;1;0;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;2;-832,-32;Inherit;False;B;1;1;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;0;0,0;Inherit;False;True;-1;;0;False;1;0;FLOAT;0;False;1;FLOAT;0\nWireConnection;3;0;2;0\nWireConnection;3;1;1;0\nWireConnection;6;0;5;0\nWireConnection;5;0;3;0\nWireConnection;5;1;4;0\nWireConnection;4;0;3;0\nWireConnection;0;0;6;0\nASEEND*/\n//CHKSM=71BB29D08447D735C1A7814C9A95F38DB2A1C626"
   m_functionName: 
-  m_description: Same as Step but provides an antialiased edge.
+  m_description: 'Same as Step but provides an antialiased edge.
+
+    (Only valid on fragment type ports)'
   m_additionalIncludes:
     m_additionalIncludes: []
     m_outsideIncludes: []
   m_additionalPragmas:
     m_additionalPragmas: []
     m_outsidePragmas: []
+  m_additionalDirectives:
+    m_validData: 0
+    m_isDirty: 0
+    m_moduleName: ' Additional Directives'
+    m_independentModule: 1
+    m_additionalDirectives: []
+    m_shaderFunctionDirectives: []
+    m_nativeDirectives: []
+    m_nativeDirectivesIndex: -1
+    m_nativeDirectivesFoldout: 0
+    m_directivesSaveItems: []
   m_nodeCategory: 7
   m_customNodeCategory: 
   m_previewPosition: 0
+  m_hidden: 0

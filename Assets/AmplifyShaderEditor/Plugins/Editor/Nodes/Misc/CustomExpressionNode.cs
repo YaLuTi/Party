@@ -22,6 +22,8 @@ namespace AmplifyShaderEditor
 		public PrecisionType Precision;
 		public VariableQualifiers Qualifier;
 		public WirePortDataType Type;
+		public bool IsSamplerState;
+		public bool IsTexture2DArray;
 		public string CustomType;
 		public bool IsVariable;
 		public bool FoldoutFlag;
@@ -60,10 +62,12 @@ namespace AmplifyShaderEditor
 		private const float LineAdjust = 1.15f;
 		private const float IdentationAdjust = 5f;
 		private const string CustomExpressionInfo = "Creates a custom expression or function according to how code is written on text area.\n\n" +
-													" - If a return function is detected on Code text area then a function will be created.\n" +
+													"- If a return function is detected on Code text area then a function will be created.\n" +
 													"Also in function mode a ; is expected on the end of each instruction line.\n\n" +
 													"- If no return function is detected then an expression will be generated and used directly on the vertex/frag body.\n" +
-													"On Expression mode a ; is not required on the end of an instruction line.";
+													"On Expression mode a ; is not required on the end of an instruction line.\n\n" +
+													"- You can also call a function from an external file, just make sure to add the include file via the 'Additional Directives' group " +
+													"in the main property panel. Also works with shader functions.";
 		private const char LineFeedSeparator = '$';
 
 		private const string ReturnHelper = "return";
@@ -101,6 +105,8 @@ namespace AmplifyShaderEditor
 		"sampler2D",
 		"sampler3D",
 		"samplerCUBE",
+		"sampler2Darray",
+		"samplerState",
 		"custom"};
 
 		private readonly string[] AvailableOutputWireTypesStr =
@@ -135,6 +141,8 @@ namespace AmplifyShaderEditor
 			WirePortDataType.SAMPLER2D,
 			WirePortDataType.SAMPLER3D,
 			WirePortDataType.SAMPLERCUBE,
+			WirePortDataType.SAMPLER2DARRAY,
+			WirePortDataType.SAMPLERSTATE,
 			WirePortDataType.OBJECT
 		};
 
@@ -164,7 +172,9 @@ namespace AmplifyShaderEditor
 			{ WirePortDataType.SAMPLER2D,   8},
 			{ WirePortDataType.SAMPLER3D,   9},
 			{ WirePortDataType.SAMPLERCUBE, 10},
-			{ WirePortDataType.OBJECT,      11}
+			{ WirePortDataType.SAMPLER2DARRAY, 11},
+			{ WirePortDataType.SAMPLERSTATE, 12},
+			{ WirePortDataType.OBJECT,      13}
 		};
 
 		[SerializeField]
@@ -454,11 +464,17 @@ namespace AmplifyShaderEditor
 				PrecisionType precision = m_items[ i ].Precision;
 				if( precision == PrecisionType.Inherit )
 					precision = CurrentPrecisionType;
-				string dataType = ( m_inputPorts[ portIdx ].DataType == WirePortDataType.OBJECT ) ? m_items[ i ].CustomType : UIUtils.PrecisionWirePortToCgType( precision, m_inputPorts[ portIdx ].DataType );
-				functionBody += qualifier + dataType + " " + m_inputPorts[ portIdx ].Name;
+				//string dataType = ( m_inputPorts[ portIdx ].DataType == WirePortDataType.OBJECT ) ? m_items[ i ].CustomType : UIUtils.PrecisionWirePortToCgType( precision, m_inputPorts[ portIdx ].DataType );
+				string declaration = string.Empty;
+				if( m_inputPorts[ portIdx ].DataType == WirePortDataType.OBJECT )
+					declaration = m_items[ i ].CustomType + " " + m_inputPorts[ portIdx ].Name;
+				else
+					declaration = UIUtils.PrecisionWirePortToTypeValue( precision, m_inputPorts[ portIdx ].DataType, m_inputPorts[ portIdx ].Name );
+				functionBody += qualifier + declaration;
+				//functionBody += qualifier + dataType + " " + m_inputPorts[ portIdx ].Name;
 				if( i < ( count - 1 ) )
 				{
-					functionBody += " , ";
+					functionBody += ", ";
 				}
 			}
 			functionBody += " )\n" + UIUtils.ShaderIndentTabs + "{\n";
@@ -871,12 +887,10 @@ namespace AmplifyShaderEditor
 								rect.y += lineSpacing;
 								int typeIdx = WireToIdx[ m_inputPorts[ portIdx ].DataType ];
 								EditorGUI.BeginChangeCheck();
-								{
-									typeIdx = EditorGUIPopup( rect, InputTypeStr, typeIdx, AvailableWireTypesStr );
-								}
-
+								typeIdx = EditorGUIPopup( rect, InputTypeStr, typeIdx, AvailableWireTypesStr );
 								if( EditorGUI.EndChangeCheck() )
 								{
+									// actual type is need in order for texture array and sampler state to fallback correctly
 									m_inputPorts[ portIdx ].ChangeType( AvailableWireTypes[ typeIdx ], false );
 									if( typeIdx == 5 || typeIdx == 6 )
 									{
@@ -1147,6 +1161,15 @@ namespace AmplifyShaderEditor
 					string functionCall = expressionName + "( ";
 					for( int i = m_firstAvailablePort; i < count; i++ )
 					{
+						if( UIUtils.CurrentWindow.OutsideGraph.SamplingMacros && !UIUtils.CurrentWindow.OutsideGraph.IsSRP )
+						{
+							// we don't know what kind of sampling the user will do so we add all of them
+							GeneratorUtils.AddCustomStandardSamplingMacros( ref dataCollector, m_inputPorts[ i ].DataType, MipType.Auto );
+							GeneratorUtils.AddCustomStandardSamplingMacros( ref dataCollector, m_inputPorts[ i ].DataType, MipType.MipLevel );
+							GeneratorUtils.AddCustomStandardSamplingMacros( ref dataCollector, m_inputPorts[ i ].DataType, MipType.MipBias );
+							GeneratorUtils.AddCustomStandardSamplingMacros( ref dataCollector, m_inputPorts[ i ].DataType, MipType.Derivative );
+						}
+
 						string inputPortLocalVar = m_inputPorts[ i ].Name + OutputId;
 						int idx = i - m_firstAvailablePort;
 						if( m_inputPorts[ i ].DataType != WirePortDataType.OBJECT )
@@ -1256,7 +1279,15 @@ namespace AmplifyShaderEditor
 						string functionCall = expressionName + "( ";
 						for( int i = m_firstAvailablePort; i < count; i++ )
 						{
-							
+							if( UIUtils.CurrentWindow.OutsideGraph.SamplingMacros && !UIUtils.CurrentWindow.OutsideGraph.IsSRP )
+							{
+								// we don't know what kind of sampling the user will do so we add all of them
+								GeneratorUtils.AddCustomStandardSamplingMacros( ref dataCollector, m_inputPorts[ i ].DataType, MipType.Auto );
+								GeneratorUtils.AddCustomStandardSamplingMacros( ref dataCollector, m_inputPorts[ i ].DataType, MipType.MipLevel );
+								GeneratorUtils.AddCustomStandardSamplingMacros( ref dataCollector, m_inputPorts[ i ].DataType, MipType.MipBias );
+								GeneratorUtils.AddCustomStandardSamplingMacros( ref dataCollector, m_inputPorts[ i ].DataType, MipType.Derivative );
+							}
+
 							string inputPortLocalVar = m_inputPorts[ i ].Name + OutputId;
 							int idx = i - m_firstAvailablePort;
 							if( m_inputPorts[ i ].DataType != WirePortDataType.OBJECT )

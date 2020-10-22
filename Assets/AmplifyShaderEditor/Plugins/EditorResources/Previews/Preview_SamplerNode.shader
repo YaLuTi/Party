@@ -5,6 +5,7 @@ Shader "Hidden/SamplerNode"
 		_B ("_UVs", 2D) = "white" {}
 		_C ("_Level", 2D) = "white" {}
 		_F ("_NormalScale", 2D) = "white" {}
+		_G ("Index", 2D) = "white" {}
 		_CustomUVs ("_CustomUVs", Int) = 0
 		_Unpack ("_Unpack", Int) = 0
 		_LodType ("_LodType", Int) = 0
@@ -74,6 +75,7 @@ Shader "Hidden/SamplerNode"
 			sampler2D _B;
 			sampler2D _C;
 			sampler2D _F;
+			sampler2D _G;
 			int _CustomUVs;
 			int _Unpack;
 			int _LodType;
@@ -88,7 +90,7 @@ Shader "Hidden/SamplerNode"
 			{
 				if (_Type == 4)
 				{
-					return UNITY_SAMPLE_TEX2DARRAY (_Array, float3(i.uv, 0));
+					return UNITY_SAMPLE_TEX2DARRAY ( _Array, float3(i.uv, tex2D( _G, i.uv ).r ) );
 				}
 				else if (_Type == 3)
 				{

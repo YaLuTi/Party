@@ -46,6 +46,15 @@ namespace AmplifyShaderEditor
 		private TemplateInterpData m_interpolatorDataContainer;
 
 		[SerializeField]
+		private TemplateTessVControlTag m_tessVControlTag;
+
+		[SerializeField]
+		private TemplateTessControlData m_tessControlData;
+
+		[SerializeField]
+		private TemplateTessDomainData m_tessDomainData;
+
+		[SerializeField]
 		private List<TemplateLocalVarData> m_localVarsList = new List<TemplateLocalVarData>();
 
 		[SerializeField]
@@ -119,7 +128,11 @@ namespace AmplifyShaderEditor
 			}
 
 			Dictionary<string, TemplateShaderPropertyData> ownDuplicatesDict = new Dictionary<string, TemplateShaderPropertyData>( duplicatesHelper );
-			TemplateHelperFunctions.CreateShaderGlobalsList( passInfo.Data, ref m_availableShaderGlobals, ref ownDuplicatesDict );
+			TemplateHelperFunctions.CreateShaderGlobalsList( passInfo.Data, ref m_availableShaderGlobals, ref ownDuplicatesDict,subshaderIdx,passIdx );
+			if( m_modules.SRPType == TemplateSRPType.BuiltIn )
+			{
+				TemplateHelperFunctions.CheckUnityBuiltinGlobalMacros( passInfo.Data, ref m_availableShaderGlobals, ref ownDuplicatesDict, subshaderIdx, passIdx );
+			}
 
 			// Vertex and Interpolator data
 			FetchVertexAndInterpData( template, subShader.Modules, offsetIdx, passInfo.Data );
@@ -144,6 +157,18 @@ namespace AmplifyShaderEditor
 
 			if( m_vertexFunctionData != null )
 				FetchInputs( offsetIdx, MasterNodePortCategory.Vertex, passInfo.Data );
+
+			FetchTessellationData( template, subShader.Modules, offsetIdx, passInfo.Data );
+			if( m_tessVControlTag != null )
+				idManager.RegisterId( m_tessVControlTag.StartIdx, uniquePrefix + m_tessVControlTag.Id, m_tessVControlTag.Id );
+
+			if( m_tessControlData != null )
+				idManager.RegisterId( m_tessControlData.StartIdx, uniquePrefix + m_tessControlData.Id, m_tessControlData.Id );
+
+			if( m_tessDomainData != null )
+				idManager.RegisterId( m_tessDomainData.StartIdx, uniquePrefix + m_tessDomainData.Id, m_tessDomainData.Id );
+
+			TemplateHelperFunctions.FetchInlineVars( passInfo.Data, ref idManager );
 
 			//Fetch local variables must be done after fetching code areas as it needs them to see is variable is on vertex or fragment
 			TemplateHelperFunctions.FetchLocalVars( passInfo.Data, ref m_localVarsList, m_vertexFunctionData, m_fragmentFunctionData );
@@ -234,6 +259,12 @@ namespace AmplifyShaderEditor
 
 			m_vertexDataContainer = null;
 
+			m_tessVControlTag = null;
+
+			m_tessControlData = null;
+
+			m_tessDomainData = null;
+
 			if( m_interpolatorDataContainer != null )
 				m_interpolatorDataContainer.Destroy();
 
@@ -282,6 +313,84 @@ namespace AmplifyShaderEditor
 			}
 		}
 
+		void FetchTessellationData( TemplateMultiPass template, TemplateModulesData subShaderModule, int offsetIdx, string body )
+		{
+			// Tessellation VControl Tag
+			try
+			{
+				int vcontrolcodeBegin = body.IndexOf( TemplatesManager.TemplateTessVControlTag );
+				if( vcontrolcodeBegin > -1 )
+				{
+					m_tessVControlTag = new TemplateTessVControlTag();
+					m_tessVControlTag.Id = TemplatesManager.TemplateTessVControlTag;
+					m_tessVControlTag.StartIdx = offsetIdx + vcontrolcodeBegin;
+
+					m_templateProperties.AddId( body, m_tessVControlTag.Id );
+				}
+			}
+			catch( Exception e )
+			{
+				Debug.LogException( e );
+			}
+
+			// Tessellation Control Data
+			try
+			{
+				int controlCodeBegin = body.IndexOf( TemplatesManager.TemplateTessControlCodeArea );
+				if( controlCodeBegin > -1 )
+				{
+					int beginIdx = controlCodeBegin + TemplatesManager.TemplateTessControlCodeArea.Length;
+					int endIdx = body.IndexOf( TemplatesManager.TemplateEndOfLine, beginIdx );
+					int length = endIdx - beginIdx;
+
+					string parameters = body.Substring( beginIdx, length );
+
+					string[] parametersArr = parameters.Split( IOUtils.FIELD_SEPARATOR );
+
+					string id = body.Substring( controlCodeBegin, endIdx + TemplatesManager.TemplateEndOfLine.Length - controlCodeBegin );
+					string inParameters = parametersArr[ 0 ];
+					string outParameters = ( parametersArr.Length > 1 ) ? parametersArr[ 1 ] : string.Empty;
+
+					m_tessControlData = new TemplateTessControlData( offsetIdx + controlCodeBegin, id, inParameters, outParameters );
+
+					m_templateProperties.AddId( body, id );
+				}
+			}
+			catch( Exception e )
+			{
+				Debug.LogException( e );
+			}
+
+			// Tessellation Domain Data
+			try
+			{
+				int domainCodeBegin = body.IndexOf( TemplatesManager.TemplateTessDomainCodeArea );
+				if( domainCodeBegin > -1 )
+				{
+					int beginIdx = domainCodeBegin + TemplatesManager.TemplateTessDomainCodeArea.Length;
+					int endIdx = body.IndexOf( TemplatesManager.TemplateEndOfLine, beginIdx );
+					int length = endIdx - beginIdx;
+
+					string parameters = body.Substring( beginIdx, length );
+
+					string[] parametersArr = parameters.Split( IOUtils.FIELD_SEPARATOR );
+
+					string id = body.Substring( domainCodeBegin, endIdx + TemplatesManager.TemplateEndOfLine.Length - domainCodeBegin );
+					string inParameters = ( parametersArr.Length > 0 ) ? parametersArr[ 0 ] : string.Empty;
+					string outParameters = ( parametersArr.Length > 1 ) ? parametersArr[ 1 ] : string.Empty;
+					string baryParameters = ( parametersArr.Length > 2 ) ? parametersArr[ 2 ] : string.Empty;
+
+					m_tessDomainData = new TemplateTessDomainData( offsetIdx + domainCodeBegin, id, inParameters, outParameters, baryParameters );
+
+					m_templateProperties.AddId( body, id );
+				}
+			}
+			catch( Exception e )
+			{
+				Debug.LogException( e );
+			}
+		}
+
 		void FetchVertexAndInterpData(TemplateMultiPass template, TemplateModulesData subShaderModule, int offsetIdx, string body )
 		{
 			// Vertex Data
@@ -295,7 +404,8 @@ namespace AmplifyShaderEditor
 					int vertexDataTagEnd = body.IndexOf( TemplatesManager.TemplateEndOfLine, vertexDataTagBegin );
 					m_vertexDataContainer.VertexDataId = body.Substring( vertexDataTagBegin, vertexDataTagEnd + TemplatesManager.TemplateEndOfLine.Length - vertexDataTagBegin );
 					int dataBeginIdx = body.LastIndexOf( '{', vertexDataTagBegin, vertexDataTagBegin );
-					string vertexData = body.Substring( dataBeginIdx + 1, vertexDataTagBegin - dataBeginIdx );
+					int dataEndIdx = body.IndexOf( '}', vertexDataTagEnd );
+					string vertexData = body.Substring( dataBeginIdx + 1, dataEndIdx - dataBeginIdx );
 
 					int parametersBegin = vertexDataTagBegin + TemplatesManager.TemplateVertexDataTag.Length;
 					string parameters = body.Substring( parametersBegin, vertexDataTagEnd - parametersBegin );
@@ -318,7 +428,8 @@ namespace AmplifyShaderEditor
 					string interpDataId = body.Substring( interpDataBegin, interpDataEnd + TemplatesManager.TemplateEndOfLine.Length - interpDataBegin );
 
 					int dataBeginIdx = body.LastIndexOf( '{', interpDataBegin, interpDataBegin );
-					string interpData = body.Substring( dataBeginIdx + 1, interpDataBegin - dataBeginIdx );
+					int dataEndIdx = body.IndexOf( '}', interpDataEnd );
+					string interpData = body.Substring( dataBeginIdx + 1, dataEndIdx - dataBeginIdx );
 
 					int interpolatorAmount = TemplateHelperFunctions.AvailableInterpolators[ "2.5" ];
 
@@ -489,6 +600,9 @@ namespace AmplifyShaderEditor
 		public TemplateFunctionData FragmentFunctionData { get { return m_fragmentFunctionData; } }
 		public VertexDataContainer VertexDataContainer { get { return m_vertexDataContainer; } }
 		public TemplateInterpData InterpolatorDataContainer { get { return m_interpolatorDataContainer; } }
+		public TemplateTessVControlTag TessVControlTag { get { return m_tessVControlTag; } }
+		public TemplateTessControlData TessControlData { get { return m_tessControlData; } }
+		public TemplateTessDomainData TessDomainData { get { return m_tessDomainData; } }
 		public string UniquePrefix { get { return m_uniquePrefix; } }
 		public TemplatePropertyContainer TemplateProperties { get { return m_templateProperties; } }
 		public List<TemplateShaderPropertyData> AvailableShaderGlobals { get { return m_availableShaderGlobals; } }

@@ -96,6 +96,9 @@ namespace AmplifyShaderEditor
 		private TemplateBlendData m_blendData = new TemplateBlendData();
 
 		[SerializeField]
+		private TemplateAlphaToMaskData m_alphaToMaskData = new TemplateAlphaToMaskData();
+
+		[SerializeField]
 		private TemplateCullModeData m_cullModeData = new TemplateCullModeData();
 
 		[SerializeField]
@@ -332,7 +335,7 @@ namespace AmplifyShaderEditor
 						int end = subBody.IndexOf( TemplatesManager.TemplateNewLine, colorMaskIdx );
 						string colorMaskParams = subBody.Substring( colorMaskIdx, end - colorMaskIdx );
 						m_colorMaskData.ColorMaskId = colorMaskParams;
-						TemplateHelperFunctions.CreateColorMask( colorMaskParams, ref m_colorMaskData );
+						TemplateHelperFunctions.CreateColorMask( colorMaskParams, ref m_colorMaskData, TemplateHelperFunctions.ColorMaskPattern );
 						if( m_colorMaskData.DataCheck == TemplateDataCheck.Valid )
 							AddId( colorMaskParams, false );
 					}
@@ -345,7 +348,7 @@ namespace AmplifyShaderEditor
 						int end = subBody.IndexOf( TemplatesManager.TemplateNewLine, blendModeIdx );
 						string blendParams = subBody.Substring( blendModeIdx, end - blendModeIdx );
 						m_blendData.BlendModeId = blendParams;
-						TemplateHelperFunctions.CreateBlendMode( blendParams, ref m_blendData );
+						TemplateHelperFunctions.CreateBlendMode( blendParams, ref m_blendData, TemplateHelperFunctions.BlendModePattern );
 						if( m_blendData.ValidBlendMode )
 						{
 							AddId( blendParams, false );
@@ -360,7 +363,7 @@ namespace AmplifyShaderEditor
 						int end = subBody.IndexOf( TemplatesManager.TemplateNewLine, blendOpIdx );
 						string blendOpParams = subBody.Substring( blendOpIdx, end - blendOpIdx );
 						BlendData.BlendOpId = blendOpParams;
-						TemplateHelperFunctions.CreateBlendOp( blendOpParams, ref m_blendData );
+						TemplateHelperFunctions.CreateBlendOp( blendOpParams, ref m_blendData, TemplateHelperFunctions.BlendOpPattern );
 						if( m_blendData.ValidBlendOp )
 						{
 							AddId( blendOpParams, false );
@@ -564,13 +567,13 @@ namespace AmplifyShaderEditor
 							// Properties
 							case TemplateCommonTagId.Property:
 							{
-								TemplateHelperFunctions.CreateShaderPropertiesList( m_templateBody.Substring( 0, idx + TemplatesManager.CommonTags[ i ].Id.Length ), ref m_availableShaderProperties, ref duplicatesHelper );
+								TemplateHelperFunctions.CreateShaderPropertiesList( m_templateBody.Substring( 0, idx + TemplatesManager.CommonTags[ i ].Id.Length ), ref m_availableShaderProperties, ref duplicatesHelper,-1,-1 );
 							}
 							break;
 							// Globals
 							case TemplateCommonTagId.Global:
 							{
-								TemplateHelperFunctions.CreateShaderGlobalsList( m_templateBody.Substring( 0, idx + TemplatesManager.CommonTags[ i ].Id.Length ), ref m_availableShaderProperties, ref duplicatesHelper );
+								TemplateHelperFunctions.CreateShaderGlobalsList( m_templateBody.Substring( 0, idx + TemplatesManager.CommonTags[ i ].Id.Length ), ref m_availableShaderProperties, ref duplicatesHelper,-1,-1 );
 							}
 							break;
 
@@ -984,6 +987,7 @@ namespace AmplifyShaderEditor
 			//	m_snippetElementsList = null;
 			//}
 
+			m_alphaToMaskData = null;
 			m_cullModeData = null;
 			m_blendData = null;
 			m_colorMaskData = null;
@@ -1166,6 +1170,7 @@ namespace AmplifyShaderEditor
 		public TemplateFunctionData FragmentFunctionData { get { return m_fragmentFunctionData; } set { m_fragmentFunctionData = value; } }
 		public List<TemplateShaderPropertyData> AvailableShaderProperties { get { return m_availableShaderProperties; } set { m_availableShaderProperties = value; } }
 		public TemplateBlendData BlendData { get { return m_blendData; } set { m_blendData = value; } }
+		public TemplateAlphaToMaskData AlphaToMaskData { get { return m_alphaToMaskData; } set { m_alphaToMaskData = value; } }
 		public TemplateCullModeData CullModeData { get { return m_cullModeData; } set { m_cullModeData = value; } }
 		public TemplateColorMaskData ColorMaskData { get { return m_colorMaskData; } set { m_colorMaskData = value; } }
 		public TemplateStencilData StencilData { get { return m_stencilData; } set { m_stencilData = value; } }

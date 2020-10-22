@@ -234,6 +234,132 @@ namespace AmplifyShaderEditor
 	}
 
 	[Serializable]
+	public class TemplateTessVControlTag
+	{
+		public string Id;
+		public int StartIdx;
+
+		public TemplateTessVControlTag()
+		{
+			StartIdx = -1;
+		}
+
+		public bool IsValid { get { return StartIdx >= 0; } }
+	}
+
+	[Serializable]
+	public class TemplateTessControlData
+	{
+		public string Id;
+		public int StartIdx;
+		public string InVarType;
+		public string InVarName;
+		public string OutVarType;
+		public string OutVarName;
+
+		public bool IsValid { get { return StartIdx >= 0; } }
+
+		public TemplateTessControlData()
+		{
+			StartIdx = -1;
+		}
+
+		public TemplateTessControlData( int startIdx, string id, string inVarInfo, string outVarInfo )
+		{
+			StartIdx = startIdx;
+			Id = id;
+			string[] inVarInfoArr = inVarInfo.Split( IOUtils.VALUE_SEPARATOR );
+			if( inVarInfoArr.Length > 1 )
+			{
+				InVarType = inVarInfoArr[ 1 ];
+				InVarName = inVarInfoArr[ 0 ];
+			}
+
+			string[] outVarInfoArr = outVarInfo.Split( IOUtils.VALUE_SEPARATOR );
+			if( outVarInfoArr.Length > 1 )
+			{
+				OutVarType = outVarInfoArr[ 1 ];
+				OutVarName = outVarInfoArr[ 0 ];
+			}
+		}
+
+		public string[] GenerateControl( Dictionary<TemplateSemantics, TemplateVertexData> vertexData, List<string> inputList )
+		{
+			List<string> value = new List<string>();
+			if( vertexData != null && vertexData.Count > 0 )
+			{
+				foreach( var item in vertexData )
+				{
+					if( inputList.FindIndex( x => { return x.Contains( item.Value.VarName ); } ) > -1 )
+						value.Add( string.Format( "{0}.{1} = {2}.{1};", OutVarName, item.Value.VarName, InVarName ) );
+				}
+			}
+			return value.ToArray();
+		}
+	}
+
+	[Serializable]
+	public class TemplateTessDomainData
+	{
+		public string Id;
+		public int StartIdx;
+		public string InVarType;
+		public string InVarName;
+		public string OutVarType;
+		public string OutVarName;
+		public string BaryVarType;
+		public string BaryVarName;
+
+		public bool IsValid { get { return StartIdx >= 0; } }
+
+		public TemplateTessDomainData()
+		{
+			StartIdx = -1;
+		}
+
+		public TemplateTessDomainData( int startIdx, string id, string inVarInfo, string outVarInfo, string baryVarInfo )
+		{
+			StartIdx = startIdx;
+			Id = id;
+			string[] inVarInfoArr = inVarInfo.Split( IOUtils.VALUE_SEPARATOR );
+			if( inVarInfoArr.Length > 1 )
+			{
+				InVarType = inVarInfoArr[ 1 ];
+				InVarName = inVarInfoArr[ 0 ];
+			}
+
+			string[] outVarInfoArr = outVarInfo.Split( IOUtils.VALUE_SEPARATOR );
+			if( outVarInfoArr.Length > 1 )
+			{
+				OutVarType = outVarInfoArr[ 1 ];
+				OutVarName = outVarInfoArr[ 0 ];
+			}
+
+			string[] baryVarInfoArr = baryVarInfo.Split( IOUtils.VALUE_SEPARATOR );
+			if( baryVarInfoArr.Length > 1 )
+			{
+				BaryVarType = baryVarInfoArr[ 1 ];
+				BaryVarName = baryVarInfoArr[ 0 ];
+			}
+		}
+
+		public string[] GenerateDomain( Dictionary<TemplateSemantics, TemplateVertexData> vertexData, List<string> inputList )
+		{
+			List<string> value = new List<string>();
+			if( vertexData != null && vertexData.Count > 0 )
+			{
+				foreach( var item in vertexData )
+				{
+					//o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
+					if( inputList.FindIndex( x => { return x.Contains( item.Value.VarName ); } ) > -1 )
+						value.Add( string.Format( "{0}.{1} = {2}[0].{1} * {3}.x + {2}[1].{1} * {3}.y + {2}[2].{1} * {3}.z;", OutVarName, item.Value.VarName, InVarName, BaryVarName ) );
+				}
+			}
+			return value.ToArray();
+		}
+	}
+
+	[Serializable]
 	public class TemplateFunctionData
 	{
 		public int MainBodyLocalIdx;
@@ -357,6 +483,10 @@ namespace AmplifyShaderEditor
 		public static readonly string TemplateSRPBatcherTag = "/*ase_srp_batcher*/\n";
 		public static readonly string TemplateInterpolatorBeginTag = "/*ase_interp(";
 		public static readonly string TemplateVertexDataTag = "/*ase_vdata:";
+
+		public static readonly string TemplateTessVControlTag = "/*ase_vcontrol*/";
+		public static readonly string TemplateTessControlCodeArea = "/*ase_control_code:";
+		public static readonly string TemplateTessDomainCodeArea = "/*ase_domain_code:";
 
 		//public static readonly string TemplateExcludeFromGraphTag = "/*ase_hide_pass*/";
 		public static readonly string TemplateMainPassTag = "/*ase_main_pass*/";
@@ -585,7 +715,19 @@ namespace AmplifyShaderEditor
 			fileContents.Append( "}\n" );
 			string filePath = AssetDatabase.GUIDToAssetPath( TemplateMenuItemsFileGUID );
 			IOUtils.SaveTextfileToDisk( fileContents.ToString(), filePath, false );
-			AssetDatabase.ImportAsset( filePath );
+			m_filepath = filePath;
+			//AssetDatabase.ImportAsset( filePath );
+		}
+
+		string m_filepath = string.Empty;
+
+		public void ReimportMenuItems()
+		{
+			if( !string.IsNullOrEmpty( m_filepath ) )
+			{
+				AssetDatabase.ImportAsset( m_filepath );
+				m_filepath = string.Empty;
+			}
 		}
 
 		public int GetIdForTemplate( TemplateData templateData )

@@ -28,6 +28,11 @@ namespace AmplifyShaderEditor
 			m_useInternalPortData = true;
 			m_previewShaderGUID = "bcdf750ff5f70444f98b8a3efa50dc6f";
 		}
+		public override void SetPreviewInputs()
+		{
+			base.SetPreviewInputs();
+			m_previewMaterialPassId = m_selectedMode;
+		}
 
 		public override string GenerateShaderForOutput( int outputId, ref MasterNodeDataCollector dataCollector, bool ignoreLocalvar )
 		{

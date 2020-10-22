@@ -91,7 +91,25 @@ namespace AmplifyShaderEditor
 			try
 			{
 				//IEnumerable<System.Type> availableTypes = AppDomain.CurrentDomain.GetAssemblies().ToList().SelectMany( type => type.GetTypes() );
-				Type[] availableTypes = GetTypesInNamespace( Assembly.GetExecutingAssembly(), "AmplifyShaderEditor" );
+				var mainAssembly = Assembly.GetExecutingAssembly();
+				Type[] availableTypes = GetTypesInNamespace( mainAssembly, "AmplifyShaderEditor" );
+
+#if UNITY_2017_3_OR_NEWER
+				try
+				{
+					var editorAssembly = Assembly.Load( "Assembly-CSharp-Editor" );
+					if( mainAssembly != editorAssembly )
+					{
+						Type[] extraTypes = GetTypesInNamespace( editorAssembly, "AmplifyShaderEditor" );
+						availableTypes = availableTypes.Concat<Type>( extraTypes ).ToArray();
+					}
+				}
+				catch( Exception )
+				{
+					// quiet catch because we don't care if it fails to find the assembly, we'll just skip it
+				}
+#endif
+
 				foreach( System.Type type in availableTypes )
 				{
 					foreach( NodeAttributes attribute in Attribute.GetCustomAttributes( type ).OfType<NodeAttributes>() )
@@ -179,7 +197,7 @@ namespace AmplifyShaderEditor
 					NodeAttributes attribute = new NodeAttributes( allFunctions[ i ].FunctionName, allFunctions[ i ].CustomNodeCategory, allFunctions[ i ].Description, KeyCode.None, true, 0, int.MaxValue, typeof( AmplifyShaderFunction ) );
 					System.Type type = typeof( FunctionNode );
 
-					ContextMenuItem newItem = new ContextMenuItem( attribute, type, AddSpacesToSentence( attribute.Name, true ), attribute.Tags, attribute.Category, attribute.Description, allFunctions[ i ], attribute.ShortcutKey );
+					ContextMenuItem newItem = new ContextMenuItem( attribute, type, AddSpacesToSentence( attribute.Name ), attribute.Tags, attribute.Category, attribute.Description, allFunctions[ i ], attribute.ShortcutKey );
 					m_items.Add( newItem );
 					m_itemFunctions.Add( newItem );
 				}
@@ -224,22 +242,45 @@ namespace AmplifyShaderEditor
 
 		}
 
-		string AddSpacesToSentence( string text, bool preserveAcronyms )
+		public static string AddSpacesToSentence( string text )
 		{
 			if( string.IsNullOrEmpty( text ) )
 				return string.Empty;
-			StringBuilder newText = new StringBuilder( text.Length * 2 );
-			newText.Append( text[ 0 ] );
+
+			bool lastIsUpper = char.IsUpper( text, 0 );
+			bool lastIsLetter = char.IsLetter( text, 0 );
+			StringBuilder title = new StringBuilder();
+			title.Append( text[ 0 ] );
 			for( int i = 1; i < text.Length; i++ )
 			{
-				if( char.IsUpper( text[ i ] ) )
-					if( ( text[ i - 1 ] != ' ' && text[ i - 1 ] != '-' && text[ i - 1 ] != '_' && !char.IsUpper( text[ i - 1 ] ) ) ||
-						( preserveAcronyms && char.IsUpper( text[ i - 1 ] ) &&
-						 i < text.Length - 1 && !char.IsUpper( text[ i + 1 ] ) && text[ i + 1 ] != ' ' && text[ i + 1 ] != '-' && text[ i + 1 ] != '_' ) )
-						newText.Append( ' ' );
-				newText.Append( text[ i ] );
+				bool currIsUpper = char.IsUpper( text, i );
+				bool currIsLetter = char.IsLetter( text, i );
+				if( currIsUpper && !lastIsUpper && lastIsLetter )
+				{
+					title.Append( " " );
+				}
+
+				// if current is a number and previous is a letter we space it (ie: Rotation2D = Rotation 2D)
+				if( lastIsLetter && char.IsNumber( text, i ) )
+				{
+					title.Append( " " );
+				}
+
+				// if previous is upper, current is upper and the next two following are lower then we space it (ie: UVDistortion = UV Distortion)
+				if( i < text.Length - 1 )
+				{
+					bool nextIsLower = char.IsLower( text, i + 1 ) && char.IsLetter( text, i + 1 );
+					bool lastIsLower = i < text.Length - 2 ? char.IsLower( text, i + 2 ) && char.IsLetter( text, i + 2 ) : false;
+					if( lastIsUpper && currIsUpper && currIsLetter && nextIsLower && lastIsLower )
+					{
+						title.Append( " " );
+					}
+				}
+				lastIsUpper = currIsUpper;
+				lastIsLetter = currIsLetter;
+				title.Append( text[ i ] );
 			}
-			return newText.ToString();
+			return title.ToString();
 		}
 
 		public NodeAttributes GetNodeAttributesForType( System.Type type )

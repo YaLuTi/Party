@@ -49,6 +49,7 @@ namespace AmplifyShaderEditor
 			AddOutputPort( WirePortDataType.FLOAT, Constants.EmptyPortValue );
 			m_insideSize.Set( 50, 0 );
 			m_showPreview = false;
+			m_showHybridInstancedUI = true;
 			m_selectedLocation = PreviewLocation.BottomCenter;
 			m_availableAttribs.Add( new PropertyAttributes( "Toggle", "[Toggle]" ) );
 			m_availableAttribs.Add( new PropertyAttributes( "Int Range", "[IntRange]" ) );
