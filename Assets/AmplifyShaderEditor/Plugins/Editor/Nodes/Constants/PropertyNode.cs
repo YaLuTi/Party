@@ -42,6 +42,7 @@ namespace AmplifyShaderEditor
 		//private const string InstancedPropertyWarning = "Instanced Property option shouldn't be used on official SRP templates as all property variables are already declared as instanced inside a CBuffer.\nPlease consider changing to Property option.";
 		private string TooltipFormatter = "{0}\n\nName: {1}\nValue: {2}";
 		protected string GlobalTypeWarningText = "Global variables must be set via a C# script using the Shader.SetGlobal{0}(...) method.\nPlease note that setting a global variable will affect all shaders which are using it.";
+		private const string HybridInstancedStr = "Hybrid Instanced";
 		private const string AutoRegisterStr = "Auto-Register";
 		private const string IgnoreVarDeclarationStr = "Variable Mode";
 		private const string IsPropertyStr = "Is Property";
@@ -87,6 +88,9 @@ namespace AmplifyShaderEditor
 		protected bool m_autoGlobalName = true;
 
 		[SerializeField]
+		protected bool m_hybridInstanced = false;
+
+		[SerializeField]
 		protected bool m_autoRegister = false;
 
 		[SerializeField]
@@ -130,6 +134,8 @@ namespace AmplifyShaderEditor
 		protected bool m_propertyNameIsDirty;
 
 		protected bool m_showAutoRegisterUI = true;
+
+		protected bool m_showHybridInstancedUI = false;
 
 		protected bool m_useVarSubtitle = false;
 
@@ -694,6 +700,7 @@ namespace AmplifyShaderEditor
 							ShowPropertyInspectorNameGUI();
 							ShowPropertyNameGUI( true );
 							ShowVariableMode();
+							ShowHybridInstanced();
 							ShowAutoRegister();
 							ShowPrecision();
 							ShowToolbar();
@@ -908,6 +915,14 @@ namespace AmplifyShaderEditor
 		{
 			if( m_showVariableMode || m_freeType )
 				CurrentVariableMode = (VariableMode)EditorGUILayoutEnumPopup( IgnoreVarDeclarationStr, m_variableMode );
+		}
+
+		public void ShowHybridInstanced()
+		{
+			if( m_showHybridInstancedUI && CurrentParameterType == PropertyType.Property && (m_containerGraph.IsSRP || m_containerGraph.CurrentShaderFunction != null) )
+			{
+				m_hybridInstanced = EditorGUILayoutToggle( HybridInstancedStr, m_hybridInstanced );
+			}
 		}
 
 		public void ShowAutoRegister()
@@ -1192,7 +1207,9 @@ namespace AmplifyShaderEditor
 
 		public virtual void CheckIfAutoRegister( ref MasterNodeDataCollector dataCollector )
 		{
-			if( CurrentParameterType != PropertyType.Constant && m_autoRegister && m_connStatus != NodeConnectionStatus.Connected )
+			// Also testing inside shader function because node can be used indirectly over a custom expression and directly over a Function Output node 
+			// That isn't being used externaly making it to not be registered ( since m_connStatus it set to Connected by being connected to an output node
+			if( CurrentParameterType != PropertyType.Constant && m_autoRegister && (m_connStatus != NodeConnectionStatus.Connected || InsideShaderFunction ))
 			{
 				RegisterProperty( ref dataCollector );
 			}
@@ -1225,6 +1242,11 @@ namespace AmplifyShaderEditor
 						{
 							dataCollector.AddToUniforms( UniqueId, dataType, dataName, m_srpBatcherCompatible, m_excludeUniform );
 						}
+					}
+
+					if( m_hybridInstanced && dataCollector.IsTemplate && dataCollector.IsSRP )
+					{
+						dataCollector.AddToDotsProperties( m_outputPorts[ 0 ].DataType, UniqueId, m_propertyName, OrderIndex, CurrentPrecisionType );
 					}
 					//dataCollector.AddToUniforms( m_uniqueId, GetUniformValue() );
 				}
@@ -1267,7 +1289,16 @@ namespace AmplifyShaderEditor
 					//m_propertyName :
 					string.Format( IOUtils.LWSRPInstancedPropertiesData, dataCollector.InstanceBlockName, m_propertyName ) :
 					string.Format( IOUtils.InstancedPropertiesData, m_propertyName );
+
+				bool insideSF = InsideShaderFunction;
+				ParentGraph cachedGraph = ContainerGraph.ParentWindow.CustomGraph;
+				if( insideSF )
+					ContainerGraph.ParentWindow.CustomGraph = this.ContainerGraph;
+
 				RegisterLocalVariable( 0, instancedVar, ref dataCollector, m_propertyName + "_Instance" );
+
+				if( insideSF )
+					ContainerGraph.ParentWindow.CustomGraph = cachedGraph;
 			}
 		}
 
@@ -1459,6 +1490,8 @@ namespace AmplifyShaderEditor
 					IOUtils.AddFieldValueToString( ref nodeInfo, m_customAttr[ i ] );
 				}
 			}
+
+			IOUtils.AddFieldValueToString( ref nodeInfo, m_hybridInstanced );
 		}
 
 		int IdForAttrib( string name )
@@ -1558,6 +1591,11 @@ namespace AmplifyShaderEditor
 				}
 			}
 
+			if( UIUtils.CurrentShaderVersion() > 18003 )
+			{
+				m_hybridInstanced = Convert.ToBoolean( GetCurrentParam( ref nodeParams ) );
+			}
+
 			CheckEnumAttribute();
 			if( m_enumCount > 0 )
 				m_visibleEnumsFoldout = true;
@@ -1579,6 +1617,11 @@ namespace AmplifyShaderEditor
 				m_oldName = m_propertyName;
 			}
 
+			if( m_variableMode == VariableMode.Fetch && m_autoGlobalName )
+			{
+				CurrentVariableMode = VariableMode.Create;
+				CurrentVariableMode = VariableMode.Fetch;
+			}
 		}
 
 		void UpdateTooltip()
@@ -1726,5 +1769,6 @@ namespace AmplifyShaderEditor
 		public bool RegisterPropertyOnInstancing { get { return m_registerPropertyOnInstancing; } set { m_registerPropertyOnInstancing = value; } }
 		public bool SrpBatcherCompatible { get { return m_srpBatcherCompatible; } }
 		public bool AddGlobalToSRPBatcher { get { return m_addGlobalToSRPBatcher; } set { m_addGlobalToSRPBatcher = value; } }
+		public bool AutoRegister { get { return m_autoRegister; } set { m_autoRegister = value; } }
 	}
 }

@@ -74,7 +74,7 @@ namespace AmplifyShaderEditor
 				string instructions = string.Empty;
 				if( m_inputPorts[ 1 ].IsConnected )
 				{
-					m_inputPorts[ 1 ].GeneratePortInstructions( ref dataCollector );
+					instructions = m_inputPorts[ 1 ].GeneratePortInstructions( ref dataCollector );
 				}
 				else
 				{

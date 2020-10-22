@@ -17,6 +17,8 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private TemplateSpecialTags m_specialTag = TemplateSpecialTags.None;
 		[SerializeField]
+		private DisableBatching m_disableBatching = DisableBatching.False;
+		[SerializeField]
 		private RenderType m_renderType = RenderType.Opaque;
 		[SerializeField]
 		private RenderQueue m_renderQueue = RenderQueue.Geometry;
@@ -28,6 +30,7 @@ namespace AmplifyShaderEditor
 			TagName = string.Empty;
 			TagValue = string.Empty;
 			m_specialTag = TemplateSpecialTags.None;
+			m_disableBatching = DisableBatching.False;
 			m_renderType = RenderType.Opaque;
 			m_renderQueue = RenderQueue.Geometry;
 			m_renderQueueOffset = 0;
@@ -41,6 +44,7 @@ namespace AmplifyShaderEditor
 			TagFoldout = other.TagFoldout;
 
 			m_specialTag = other.m_specialTag;
+			m_disableBatching = other.m_disableBatching;
 			m_renderType = other.m_renderType;
 			m_renderQueue = other.m_renderQueue;
 			m_renderQueueOffset = other.m_renderQueueOffset;
@@ -96,7 +100,15 @@ namespace AmplifyShaderEditor
 					BuildQueueTagValue();
 				}
 				break;
-
+				case TemplateSpecialTags.DisableBatching:
+				{
+					if( !TemplateHelperFunctions.StringToDisableBatching.TryGetValue( value[ 0 ], out m_disableBatching ) )
+					{
+						m_disableBatching = DisableBatching.False;
+						TagValue = value[ 0 ];
+					}
+				}
+				break;
 			}
 		}
 
@@ -114,6 +126,14 @@ namespace AmplifyShaderEditor
 			{
 				m_specialTag = TemplateSpecialTags.Queue;
 				SetTagValue( TagValue );
+			}
+			else if( TagName.Equals( Constants.DisableBatchingHelperStr ) )
+			{
+				m_specialTag = TemplateSpecialTags.DisableBatching;
+				if( !TemplateHelperFunctions.StringToDisableBatching.TryGetValue( TagValue, out m_disableBatching ) )
+				{
+					m_disableBatching = DisableBatching.False;
+				}
 			}
 			else
 			{
@@ -163,6 +183,14 @@ namespace AmplifyShaderEditor
 						BuildQueueTagValue();
 					}
 					break;
+					case TemplateSpecialTags.DisableBatching:
+					{
+						if( !TemplateHelperFunctions.StringToDisableBatching.TryGetValue( TagValue, out m_disableBatching ) )
+						{
+							m_disableBatching = DisableBatching.False;
+						}
+					}
+					break;
 				}
 			}
 			else if( UIUtils.CurrentShaderVersion() < 15600 )
@@ -195,6 +223,10 @@ namespace AmplifyShaderEditor
 						m_renderQueue.ToString() + IOUtils.VALUE_SEPARATOR +
 						m_specialTag + IOUtils.VALUE_SEPARATOR +
 						m_renderQueueOffset;
+				case TemplateSpecialTags.DisableBatching:
+				return TagName + IOUtils.VALUE_SEPARATOR +
+						Batching.ToString() + IOUtils.VALUE_SEPARATOR +
+						m_specialTag;
 			}
 
 			return TagName + IOUtils.VALUE_SEPARATOR + TagValue;
@@ -206,6 +238,7 @@ namespace AmplifyShaderEditor
 			{
 				case TemplateSpecialTags.RenderType:
 				return string.Format( TagFormat, TagName, ( RenderType != RenderType.Custom ? RenderType.ToString() : TagValue ) );
+				case TemplateSpecialTags.DisableBatching:
 				case TemplateSpecialTags.Queue:
 				case TemplateSpecialTags.None:
 				default:
@@ -234,6 +267,11 @@ namespace AmplifyShaderEditor
 				m_specialTag = value;
 				switch( value )
 				{
+					case TemplateSpecialTags.DisableBatching:
+					{
+						TagValue = m_disableBatching.ToString();
+					}
+					break;
 					case TemplateSpecialTags.RenderType:
 					{
 						//if( m_renderType != RenderType.Custom )
@@ -246,6 +284,14 @@ namespace AmplifyShaderEditor
 					}
 					break;
 				}
+			}
+		}
+
+		public DisableBatching Batching
+		{
+			get { return m_disableBatching; }
+			set { m_disableBatching = value;
+				TagValue = value.ToString();
 			}
 		}
 

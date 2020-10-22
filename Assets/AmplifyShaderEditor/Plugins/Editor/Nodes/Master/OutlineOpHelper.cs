@@ -145,6 +145,7 @@ namespace AmplifyShaderEditor
 		private string m_includes = string.Empty;
 		private string m_pragmas = string.Empty;
 		private string m_defines = string.Empty;
+		private string m_standardAdditionalDirectives = string.Empty;
 		private string m_vertexData = string.Empty;
 		private string m_grabPasses = string.Empty;
 		private Dictionary<string, string> m_localFunctions;
@@ -310,7 +311,6 @@ namespace AmplifyShaderEditor
 			{
 				body.Add( "#pragma target 3.0" );
 			}
-
 			bool customOutline = dataCollector.UsingCustomOutlineColor || dataCollector.UsingCustomOutlineWidth || dataCollector.UsingCustomOutlineAlpha;
 			int outlineMode = customOutline ? m_offsetMode : ( m_mode == OutlineMode.VertexOffset ? 0 : 1 );
 			string extraOptions = ( customOutline ? m_customNoFog : m_noFog ) ? "nofog " : string.Empty;
@@ -331,7 +331,7 @@ namespace AmplifyShaderEditor
 				AddMultibodyString( m_includes, body );
 				AddMultibodyString( m_pragmas, body );
 			}
-
+			AddMultibodyString( m_standardAdditionalDirectives, body );
 			//if( instanced )
 			//{
 			//	body.Add( OutlineInstancedHeader );
@@ -344,7 +344,7 @@ namespace AmplifyShaderEditor
 
 					for( int i = 0; i < InputList.Count; i++ )
 					{
-						dataCollector.AddToInput( InputList[ i ].NodeId, InputList[ i ].PropertyName, true );
+						dataCollector.AddToInput( InputList[ i ].NodeId, InputList[ i ].PropertyName, !InputList[ i ].IsDirective );
 					}
 				}
 				else
@@ -391,6 +391,9 @@ namespace AmplifyShaderEditor
 				//{
 				//	body.Add( OutlineBodyInstancedEnd[ i ] );
 				//}
+				
+				//Instanced block name must differ from used on main shader so it won't throw a duplicate name error
+				shaderName = shaderName+ "Outline";
 				bool openCBuffer = true;
 				if( customOutline )
 				{
@@ -613,6 +616,7 @@ namespace AmplifyShaderEditor
 		public string Includes { get { return m_includes; } set { m_includes = value; } }
 		public string Pragmas { get { return m_pragmas; } set { m_pragmas = value; } }
 		public string Defines { get { return m_defines; } set { m_defines = value; } }
+		public string StandardAdditionalDirectives { get { return m_standardAdditionalDirectives; } set { m_standardAdditionalDirectives = value; } }
 		public string VertexData { get { return m_vertexData; } set { m_vertexData = value; } }
 		public string GrabPasses { get { return m_grabPasses; } set { m_grabPasses = value; } }
 		public List<PropertyDataCollector> InputList { get { return m_inputList; } set { m_inputList = value; } }

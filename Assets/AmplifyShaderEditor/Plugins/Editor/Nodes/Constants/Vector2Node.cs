@@ -37,6 +37,7 @@ namespace AmplifyShaderEditor
 			m_availableAttribs.Add( new PropertyAttributes( "Remap Sliders", "[RemapSliders]" ) );
 			m_previewShaderGUID = "88b4191eb06084d4da85d1dd2f984085";
 			m_srpBatcherCompatible = true;
+			m_showHybridInstancedUI = true;
 		}
 
 		public override void CopyDefaultsToMaterial()

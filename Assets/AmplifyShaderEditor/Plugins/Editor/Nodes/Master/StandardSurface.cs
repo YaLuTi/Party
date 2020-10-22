@@ -49,6 +49,13 @@ namespace AmplifyShaderEditor
 		Custom = 5,
 	}
 
+	public enum DisableBatching
+	{
+		True,
+		False,
+		LODFading
+	}
+
 	public enum RenderType
 	{
 		Opaque,
@@ -746,6 +753,8 @@ namespace AmplifyShaderEditor
 
 			m_receiveShadows = EditorGUILayoutToggle( ReceiveShadowsContent, m_receiveShadows );
 
+			DrawSamplingMacros();
+
 			m_drawInstancedHelper.Draw( this );
 
 			m_queueOrder = EditorGUILayoutIntField( QueueIndexContent, m_queueOrder );
@@ -925,9 +934,9 @@ namespace AmplifyShaderEditor
 						}
 					}
 
-					EditorGUIUtility.labelWidth = 130;
+					//EditorGUIUtility.labelWidth = 130;
 					m_inlineAlphaToCoverage.CustomDrawer( ref inst, ( x ) => { m_alphaToCoverage = EditorGUILayoutToggle( AlphaToCoverageStr, m_alphaToCoverage ); }, AlphaToCoverageStr.text );
-					EditorGUIUtility.labelWidth = cachedLabelWidth;
+					//EditorGUIUtility.labelWidth = cachedLabelWidth;
 					EditorGUI.EndDisabledGroup();
 
 					EditorGUILayout.Separator();
@@ -1794,15 +1803,15 @@ namespace AmplifyShaderEditor
 				m_billboardOpHelper.FillDataCollectorWithInternalData( ref m_currentDataCollector );
 			}
 
-
-			if( !m_renderingOptionsOpHelper.UseDefaultShadowCaster && 
-				( ( m_castShadows && ( m_alphaToCoverage || m_inlineAlphaToCoverage.Active ) ) ||
-				( m_castShadows && hasOpacity ) ||
-				( m_castShadows && ( m_currentDataCollector.UsingWorldNormal || m_currentDataCollector.UsingWorldReflection || m_currentDataCollector.UsingViewDirection ) ) ||
-				( m_castShadows && m_inputPorts[ m_discardPortId ].Available && m_inputPorts[ m_discardPortId ].IsConnected && m_currentLightModel == StandardShaderLightModel.CustomLighting ) ))
-				m_customShadowCaster = true;
-			else
-				m_customShadowCaster = false;
+			m_customShadowCaster = CustomShadowCaster;
+			//if( !m_renderingOptionsOpHelper.UseDefaultShadowCaster && 
+			//	( ( m_castShadows && ( m_alphaToCoverage || m_inlineAlphaToCoverage.Active ) ) ||
+			//	( m_castShadows && hasOpacity ) ||
+			//	( m_castShadows && ( m_currentDataCollector.UsingWorldNormal || m_currentDataCollector.UsingWorldReflection || m_currentDataCollector.UsingViewDirection ) ) ||
+			//	( m_castShadows && m_inputPorts[ m_discardPortId ].Available && m_inputPorts[ m_discardPortId ].IsConnected && m_currentLightModel == StandardShaderLightModel.CustomLighting ) ))
+			//	m_customShadowCaster = true;
+			//else
+			//	m_customShadowCaster = false;
 
 			//m_customShadowCaster = true;
 
@@ -2030,6 +2039,7 @@ namespace AmplifyShaderEditor
 						if( m_currentDataCollector.DirtyPragmas/* && !m_customShadowCaster */)
 							ShaderBody += m_currentDataCollector.Pragmas;
 
+						m_currentDataCollector.AddASEMacros();
 						if( m_currentDataCollector.DirtyAdditionalDirectives )
 							ShaderBody += m_currentDataCollector.StandardAdditionalDirectives;
 
@@ -2311,8 +2321,8 @@ namespace AmplifyShaderEditor
 							ShaderBody += "\t\t\t#endif\n";
 							ShaderBody += "\t\t\tfloat2 projScreenPos = ( screenPos / screenPos.w ).xy;\n";
 							ShaderBody += "\t\t\tfloat3 worldViewDir = normalize( UnityWorldSpaceViewDir( " + Constants.InputVarStr + ".worldPos ) );\n";
-							ShaderBody += "\t\t\tfloat3 refractionOffset = ( ( ( ( indexOfRefraction - 1.0 ) * mul( UNITY_MATRIX_V, float4( worldNormal, 0.0 ) ) ) * ( 1.0 / ( screenPos.z + 1.0 ) ) ) * ( 1.0 - dot( worldNormal, worldViewDir ) ) );\n";
-							ShaderBody += "\t\t\tfloat2 cameraRefraction = float2( refractionOffset.x, -( refractionOffset.y * _ProjectionParams.x ) );\n";
+							ShaderBody += "\t\t\tfloat3 refractionOffset = ( indexOfRefraction - 1.0 ) * mul( UNITY_MATRIX_V, float4( worldNormal, 0.0 ) ) * ( 1.0 - dot( worldNormal, worldViewDir ) );\n";
+							ShaderBody += "\t\t\tfloat2 cameraRefraction = float2( refractionOffset.x, refractionOffset.y );\n";
 
 							string grabpass = "_GrabTexture";
 							if( m_grabOrder != 0 )
@@ -3112,6 +3122,11 @@ namespace AmplifyShaderEditor
 				if( UIUtils.CurrentShaderVersion() > 16207 )
 					m_inlineAlphaToCoverage.ReadFromString( ref m_currentReadParamIdx, ref nodeParams );
 
+				if( UIUtils.CurrentShaderVersion() > 18302 )
+					SamplingMacros = Convert.ToBoolean( GetCurrentParam( ref nodeParams ) );
+				else
+					SamplingMacros = false;
+
 				m_lightModelChanged = true;
 				m_lastLightModel = m_currentLightModel;
 				DeleteAllInputConnections( true );
@@ -3191,6 +3206,7 @@ namespace AmplifyShaderEditor
 			m_drawInstancedHelper.WriteToString( ref nodeInfo );
 			m_inlineChromaticAberration.WriteToString( ref nodeInfo );
 			m_inlineAlphaToCoverage.WriteToString( ref nodeInfo );
+			IOUtils.AddFieldValueToString( ref nodeInfo, m_samplingMacros );
 		}
 
 		private bool TestCustomBlendMode()
@@ -3298,5 +3314,18 @@ namespace AmplifyShaderEditor
 		public OutlineOpHelper OutlineHelper { get { return m_outlineHelper; } }
 		public float OpacityMaskClipValue { get { return m_opacityMaskClipValue; } }
 		public InlineProperty InlineOpacityMaskClipValue { get { return m_inlineOpacityMaskClipValue; } set { m_inlineOpacityMaskClipValue = value; } }
+		public bool CustomShadowCaster
+		{
+			get
+			{
+				bool hasOpacity = m_inputPorts[ m_opacityPortId ].IsConnected;
+				return 
+					( !m_renderingOptionsOpHelper.UseDefaultShadowCaster &&
+					( ( m_castShadows && ( m_alphaToCoverage || m_inlineAlphaToCoverage.Active ) ) ||
+					( m_castShadows && hasOpacity ) ||
+					( m_castShadows && ( m_currentDataCollector.UsingWorldNormal || m_currentDataCollector.UsingWorldReflection || m_currentDataCollector.UsingViewDirection ) ) ||
+					( m_castShadows && m_inputPorts[ m_discardPortId ].Available && m_inputPorts[ m_discardPortId ].IsConnected && m_currentLightModel == StandardShaderLightModel.CustomLighting ) ) );
+			}
+		}
 	}
 }

@@ -9,6 +9,8 @@ namespace AmplifyShaderEditor
 	[NodeAttributes( "Decode Depth Normal", "Miscellaneous", "Decodes both Depth and Normal from a previously encoded pixel value" )]
 	public sealed class DecodeDepthNormalNode : ParentNode
 	{
+		// URP will only have support for depth normals texture over v.10 ... must revisit this node when it comes out
+		private const string SRPErrorMessage = "This node is only currently supported on the Built-in pipeline";
 		private const string DecodeDepthNormalFunc = "DecodeDepthNormal( {0}, {1}, {2} );";
 
 		protected override void CommonInit( int uniqueId )
@@ -22,6 +24,12 @@ namespace AmplifyShaderEditor
 
 		public override string GenerateShaderForOutput( int outputId, ref MasterNodeDataCollector dataCollector, bool ignoreLocalvar )
 		{
+			if( dataCollector.IsSRP )
+			{
+				UIUtils.ShowMessage( SRPErrorMessage, MessageSeverity.Error );
+				return GenerateErrorValue( outputId );
+			}
+
 			if( m_outputPorts[ outputId ].IsLocalValue( dataCollector.PortCategory ) )
 				return m_outputPorts[ outputId ].LocalValue( dataCollector.PortCategory );
 

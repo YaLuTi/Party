@@ -32,6 +32,7 @@ namespace AmplifyShaderEditor
 			AddOutputVectorPorts( WirePortDataType.FLOAT3, "XYZ" );
 			m_previewShaderGUID = "8a44d38f06246bf48944b3f314bc7920";
 			m_srpBatcherCompatible = true;
+			m_showHybridInstancedUI = true;
 		}
 
 		public override void CopyDefaultsToMaterial()

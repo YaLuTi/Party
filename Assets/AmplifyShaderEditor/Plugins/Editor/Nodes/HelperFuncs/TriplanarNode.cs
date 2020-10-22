@@ -30,7 +30,7 @@ namespace AmplifyShaderEditor
 		private bool m_normalCorrection = false;
 
 		[SerializeField]
-		private bool m_arraySupport = false;
+		private ViewSpace m_normalSpace = ViewSpace.Tangent;
 
 		[SerializeField]
 		private TexturePropertyNode m_topTexture;
@@ -80,19 +80,6 @@ namespace AmplifyShaderEditor
 		private readonly string m_functionCall = "TriplanarSampling{0}( {1} )";
 		private readonly string m_functionHeader = "inline {0} TriplanarSampling{1}( {2}float3 worldPos, float3 worldNormal, float falloff, float2 tiling, float3 normalScale, float3 index )";
 
-		private readonly string m_singularTextureRegular = "sampler2D topTexMap, ";
-		private readonly string m_topmidbotTextureRegular = "sampler2D topTexMap, sampler2D midTexMap, sampler2D botTexMap, ";
-
-		private readonly string m_singularTextureSRP = "TEXTURE2D_PARAM( topTexMap, samplertopTexMap), ";
-		private readonly string m_topmidbotTextureSRP = "TEXTURE2D_PARAM( topTexMap, samplertopTexMap), TEXTURE2D_PARAM( midTexMap , samplermidTexMap), TEXTURE2D_PARAM( botTexMap , samplerbotTexMap), ";
-
-
-		private readonly string m_singularArrayTextureStandard = "UNITY_ARGS_TEX2DARRAY( topTexMap ), ";
-		private readonly string m_topmidbotArrayTextureStandard = "UNITY_ARGS_TEX2DARRAY( topTexMap ), UNITY_ARGS_TEX2DARRAY( midTexMap ), UNITY_ARGS_TEX2DARRAY( botTexMap ), ";
-
-		private readonly string m_singularArrayTextureSRP = "ASE_TEXTURE2D_ARRAY_ARGS( topTexMap ), ";
-		private readonly string m_topmidbotArrayTextureSRP = "ASE_TEXTURE2D_ARRAY_ARGS( topTexMap ), ASE_TEXTURE2D_ARRAY_ARGS( midTexMap ), ASE_TEXTURE2D_ARRAY_ARGS( botTexMap ), ";
-
 		private readonly List<string> m_functionSamplingBodyProj = new List<string>() {
 			"float3 projNormal = ( pow( abs( worldNormal ), falloff ) );",
 			"projNormal /= ( projNormal.x + projNormal.y + projNormal.z ) + 0.00001;",// 0.00001 is to prevent division by 0
@@ -104,37 +91,20 @@ namespace AmplifyShaderEditor
 			"projNormal.y = max( 0, projNormal.y * nsign.y );"
 		};
 
-		// Sphere sampling
-		private readonly List<string> m_functionSamplingBodySampSphere = new List<string>() {
-			"half4 xNorm; half4 yNorm; half4 zNorm;",
-			"xNorm = ( {0}( ASE_TEXTURE_PARAMS( topTexMap ), {1}tiling * worldPos.zy * float2( nsign.x, 1.0 ){2} ) );",
-			"yNorm = ( {0}( ASE_TEXTURE_PARAMS( topTexMap ), {1}tiling * worldPos.xz * float2( nsign.y, 1.0 ){2} ) );",
-			"zNorm = ( {0}( ASE_TEXTURE_PARAMS( topTexMap ), {1}tiling * worldPos.xy * float2( -nsign.z, 1.0 ){2} ) );"
-		};
-
-		// Cylinder sampling
-		private readonly List<string> m_functionSamplingBodySampCylinder = new List<string>() {
-			"half4 xNorm; half4 yNorm; half4 yNormN; half4 zNorm;",
-			"xNorm = ( {0}( ASE_TEXTURE_PARAMS( midTexMap ), {1}tiling * worldPos.zy * float2( nsign.x, 1.0 ){3} ) );",
-			"yNorm = ( {0}( ASE_TEXTURE_PARAMS( topTexMap ), {1}tiling * worldPos.xz * float2( nsign.y, 1.0 ){2} ) );",
-			"yNormN = ( {0}( ASE_TEXTURE_PARAMS( botTexMap ), {1}tiling * worldPos.xz * float2( nsign.y, 1.0 ){4} ) );",
-			"zNorm = ( {0}( ASE_TEXTURE_PARAMS( midTexMap ), {1}tiling * worldPos.xy * float2( -nsign.z, 1.0 ){3} ) );"
-		};
-
 		private readonly List<string> m_functionSamplingBodySignsSphere = new List<string>() {
-			"xNorm.xyz = half3( {0}( xNorm{1} ).xy * float2( nsign.x, 1.0 ) + worldNormal.zy, worldNormal.x ).zyx;",
-			"yNorm.xyz = half3( {0}( yNorm{1} ).xy * float2( nsign.y, 1.0 ) + worldNormal.xz, worldNormal.y ).xzy;",
-			"zNorm.xyz = half3( {0}( zNorm{1} ).xy * float2( -nsign.z, 1.0 ) + worldNormal.xy, worldNormal.z ).xyz;"
+			"xNorm.xyz  = half3( {0}( xNorm{1} ).xy * float2(  nsign.x, 1.0 ) + worldNormal.zy, worldNormal.x ).zyx;",
+			"yNorm.xyz  = half3( {0}( yNorm{1} ).xy * float2(  nsign.y, 1.0 ) + worldNormal.xz, worldNormal.y ).xzy;",
+			"zNorm.xyz  = half3( {0}( zNorm{1} ).xy * float2( -nsign.z, 1.0 ) + worldNormal.xy, worldNormal.z ).xyz;"
 		};
 
 		private readonly List<string> m_functionSamplingBodySignsSphereScale = new List<string>() {
-			"xNorm.xyz = half3( {0}( xNorm, normalScale.y ).xy * float2( nsign.x, 1.0 ) + worldNormal.zy, worldNormal.x ).zyx;",
-			"yNorm.xyz = half3( {0}( yNorm, normalScale.x ).xy * float2( nsign.y, 1.0 ) + worldNormal.xz, worldNormal.y ).xzy;",
-			"zNorm.xyz = half3( {0}( zNorm, normalScale.y ).xy * float2( -nsign.z, 1.0 ) + worldNormal.xy, worldNormal.z ).xyz;"
+			"xNorm.xyz  = half3( {0}( xNorm, normalScale.y ).xy * float2(  nsign.x, 1.0 ) + worldNormal.zy, worldNormal.x ).zyx;",
+			"yNorm.xyz  = half3( {0}( yNorm, normalScale.x ).xy * float2(  nsign.y, 1.0 ) + worldNormal.xz, worldNormal.y ).xzy;",
+			"zNorm.xyz  = half3( {0}( zNorm, normalScale.y ).xy * float2( -nsign.z, 1.0 ) + worldNormal.xy, worldNormal.z ).xyz;"
 		};
 
 		private readonly List<string> m_functionSamplingBodySignsCylinder = new List<string>() {
-			"yNormN.xyz = half3( {0}( yNormN {1} ).xy * float2( nsign.y, 1.0 ) + worldNormal.xz, worldNormal.y ).xzy;"
+			"yNormN.xyz = half3( {0}( yNormN {1}).xy * float2( nsign.y, 1.0 ) + worldNormal.xz, worldNormal.y ).xzy;"
 		};
 
 		private readonly List<string> m_functionSamplingBodySignsCylinderScale = new List<string>() {
@@ -203,11 +173,14 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.SAMPLER2D, true, "Top", -1, MasterNodePortCategory.Fragment, 0 );
+			AddInputPort( WirePortDataType.SAMPLER2D, false, "Top", -1, MasterNodePortCategory.Fragment, 0 );
+			m_inputPorts[ 0 ].CreatePortRestrictions( WirePortDataType.SAMPLER2D, WirePortDataType.SAMPLER2DARRAY );
 			AddInputPort( WirePortDataType.FLOAT, true, "Top Index", -1, MasterNodePortCategory.Fragment, 5 );
-			AddInputPort( WirePortDataType.SAMPLER2D, true, "Middle", -1, MasterNodePortCategory.Fragment, 1 );
+			AddInputPort( WirePortDataType.SAMPLER2D, false, "Middle", -1, MasterNodePortCategory.Fragment, 1 );
+			m_inputPorts[ 2 ].CreatePortRestrictions( WirePortDataType.SAMPLER2D, WirePortDataType.SAMPLER2DARRAY );
 			AddInputPort( WirePortDataType.FLOAT, true, "Mid Index", -1, MasterNodePortCategory.Fragment, 6 );
-			AddInputPort( WirePortDataType.SAMPLER2D, true, "Bottom", -1, MasterNodePortCategory.Fragment, 2 );
+			AddInputPort( WirePortDataType.SAMPLER2D, false, "Bottom", -1, MasterNodePortCategory.Fragment, 2 );
+			m_inputPorts[ 4 ].CreatePortRestrictions( WirePortDataType.SAMPLER2D, WirePortDataType.SAMPLER2DARRAY );
 			AddInputPort( WirePortDataType.FLOAT, true, "Bot Index", -1, MasterNodePortCategory.Fragment, 7 );
 			AddInputPort( WirePortDataType.FLOAT3, true, "Pos", -1, MasterNodePortCategory.Fragment, 9 );
 			AddInputPort( WirePortDataType.FLOAT3, true, "Scale", -1, MasterNodePortCategory.Fragment, 8 );
@@ -420,14 +393,26 @@ namespace AmplifyShaderEditor
 			}
 
 			PreviewMaterial.SetFloat( "_IsNormal", ( m_normalCorrection ? 1 : 0 ) );
+			PreviewMaterial.SetFloat( "_IsTangent", ( m_normalSpace == ViewSpace.Tangent ? 1 : 0 ) );
 			PreviewMaterial.SetFloat( "_IsSpherical", ( m_selectedTriplanarType == TriplanarType.Spherical ? 1 : 0 ) );
 		}
 
 		public override void OnInputPortConnected( int portId, int otherNodeId, int otherPortId, bool activateNode = true )
 		{
 			base.OnInputPortConnected( portId, otherNodeId, otherPortId, activateNode );
+			if( portId == 0 )
+				m_topTexPort.MatchPortToConnection();
+
+			if( portId == 1 )
+				m_midTexPort.MatchPortToConnection();
+
+			if( portId == 2 )
+				m_botTexPort.MatchPortToConnection();
+
 			if( m_texturesInitialize )
 				ReRegisterPorts();
+
+			ConfigurePorts();
 		}
 
 		public override void OnInputPortDisconnected( int portId )
@@ -435,6 +420,54 @@ namespace AmplifyShaderEditor
 			base.OnInputPortDisconnected( portId );
 			if( m_texturesInitialize )
 				ReRegisterPorts();
+		}
+
+		public override void OnConnectedOutputNodeChanges( int portId, int otherNodeId, int otherPortId, string name, WirePortDataType type )
+		{
+			base.OnConnectedOutputNodeChanges( portId, otherNodeId, otherPortId, name, type );
+			if( portId == 0 )
+			{
+				if( !m_topTexPort.CheckValidType( type ) )
+				{
+					m_topTexPort.FullDeleteConnections();
+					UIUtils.ShowMessage( UniqueId, "Triplanar Sampler node only accepts SAMPLER2D and SAMPLER2DARRAY input types.\nTexture Object connected changed to " + type + ", connection was lost, please review and update accordingly.", MessageSeverity.Warning );
+				}
+				else
+				{
+					m_topTexPort.MatchPortToConnection();
+				}
+			}
+
+			if( portId == 1 )
+			{
+				if( !m_midTexPort.CheckValidType( type ) )
+				{
+					m_midTexPort.FullDeleteConnections();
+					UIUtils.ShowMessage( UniqueId, "Triplanar Sampler node only accepts SAMPLER2D and SAMPLER2DARRAY input types.\nTexture Object connected changed to " + type + ", connection was lost, please review and update accordingly.", MessageSeverity.Warning );
+				}
+				else
+				{
+					m_midTexPort.MatchPortToConnection();
+				}
+			}
+
+			if( portId == 2 )
+			{
+				if( !m_botTexPort.CheckValidType( type ) )
+				{
+					m_botTexPort.FullDeleteConnections();
+					UIUtils.ShowMessage( UniqueId, "Triplanar Sampler node only accepts SAMPLER2D and SAMPLER2DARRAY input types.\nTexture Object connected changed to " + type + ", connection was lost, please review and update accordingly.", MessageSeverity.Warning );
+				}
+				else
+				{
+					m_botTexPort.MatchPortToConnection();
+				}
+			}
+
+			if( m_texturesInitialize )
+				ReRegisterPorts();
+
+			ConfigurePorts();
 		}
 
 		public void ReRegisterPorts()
@@ -515,26 +548,20 @@ namespace AmplifyShaderEditor
 				m_scalePort.Visible = false;
 			}
 
-			if( m_arraySupport )
-			{
+			if( m_topTexPort.DataType == WirePortDataType.SAMPLER2DARRAY )
 				m_topIndexPort.Visible = true;
-				if( m_selectedTriplanarType == TriplanarType.Cylindrical )
-				{
-					m_midIndexPort.Visible = true;
-					m_botIndexPort.Visible = true;
-				}
-				else
-				{
-					m_midIndexPort.Visible = false;
-					m_botIndexPort.Visible = false;
-				}
-			}
 			else
-			{
 				m_topIndexPort.Visible = false;
+
+			if( m_midTexPort.DataType == WirePortDataType.SAMPLER2DARRAY && m_selectedTriplanarType == TriplanarType.Cylindrical )
+				m_midIndexPort.Visible = true;
+			else
 				m_midIndexPort.Visible = false;
+
+			if( m_botTexPort.DataType == WirePortDataType.SAMPLER2DARRAY && m_selectedTriplanarType == TriplanarType.Cylindrical )
+				m_botIndexPort.Visible = true;
+			else
 				m_botIndexPort.Visible = false;
-			}
 
 			if( m_selectedTriplanarSpace == TriplanarSpace.World )
 				m_posPort.Name = "World Pos";
@@ -581,9 +608,8 @@ namespace AmplifyShaderEditor
 
 			m_normalCorrection = EditorGUILayoutToggle( "Normal Map", m_normalCorrection );
 
-			m_arraySupport = EditorGUILayoutToggle( "Use Texture Array", m_arraySupport );
-			if( m_arraySupport )
-				EditorGUILayout.HelpBox( "Please connect all texture ports to a Texture Object node with a texture array asset for this option to work correctly", MessageType.Info );
+			if( m_normalCorrection )
+				m_normalSpace = (ViewSpace)EditorGUILayoutEnumPopup( "Output Normal Space", m_normalSpace );
 
 			if( EditorGUI.EndChangeCheck() )
 			{
@@ -1030,32 +1056,8 @@ namespace AmplifyShaderEditor
 
 		public override string GenerateShaderForOutput( int outputId, ref MasterNodeDataCollector dataCollector, bool ignoreLocalvar )
 		{
-			bool sampleThroughMacros = UIUtils.CurrentWindow.OutsideGraph.SamplingThroughMacros;
-			//ConfigureFunctions();
-			if( dataCollector.IsSRP )
-			{
-				if( m_arraySupport )
-				{
-					dataCollector.AddToDirectives( Constants.CustomASEStandardSamplerParams );
-					for( int i = 0; i < Constants.CustomASESRPTextureArrayMacros.Length; i++ )
-						dataCollector.AddToDirectives( Constants.CustomASESRPTextureArrayMacros[ i ] );
-				}
-				else
-				{
-					if( sampleThroughMacros )
-					{
-						dataCollector.AddToDirectives( Constants.CustomASESRPSamplerParams );
-					}
-					else
-					{
-						dataCollector.AddToDirectives( Constants.CustomASEStandardSamplerParams );
-					}
-				}
-			}
-			else
-			{
-				dataCollector.AddToDirectives( Constants.CustomASEStandardSamplerParams );
-			}
+			ParentGraph outsideGraph = UIUtils.CurrentWindow.OutsideGraph;
+
 			dataCollector.AddPropertyNode( m_topTexture );
 			dataCollector.AddPropertyNode( m_midTexture );
 			dataCollector.AddPropertyNode( m_botTexture );
@@ -1065,6 +1067,9 @@ namespace AmplifyShaderEditor
 			string texTop = string.Empty;
 			string texMid = string.Empty;
 			string texBot = string.Empty;
+			string ssTop = string.Empty;
+			string ssMid = string.Empty;
+			string ssBot = string.Empty;
 
 			if( m_topTexPort.IsConnected )
 			{
@@ -1082,11 +1087,12 @@ namespace AmplifyShaderEditor
 				texMid = texTop;
 				texBot = texTop;
 
-				if( sampleThroughMacros )
-				{
-					dataCollector.AddToUniforms( UniqueId, string.Format( Constants.SamplerDeclarationSRPMacros[ TextureType.Texture2D ], texTop ) );
-					texTop = string.Format( "TEXTURE2D_ARGS({0},sampler{0})", texTop );
-				}
+#if UNITY_2018_1_OR_NEWER
+				if( ( outsideGraph.SamplingMacros || m_topTexPort.DataType == WirePortDataType.SAMPLER2DARRAY ) )
+#else
+				if( ( outsideGraph.SamplingMacros || m_topTexPort.DataType == WirePortDataType.SAMPLER2DARRAY ) && !outsideGraph.IsStandardSurface )
+#endif
+					ssTop = GeneratorUtils.GenerateSamplerState( ref dataCollector, UniqueId, texTop );
 			}
 			else
 			{
@@ -1111,16 +1117,21 @@ namespace AmplifyShaderEditor
 					dataCollector.AddToProperties( UniqueId, m_botTexture.GetTexture2DPropertyValue(), m_botTexture.OrderIndex );
 					texBot = m_botTexture.PropertyName;
 				}
-
-				if( sampleThroughMacros )
-				{
-					dataCollector.AddToUniforms( UniqueId, string.Format( Constants.SamplerDeclarationSRPMacros[ TextureType.Texture2D ], texTop ) );
-					texTop = string.Format( "TEXTURE2D_ARGS({0},sampler{0})", texTop );
-					dataCollector.AddToUniforms( UniqueId, string.Format( Constants.SamplerDeclarationSRPMacros[ TextureType.Texture2D ], texMid ) );
-					texMid = string.Format( "TEXTURE2D_ARGS({0},sampler{0})", texMid );
-					dataCollector.AddToUniforms( UniqueId, string.Format( Constants.SamplerDeclarationSRPMacros[ TextureType.Texture2D ], texBot ) );
-					texBot = string.Format( "TEXTURE2D_ARGS({0},sampler{0})", texBot );
-				}
+#if UNITY_2018_1_OR_NEWER
+				if( ( outsideGraph.SamplingMacros || m_topTexPort.DataType == WirePortDataType.SAMPLER2DARRAY ) )
+					ssTop = GeneratorUtils.GenerateSamplerState( ref dataCollector, UniqueId, texTop );
+				if( ( outsideGraph.SamplingMacros || m_midTexPort.DataType == WirePortDataType.SAMPLER2DARRAY ) )
+					ssMid = GeneratorUtils.GenerateSamplerState( ref dataCollector, UniqueId, texMid );
+				if( ( outsideGraph.SamplingMacros || m_botTexPort.DataType == WirePortDataType.SAMPLER2DARRAY ) )
+					ssBot = GeneratorUtils.GenerateSamplerState( ref dataCollector, UniqueId, texBot );
+#else
+				if( ( outsideGraph.SamplingMacros || m_topTexPort.DataType == WirePortDataType.SAMPLER2DARRAY ) && !outsideGraph.IsStandardSurface )
+					ssTop = GeneratorUtils.GenerateSamplerState( ref dataCollector, UniqueId, texTop );
+				if( ( outsideGraph.SamplingMacros || m_midTexPort.DataType == WirePortDataType.SAMPLER2DARRAY ) && !outsideGraph.IsStandardSurface )
+					ssMid = GeneratorUtils.GenerateSamplerState( ref dataCollector, UniqueId, texMid );
+				if( ( outsideGraph.SamplingMacros || m_botTexPort.DataType == WirePortDataType.SAMPLER2DARRAY ) && !outsideGraph.IsStandardSurface )
+					ssBot = GeneratorUtils.GenerateSamplerState( ref dataCollector, UniqueId, texBot );
+#endif
 			}
 
 			if( !isVertex )
@@ -1134,20 +1145,12 @@ namespace AmplifyShaderEditor
 			string topIndex = "0";
 			string midIndex = "0";
 			string botIndex = "0";
-
-			if( m_arraySupport && ( !m_topTexPort.IsConnected && m_selectedTriplanarType == TriplanarType.Spherical
-				|| m_selectedTriplanarType == TriplanarType.Cylindrical && !( m_topTexPort.IsConnected && m_midTexPort.IsConnected && m_botTexPort.IsConnected ) ) )
-				m_arraySupport = false;
-
-			if( m_arraySupport )
-			{
+			if( m_topIndexPort.Visible )
 				topIndex = m_topIndexPort.GeneratePortInstructions( ref dataCollector );
-				if( m_selectedTriplanarType == TriplanarType.Cylindrical )
-				{
-					midIndex = m_midIndexPort.GeneratePortInstructions( ref dataCollector );
-					botIndex = m_botIndexPort.GeneratePortInstructions( ref dataCollector );
-				}
-			}
+			if( m_midIndexPort.Visible )
+				midIndex = m_midIndexPort.GeneratePortInstructions( ref dataCollector );
+			if( m_botIndexPort.Visible )
+				botIndex = m_botIndexPort.GeneratePortInstructions( ref dataCollector );
 
 			string tiling = m_tilingPort.GeneratePortInstructions( ref dataCollector );
 			string falloff = m_falloffPort.GeneratePortInstructions( ref dataCollector );
@@ -1155,7 +1158,8 @@ namespace AmplifyShaderEditor
 			bool scaleNormals = false;
 			if( m_scalePort.IsConnected || ( m_scalePort.IsConnected && ( m_scalePort.Vector3InternalData == Vector3.one || m_scalePort.FloatInternalData == 1 ) ) )
 				scaleNormals = true;
-			
+
+			MipType mip = isVertex ? MipType.MipLevel : MipType.Auto;
 			string samplingTriplanar = string.Empty;
 			string headerID = string.Empty;
 			string header = string.Empty;
@@ -1165,25 +1169,45 @@ namespace AmplifyShaderEditor
 			List<string> triplanarBody = new List<string>();
 
 			triplanarBody.AddRange( m_functionSamplingBodyProj );
+			headerID += OutputId;
 			if( m_selectedTriplanarType == TriplanarType.Spherical )
 			{
-				headerID += "S";
-				samplers = m_arraySupport ? ( dataCollector.IsSRP ? m_singularArrayTextureSRP : m_singularArrayTextureStandard ) : (sampleThroughMacros? m_singularTextureSRP : m_singularTextureRegular);
+				samplers = GeneratorUtils.GetPropertyDeclaraction( "topTexMap", m_topTexPort.DataType, ", " ) + GeneratorUtils.GetSamplerDeclaraction( "samplertopTexMap", m_topTexPort.DataType, ", " );
+#if !UNITY_2018_1_OR_NEWER
+				if( m_topTexPort.DataType == WirePortDataType.SAMPLER2DARRAY && outsideGraph.IsStandardSurface )
+					samplers = "UNITY_ARGS_TEX2DARRAY(topTexMap), ";
+#endif
 
-				triplanarBody.AddRange( m_functionSamplingBodySampSphere );
+				string array1 = "";
+				string array2 = "";
+				if( m_topTexPort.DataType == WirePortDataType.SAMPLER2DARRAY )
+				{
+					if( outsideGraph.IsSRP )
+					{
+						array1 = "";
+						array2 = ", index.x";
+					}
+					else
+					{
+						array1 = "float3( ";
+						array2 = ", index.x )";
+					}
+				}
+
+				triplanarBody.Add( "half4 xNorm; half4 yNorm; half4 zNorm;" );
+				triplanarBody.Add( "xNorm = " + GeneratorUtils.GenerateSamplingCall( ref dataCollector, m_topTexPort.DataType, "topTexMap", "samplertopTexMap", string.Format( "{0}tiling * worldPos.zy * float2(  nsign.x, 1.0 ){1}", array1, array2 ), mip, "0" ) + ";" );
+				triplanarBody.Add( "yNorm = " + GeneratorUtils.GenerateSamplingCall( ref dataCollector, m_topTexPort.DataType, "topTexMap", "samplertopTexMap", string.Format( "{0}tiling * worldPos.xz * float2(  nsign.y, 1.0 ){1}", array1, array2 ), mip, "0" ) + ";" );
+				triplanarBody.Add( "zNorm = " + GeneratorUtils.GenerateSamplingCall( ref dataCollector, m_topTexPort.DataType, "topTexMap", "samplertopTexMap", string.Format( "{0}tiling * worldPos.xy * float2( -nsign.z, 1.0 ){1}", array1, array2 ), mip, "0" ) + ";" );
 
 				if( m_normalCorrection )
 				{
-					headerID += "N";
 					if( scaleNormals )
 					{
 						ConvertListTo( dataCollector, true, m_functionSamplingBodySignsSphereScale, triplanarBody );
-						//triplanarBody.AddRange( m_functionSamplingBodySignsSphereScale );
 					}
 					else
 					{
 						ConvertListTo( dataCollector, false, m_functionSamplingBodySignsSphere, triplanarBody );
-						//triplanarBody.AddRange( m_functionSamplingBodySignsSphere );
 					}
 					triplanarBody.AddRange( m_functionSamplingBodyReturnSphereNormalize );
 				}
@@ -1194,74 +1218,70 @@ namespace AmplifyShaderEditor
 			}
 			else
 			{
-				headerID += "C";
-				samplers = m_arraySupport ? ( dataCollector.IsSRP ? m_topmidbotArrayTextureSRP : m_topmidbotArrayTextureStandard ) :( sampleThroughMacros? m_topmidbotTextureSRP: m_topmidbotTextureRegular);
+				string topArgs = GeneratorUtils.GetPropertyDeclaraction( "topTexMap", m_topTexPort.DataType, ", " ) + GeneratorUtils.GetSamplerDeclaraction( "samplertopTexMap", m_topTexPort.DataType, ", " );
+				string midArgs = GeneratorUtils.GetPropertyDeclaraction( "midTexMap", m_midTexPort.DataType, ", " ) + GeneratorUtils.GetSamplerDeclaraction( "samplermidTexMap", m_midTexPort.DataType, ", " );
+				string botArgs = GeneratorUtils.GetPropertyDeclaraction( "botTexMap", m_botTexPort.DataType, ", " ) + GeneratorUtils.GetSamplerDeclaraction( "samplerbotTexMap", m_botTexPort.DataType, ", " );
+
+#if !UNITY_2018_1_OR_NEWER
+				if( m_topTexPort.DataType == WirePortDataType.SAMPLER2DARRAY && outsideGraph.IsStandardSurface )
+					topArgs = "UNITY_ARGS_TEX2DARRAY(topTexMap), ";
+
+				if( m_midTexPort.DataType == WirePortDataType.SAMPLER2DARRAY && outsideGraph.IsStandardSurface )
+					midArgs = "UNITY_ARGS_TEX2DARRAY(midTexMap), ";
+
+				if( m_botTexPort.DataType == WirePortDataType.SAMPLER2DARRAY && outsideGraph.IsStandardSurface )
+					botArgs = "UNITY_ARGS_TEX2DARRAY(botTexMap), ";
+#endif
+
+				samplers = topArgs + midArgs + botArgs;
+
+				string uvTop = "tiling * worldPos.xz * float2(  nsign.y, 1.0 )";
+				if( m_topTexPort.DataType == WirePortDataType.SAMPLER2DARRAY )
+					uvTop = outsideGraph.IsSRP ? uvTop + ", index.x" : "float3( " + uvTop + ", index.x )";
+
+				string uvMid = "tiling * worldPos.zy * float2(  nsign.x, 1.0 )";
+				if( m_midTexPort.DataType == WirePortDataType.SAMPLER2DARRAY )
+					uvMid = outsideGraph.IsSRP ? uvMid + ", index.y" : "float3( " + uvMid + ", index.y )";
+
+				string uvMidNeg = "tiling * worldPos.xy * float2( -nsign.z, 1.0 )";
+				if( m_midTexPort.DataType == WirePortDataType.SAMPLER2DARRAY )
+					uvMidNeg = outsideGraph.IsSRP ? uvMidNeg + ", index.y" : "float3( " + uvMidNeg + ", index.y )";
+
+				string uvBot = "tiling * worldPos.xz * float2(  nsign.y, 1.0 )";
+				if( m_botTexPort.DataType == WirePortDataType.SAMPLER2DARRAY )
+					uvBot = outsideGraph.IsSRP ? uvBot + ", index.z" : "float3( " + uvBot + ", index.z )";
+
 				extraArguments = ", {7}, {8}";
 				triplanarBody.AddRange( m_functionSamplingBodyNegProj );
 
-				triplanarBody.AddRange( m_functionSamplingBodySampCylinder );
+				triplanarBody.Add( "half4 xNorm; half4 yNorm; half4 yNormN; half4 zNorm;" );
+				triplanarBody.Add( "xNorm  = " + GeneratorUtils.GenerateSamplingCall( ref dataCollector, m_midTexPort.DataType, "midTexMap", "samplermidTexMap", uvMid, mip, "0" ) + ";" );
+				triplanarBody.Add( "yNorm  = " + GeneratorUtils.GenerateSamplingCall( ref dataCollector, m_topTexPort.DataType, "topTexMap", "samplertopTexMap", uvTop, mip, "0" ) + ";" );
+				triplanarBody.Add( "yNormN = " + GeneratorUtils.GenerateSamplingCall( ref dataCollector, m_botTexPort.DataType, "botTexMap", "samplerbotTexMap", uvBot, mip, "0" ) + ";" );
+				triplanarBody.Add( "zNorm  = " + GeneratorUtils.GenerateSamplingCall( ref dataCollector, m_midTexPort.DataType, "midTexMap", "samplermidTexMap", uvMidNeg, mip, "0" ) + ";" );
 
 				if( m_normalCorrection )
 				{
-					headerID += "N";
 					if( scaleNormals )
 					{
-						//triplanarBody.AddRange( m_functionSamplingBodySignsSphereScale );
+						if( !( dataCollector.IsTemplate && dataCollector.IsSRP ) )
+						{
+							dataCollector.AddToIncludes( UniqueId, Constants.UnityStandardUtilsLibFuncs );
+						}
+
 						ConvertListTo( dataCollector, true, m_functionSamplingBodySignsSphereScale, triplanarBody );
 						ConvertListTo( dataCollector, true, m_functionSamplingBodySignsCylinderScale, triplanarBody );
-						//triplanarBody.AddRange( m_functionSamplingBodySignsCylinderScale );
 					}
 					else
 					{
-						//triplanarBody.AddRange( m_functionSamplingBodySignsSphere );
 						ConvertListTo( dataCollector, false, m_functionSamplingBodySignsSphere, triplanarBody );
 						ConvertListTo( dataCollector, false, m_functionSamplingBodySignsCylinder, triplanarBody );
-						//triplanarBody.AddRange( m_functionSamplingBodySignsCylinder );
 					}
 					triplanarBody.AddRange( m_functionSamplingBodyReturnCylinderNormalize );
 				}
 				else
 				{
 					triplanarBody.AddRange( m_functionSamplingBodyReturnCylinder );
-				}
-			}
-
-			if( isVertex )
-			{
-				if( m_arraySupport )
-				{
-					string arrayFetch = dataCollector.IsSRP ? "ASE_SAMPLE_TEXTURE2D_ARRAY_LOD" : "UNITY_SAMPLE_TEX2DARRAY_LOD";
-
-					headerID += "VA";
-					for( int i = 0; i < triplanarBody.Count; i++ )
-						triplanarBody[ i ] = string.Format( triplanarBody[ i ], arrayFetch, "float3( ", ", 0 ), index.x", ", 0 ), index.y", ", 0 ), index.z" );
-				}
-				else
-				{
-					headerID += "V";
-					string sampleFunc = sampleThroughMacros ? "SAMPLE_TEXTURE2DLOD" : "tex2Dlod";
-					for( int i = 0; i < triplanarBody.Count; i++ )
-						triplanarBody[ i ] = string.Format( triplanarBody[ i ], sampleFunc, "float4( ", ", 0, 0 )", ", 0, 0 )", ", 0, 0 )" );
-				}
-			}
-			else
-			{
-				if( m_arraySupport )
-				{
-					string arrayFetch = dataCollector.IsSRP ? "ASE_SAMPLE_TEXTURE2D_ARRAY" : "UNITY_SAMPLE_TEX2DARRAY";
-					headerID += "FA";
-					for( int i = 0; i < triplanarBody.Count; i++ )
-						triplanarBody[ i ] = string.Format( triplanarBody[ i ], arrayFetch, "float3( ", ", index.x )", ", index.y )", ", index.z )" );
-				}
-				else
-				{
-					headerID += "F";
-					string sampleFunc = sampleThroughMacros ? "SAMPLE_TEXTURE2D" : "tex2D";
-					for( int i = 0; i < triplanarBody.Count; i++ )
-					{
-						triplanarBody[ i ] = string.Format( triplanarBody[ i ], sampleFunc, "", "", "", "" );
-						
-					}
 				}
 			}
 
@@ -1277,12 +1297,12 @@ namespace AmplifyShaderEditor
 			string pos = GeneratorUtils.GenerateWorldPosition( ref dataCollector, UniqueId );
 			string norm = GeneratorUtils.GenerateWorldNormal( ref dataCollector, UniqueId );
 			string worldToTangent = string.Empty;
-			if( m_normalCorrection )
+			if( m_normalCorrection && m_normalSpace == ViewSpace.Tangent )
 				worldToTangent = GeneratorUtils.GenerateWorldToTangentMatrix( ref dataCollector, UniqueId, CurrentPrecisionType );
 
 			if( m_selectedTriplanarSpace == TriplanarSpace.Object )
 			{
-				if( m_normalCorrection )
+				if( m_normalCorrection && m_normalSpace == ViewSpace.Tangent )
 				{
 					string vt = GeneratorUtils.GenerateVertexTangent( ref dataCollector, UniqueId, CurrentPrecisionType, WirePortDataType.FLOAT3 );
 					string vbt = GeneratorUtils.GenerateVertexBitangent( ref dataCollector, UniqueId, CurrentPrecisionType );
@@ -1303,24 +1323,31 @@ namespace AmplifyShaderEditor
 				pos = m_posPort.GeneratePortInstructions( ref dataCollector );
 			}
 
+#if !UNITY_2018_1_OR_NEWER
+			if( outsideGraph.IsStandardSurface && m_topTexPort.DataType == WirePortDataType.SAMPLER2DARRAY )
+				texTop = "UNITY_PASS_TEX2DARRAY(" + texTop + ")";
+			if( outsideGraph.IsStandardSurface && m_midTexPort.DataType == WirePortDataType.SAMPLER2DARRAY )
+				texMid = "UNITY_PASS_TEX2DARRAY(" + texMid + ")";
+			if( outsideGraph.IsStandardSurface && m_botTexPort.DataType == WirePortDataType.SAMPLER2DARRAY )
+				texBot = "UNITY_PASS_TEX2DARRAY(" + texBot + ")";
+#endif
+
 			string call = string.Empty;
-
-			if( m_arraySupport )
-			{
-				string arrayPassParams = dataCollector.IsSRP ? "ASE_TEXTURE2D_ARRAY_PARAM" : "UNITY_PASS_TEX2DARRAY";
-				texTop = arrayPassParams + "(" + texTop + ")";
-				texMid = arrayPassParams + "(" + texMid + ")";
-				texBot = arrayPassParams + "(" + texBot + ")";
-			}
-
 			string normalScale = m_scalePort.GeneratePortInstructions( ref dataCollector );
 
+			if( !string.IsNullOrEmpty( ssTop ) )
+				ssTop = ", " + ssTop;
+			if( !string.IsNullOrEmpty( ssMid ) )
+				ssMid = ", " + ssMid;
+			if( !string.IsNullOrEmpty( ssBot ) )
+				ssBot = ", " + ssBot;
+
 			if( m_selectedTriplanarType == TriplanarType.Spherical )
-				call = dataCollector.AddFunctions( callHeader, samplingTriplanar, texTop, pos, norm, falloff, tiling, normalScale, topIndex );
+				call = dataCollector.AddFunctions( callHeader, samplingTriplanar, texTop + ssTop, pos, norm, falloff, tiling, normalScale, topIndex );
 			else
-				call = dataCollector.AddFunctions( callHeader, samplingTriplanar, texTop, texMid, texBot, pos, norm, falloff, tiling, normalScale, "float3(" + topIndex + "," + midIndex + "," + botIndex + ")" );
+				call = dataCollector.AddFunctions( callHeader, samplingTriplanar, texTop + ssTop, texMid + ssMid, texBot + ssBot, pos, norm, falloff, tiling, normalScale, "float3(" + topIndex + "," + midIndex + "," + botIndex + ")" );
 			dataCollector.AddToLocalVariables( dataCollector.PortCategory, UniqueId, type + " triplanar" + OutputId + " = " + call + ";" );
-			if( m_normalCorrection )
+			if( m_normalCorrection && m_normalSpace == ViewSpace.Tangent )
 			{
 				dataCollector.AddToLocalVariables( dataCollector.PortCategory, UniqueId, "float3 tanTriplanarNormal" + OutputId + " = mul( " + worldToTangent + ", triplanar" + OutputId + " );" );
 				return GetOutputVectorItem( 0, outputId, "tanTriplanarNormal" + OutputId );
@@ -1424,8 +1451,11 @@ namespace AmplifyShaderEditor
 			if( UIUtils.CurrentShaderVersion() > 6102 )
 				m_propertyInspectorName = GetCurrentParam( ref nodeParams );
 
-			if( UIUtils.CurrentShaderVersion() > 13701 )
-				m_arraySupport = Convert.ToBoolean( GetCurrentParam( ref nodeParams ) );
+			if( UIUtils.CurrentShaderVersion() <= 18301 )
+				Convert.ToBoolean( GetCurrentParam( ref nodeParams ) );
+
+			if( UIUtils.CurrentShaderVersion() > 18201 )
+				m_normalSpace = (ViewSpace)Enum.Parse( typeof( ViewSpace ), GetCurrentParam( ref nodeParams ) );
 
 			SetTitleText( m_propertyInspectorName );
 
@@ -1470,7 +1500,8 @@ namespace AmplifyShaderEditor
 
 			IOUtils.AddFieldValueToString( ref nodeInfo, m_propertyInspectorName );
 
-			IOUtils.AddFieldValueToString( ref nodeInfo, m_arraySupport );
+			//IOUtils.AddFieldValueToString( ref nodeInfo, m_arraySupport );
+			IOUtils.AddFieldValueToString( ref nodeInfo, m_normalSpace );
 		}
 		public override void RefreshOnUndo()
 		{

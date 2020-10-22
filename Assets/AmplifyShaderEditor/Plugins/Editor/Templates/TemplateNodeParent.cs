@@ -266,7 +266,7 @@ namespace AmplifyShaderEditor
 			IOUtils.AddFieldValueToString( ref nodeInfo, m_subShaderIdx );
 			IOUtils.AddFieldValueToString( ref nodeInfo, m_passIdx );
 		}
-		public int SubShaderIdx { get { return m_subShaderIdx; } }
-		public int PassIdx { get { return m_passIdx; } }
+		public int SubShaderIdx { get { return m_subShaderIdx; } set { m_subShaderIdx = value; } }
+		public int PassIdx { get { return m_passIdx; } set { m_passIdx = value; } }
 	}
 }

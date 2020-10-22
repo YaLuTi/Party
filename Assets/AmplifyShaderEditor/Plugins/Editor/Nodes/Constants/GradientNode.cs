@@ -4,6 +4,7 @@
 using UnityEngine;
 using UnityEditor;
 using System;
+using System.Reflection;
 
 namespace AmplifyShaderEditor
 {
@@ -72,7 +73,7 @@ namespace AmplifyShaderEditor
 			{
 				if( i < m_gradient.colorKeys.Length )
 				{
-					colors[ i ] = "float4( "+ m_gradient.colorKeys[ i ].color.r + ", "+ m_gradient.colorKeys[ i ].color.g + ", "+ m_gradient.colorKeys[ i ].color.b + ", "+ m_gradient.colorKeys[ i ].time + " )";
+					colors[ i ] = "float4( " + m_gradient.colorKeys[ i ].color.r + ", " + m_gradient.colorKeys[ i ].color.g + ", " + m_gradient.colorKeys[ i ].color.b + ", " + m_gradient.colorKeys[ i ].time + " )";
 				}
 				else
 				{
@@ -97,9 +98,9 @@ namespace AmplifyShaderEditor
 				, colors[ 0 ], colors[ 1 ], colors[ 2 ], colors[ 3 ], colors[ 4 ], colors[ 5 ], colors[ 6 ], colors[ 7 ]
 				, alphas[ 0 ], alphas[ 1 ], alphas[ 2 ], alphas[ 3 ], alphas[ 4 ], alphas[ 5 ], alphas[ 6 ], alphas[ 7 ] );
 
-			dataCollector.AddLocalVariable( UniqueId, "Gradient gradient" + UniqueId + " = " + functionResult + ";" );
+			dataCollector.AddLocalVariable( UniqueId, "Gradient gradient" + OutputId + " = " + functionResult + ";" );
 
-			return "gradient" + UniqueId;
+			return "gradient" + OutputId;
 		}
 
 		public static void GenerateGradientStruct( ref string body )
@@ -177,7 +178,7 @@ namespace AmplifyShaderEditor
 
 			for( int i = 0; i < m_gradient.colorKeys.Length; i++ )
 			{
-				Vector4 colorKey = new Vector4( m_gradient.colorKeys[ i ].color.r, m_gradient.colorKeys[ i ].color.g, m_gradient.colorKeys[ i ].color.b, m_gradient.colorKeys[ i ].time) ;
+				Vector4 colorKey = new Vector4( m_gradient.colorKeys[ i ].color.r, m_gradient.colorKeys[ i ].color.g, m_gradient.colorKeys[ i ].color.b, m_gradient.colorKeys[ i ].time );
 				IOUtils.AddFieldValueToString( ref nodeInfo, IOUtils.Vector4ToString( colorKey ) );
 			}
 
@@ -186,6 +187,44 @@ namespace AmplifyShaderEditor
 				Vector2 alphaKey = new Vector4( m_gradient.alphaKeys[ i ].alpha, m_gradient.alphaKeys[ i ].time );
 				IOUtils.AddFieldValueToString( ref nodeInfo, IOUtils.Vector2ToString( alphaKey ) );
 			}
+		}
+	}
+
+	internal static class EditorGUILayoutEx
+	{
+		public static System.Type Type = typeof( EditorGUILayout );
+		public static Gradient GradientField( Gradient value, params GUILayoutOption[] options )
+		{
+#if UNITY_2018_3_OR_NEWER
+			return EditorGUILayout.GradientField( value, options );
+#else
+			MethodInfo method = EditorGUILayoutEx.Type.GetMethod( "GradientField", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { typeof( Gradient ), typeof( GUILayoutOption[] ) }, null );
+			return (Gradient)method.Invoke( Type, new object[] { value, options } );
+#endif
+		}
+
+		public static Gradient GradientField( string label, Gradient value, params GUILayoutOption[] options )
+		{
+#if UNITY_2018_3_OR_NEWER
+			return EditorGUILayout.GradientField( label, value, options );
+#else
+			MethodInfo method = EditorGUILayoutEx.Type.GetMethod( "GradientField", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { typeof( string ), typeof( Gradient ), typeof( GUILayoutOption[] ) }, null );
+			return (Gradient)method.Invoke( Type, new object[] { label, value, options } );
+#endif
+		}
+	}
+
+	internal static class EditorGUIEx
+	{
+		public static System.Type Type = typeof( EditorGUI );
+
+		public static Gradient GradientField( Rect position, Gradient gradient )
+		{
+#if UNITY_2018_3_OR_NEWER
+			return EditorGUI.GradientField( position, gradient );
+#else
+			return (Gradient)EditorGUIEx.Type.InvokeMember( "GradientField", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.InvokeMethod, null, null, new object[] { position, gradient } );
+#endif
 		}
 	}
 }

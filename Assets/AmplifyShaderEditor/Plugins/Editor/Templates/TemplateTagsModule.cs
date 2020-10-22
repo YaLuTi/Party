@@ -85,6 +85,10 @@ namespace AmplifyShaderEditor
 					{
 						m_availableTags[ m_tagNameCheckItemId ].SpecialTag = TemplateSpecialTags.RenderType;
 					}
+					else if( m_availableTags[ m_tagNameCheckItemId ].TagName.Equals( Constants.DisableBatchingHelperStr ) )
+					{
+						m_availableTags[ m_tagNameCheckItemId ].SpecialTag = TemplateSpecialTags.DisableBatching;
+					}
 					else
 					{
 						m_availableTags[ m_tagNameCheckItemId ].SpecialTag = TemplateSpecialTags.None;
@@ -165,6 +169,12 @@ namespace AmplifyShaderEditor
 						//Tag Value
 						switch( m_availableTags[ i ].SpecialTag )
 						{
+							case TemplateSpecialTags.DisableBatching:
+							{
+								m_availableTags[ i ].Batching = (DisableBatching)m_currentOwner.EditorGUILayoutEnumPopup( RenderTypeLabelStr, m_availableTags[ i ].Batching );
+								m_availableTags[ i ].TagValue = m_availableTags[ i ].Batching.ToString();
+							}
+							break;
 							case TemplateSpecialTags.RenderType:
 							{
 								m_availableTags[ i ].RenderType = (RenderType)m_currentOwner.EditorGUILayoutEnumPopup( RenderTypeLabelStr, m_availableTags[ i ].RenderType );
@@ -254,6 +264,11 @@ namespace AmplifyShaderEditor
 				{
 					switch( tag )
 					{
+						case TemplateSpecialTags.DisableBatching:
+						{
+							m_availableTags[ i ].Batching = TemplateHelperFunctions.StringToDisableBatching[ item.ActionData ];
+							return;
+						}
 						case TemplateSpecialTags.RenderType:
 						{
 							m_availableTags[ i ].RenderType = TemplateHelperFunctions.StringToRenderType[ item.ActionData ];
@@ -274,6 +289,13 @@ namespace AmplifyShaderEditor
 			CustomTagData data = new CustomTagData();
 			switch( tag )
 			{
+				case TemplateSpecialTags.DisableBatching:
+				{
+					data.SpecialTag = TemplateSpecialTags.DisableBatching;
+					data.TagName = "DisableBatching";
+					data.Batching = TemplateHelperFunctions.StringToDisableBatching[ item.ActionData ];
+				}
+				break;
 				case TemplateSpecialTags.RenderType:
 				{
 					data.SpecialTag = TemplateSpecialTags.RenderType;

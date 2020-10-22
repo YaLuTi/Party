@@ -21,7 +21,9 @@ namespace AmplifyShaderEditor
 														WirePortDataType.SAMPLER1D,
 														WirePortDataType.SAMPLER2D,
 														WirePortDataType.SAMPLER3D,
-														WirePortDataType.SAMPLERCUBE );
+														WirePortDataType.SAMPLERCUBE,
+														WirePortDataType.SAMPLER2DARRAY,
+														WirePortDataType.SAMPLERSTATE );
 			m_inputPorts[ 0 ].Name = "(VS) In";
 			m_outputPorts[ 0 ].Name = "Out";
 			m_useInternalPortData = false;

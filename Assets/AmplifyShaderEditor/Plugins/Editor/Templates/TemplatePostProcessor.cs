@@ -26,6 +26,20 @@ namespace AmplifyShaderEditor
 
 		static void OnPostprocessAllAssets( string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths )
 		{
+			bool containsShaders = false;
+			for( int i = 0; i < importedAssets.Length; i++ )
+			{
+				if( importedAssets[ i ].EndsWith( ".shader" ) )
+				{
+					containsShaders = true;
+					break;
+				}
+			}
+
+			// leave early if there's no shaders among the imports
+			if( !containsShaders )
+				return;
+
 			TemplatesManager templatesManager;
 			bool firstTimeDummyFlag = false;
 			if( UIUtils.CurrentWindow == null )
@@ -152,6 +166,12 @@ namespace AmplifyShaderEditor
 				}
 				UIUtils.CurrentWindow = currWindow;
 			}
+
+			// reimport menu items at the end of everything, hopefully preventing import loops
+			templatesManager.ReimportMenuItems();
+
+			// destroying the DummyManager, not doing so will create leaks over time
+			Destroy();
 		}
 	}
 }

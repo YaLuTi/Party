@@ -17,7 +17,9 @@ namespace UnityEditor
 			public static Texture2D errorIcon = EditorGUIUtilityEx.LoadIcon( "console.erroricon.sml" );
 
 			public static Texture2D warningIcon = EditorGUIUtilityEx.LoadIcon( "console.warnicon.sml" );
-
+			#if UNITY_2020_1_OR_NEWER
+			public static GUIContent togglePreprocess = EditorGUIUtilityEx.TextContent( "Preprocess only|Show preprocessor output instead of compiled shader code" );
+			#endif
 			public static GUIContent showSurface = EditorGUIUtilityEx.TextContent( "Show generated code|Show generated code of a surface shader" );
 
 			public static GUIContent showFF = EditorGUIUtilityEx.TextContent( "Show generated code|Show generated code of a fixed function shader" );
@@ -34,7 +36,9 @@ namespace UnityEditor
 
 			public static GUIContent arrayValuePopupButton = EditorGUIUtilityEx.TextContent( "..." );
 		}
-
+#if UNITY_2020_1_OR_NEWER
+		private static bool s_PreprocessOnly = false;
+#endif
 		private const float kSpace = 5f;
 
 		const float kValueFieldWidth = 200.0f;
@@ -488,26 +492,34 @@ namespace UnityEditor
 
 		private void ShowCompiledCodeButton( Shader s )
 		{
+#if UNITY_2020_1_OR_NEWER
+			using( new EditorGUI.DisabledScope( !EditorSettings.cachingShaderPreprocessor ) )
+				s_PreprocessOnly = EditorGUILayout.Toggle( Styles.togglePreprocess, s_PreprocessOnly );
+#endif
 			EditorGUILayout.BeginHorizontal( new GUILayoutOption[ 0 ] );
 			EditorGUILayout.PrefixLabel( "Compiled code", EditorStyles.miniButton );
-			bool flag = ShaderUtilEx.HasShaderSnippets( s ) || ShaderUtilEx.HasSurfaceShaders( s ) || ShaderUtilEx.HasFixedFunctionShaders( s );
-			if ( flag )
+			bool hasCode = ShaderUtilEx.HasShaderSnippets( s ) || ShaderUtilEx.HasSurfaceShaders( s ) || ShaderUtilEx.HasFixedFunctionShaders( s );
+			if( hasCode )
 			{
-				GUIContent showCurrent = CustomShaderInspector.Styles.showCurrent;
+				GUIContent showCurrent = Styles.showCurrent;
 				Rect rect = GUILayoutUtility.GetRect( showCurrent, EditorStyles.miniButton, new GUILayoutOption[]
 				{
 					GUILayout.ExpandWidth(false)
 				} );
 				Rect position = new Rect( rect.xMax - 16f, rect.y, 16f, rect.height );
-				if ( EditorGUIEx.ButtonMouseDown( position, GUIContent.none, FocusType.Passive, GUIStyle.none ) )
+				if( EditorGUIEx.ButtonMouseDown( position, GUIContent.none, FocusType.Passive, GUIStyle.none ) )
 				{
 					Rect last = GUILayoutUtilityEx.TopLevel_GetLast();
-					PopupWindow.Show( last, ( PopupWindowContent ) Activator.CreateInstance( System.Type.GetType( "UnityEditor.ShaderInspectorPlatformsPopup, UnityEditor" ), new object[] { s } ) );
+					PopupWindow.Show( last, (PopupWindowContent)Activator.CreateInstance( System.Type.GetType( "UnityEditor.ShaderInspectorPlatformsPopup, UnityEditor" ), new object[] { s } ) );
 					GUIUtility.ExitGUI();
 				}
-				if ( GUI.Button( rect, showCurrent, EditorStyles.miniButton ) )
+				if( GUI.Button( rect, showCurrent, EditorStyles.miniButton ) )
 				{
+#if UNITY_2020_1_OR_NEWER
+					ShaderUtilEx.OpenCompiledShader( s, ShaderInspectorPlatformsPopupEx.GetCurrentMode(), ShaderInspectorPlatformsPopupEx.GetCurrentPlatformMask(), ShaderInspectorPlatformsPopupEx.GetCurrentVariantStripping() == 0, s_PreprocessOnly );
+#else
 					ShaderUtilEx.OpenCompiledShader( s, ShaderInspectorPlatformsPopupEx.GetCurrentMode(), ShaderInspectorPlatformsPopupEx.GetCurrentPlatformMask(), ShaderInspectorPlatformsPopupEx.GetCurrentVariantStripping() == 0 );
+#endif
 					GUIUtility.ExitGUI();
 				}
 			}
@@ -686,30 +698,6 @@ namespace UnityEditor
 		}
 	}
 
-	public static class EditorGUILayoutEx
-	{
-		public static System.Type Type = typeof( EditorGUILayout );
-		public static Gradient GradientField( Gradient value, params GUILayoutOption[] options )
-		{
-#if UNITY_2018_3_OR_NEWER
-			return EditorGUILayout.GradientField( value, options );
-#else
-			MethodInfo method = EditorGUILayoutEx.Type.GetMethod( "GradientField", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { typeof( Gradient ), typeof( GUILayoutOption[] ) }, null );
-			return (Gradient)method.Invoke( Type, new object[]{ value, options} );
-#endif
-		}
-
-		public static Gradient GradientField( string label, Gradient value, params GUILayoutOption[] options )
-		{
-#if UNITY_2018_3_OR_NEWER
-			return EditorGUILayout.GradientField( label, value, options );
-#else
-			MethodInfo method = EditorGUILayoutEx.Type.GetMethod( "GradientField", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] { typeof( string ), typeof( Gradient ), typeof( GUILayoutOption[] ) }, null );
-			return (Gradient)method.Invoke( Type, new object[] { label, value, options } );
-#endif
-		}
-	}
-
 	public static class GUILayoutUtilityEx
 	{
 		private static System.Type type = null;
@@ -749,11 +737,17 @@ namespace UnityEditor
 			ShaderUtilEx.Type.InvokeMember( "OpenGeneratedFixedFunctionShader", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.InvokeMethod, null, null, new object[] { s } );
 		}
 
+#if UNITY_2020_1_OR_NEWER
+		public static void OpenCompiledShader( Shader shader, int mode, int customPlatformsMask, bool includeAllVariants, bool preprocessOnly )
+		{
+			ShaderUtilEx.Type.InvokeMember( "OpenCompiledShader", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.InvokeMethod, null, null, new object[] { shader, mode, customPlatformsMask, includeAllVariants, preprocessOnly } );
+		}
+#else
 		public static void OpenCompiledShader( Shader shader, int mode, int customPlatformsMask, bool includeAllVariants )
 		{
 			ShaderUtilEx.Type.InvokeMember( "OpenCompiledShader", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.InvokeMethod, null, null, new object[] { shader, mode, customPlatformsMask, includeAllVariants } );
 		}
-
+#endif
 		public static void FetchCachedErrors( Shader s )
 		{
 #if UNITY_2019_3_OR_NEWER
@@ -903,15 +897,6 @@ namespace UnityEditor
 	public static class EditorGUIEx
 	{
 		public static System.Type Type = typeof( EditorGUI );
-
-		public static Gradient GradientField( Rect position, Gradient gradient )
-		{
-#if UNITY_2018_3_OR_NEWER
-			return EditorGUI.GradientField( position, gradient );
-#else
-			return (Gradient)EditorGUIEx.Type.InvokeMember( "GradientField", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.InvokeMethod, null, null, new object[] { position, gradient } );
-#endif
-		}
 
 		public static bool ButtonMouseDown( Rect position, GUIContent content, FocusType focusType, GUIStyle style )
 		{

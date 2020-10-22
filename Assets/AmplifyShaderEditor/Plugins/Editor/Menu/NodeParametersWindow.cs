@@ -34,7 +34,7 @@ namespace AmplifyShaderEditor
 		private List<PropertyNode> m_propertyReordableNodes = new List<PropertyNode>();
 
 		// width and height are between [0,1] and represent a percentage of the total screen area
-		public NodeParametersWindow( AmplifyShaderEditorWindow parentWindow ) : base( parentWindow, 0, 0, 265, 0, string.Empty, MenuAnchor.TOP_LEFT, MenuAutoSize.MATCH_VERTICAL )
+		public NodeParametersWindow( AmplifyShaderEditorWindow parentWindow ) : base( parentWindow, 0, 0, 285, 0, string.Empty, MenuAnchor.TOP_LEFT, MenuAutoSize.MATCH_VERTICAL )
 		{
 			SetMinimizedArea( -225, 0, 260, 0 );
 		}
@@ -140,8 +140,10 @@ namespace AmplifyShaderEditor
 							//UIUtils.RecordObject( selectedNode , "Changing properties on node " + selectedNode.UniqueId);
 							m_currentScrollPos = EditorGUILayout.BeginScrollView( m_currentScrollPos, GUILayout.Width( 0 ), GUILayout.Height( 0 ) );
 							float labelWidth = EditorGUIUtility.labelWidth;
-							if ( selectedNode.TextLabelWidth > 0 )
-								EditorGUIUtility.labelWidth = selectedNode.TextLabelWidth;
+							//if( selectedNode.TextLabelWidth > 0 )
+							//	EditorGUIUtility.labelWidth = selectedNode.TextLabelWidth;
+							//else
+								EditorGUIUtility.labelWidth = TransformedArea.width * 0.42f;
 
 							changeCheck = selectedNode.SafeDrawProperties();
 							EditorGUIUtility.labelWidth = labelWidth;

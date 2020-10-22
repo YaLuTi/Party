@@ -17,6 +17,9 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private int m_materialValue;
 
+		[SerializeField]
+		private bool m_setAsUINT = false;
+
 		private const float LabelWidth = 8;
 
 		private int m_cachedPropertyId = -1;
@@ -35,6 +38,7 @@ namespace AmplifyShaderEditor
 			m_insideSize.Set( 50, 10 );
 			m_selectedLocation = PreviewLocation.BottomCenter;
 			m_drawPrecisionUI = false;
+			m_showHybridInstancedUI = true;
 			m_availableAttribs.Add( new PropertyAttributes( "Enum", "[Enum]" ) );
 			m_previewShaderGUID = "0f64d695b6ffacc469f2dd31432a232a";
 			m_srpBatcherCompatible = true;
@@ -81,11 +85,24 @@ namespace AmplifyShaderEditor
 		public override void CopyDefaultsToMaterial()
 		{
 			m_materialValue = m_defaultValue;
+			DrawSetAsUINT();
 		}
 
 		public override void DrawSubProperties()
 		{
 			m_defaultValue = EditorGUILayoutIntField( Constants.DefaultValueLabel, m_defaultValue );
+			DrawSetAsUINT();
+		}
+
+		private void DrawSetAsUINT()
+		{
+			EditorGUI.BeginChangeCheck();
+			m_setAsUINT = EditorGUILayoutToggle( "Set as UINT", m_setAsUINT );
+			if( EditorGUI.EndChangeCheck() )
+			{
+				WirePortDataType portType = m_setAsUINT ? WirePortDataType.UINT : WirePortDataType.INT;
+				m_outputPorts[ 0 ].ChangeType( portType, false );
+			}
 		}
 
 		public override void DrawMaterialProperties()
@@ -247,6 +264,8 @@ namespace AmplifyShaderEditor
 			m_defaultValue = Convert.ToInt32( GetCurrentParam( ref nodeParams ) );
 			if( UIUtils.CurrentShaderVersion() > 14101 )
 				m_materialValue = Convert.ToInt32( GetCurrentParam( ref nodeParams ) );
+			if( UIUtils.CurrentShaderVersion() > 18500 )
+				m_setAsUINT = Convert.ToBoolean( GetCurrentParam( ref nodeParams ) );
 		}
 
 		public override void WriteToString( ref string nodeInfo, ref string connectionsInfo )
@@ -254,6 +273,7 @@ namespace AmplifyShaderEditor
 			base.WriteToString( ref nodeInfo, ref connectionsInfo );
 			IOUtils.AddFieldValueToString( ref nodeInfo, m_defaultValue );
 			IOUtils.AddFieldValueToString( ref nodeInfo, m_materialValue );
+			IOUtils.AddFieldValueToString( ref nodeInfo, m_setAsUINT );
 		}
 
 		public override string GetPropertyValStr()

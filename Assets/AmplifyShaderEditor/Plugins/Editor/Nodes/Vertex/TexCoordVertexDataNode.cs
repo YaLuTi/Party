@@ -103,6 +103,12 @@ namespace AmplifyShaderEditor
 					dataCollector.TemplateDataCollectorInstance.RegisterUV( m_index, m_outputPorts[ 0 ].DataType );
 				}
 
+				string result = string.Empty;
+				if( dataCollector.TemplateDataCollectorInstance.GetCustomInterpolatedData( TemplateHelperFunctions.IntToUVChannelInfo[ m_index ], m_outputPorts[ 0 ].DataType, PrecisionType.Float, ref result, false, dataCollector.PortCategory ) )
+				{
+					return GetOutputVectorItem( 0, outputId, result );
+				}
+				else
 				if( dataCollector.TemplateDataCollectorInstance.HasUV( m_index ) )
 				{
 					InterpDataHelper info = dataCollector.TemplateDataCollectorInstance.GetUVInfo( m_index );

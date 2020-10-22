@@ -8,7 +8,8 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Texture Array", "Textures", "Texture Array fetches a texture from a texture2DArray asset file given a index value", KeyCode.None, true, 0, int.MaxValue, typeof( Texture2DArray ) )]
+	//[NodeAttributes( "Texture Array", "Textures", "Texture Array fetches a texture from a texture2DArray asset file given a index value", KeyCode.None, true, 0, int.MaxValue, typeof( Texture2DArray ) )]
+	[NodeAttributes( "[Old]Texture Array", "Textures", "Texture Array fetches a texture from a texture2DArray asset file given a index value", null, KeyCode.None, true, true, "SamplerNode", typeof( SamplerNode ) )]
 	public class TextureArrayNode : PropertyNode
 	{
 		[SerializeField]
@@ -673,31 +674,6 @@ namespace AmplifyShaderEditor
 			}
 			string index = m_indexPort.GeneratePortInstructions( ref dataCollector );
 
-			string m_normalMapUnpackMode = "";
-			if( m_autoUnpackNormals )
-			{
-				bool isScaledNormal = false;
-				if( m_normalPort.IsConnected )
-				{
-					isScaledNormal = true;
-				}
-				else
-				{
-					if( m_normalPort.FloatInternalData != 1 )
-					{
-						isScaledNormal = true;
-					}
-				}
-
-				string scaleValue = isScaledNormal ? m_normalPort.GeneratePortInstructions( ref dataCollector ) : "1.0";
-				m_normalMapUnpackMode = TemplateHelperFunctions.CreateUnpackNormalStr( dataCollector, isScaledNormal, scaleValue );
-				if( isScaledNormal && ( !dataCollector.IsTemplate || !dataCollector.IsSRP ) )
-				{
-					dataCollector.AddToIncludes( UniqueId, Constants.UnityStandardUtilsLibFuncs );
-				}
-
-			}
-
 			string result = string.Empty;
 
 			if( dataCollector.IsTemplate && dataCollector.IsSRP )
@@ -706,7 +682,7 @@ namespace AmplifyShaderEditor
 				//TODO: unity now supports bias as well
 				if( m_mipMode == MipType.MipBias )
 				{
-					dataCollector.UsingArrayDerivatives = true;
+					GeneratorUtils.AddCustomArraySamplingMacros( ref dataCollector );
 					result = propertyName + ".SampleGrad(sampler" + propertyName + ", float3(" + uvs + ", " + index + "), " + m_ddxPort.GeneratePortInstructions( ref dataCollector ) + ", " + m_ddyPort.GeneratePortInstructions( ref dataCollector ) + ");";
 				}
 				else if( m_lodPort.Visible || isVertex )
@@ -723,7 +699,7 @@ namespace AmplifyShaderEditor
 				//CAREFUL mipbias here means derivative (this needs index changes)
 				if( m_mipMode == MipType.MipBias )
 				{
-					dataCollector.UsingArrayDerivatives = true;
+					GeneratorUtils.AddCustomArraySamplingMacros( ref dataCollector );
 					result = "ASE_SAMPLE_TEX2DARRAY_GRAD(" + propertyName + ", float3(" + uvs + ", " + index + "), " + m_ddxPort.GeneratePortInstructions( ref dataCollector ) + ", " + m_ddyPort.GeneratePortInstructions( ref dataCollector ) + " )";
 				}
 				else if( m_lodPort.Visible || isVertex )
@@ -737,7 +713,27 @@ namespace AmplifyShaderEditor
 			}
 
 			if( m_autoUnpackNormals )
-				result = string.Format( m_normalMapUnpackMode, result );
+			{
+				bool isScaledNormal = false;
+				if( m_normalPort.IsConnected )
+				{
+					isScaledNormal = true;
+				}
+				else
+				{
+					if( m_normalPort.FloatInternalData != 1 )
+					{
+						isScaledNormal = true;
+					}
+				}
+
+				string scaleValue = isScaledNormal ? m_normalPort.GeneratePortInstructions( ref dataCollector ) : "1.0";
+				result = GeneratorUtils.GenerateUnpackNormalStr( ref dataCollector, CurrentPrecisionType, UniqueId, OutputId, result, isScaledNormal, scaleValue );
+				if( isScaledNormal && ( !dataCollector.IsTemplate || !dataCollector.IsSRP ) )
+				{
+					dataCollector.AddToIncludes( UniqueId, Constants.UnityStandardUtilsLibFuncs );
+				}
+			}
 
 			RegisterLocalVariable( 0, result, ref dataCollector, "texArray" + OutputId );
 			return GetOutputVectorItem( 0, outputId, m_outputPorts[ 0 ].LocalValue( dataCollector.PortCategory ) );

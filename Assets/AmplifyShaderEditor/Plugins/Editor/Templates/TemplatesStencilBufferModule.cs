@@ -386,6 +386,8 @@ namespace AmplifyShaderEditor
 			GUI.enabled = m_active;
 			EditorGUI.BeginChangeCheck();
 			{
+				var cache = EditorGUIUtility.labelWidth;
+				EditorGUIUtility.labelWidth = EditorGUIUtility.labelWidth - 20;
 				m_reference.IntSlider( ref owner, ReferenceValueContent, 0, 255 );
 				m_readMask.IntSlider( ref owner, ReadMaskContent, 0, 255 );
 				m_writeMask.IntSlider( ref owner, WriteMaskContent, 0, 255 );
@@ -408,6 +410,8 @@ namespace AmplifyShaderEditor
 					m_failStencilOpFrontIdx.EnumTypePopup( ref owner, FailFrontStr, StencilBufferOpHelper.StencilOpsLabels );
 					m_zFailStencilOpFrontIdx.EnumTypePopup( ref owner, ZFailFrontStr, StencilBufferOpHelper.StencilOpsLabels );
 				}
+
+				EditorGUIUtility.labelWidth = cache;
 			}
 			if( EditorGUI.EndChangeCheck() )
 			{

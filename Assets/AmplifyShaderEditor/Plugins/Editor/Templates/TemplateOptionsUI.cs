@@ -36,7 +36,14 @@ namespace AmplifyShaderEditor
 		public TemplateOptionUIItem( TemplateOptionsItem options )
 		{
 			m_options = options;
-			m_currentOption = m_options.DefaultOptionIndex;
+			if( m_options.Type == AseOptionsType.Field )
+			{
+				m_options.FieldValue.FloatValue = m_options.DefaultFieldValue;
+			}
+			else
+			{
+				m_currentOption = m_options.DefaultOptionIndex;
+			}
 			m_invertActionOnDeselection = options.Setup == AseOptionItemSetup.InvertActionOnDeselection;
 		}
 
@@ -45,6 +52,7 @@ namespace AmplifyShaderEditor
 			m_isVisible = origin.IsVisible;
 			m_wasVisible = origin.WasVisible;
 			m_currentOption = origin.CurrentOption;
+			m_options.FieldValue.FloatValue = origin.CurrentFieldValue;
 			m_checkOnExecute = origin.CheckOnExecute;
 			m_invertActionOnDeselection = origin.InvertActionOnDeselection;
 		}
@@ -65,6 +73,64 @@ namespace AmplifyShaderEditor
 					case AseOptionsUIWidget.Toggle:
 					{
 						m_currentOption = owner.EditorGUILayoutToggle( m_options.Name, m_currentOption == 1 ) ? 1 : 0;
+					}
+					break;
+					case AseOptionsUIWidget.Float:
+					{
+						if( m_options.FieldInline )
+						{
+							m_options.FieldValue.FloatField( ref owner, m_options.Name );
+							if( m_options.FieldValue.Active )
+								m_currentOption = 1;
+							else
+								m_currentOption = 0;
+						}
+						else
+						{
+							m_options.FieldValue.FloatValue = owner.EditorGUILayoutFloatField( m_options.Name, m_options.FieldValue.FloatValue );
+						}
+					}
+					break;
+					case AseOptionsUIWidget.Int:
+					{
+						if( m_options.FieldInline )
+						{
+							m_options.FieldValue.IntField( ref owner, m_options.Name );
+							if( m_options.FieldValue.Active )
+								m_currentOption = 1;
+							else
+								m_currentOption = 0;
+						}
+						else
+							m_options.FieldValue.FloatValue = owner.EditorGUILayoutIntField( m_options.Name, (int)m_options.FieldValue.FloatValue );
+					}
+					break;
+					case AseOptionsUIWidget.FloatRange:
+					{
+						if( m_options.FieldInline )
+						{
+							m_options.FieldValue.SliderField( ref owner, m_options.Name, m_options.FieldMin, m_options.FieldMax );
+							if( m_options.FieldValue.Active )
+								m_currentOption = 1;
+							else
+								m_currentOption = 0;
+						}
+						else
+							m_options.FieldValue.FloatValue = owner.EditorGUILayoutSlider( m_options.Name, m_options.FieldValue.FloatValue, m_options.FieldMin, m_options.FieldMax );
+					}
+					break;
+					case AseOptionsUIWidget.IntRange:
+					{
+						if( m_options.FieldInline )
+						{
+							m_options.FieldValue.IntSlider( ref owner, m_options.Name, (int)m_options.FieldMin, (int)m_options.FieldMax );
+							if( m_options.FieldValue.Active )
+								m_currentOption = 1;
+							else
+								m_currentOption = 0;
+						}
+						else
+							m_options.FieldValue.FloatValue = owner.EditorGUILayoutIntSlider( m_options.Name, (int)m_options.FieldValue.FloatValue, (int)m_options.FieldMin, (int)m_options.FieldMax );
 					}
 					break;
 				}
@@ -189,6 +255,18 @@ namespace AmplifyShaderEditor
 		{
 			get { return m_checkOnExecute; }
 			set { m_checkOnExecute = value; }
+		}
+
+		public InlineProperty FieldValue
+		{
+			get { return m_options.FieldValue; }
+			set { m_options.FieldValue = value; }
+		}
+
+		public float CurrentFieldValue
+		{
+			get { return m_options.FieldValue.FloatValue; }
+			set { m_options.FieldValue.FloatValue = value; }
 		}
 
 		public int CurrentOption
