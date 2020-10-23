@@ -114,7 +114,7 @@ public class PlayerHitten : MonoBehaviour
         StartCoroutine(AddForceToLimb(info));
 
         if (ragdollControl.shotByBullet) return;
-        // Destroy(Instantiate(HitFx, info.hitPoint, Quaternion.identity), 2f);
+        Destroy(Instantiate(HitFx, info.hitPoint, Quaternion.identity), 2f);
 
         if (info.IsShot)
         {
