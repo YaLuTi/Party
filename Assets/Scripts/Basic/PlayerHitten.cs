@@ -14,13 +14,16 @@ public class PlayerHitten : MonoBehaviour
     PlayerBehavior pickItem;
     PlayerMove playerMove;
     PlayerInput playerInput;
+    PlayerIdentity playerIdentity;
 
     public bool test;
     public Transform Hips;
     public Transform foot;
     public Transform FaceWay;
+
+    [Header("FX")]
     public GameObject Decal;
-    public GameObject HitFx;
+    public GameObject RespawnPortal;
 
     [Header("Health & UI")]
     [SerializeField]
@@ -34,6 +37,7 @@ public class PlayerHitten : MonoBehaviour
 
     float Health;
     public bool Dead = false;
+    public bool IsInvincible = false;
     bool Respawnable = true;
     public void SetRespawnable(bool b)
     {
@@ -58,6 +62,7 @@ public class PlayerHitten : MonoBehaviour
         playerInput = GetComponentInChildren<PlayerInput>();
         pickItem = GetComponentInChildren<PlayerBehavior>();
         playerMove = GetComponentInChildren<PlayerMove>();
+        playerIdentity = GetComponentInChildren<PlayerIdentity>();
 
         Health = MaxHealth;
         Dead = false;
@@ -106,6 +111,15 @@ public class PlayerHitten : MonoBehaviour
         Vector3 v = Decal.transform.position;
         v.y = foot.position.y;
         Decal.transform.position = v;
+
+        if (IsInvincible)
+        {
+            playerIdentity.SetPlayerMaterial(0, "_Fresnel_Bias", Mathf.PingPong(Time.time * 0.7f, 0.25f));
+        }
+        else
+        {
+            playerIdentity.SetPlayerMaterial(0, "_Fresnel_Bias", 0);
+        }
     }
     public void OnHit(BulletHitInfo_AF info)
     {
@@ -114,7 +128,6 @@ public class PlayerHitten : MonoBehaviour
         StartCoroutine(AddForceToLimb(info));
 
         if (ragdollControl.shotByBullet) return;
-        Destroy(Instantiate(HitFx, info.hitPoint, Quaternion.identity), 2f);
 
         if (info.IsShot)
         {
@@ -139,13 +152,16 @@ public class PlayerHitten : MonoBehaviour
         yield return new WaitForSeconds(time);
         if (Respawnable)
         {
-            GetComponent<PlayerIdentity>().Respawn();
+            playerIdentity.Respawn();
+            IsInvincible = true;
             ragdollControl.shotByBullet = true;
             Health = MaxHealth;
             OnHealthChanged?.Invoke(this, 0, Health);
             ragdollControl.IsDead = false;
             Dead = false;
         }
+        yield return new WaitForSeconds(4.5f);
+        IsInvincible = false;
         yield return null;
     }
 

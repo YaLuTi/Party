@@ -104,6 +104,7 @@ namespace AnimFollow
 		float getupLerp1 = .15f;		// Determines the initial regaining of strength after the character fallen to ease the ragdoll to the masters pose
 		float getupLerp2 = 2f;			// Determines the regaining of strength during the later part of the get up state
 		float wakeUpStrength = .2f;		// A number that defines the degree of strength the ragdoll must reach before it is assumed to match the master pose and start the later part of the get up state
+        public float GetUpTime = 1.3f;
 		
 		float toContactLerp = 70f;				// Determines how fast the character loses strength when in contact
 		float fromContactLerp = 1f;				// Determines how fast the character gains strength after freed from contact
@@ -316,7 +317,6 @@ namespace AnimFollow
                     {
                         if (animFollow.maxTorque < wakeUpStrength / 100) // Ease the ragdoll to the master pose. WakeUpStrength limit should be set so that the radoll just has reached the master pose
                         {
-                            Debug.Log("WUTTTTTT");
                             // master.transform.Translate((ragdollRootBone.position - masterRootBone.position) * .5f, Space.World);
 
                             animator.speed = getup1AnimatorSpeedFactor * animatorSpeed; // Slow the animation briefly to give the ragdoll time to ease to master pose
@@ -327,7 +327,6 @@ namespace AnimFollow
 						}
 						else if (!(isInTransitionToGetup || getupState)) // Getting up is done. We are back in Idle (if not delayed)
                         {
-                            Debug.Log("TREY");
                             playerMovement.inhibitMove = false; // Master is able to move again
                             playerMovement.EnableMove();
                             playerMovement.EnableRotate();
@@ -347,14 +346,12 @@ namespace AnimFollow
 
 							if (limbErrorMagnitude < maxErrorWhenMatching * 10) // Do not go to full strength unless ragdoll is matching master (delay)
                             {
-                                Debug.Log("TRE");
                                 gettingUp = false; // Getting up is done
 								delayedGetupDone = false;
 								playerMovement.inhibitRun = false;
 							}
 							else
                             {
-                                Debug.Log("TRY");
                                 delayedGetupDone = true;
 								playerMovement.inhibitRun = true; // Inhibit running until ragdoll is matching master again
 							}
@@ -392,7 +389,7 @@ namespace AnimFollow
 					animFollow.SetJointTorque (animFollow.maxJointTorque); // Do not wait for animfollow.secondaryUpdate
 
                     // Orientate master to ragdoll and start transition to getUp when settled on the ground. Falling is over, getting up commences
-                    if (ragdollRootBone.GetComponent<Rigidbody>().velocity.magnitude < settledSpeed && contactTime + noContactTime > 1.3f) // && contactTime + noContactTime > .4f)
+                    if (ragdollRootBone.GetComponent<Rigidbody>().velocity.magnitude < settledSpeed && contactTime + noContactTime > GetUpTime) // && contactTime + noContactTime > .4f)
                     {
                         gettingUp = true;
 						orientate = true;

@@ -3220,6 +3220,7 @@ MonoBehaviour:
   falling: 0
   gettingUp: 0
   jointLimits: 1
+  GetUpTime: 1.3
   orientateY: 0
   collisionSpeed: 0
   numberOfCollisions: 0
@@ -4171,9 +4172,10 @@ MonoBehaviour:
   foot: {fileID: 8879871389245561750}
   FaceWay: {fileID: 8879871389107737055}
   Decal: {fileID: 6760737987697771960}
-  HitFx: {fileID: 5886044324573515229, guid: cab8f0fdfddccae499bbc5d4df8fc852, type: 3}
+  RespawnPortal: {fileID: 0}
   MaxHealth: 30
   Dead: 0
+  IsInvincible: 0
   PlayerUI: {fileID: 2383896703354539456, guid: 85926009e9d656746b326eb88aa94862,
     type: 3}
   Flag: {fileID: 0}
@@ -4223,6 +4225,8 @@ MonoBehaviour:
   BodyMeshRenderer1: {fileID: 8879871388823248677}
   BodyMeshRenderer2: {fileID: 8879871389183145001}
   Decal: {fileID: 6760737987697771960}
+  RespawnPortal: {fileID: 6758186405939245328, guid: b852cc6cfde92db40baa1b7c08d35a16,
+    type: 3}
   rbs: []
   PlayerID: 0
 --- !u!1 &8879871390833939613

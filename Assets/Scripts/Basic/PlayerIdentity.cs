@@ -33,6 +33,7 @@ public class PlayerIdentity : MonoBehaviour
     public SkinnedMeshRenderer BodyMeshRenderer1;
     public SkinnedMeshRenderer BodyMeshRenderer2;
     public GameObject Decal;
+    public GameObject RespawnPortal;
 
     PlayerCreating playerCreating;
 
@@ -165,6 +166,12 @@ public class PlayerIdentity : MonoBehaviour
         StartCoroutine(_SetRagData());
     }
 
+    public void SetPlayerMaterial(int num, string name, float value)
+    {
+        Material[] mats = BodyMeshRenderer1.materials;
+        mats[num].SetFloat(name, value);
+    }
+
     IEnumerator _SetRagData()
     {
         Decal.SetActive(true);
@@ -204,6 +211,8 @@ public class PlayerIdentity : MonoBehaviour
         playerMove.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID] + new Vector3(0, 0, 0);
         playerRigHips.transform.position = stageInfo.SpawnPosition[PlayerID] + new Vector3(0, -3, 0);
         playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID] + new Vector3(0, -3, 0);
+
+        Destroy(Instantiate(RespawnPortal, stageInfo.SpawnPosition[PlayerID] + new Vector3(0, 0.1f, 0), Quaternion.Euler(90,0,0)), 2.5f);
 
         GlobalAudioPlayer.PlayRespawn();
 
