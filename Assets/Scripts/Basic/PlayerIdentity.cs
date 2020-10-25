@@ -140,13 +140,13 @@ public class PlayerIdentity : MonoBehaviour
         playerMove.localScale = new Vector3(2.6f, 2.6f, 2.6f);
         // _playerBehavior.enabled = false;
         playerRig.gameObject.SetActive(false);
-        BodyMeshRenderer2.enabled = true;
+        // BodyMeshRenderer2.enabled = true;
 
-        MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
+        /*MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
         for(int i = 0; i < meshRenderers.Length; i++)
         {
             meshRenderers[i].enabled = true;
-        }
+        }*/
 
         footIK_AF.enabled = false;
     }
@@ -197,17 +197,26 @@ public class PlayerIdentity : MonoBehaviour
             if (collider == null) continue;
             collider.isTrigger = true;
         }
+        footIK_AF.followTerrain = false;
         yield return new WaitForFixedUpdate();
 
-        playerMove.transform.position = stageInfo.SpawnPosition[PlayerID] + new Vector3(0, 7, 0);
-        playerMove.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID] + new Vector3(0, 7, 0);
-        playerRigHips.transform.position = stageInfo.SpawnPosition[PlayerID] + new Vector3(0, 7, 0);
-        playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID] + new Vector3(0, 7, 0);
+        playerMove.transform.position = stageInfo.SpawnPosition[PlayerID] + new Vector3(0,0,0);
+        playerMove.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID] + new Vector3(0, 0, 0);
+        playerRigHips.transform.position = stageInfo.SpawnPosition[PlayerID] + new Vector3(0, -3, 0);
+        playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID] + new Vector3(0, -3, 0);
 
         GlobalAudioPlayer.PlayRespawn();
 
         yield return new WaitForFixedUpdate();
-        // yield return new WaitForSeconds(1.5f);
+        
+        foreach (Rigidbody rb in rbs)
+        {
+            if (rb == null) continue;
+            rb.AddForce(new Vector3(0, 1750, 0));
+        }
+
+        yield return new WaitForSeconds(1f);
+
         foreach (Rigidbody rb in rbs)
         {
             if (rb == null) continue;
@@ -283,7 +292,7 @@ public class PlayerIdentity : MonoBehaviour
         footIK_AF.followTerrain = true;
         yield return new WaitForFixedUpdate();
 
-        BodyMeshRenderer2.enabled = true;
+        // BodyMeshRenderer2.enabled = true;
         playerCreating.Creat();
 
         yield return null;

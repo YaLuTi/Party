@@ -139,19 +139,22 @@ namespace AnimFollow
 #endif
 			else if (hideMaster)
 			{
+                Debug.Log("WEFS");
 				SkinnedMeshRenderer visible;
 				MeshRenderer visible2;
 				if (visible = master.GetComponentInChildren<SkinnedMeshRenderer>())
-				{
-					visible.enabled = false;
+                {
+                    Debug.Log("WFS");
+                    visible.enabled = false;
 					SkinnedMeshRenderer[] visibles;
 					visibles = master.GetComponentsInChildren<SkinnedMeshRenderer>();
 					foreach (SkinnedMeshRenderer visiblen in visibles)
 						visiblen.enabled = false;
 				}
 				if (visible2 = master.GetComponentInChildren<MeshRenderer>())
-				{
-					visible2.enabled = false;
+                {
+                    Debug.Log("WES");
+                    visible2.enabled = false;
 					MeshRenderer[] visibles2;
 					visibles2 = master.GetComponentsInChildren<MeshRenderer>();
 					foreach (MeshRenderer visiblen2 in visibles2)

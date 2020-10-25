@@ -140,6 +140,7 @@ public class PlayerHitten : MonoBehaviour
         if (Respawnable)
         {
             GetComponent<PlayerIdentity>().Respawn();
+            ragdollControl.shotByBullet = true;
             Health = MaxHealth;
             OnHealthChanged?.Invoke(this, 0, Health);
             ragdollControl.IsDead = false;

@@ -272,7 +272,9 @@ namespace AnimFollow
 
                 playerMovement.Hitten();
 				shotByBullet = false;
-				falling = true;
+                noContactTime = 0;
+                contactTime = 0;
+                falling = true;
 				gettingUp = false;
 				orientated = false;
 				animator.speed = animatorSpeed;
@@ -312,10 +314,11 @@ namespace AnimFollow
 
 					if (orientated)
                     {
-                        if (animFollow.maxTorque < wakeUpStrength) // Ease the ragdoll to the master pose. WakeUpStrength limit should be set so that the radoll just has reached the master pose
+                        if (animFollow.maxTorque < wakeUpStrength / 100) // Ease the ragdoll to the master pose. WakeUpStrength limit should be set so that the radoll just has reached the master pose
                         {
+                            Debug.Log("WUTTTTTT");
                             // master.transform.Translate((ragdollRootBone.position - masterRootBone.position) * .5f, Space.World);
-                            
+
                             animator.speed = getup1AnimatorSpeedFactor * animatorSpeed; // Slow the animation briefly to give the ragdoll time to ease to master pose
 							animFollow.maxTorque = Mathf.Lerp(animFollow.maxTorque, contactTorque, getupLerp1 * Time.fixedDeltaTime); // We now start lerping the strength back to the ragdoll. Do until strength is wakeUpStrength. Animation is running wery slowly
 							animFollow.maxForce = Mathf.Lerp(animFollow.maxForce, contactForce, getupLerp1 * Time.fixedDeltaTime);
@@ -324,6 +327,7 @@ namespace AnimFollow
 						}
 						else if (!(isInTransitionToGetup || getupState)) // Getting up is done. We are back in Idle (if not delayed)
                         {
+                            Debug.Log("TREY");
                             playerMovement.inhibitMove = false; // Master is able to move again
                             playerMovement.EnableMove();
                             playerMovement.EnableRotate();
@@ -341,15 +345,17 @@ namespace AnimFollow
 								IceOnGetup[m].GetComponent<Collider>().material.staticFriction = noIceStatFriction[m];
 							}
 
-							if (limbErrorMagnitude < maxErrorWhenMatching) // Do not go to full strength unless ragdoll is matching master (delay)
-							{
-								gettingUp = false; // Getting up is done
+							if (limbErrorMagnitude < maxErrorWhenMatching * 10) // Do not go to full strength unless ragdoll is matching master (delay)
+                            {
+                                Debug.Log("TRE");
+                                gettingUp = false; // Getting up is done
 								delayedGetupDone = false;
 								playerMovement.inhibitRun = false;
 							}
 							else
-							{
-								delayedGetupDone = true;
+                            {
+                                Debug.Log("TRY");
+                                delayedGetupDone = true;
 								playerMovement.inhibitRun = true; // Inhibit running until ragdoll is matching master again
 							}
 						}
@@ -366,7 +372,16 @@ namespace AnimFollow
 								jointLimits = false;
 							}
 						}
-					}
+
+                        if (isInTransitionToGetup)
+                        {
+                            Debug.Log("A");
+                        }
+                        if (getupState)
+                        {
+                            Debug.Log("B");
+                        }
+                    }
 				}
 				else // Falling
                 {
@@ -376,8 +391,8 @@ namespace AnimFollow
 					animFollow.maxJointTorque = Mathf.Lerp(animFollow.maxJointTorque, 0f, fallLerp * Time.fixedDeltaTime);
 					animFollow.SetJointTorque (animFollow.maxJointTorque); // Do not wait for animfollow.secondaryUpdate
 
-					// Orientate master to ragdoll and start transition to getUp when settled on the ground. Falling is over, getting up commences
-					if (ragdollRootBone.GetComponent<Rigidbody>().velocity.magnitude < settledSpeed) // && contactTime + noContactTime > .4f)
+                    // Orientate master to ragdoll and start transition to getUp when settled on the ground. Falling is over, getting up commences
+                    if (ragdollRootBone.GetComponent<Rigidbody>().velocity.magnitude < settledSpeed && contactTime + noContactTime > 1.3f) // && contactTime + noContactTime > .4f)
                     {
                         gettingUp = true;
 						orientate = true;
