@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat_Player_Two
-  m_Shader: {fileID: 4800000, guid: 4f5fd28ff3472ff4e8f7109ef3524e62, type: 3}
+  m_Name: Mat_PlayerDepth
+  m_Shader: {fileID: 4800000, guid: a61b8a3f8147c9e4e933c9bbcf254682, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
@@ -59,7 +59,9 @@ Material:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _Depth_Distance: 0.2
+    - _Depth_Distance2: 81.08
     - _Depth_Smoothstep_Max: 1
+    - _Depth_Smoothstep_Max2: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _Emission_Multiplier: 1
@@ -77,12 +79,13 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _Transparent_Multiplier: 1
     - _UVSec: 0
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
-    - _Color: {r: 1, g: 0.40864828, b: 0.36320752, a: 1}
-    - _Color_Base: {r: 1, g: 0.25, b: 0.25, a: 1}
+    - _Color: {r: 0.3443396, g: 0.6975105, b: 1, a: 1}
+    - _Color_Base: {r: 0.0693307, g: 0.69901663, b: 0.7735849, a: 1}
     - _Color_Fresnel: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Emission_Color: {r: 16, g: 3.5475807, b: 0, a: 0}

@@ -7,11 +7,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat_Player_Two
-  m_Shader: {fileID: 4800000, guid: 4f5fd28ff3472ff4e8f7109ef3524e62, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 0
-  m_EnableInstancingVariants: 0
+  m_Name: Decal 1
+  m_Shader: {fileID: 4800000, guid: d8f400148b999fe41bd30759b3a9126b, type: 3}
+  m_ShaderKeywords: _BLENDMODE_BLEND
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -20,6 +20,14 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _CutoutRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _CutoutTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -35,15 +43,31 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DistortTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _FalloffTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 0b89d6c6d99a13e49b4e163c39a67250, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Mask:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -56,34 +80,46 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _AlphaPow: 1
+    - _BlendMode: 1
     - _BumpScale: 1
+    - _ColorStrength: 1
     - _Cutoff: 0.5
-    - _Depth_Distance: 0.2
-    - _Depth_Smoothstep_Max: 1
+    - _Cutout: 1
+    - _CutoutAlphaMul: 1
+    - _CutoutThreshold: 0.015
     - _DetailNormalMapScale: 1
+    - _DistortScale: 0.1
+    - _DistortSpeed: 1
     - _DstBlend: 0
-    - _Emission_Multiplier: 1
-    - _Fresnel_Bias: 0
-    - _Fresnel_Power: 5
-    - _Fresnel_Scale: 0.1
-    - _GlossMapScale: 1
+    - _DstMode: 10
     - _Glossiness: 0.5
-    - _GlossyReflections: 1
+    - _MaskPow: 1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Smoothness: 0.75
-    - _SmoothnessTextureChannel: 0
-    - _SpecularHighlights: 1
+    - _Scale: 1
+    - _Speed: 1
     - _SrcBlend: 1
+    - _SrcMode: 5
     - _UVSec: 0
+    - _UseAlphaPow: 0
+    - _UseCutout: 0
+    - _UseCutoutTex: 0
+    - _UseCutoutThreshold: 0
+    - _UseFrameBlending: 0
+    - _UseNoiseDistortion: 0
+    - _UseVertexStreamRandom: 0
+    - _UseWorldSpaceUV: 0
+    - _ZTest: 10
+    - _ZTest1: 5
+    - _ZTestSelf: 5
     - _ZWrite: 1
-    - __dirty: 0
+    - _Ztest: 5
     m_Colors:
-    - _Color: {r: 1, g: 0.40864828, b: 0.36320752, a: 1}
-    - _Color_Base: {r: 1, g: 0.25, b: 0.25, a: 1}
-    - _Color_Fresnel: {r: 1, g: 1, b: 1, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _CutoutColor: {r: 1, g: 1, b: 1, a: 1}
+    - _DistortionSpeedScale: {r: 1, g: -1, b: 0.15, a: 0.15}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Emission_Color: {r: 16, g: 3.5475807, b: 0, a: 0}
-    - _Fresnel_Color: {r: 1, g: 1, b: 1, a: 0}
+    - _TintColor: {r: 1.9597656, g: 1.6290878, b: 5.988, a: 1}
