@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7766569124876660283}
   - component: {fileID: 5650730683281793362}
   m_Layer: 4
-  m_Name: Cube.002 (1)
+  m_Name: EffectRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -145,9 +145,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3480916957715787978}
   - component: {fileID: 4425456982606471938}
-  - component: {fileID: 8939835677610626118}
-  m_Layer: 4
-  m_Name: Cube.002 (1)
+  m_Layer: 0
+  m_Name: EffectRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -174,7 +173,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5586358672731016446}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -185,7 +184,6 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e93829bd2ff2da043af03ea04420cfef, type: 2}
   - {fileID: 2100000, guid: 4da2d8fd3d2d4dd459e23f1434094fdc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -241,18 +239,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.000041216612, y: 0.10153009, z: -0.002829641}
     m_Extent: {x: 0.35180068, y: 0.3944704, z: 0.14657691}
   m_DirtyAABB: 0
---- !u!114 &8939835677610626118
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5586358672731016446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b48b17331a4f9c946aab6251219d1e13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5599852175769910473
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,7 +444,6 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: e93829bd2ff2da043af03ea04420cfef, type: 2}
-  - {fileID: 2100000, guid: 4da2d8fd3d2d4dd459e23f1434094fdc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3389,7 +3374,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8879871390262178135
 Transform:
   m_ObjectHideFlags: 0
@@ -4451,6 +4436,7 @@ MonoBehaviour:
   Crown: {fileID: 0}
   BodyMeshRenderer1: {fileID: 8879871388823248677}
   BodyMeshRenderer2: {fileID: 8879871389183145001}
+  EffectMeshRenderer: {fileID: 8879871388823248677}
   Decal: {fileID: 6760737987697771960}
   RespawnPortal: {fileID: 6758186405939245328, guid: b852cc6cfde92db40baa1b7c08d35a16,
     type: 3}

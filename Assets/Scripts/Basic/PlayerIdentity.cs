@@ -32,6 +32,7 @@ public class PlayerIdentity : MonoBehaviour
 
     public SkinnedMeshRenderer BodyMeshRenderer1;
     public SkinnedMeshRenderer BodyMeshRenderer2;
+    public SkinnedMeshRenderer EffectMeshRenderer;
     public GameObject Decal;
     public GameObject RespawnPortal;
 
@@ -168,7 +169,7 @@ public class PlayerIdentity : MonoBehaviour
 
     public void SetPlayerMaterial(int num, string name, float value)
     {
-        Material[] mats = BodyMeshRenderer1.materials;
+        Material[] mats = EffectMeshRenderer.materials;
         mats[num].SetFloat(name, value);
     }
 
@@ -212,8 +213,6 @@ public class PlayerIdentity : MonoBehaviour
         playerRigHips.transform.position = stageInfo.SpawnPosition[PlayerID] + new Vector3(0, -3, 0);
         playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID] + new Vector3(0, -3, 0);
 
-        SetPlayerMaterial(1, "_Transparent_Multiplier", 1);
-
         Destroy(Instantiate(RespawnPortal, stageInfo.SpawnPosition[PlayerID] + new Vector3(0, 0.1f, 0), Quaternion.Euler(90,0,0)), 2.5f);
 
         GlobalAudioPlayer.PlayRespawn();
@@ -240,8 +239,6 @@ public class PlayerIdentity : MonoBehaviour
         }
         footIK_AF.followTerrain = true;
         respawn = null;
-
-        SetPlayerMaterial(1, "_Transparent_Multiplier", 0);
 
         yield return null;
     }

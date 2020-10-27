@@ -16,7 +16,7 @@ Shader "QQA/Shader_SimpleType"
 
 	SubShader
 	{
-		Tags{ "RenderType" = "Opaque"  "Queue" = "Transparent+0" "IgnoreProjector" = "True" "IsEmissive" = "true"  }
+		Tags{ "RenderType" = "Opaque"  "Queue" = "Geometry+0" "IgnoreProjector" = "True" "IsEmissive" = "true"  }
 		Cull Back
 		CGINCLUDE
 		#include "UnityPBSLighting.cginc"
@@ -125,7 +125,7 @@ Shader "QQA/Shader_SimpleType"
 }
 /*ASEBEGIN
 Version=18600
-0;73;841;426;1324.508;363.4952;2.016576;True;False
+0;73;1110;426;1595.738;363.4952;2.016576;True;False
 Node;AmplifyShaderEditor.RangedFloatNode;11;-651.6928,75.19522;Inherit;False;Property;_Fresnel_Bias;Fresnel_Bias;4;0;Create;True;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;13;-649.6928,143.1953;Inherit;False;Property;_Fresnel_Scale;Fresnel_Scale;5;0;Create;True;0;0;False;0;False;1;0.1;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;5;-649.6928,214.1953;Inherit;False;Property;_Fresnel_Power;Fresnel_Power;6;0;Create;True;0;0;False;0;False;5;5;0;0;0;1;FLOAT;0
@@ -135,7 +135,7 @@ Node;AmplifyShaderEditor.RangedFloatNode;24;-391.6147,327.7959;Inherit;False;Pro
 Node;AmplifyShaderEditor.RangedFloatNode;29;-393.6342,460.6009;Inherit;False;Property;_Smoothness;Smoothness;3;0;Create;True;0;0;False;0;False;0.5;0.75;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;31;-186.8582,18.77758;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.ColorNode;21;-338.1329,-323.801;Inherit;False;Property;_Color_Base;Color_Base;0;1;[HDR];Create;True;0;0;False;0;False;0.8,0.8,0.8,0;0,0.8938551,1,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;0,0;Float;False;True;-1;2;ASEMaterialInspector;0;0;Standard;QQA/Shader_SimpleType;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;False;False;False;False;False;False;Back;0;False;-1;0;False;-1;False;0;False;-1;0;False;-1;False;0;Translucent;0.5;True;True;0;True;Opaque;;Transparent;All;14;all;True;True;True;True;0;False;-1;False;0;False;-1;255;False;-1;255;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;False;2;15;10;25;False;0.5;True;0;5;False;-1;10;False;-1;0;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;Relative;0;;0;-1;-1;-1;0;False;0;0;False;-1;-1;0;False;-1;0;0;0;False;0.1;False;-1;0;False;-1;False;16;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0;False;9;FLOAT;0;False;10;FLOAT;0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
+Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;0,0;Float;False;True;-1;2;ASEMaterialInspector;0;0;Standard;QQA/Shader_SimpleType;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;False;False;False;False;False;False;Back;0;False;-1;0;False;-1;False;0;False;-1;0;False;-1;False;0;Opaque;0.5;True;True;0;False;Opaque;;Geometry;All;14;all;True;True;True;True;0;False;-1;False;0;False;-1;255;False;-1;255;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;False;2;15;10;25;False;0.5;True;0;5;False;-1;10;False;-1;0;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;Relative;0;;-1;-1;-1;-1;0;False;0;0;False;-1;-1;0;False;-1;0;0;0;False;0.1;False;-1;0;False;-1;False;16;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0;False;9;FLOAT;0;False;10;FLOAT;0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
 WireConnection;28;1;11;0
 WireConnection;28;2;13;0
 WireConnection;28;3;5;0
@@ -146,4 +146,4 @@ WireConnection;0;2;31;0
 WireConnection;0;3;24;0
 WireConnection;0;4;29;0
 ASEEND*/
-//CHKSM=EB10CA8C6712DBF5CD69366B8A3609248338812C
+//CHKSM=D53D27C2C4B1D909526E0445ED4770C161BFB08C
