@@ -167,7 +167,7 @@ public class PlayerHitten : MonoBehaviour
 
     public void OnDamaged(float damage)
     {
-        if (ragdollControl.shotByBullet || Dead) return;
+        if (ragdollControl.shotByBullet || Dead || IsInvincible) return;
 
 
         float oldH = Health;

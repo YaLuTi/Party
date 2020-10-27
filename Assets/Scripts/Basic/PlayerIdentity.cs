@@ -212,8 +212,7 @@ public class PlayerIdentity : MonoBehaviour
         playerRigHips.transform.position = stageInfo.SpawnPosition[PlayerID] + new Vector3(0, -3, 0);
         playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID] + new Vector3(0, -3, 0);
 
-        /*Material[] mats = BodyMeshRenderer1.materials;
-        mats[0].SetFloat(name, value);*/
+        SetPlayerMaterial(1, "_Transparent_Multiplier", 1);
 
         Destroy(Instantiate(RespawnPortal, stageInfo.SpawnPosition[PlayerID] + new Vector3(0, 0.1f, 0), Quaternion.Euler(90,0,0)), 2.5f);
 
@@ -241,6 +240,9 @@ public class PlayerIdentity : MonoBehaviour
         }
         footIK_AF.followTerrain = true;
         respawn = null;
+
+        SetPlayerMaterial(1, "_Transparent_Multiplier", 0);
+
         yield return null;
     }
     IEnumerator SpawnToPositionLoad()

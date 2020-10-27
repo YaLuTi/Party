@@ -82,7 +82,7 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (rig.position.y < -5 || rig.position.y > 15)
+        if (rig.position.y < -5 || rig.position.y > 15 || transform.position.y < -5 || transform.position.y > 15)
         {
             StartCoroutine(ReSpawn());
         }
