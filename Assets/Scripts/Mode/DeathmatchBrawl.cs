@@ -24,7 +24,7 @@ public class DeathmatchBrawl : MonoBehaviour
         {
             StageManager.players[i].GetComponent<PlayerHitten>().OnDeath += OnPlayerDeath;
             playerHittens.Add(StageManager.players[i].GetComponent<PlayerHitten>());
-            Lifes.Add(3);
+            Lifes.Add(10);
             GameObject g = Instantiate(UI);
             g.transform.parent = GameObject.FindGameObjectWithTag("Canvas").transform;
             switch (i)
@@ -60,7 +60,7 @@ public class DeathmatchBrawl : MonoBehaviour
         Debug.Log(num);
         StageManager.players[num].GetComponent<PlayerHitten>().OnDeath += OnPlayerDeath;
         playerHittens.Add(StageManager.players[num].GetComponent<PlayerHitten>());
-        Lifes.Add(3);
+        Lifes.Add(10);
         GameObject g = Instantiate(UI);
         g.transform.parent = GameObject.FindGameObjectWithTag("Canvas").transform;
         switch (num)

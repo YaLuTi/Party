@@ -113,6 +113,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""2aff28bc-8073-4430-8c8d-2c000cb852d4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -412,6 +420,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Pick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9ee38905-2861-4d4e-814b-7aa61216b1ed"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -648,6 +667,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_GamePlay_UI_Down = m_GamePlay.FindAction("UI_Down", throwIfNotFound: true);
         m_GamePlay_UI_Left = m_GamePlay.FindAction("UI_Left", throwIfNotFound: true);
         m_GamePlay_UI_Right = m_GamePlay.FindAction("UI_Right", throwIfNotFound: true);
+        m_GamePlay_Interact = m_GamePlay.FindAction("Interact", throwIfNotFound: true);
         // Creating(UI)
         m_CreatingUI = asset.FindActionMap("Creating(UI)", throwIfNotFound: true);
         m_CreatingUI_UI_Right = m_CreatingUI.FindAction("UI_Right", throwIfNotFound: true);
@@ -717,6 +737,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_GamePlay_UI_Down;
     private readonly InputAction m_GamePlay_UI_Left;
     private readonly InputAction m_GamePlay_UI_Right;
+    private readonly InputAction m_GamePlay_Interact;
     public struct GamePlayActions
     {
         private @PlayerControls m_Wrapper;
@@ -733,6 +754,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @UI_Down => m_Wrapper.m_GamePlay_UI_Down;
         public InputAction @UI_Left => m_Wrapper.m_GamePlay_UI_Left;
         public InputAction @UI_Right => m_Wrapper.m_GamePlay_UI_Right;
+        public InputAction @Interact => m_Wrapper.m_GamePlay_Interact;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -778,6 +800,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @UI_Right.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Right;
                 @UI_Right.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Right;
                 @UI_Right.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Right;
+                @Interact.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_GamePlayActionsCallbackInterface = instance;
             if (instance != null)
@@ -818,6 +843,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @UI_Right.started += instance.OnUI_Right;
                 @UI_Right.performed += instance.OnUI_Right;
                 @UI_Right.canceled += instance.OnUI_Right;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
         }
     }
@@ -927,6 +955,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnUI_Down(InputAction.CallbackContext context);
         void OnUI_Left(InputAction.CallbackContext context);
         void OnUI_Right(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
     public interface ICreatingUIActions
     {

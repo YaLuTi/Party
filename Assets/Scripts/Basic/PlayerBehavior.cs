@@ -216,6 +216,38 @@ public class PlayerBehavior : MonoBehaviour
             }
         }
     }
+
+    void OnInteract()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, PickRadius);
+
+        if (colliders.Length > 0)
+        {
+            float shortestDistance = 10;
+            Collider pick = null;
+
+            foreach (Collider collider in colliders)
+            {
+                if (collider.gameObject.tag != "SceneItem") continue;
+                if (pick == null)
+                {
+                    pick = collider;
+                    shortestDistance = Vector3.Distance(this.gameObject.transform.position, pick.transform.position);
+                }
+                float distance = Vector3.Distance(this.gameObject.transform.position, pick.transform.position);
+                if (distance < shortestDistance)
+                {
+                    pick = collider;
+                    shortestDistance = distance;
+                }
+            }
+
+            if (pick != null)
+            {
+                pick.GetComponent<Basic_SceneItem>().Trigger();
+            }
+        }
+    }
     
     // Throw
     void OnThrow()
