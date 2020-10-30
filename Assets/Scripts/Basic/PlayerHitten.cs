@@ -108,9 +108,9 @@ public class PlayerHitten : MonoBehaviour
     {
 
         Decal.transform.position = Hips.transform.position;
-        Vector3 v = Decal.transform.position;
+        /*Vector3 v = Decal.transform.position;
         v.y = foot.position.y;
-        Decal.transform.position = v;
+        Decal.transform.position = v;*/
 
         if (IsInvincible)
         {

@@ -77,9 +77,9 @@ public class PlayerIdentity : MonoBehaviour
         _playerMove.enabled = false;
         _playerBehavior = GetComponentInChildren<PlayerBehavior>();
         _playerBehavior.enabled = false;*/
-        mats = Decal.GetComponent<MeshRenderer>().materials;
-        mats[0] = RingMaterialsArray[PlayerID];
-        Decal.GetComponent<MeshRenderer>().materials = mats;
+        Material material = Decal.GetComponent<Projector>().material;
+        material = RingMaterialsArray[PlayerID];
+        Decal.GetComponent<Projector>().material = material;
 
         StartCoroutine(SpawnToPosition());
     }
