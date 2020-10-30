@@ -12,7 +12,7 @@ public class PlayerHitten : MonoBehaviour
     RagdollControl_AF ragdollControl;
 
     PlayerBehavior pickItem;
-    PlayerMove playerMove;
+    public PlayerMove playerMove;
     PlayerInput playerInput;
     PlayerIdentity playerIdentity;
 

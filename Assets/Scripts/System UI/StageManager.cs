@@ -296,6 +296,12 @@ public class StageManager : MonoBehaviour
         players.Clear();
     }
 
+    public static void RemoveCameraTarget(Transform transform)
+    {
+        targetGroup = GameObject.FindGameObjectWithTag("CineGroup").GetComponent<CinemachineTargetGroup>();
+        targetGroup.RemoveMember(transform);
+    }
+
     public static void LoadNewScene()
     {
         targetGroup = GameObject.FindGameObjectWithTag("CineGroup").GetComponent<CinemachineTargetGroup>();
