@@ -199,19 +199,22 @@ public class PlayerHitten : MonoBehaviour
 
     IEnumerator AddForceToLimb(BulletHitInfo_AF bulletHitInfo)
     {
-        yield return new WaitForFixedUpdate();
-        if (bulletHitInfo.hitTransform != null)
+        if (!IsInvincible)
         {
-            if(bulletHitInfo.hitTransform.GetComponent<Rigidbody>() != null) bulletHitInfo.hitTransform.GetComponent<Rigidbody>().AddForceAtPosition(bulletHitInfo.bulletForce, bulletHitInfo.hitPoint);
-        }
-        playerMove.AddForceSpeed(bulletHitInfo.bulletForce / 100f);
+            yield return new WaitForFixedUpdate();
+            if (bulletHitInfo.hitTransform != null)
+            {
+                if (bulletHitInfo.hitTransform.GetComponent<Rigidbody>() != null) bulletHitInfo.hitTransform.GetComponent<Rigidbody>().AddForceAtPosition(bulletHitInfo.bulletForce, bulletHitInfo.hitPoint);
+            }
+            playerMove.AddForceSpeed(bulletHitInfo.bulletForce / 100f);
 
-        // 最好設成一個Global Ienumertor 比較方便
-        if(gamepad != null)
-        {
-            gamepad.SetMotorSpeeds(0.8f, 1f);
-            yield return new WaitForSeconds(0.2f);
-            gamepad.PauseHaptics();
+            // 最好設成一個Global Ienumertor 比較方便
+            if (gamepad != null)
+            {
+                gamepad.SetMotorSpeeds(0.8f, 1f);
+                yield return new WaitForSeconds(0.2f);
+                gamepad.PauseHaptics();
+            }
         }
     }
 }
