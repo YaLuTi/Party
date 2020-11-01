@@ -5,11 +5,17 @@ using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
+    public PlayerHitten playerHitten;
     public Slider slider;
     // Start is called before the first frame update
     void Start()
     {
-        
+        if(playerHitten != null)
+        {
+            playerHitten.OnHealthChanged += OnPlayerHealthChanged;
+            slider.maxValue = playerHitten.GetMaxHealth();
+            slider.value = slider.maxValue;
+        }
     }
 
     public void SetUp(PlayerHitten playerHitten)
