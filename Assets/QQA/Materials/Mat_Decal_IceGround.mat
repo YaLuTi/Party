@@ -8,12 +8,12 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_Decal_IceGround
-  m_Shader: {fileID: 4800000, guid: 27cb6310aae92eb4d901aa0585e1e0c6, type: 3}
+  m_Shader: {fileID: 4800000, guid: 7da64a30774b52c4bac62dcf3d6d146b, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -56,11 +56,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureSample0:
-        m_Texture: {fileID: 2800000, guid: f5838d06cf436164885d5479f4c54f3b, type: 3}
+        m_Texture: {fileID: 2800000, guid: 0ba5127c1d8e3f84c8c1f0acbf14cd07, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample1:
+        m_Texture: {fileID: 2800000, guid: 0ba5127c1d8e3f84c8c1f0acbf14cd07, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TexturesCom_Fireworks0005_6_M_1:
-        m_Texture: {fileID: 2800000, guid: 0ba5127c1d8e3f84c8c1f0acbf14cd07, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -68,21 +72,29 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _1: 0
+    - _Alpha_Bias: 1
     - _BumpScale: 1
+    - _Constant: 1
+    - _Constant1: 0
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _Float0: 10
+    - _Float0: 1
     - _Float1: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _High_Power: 3.5
     - _Metallic: 0
     - _Mode: 0
+    - _Noise_Scale: 5
+    - _Noise_Threshold: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Position_Multiplier: 10
-    - _Position_Scale: 2
+    - _Position_Scale: 1.5
+    - _Rim_Radius: 0.1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -90,7 +102,12 @@ Material:
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color0: {r: 5.992157, g: 5.992157, b: 5.992157, a: 0}
+    - _Color: {r: 21.361254, g: 21.361254, b: 21.361254, a: 0}
+    - _Color0: {r: 21.361254, g: 21.361254, b: 21.361254, a: 0}
+    - _Color1: {r: 63.999992, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Vector0: {r: 6.2, g: 0, b: 0, a: 0}
+    - _Emission_Color: {r: 63.999992, g: 0, b: 0, a: 0}
+    - _High_Color: {r: 23.968628, g: 23.968628, b: 23.968628, a: 1}
+    - _Low_Color: {r: 5.742706, g: 6.61523, b: 7.0373044, a: 1}
+    - _Position_Rotate1: {r: 1, g: 0, b: 0, a: 1}
+    - _Vector0: {r: 0, g: 1, b: 0, a: 0}
