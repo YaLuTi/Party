@@ -14,7 +14,7 @@ public class LoadSceneAdditive : MonoBehaviour
     {
         if (LoadTitle)
         {
-            SceneManager.LoadScene("CharacterChoose", LoadSceneMode.Additive);
+            SceneManager.LoadScene("TrueMainMenu", LoadSceneMode.Additive);
         }
         if (LoadBattle)
         {
