@@ -34,7 +34,11 @@ public class PlayerCreating : MonoBehaviour
         //
         StageManager.PlayerProfile[playerIdentity.PlayerID] = playerIdentity.PlayerID;
         selecting = playerIdentity.PlayerID;
-        profileChooseUI.Set(playerIdentity.PlayerID);
+
+        if (profileChooseUI != null)
+        {
+            profileChooseUI.Set(playerIdentity.PlayerID);
+        }
 
         ClothIDArray = new int[1]; // 手動設定吧
         ClothIDArray[0] = PlayerPrefs.GetInt("Profile_" + selecting + "_HAT");

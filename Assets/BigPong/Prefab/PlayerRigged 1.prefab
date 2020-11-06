@@ -49,7 +49,7 @@ Projector:
   m_Material: {fileID: 2100000, guid: 4ee103e11b2c8ad42bc08541b6a4176a, type: 2}
   m_IgnoreLayers:
     serializedVersion: 2
-    m_Bits: 32562
+    m_Bits: 32566
 --- !u!1 &1500047949404099522
 GameObject:
   m_ObjectHideFlags: 0
@@ -1076,7 +1076,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bc04945ca406e04486d8e908088b1fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCreatingUI: {fileID: 0}
+  profileChooseUI: {fileID: 0}
+  playerIdentity: {fileID: 0}
   clothDataArrays:
   - {fileID: 11400000, guid: 2c0ac7b2b5f49b447b2d1c1c2f74e854, type: 2}
   - {fileID: 11400000, guid: c76e660d01cf884439bd3def4fa06548, type: 2}
@@ -1086,6 +1087,7 @@ MonoBehaviour:
   RigclothOffset:
   - {fileID: 8879871390541313549}
   - {fileID: 8879871390541313549}
+  selecting: 0
 --- !u!114 &561749207926382245
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,12 +9,21 @@ public class LoadSceneAdditive : MonoBehaviour
     public bool LoadBattle;
     public bool LoadTitle;
     public bool Test;
+
+    [Header("Title Close")]
+    public GameObject MainCamera;
+    public GameObject stageInfo;
+    public GameObject Spawner;
+
     // Start is called before the first frame update
     void Start()
     {
         if (LoadTitle)
         {
             SceneManager.LoadScene("TrueMainMenu", LoadSceneMode.Additive);
+            MainCamera.SetActive(false);
+            stageInfo.SetActive(false);
+            Spawner.SetActive(false);
         }
         if (LoadBattle)
         {
