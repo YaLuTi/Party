@@ -163,7 +163,7 @@ public class PlayerIdentity : MonoBehaviour
 
     public void SetRagData()
     {
-        Destroy(playerCreating);
+        // Destroy(playerCreating);
         StartCoroutine(_SetRagData());
     }
 
@@ -302,7 +302,8 @@ public class PlayerIdentity : MonoBehaviour
 
         footIK_AF.followTerrain = true;
         yield return new WaitForFixedUpdate();
-
+        SetRagData();
+        yield return new WaitForFixedUpdate();
         // BodyMeshRenderer2.enabled = true;
         playerCreating.Creat();
 

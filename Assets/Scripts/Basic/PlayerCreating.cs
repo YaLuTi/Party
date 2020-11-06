@@ -5,17 +5,20 @@ using UnityEngine.InputSystem;
 
 public class PlayerCreating : MonoBehaviour
 {
-    public PlayerCraftingUI playerCreatingUI;
+    public ProfileChooseUI profileChooseUI;
     PlayerInput playerInput;
+
+    public PlayerIdentity playerIdentity;
 
     public ClothDataArray[] clothDataArrays;
     public Transform[] clothOffset; // 0 hat 1 face
     public Transform[] RigclothOffset;
 
-    int[] ClothArray;
+    int[] ClothIDArray;
     GameObject[] ClothClone;
     GameObject[] RigClothClone;
-    int choosingArray = 0;
+
+    public int selecting = 0;
 
     bool IsEnable = false;
 
@@ -23,134 +26,112 @@ public class PlayerCreating : MonoBehaviour
     void Start()
     {
         playerInput = GetComponent<PlayerInput>();
+        playerIdentity = transform.root.GetComponent<PlayerIdentity>();
     }
 
     public void Creat()
     {
         //
-        ClothArray = new int[clothDataArrays.Length];
+        StageManager.PlayerProfile[playerIdentity.PlayerID] = playerIdentity.PlayerID;
+        selecting = playerIdentity.PlayerID;
+        profileChooseUI.Set(playerIdentity.PlayerID);
 
-        
+        ClothIDArray = new int[1]; // 手動設定吧
+        ClothIDArray[0] = PlayerPrefs.GetInt("Profile_" + selecting + "_HAT");
+
         ClothClone = new GameObject[clothDataArrays.Length];
-        
-        ClothClone[0] = Instantiate(clothDataArrays[0].clothDatas[0].cloth);
-
-        Vector3 v = ClothClone[0].transform.position;
-        Quaternion q = ClothClone[0].transform.rotation;
-        Vector3 s = ClothClone[0].transform.localScale;
-
-        ClothClone[0].transform.parent = clothOffset[0];
-
-        ClothClone[0].transform.localPosition = v;
-        ClothClone[0].transform.localRotation = q;
-        ClothClone[0].transform.localScale = s;
-        /*ClothClone[0].transform.localScale = clothDataArrays[0].clothDatas[0].ScaleOffset;
-        ClothClone[0].transform.localPosition = clothDataArrays[0].clothDatas[0].PositionOffset;
-        ClothClone[0].transform.localRotation = Quaternion.Euler(clothDataArrays[0].clothDatas[0].RotationOffset);*/
-        
         RigClothClone = new GameObject[clothDataArrays.Length];
-
-        RigClothClone[choosingArray] = Instantiate(clothDataArrays[choosingArray].clothDatas[ClothArray[choosingArray]].cloth);
-        
-        v = RigClothClone[choosingArray].transform.position;
-        q = RigClothClone[choosingArray].transform.rotation;
-        s = RigClothClone[choosingArray].transform.localScale;
-
-        RigClothClone[choosingArray].transform.parent = RigclothOffset[choosingArray];
-
-        RigClothClone[choosingArray].transform.localPosition = v;
-        RigClothClone[choosingArray].transform.localRotation = q;
-        RigClothClone[choosingArray].transform.localScale = s;
-
-        /*RigClothClone[choosingArray].transform.localScale = clothDataArrays[choosingArray].clothDatas[ClothArray[choosingArray]].ScaleOffset;
-        RigClothClone[choosingArray].transform.localPosition = clothDataArrays[choosingArray].clothDatas[ClothArray[choosingArray]].PositionOffset;
-        RigClothClone[choosingArray].transform.localRotation = Quaternion.Euler(clothDataArrays[choosingArray].clothDatas[ClothArray[choosingArray]].RotationOffset);*/
-
+        ChangeHat();
         IsEnable = true;
     }
 
     void OnUI_Right()
     {
         if (!this.enabled || !IsEnable) return;
-        ClothArray[choosingArray]++;
-        if(ClothArray[choosingArray] >= clothDataArrays[choosingArray].clothDatas.Length)
+        selecting++;
+        if(selecting >= PlayerPrefs.GetInt("Profile_Count"))
         {
-            ClothArray[choosingArray] = 0;
+            selecting = 0;
         }
-        playerCreatingUI.Right(clothDataArrays[choosingArray].clothDatas[ClothArray[choosingArray]].name);
+        profileChooseUI.Right(selecting);
+
+        ClothIDArray[0] = PlayerPrefs.GetInt("Profile_" + selecting + "_HAT");
 
         ChangeHat();
     }
-
     void OnUI_Left()
     {
         if (!this.enabled || !IsEnable) return;
-        ClothArray[choosingArray]--;
-        if (ClothArray[choosingArray] < 0)
+        selecting--;
+        if (selecting < 0)
         {
-            ClothArray[choosingArray] = clothDataArrays[choosingArray].clothDatas.Length - 1;
+            selecting = PlayerPrefs.GetInt("Profile_Count") - 1;
         }
-        playerCreatingUI.Left(clothDataArrays[choosingArray].clothDatas[ClothArray[choosingArray]].name);
+        profileChooseUI.Left(selecting);
+
+        ClothIDArray[0] = PlayerPrefs.GetInt("Profile_" + selecting + "_HAT");
 
         ChangeHat();
     }
 
     void OnUI_Up()
     {
-        choosingArray--;
-        playerCreatingUI.Up();
     }
-
     void OnUI_Down()
     {
-        Debug.Log("D");
-        choosingArray++;
-        playerCreatingUI.Down();
     }
 
     void ChangeHat()
     {
-        if(ClothClone[choosingArray] != null)
+        for(int choosingArray = 0; choosingArray < ClothIDArray.Length; choosingArray++)
         {
-            Destroy(ClothClone[choosingArray]);
-        }
-        ClothClone[choosingArray] = Instantiate(clothDataArrays[choosingArray].clothDatas[ClothArray[choosingArray]].cloth);
-        Vector3 v = ClothClone[0].transform.position;
-        Quaternion q = ClothClone[0].transform.rotation;
-        Vector3 s = ClothClone[0].transform.localScale;
+            if (ClothClone[choosingArray] != null)
+            {
+                Destroy(ClothClone[choosingArray]);
+            }
+            ClothClone[choosingArray] = Instantiate(clothDataArrays[choosingArray].clothDatas[ClothIDArray[choosingArray]].cloth);
+            Vector3 v = ClothClone[0].transform.position;
+            Quaternion q = ClothClone[0].transform.rotation;
+            Vector3 s = ClothClone[0].transform.localScale;
 
-        ClothClone[0].transform.parent = clothOffset[0];
+            ClothClone[0].transform.parent = clothOffset[0];
 
-        ClothClone[0].transform.localPosition = v;
-        ClothClone[0].transform.localRotation = q;
-        ClothClone[0].transform.localScale = s;
+            ClothClone[0].transform.localPosition = v;
+            ClothClone[0].transform.localRotation = q;
+            ClothClone[0].transform.localScale = s;
 
-        if (RigClothClone[choosingArray] != null)
-        {
+            if (RigClothClone[choosingArray] != null)
+            {
+                Destroy(RigClothClone[choosingArray]);
+            }
             Destroy(RigClothClone[choosingArray]);
+            RigClothClone[choosingArray] = Instantiate(clothDataArrays[choosingArray].clothDatas[ClothIDArray[choosingArray]].cloth);
+            v = RigClothClone[choosingArray].transform.position;
+            q = RigClothClone[choosingArray].transform.rotation;
+            s = RigClothClone[choosingArray].transform.localScale;
+
+            RigClothClone[choosingArray].transform.parent = RigclothOffset[choosingArray];
+
+            RigClothClone[choosingArray].transform.localPosition = v;
+            RigClothClone[choosingArray].transform.localRotation = q;
+            RigClothClone[choosingArray].transform.localScale = s;
         }
-        Destroy(RigClothClone[choosingArray]);
-        RigClothClone[choosingArray] = Instantiate(clothDataArrays[choosingArray].clothDatas[ClothArray[choosingArray]].cloth);
-        v = RigClothClone[choosingArray].transform.position;
-        q = RigClothClone[choosingArray].transform.rotation;
-        s = RigClothClone[choosingArray].transform.localScale;
+    }
 
-        RigClothClone[choosingArray].transform.parent = RigclothOffset[choosingArray];
-
-        RigClothClone[choosingArray].transform.localPosition = v;
-        RigClothClone[choosingArray].transform.localRotation = q;
-        RigClothClone[choosingArray].transform.localScale = s;
+    void ChangeProfile()
+    {
+        // ClothIDArray[0] = 
     }
 
     // 這寫法目前不可逆 要再修正
     void OnYes()
     {
-        StageManager.LoadSceneCheck(); // 在增加玩家數字前檢查 才可以進到全員OK?畫面
+        // StageManager.LoadSceneCheck(); // 在增加玩家數字前檢查 才可以進到全員OK?畫面
         if (!this.enabled || !IsEnable) return;
-        playerCreatingUI.Ready();
+        profileChooseUI.Ready();
         StageManager.PlayerReady();
 
-        playerInput.SwitchCurrentActionMap("GamePlay");
+        // playerInput.SwitchCurrentActionMap("GamePlay");
 
         this.enabled = false;
     }
@@ -160,7 +141,12 @@ public class PlayerCreating : MonoBehaviour
 
     }
 
-    void OnPause()
+    public void ChangeInput(string state)
+    {
+        playerInput.SwitchCurrentActionMap(state);
+    }
+
+    void OnEnter()
     {
         StageManager.LoadSceneCheck();
 

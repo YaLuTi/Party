@@ -14,6 +14,7 @@ public class StageManager : MonoBehaviour
     public OnBattleScene OnBattleScene;
     public static StageManager instance;
     public static List<GameObject> players = new List<GameObject>();
+    public static int[] PlayerProfile;
     public static int[] playerScore;
     PlayerInputManager inputManager;
 
@@ -28,8 +29,11 @@ public class StageManager : MonoBehaviour
 
     public static CinemachineTargetGroup targetGroup;
     public PlayableDirector EndDirector;
+
+    // 要移除
     public GameObject PlayerCraftUI;
-    List<GameObject> PlayerCraftUIList = new List<GameObject>();
+    public static List<GameObject> PlayerCraftUIList = new List<GameObject>();
+
     public GameObject Canvas;
 
 
@@ -41,8 +45,9 @@ public class StageManager : MonoBehaviour
     void Awake()
     {
         inputManager = GetComponent<PlayerInputManager>();
+        PlayerProfile = new int[4];
 
-        if(instance == null)
+        if (instance == null)
         {
             DontDestroyOnLoad(this.gameObject);
             instance = this;
@@ -111,7 +116,7 @@ public class StageManager : MonoBehaviour
         PlayerReadyNum++;
     }
 
-    // 這邊一團亂
+    // 這邊一團亂 要整理！！！！！！！！！！！
     public static void LoadSceneCheck()
     {
         if(PlayerReadyNum >= players.Count)
@@ -119,6 +124,15 @@ public class StageManager : MonoBehaviour
             playerScore = new int[players.Count];
             scores = new int[players.Count];
             TriggerLoadScene = true;
+
+            foreach(GameObject g in players)
+            {
+                g.GetComponentInChildren<PlayerCreating>().ChangeInput("GamePlay");
+            }
+            foreach(GameObject g in PlayerCraftUIList)
+            {
+                Destroy(g);
+            }
         }
     }
 
@@ -130,7 +144,7 @@ public class StageManager : MonoBehaviour
             Debug.Log("Add");
             playerInput.transform.root.GetComponent<PlayerIdentity>().InputEnable();
             playerInput.SwitchCurrentActionMap("GamePlay");
-            Destroy(playerInput.transform.root.GetComponentInChildren<PlayerCreating>());
+            // Destroy(playerInput.transform.root.GetComponentInChildren<PlayerCreating>());
             players.Add((playerInput.transform.root.gameObject));
 
             if(targetGroup != null)targetGroup.AddMember(playerInput.transform, 1, 0);
@@ -147,12 +161,24 @@ public class StageManager : MonoBehaviour
             Debug.Log("Add");
             DontDestroyOnLoad(playerInput.transform.root.gameObject);
             players.Add((playerInput.transform.root.gameObject));
+
             GameObject g = Instantiate(PlayerCraftUI);
-            g.GetComponent<Transform>().localPosition = new Vector3(-1.15f + (players.Count - 1) * 2.25f, 3.11f, -0.6f);
-            players[players.Count - 1].GetComponentInChildren<PlayerCreating>().playerCreatingUI = g.GetComponent<PlayerCraftingUI>();
+            StageInfo stageInfo = GameObject.FindGameObjectWithTag("StageInfo").GetComponent<StageInfo>();
+            Vector3 v = stageInfo.SpawnPosition[players.Count - 1];
+            v += new Vector3(2.25f, 2.5f, 0);
+            g.GetComponent<Transform>().position = v;
+
+            players[players.Count - 1].GetComponentInChildren<PlayerCreating>().profileChooseUI = g.GetComponent<ProfileChooseUI>();
+
             OnBattleScene += players[players.Count - 1].GetComponent<PlayerIdentity>().OnTest;
+
+            if (targetGroup != null) targetGroup.AddMember(playerInput.transform, 1, 0);
             PlayerCraftUIList.Add(g);
-            OnPlayerJoin(playerInput.gameObject, players.Count - 1);
+            if (OnPlayerJoin != null)
+            {
+                OnPlayerJoin(playerInput.gameObject, players.Count - 1);
+            }
+            // LoadTestScene();
         }
     }
 
@@ -230,9 +256,6 @@ public class StageManager : MonoBehaviour
 
     IEnumerator _LoadTestScene()
     {
-        // TransitionsPanel.DOAnchorPosY(0, 0.4f);
-        // TitleAudioSource.PlayOneShot(TitleAudioSource.clip);
-        yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < players.Count; i++)
         {
             players[i].GetComponent<PlayerIdentity>().SetRagData();

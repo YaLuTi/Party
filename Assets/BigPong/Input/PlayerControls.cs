@@ -485,6 +485,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""UI_Move"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""a53a3ae3-c369-4e15-853f-e68f8b05b381"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -619,6 +627,61 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Enter"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""keyboard"",
+                    ""id"": ""334365ca-8137-4889-8c96-06ae8ec7da7b"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UI_Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""bae90811-b337-45d7-8afa-04da5327a230"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UI_Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""54eb7eae-d444-4f09-be50-6fba24297408"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UI_Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""abb1c99f-e435-4754-bc1e-75fed800b6e0"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UI_Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""a638f8be-2d03-4158-b76a-0b9defa8620e"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UI_Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -676,6 +739,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_CreatingUI_UI_Down = m_CreatingUI.FindAction("UI_Down", throwIfNotFound: true);
         m_CreatingUI_UI_Up = m_CreatingUI.FindAction("UI_Up", throwIfNotFound: true);
         m_CreatingUI_Enter = m_CreatingUI.FindAction("Enter", throwIfNotFound: true);
+        m_CreatingUI_UI_Move = m_CreatingUI.FindAction("UI_Move", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -860,6 +924,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_CreatingUI_UI_Down;
     private readonly InputAction m_CreatingUI_UI_Up;
     private readonly InputAction m_CreatingUI_Enter;
+    private readonly InputAction m_CreatingUI_UI_Move;
     public struct CreatingUIActions
     {
         private @PlayerControls m_Wrapper;
@@ -870,6 +935,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @UI_Down => m_Wrapper.m_CreatingUI_UI_Down;
         public InputAction @UI_Up => m_Wrapper.m_CreatingUI_UI_Up;
         public InputAction @Enter => m_Wrapper.m_CreatingUI_Enter;
+        public InputAction @UI_Move => m_Wrapper.m_CreatingUI_UI_Move;
         public InputActionMap Get() { return m_Wrapper.m_CreatingUI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -897,6 +963,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Enter.started -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnEnter;
                 @Enter.performed -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnEnter;
                 @Enter.canceled -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnEnter;
+                @UI_Move.started -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnUI_Move;
+                @UI_Move.performed -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnUI_Move;
+                @UI_Move.canceled -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnUI_Move;
             }
             m_Wrapper.m_CreatingUIActionsCallbackInterface = instance;
             if (instance != null)
@@ -919,6 +988,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Enter.started += instance.OnEnter;
                 @Enter.performed += instance.OnEnter;
                 @Enter.canceled += instance.OnEnter;
+                @UI_Move.started += instance.OnUI_Move;
+                @UI_Move.performed += instance.OnUI_Move;
+                @UI_Move.canceled += instance.OnUI_Move;
             }
         }
     }
@@ -965,5 +1037,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnUI_Down(InputAction.CallbackContext context);
         void OnUI_Up(InputAction.CallbackContext context);
         void OnEnter(InputAction.CallbackContext context);
+        void OnUI_Move(InputAction.CallbackContext context);
     }
 }
