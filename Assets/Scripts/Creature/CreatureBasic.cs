@@ -57,7 +57,7 @@ public class CreatureBasic : MonoBehaviour
             bulletHitInfo_AF.hitTransform = other.transform;
             bulletHitInfo_AF.hitPoint = other.ClosestPoint(transform.position);
             other.transform.root.gameObject.GetComponent<PlayerHitten>().OnHit(bulletHitInfo_AF);
-            other.transform.root.gameObject.GetComponent<PlayerHitten>().OnDamaged(5);
+            // other.transform.root.gameObject.GetComponent<PlayerHitten>().OnDamaged(5);
             Destroy(this.gameObject);
         }
     }

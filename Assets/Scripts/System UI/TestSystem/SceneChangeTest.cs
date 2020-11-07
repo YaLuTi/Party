@@ -11,7 +11,7 @@ public class SceneChangeTest : MonoBehaviour
     int SceneChoosing = 0;
 
     public string[] ModeArray;
-    int ModeChoosing = 0;
+    int ModeChoosing = 1;
 
     int NowScene = 0;
     int NowMode = 0;
@@ -74,7 +74,7 @@ public class SceneChangeTest : MonoBehaviour
             "Scene : " + SceneArray[SceneChoosing], guiStyleHeader);
     }
 
-    void LoadScene()
+    public void LoadScene()
     {
         StartCoroutine(_LoadScene());
     }
@@ -86,7 +86,7 @@ public class SceneChangeTest : MonoBehaviour
         {
             yield return null;
         }
-        StageManager.ClearPlayer();
+        // StageManager.ClearPlayer();
         PlayerHitten.TestHP = 0;
 
         asyncLoad = SceneManager.LoadSceneAsync(SceneArray[SceneChoosing]);

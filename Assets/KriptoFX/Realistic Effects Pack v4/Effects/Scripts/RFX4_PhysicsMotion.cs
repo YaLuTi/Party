@@ -52,6 +52,8 @@ public class RFX4_PhysicsMotion : MonoBehaviour
     [SerializeField]
     LayerMask PlayerlayerMask;
 
+    public int PlayerID;
+
     void OnEnable ()
     {
         effectSettings = GetComponentInParent<RFX4_EffectSettings>();

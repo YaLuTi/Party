@@ -165,7 +165,7 @@ public class PlayerHitten : MonoBehaviour
         yield return null;
     }
 
-    public void OnDamaged(float damage)
+    public void OnDamaged(float damage, int ID)
     {
         if (ragdollControl.shotByBullet || Dead || IsInvincible) return;
 

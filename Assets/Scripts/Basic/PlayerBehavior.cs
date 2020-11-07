@@ -30,6 +30,8 @@ public class PlayerBehavior : MonoBehaviour
 
     public PlayerItemHand itemHand;
     PlayerStatusAnimator playerStatus;
+
+    GameObject ChoosingFacility;
     // Start is called before the first frame update
 
     private void Awake()
@@ -103,6 +105,52 @@ public class PlayerBehavior : MonoBehaviour
                     HighlightObject.GetComponent<ItemBasic>().CancelHighlight();
                 }
                 HighlightObject = null;
+            }
+        }
+        if (colliders.Length > 0)
+        {
+            float shortestDistance = 10;
+            Collider pick = null;
+
+            foreach (Collider collider in colliders)
+            {
+                if (collider.gameObject.tag != "SceneItem") continue;
+                if (pick == null)
+                {
+                    pick = collider;
+                    shortestDistance = Vector3.Distance(this.gameObject.transform.position, pick.transform.position);
+                }
+                float distance = Vector3.Distance(this.gameObject.transform.position, pick.transform.position);
+                if (distance < shortestDistance)
+                {
+                    pick = collider;
+                    shortestDistance = distance;
+                }
+            }
+
+            if (pick != null)
+            {
+                if (pick.gameObject != ChoosingFacility)
+                {
+                    ChoosingFacility = pick.gameObject;
+                    ChoosingFacility.GetComponent<FacilityArea>().PlayersNum++;
+                }
+            }
+            else
+            {
+                if(ChoosingFacility != null)
+                {
+                    ChoosingFacility.GetComponent<FacilityArea>().PlayersNum--;
+                    ChoosingFacility = null;
+                }
+            }
+        }
+        else
+        {
+            if(ChoosingFacility != null)
+            {
+                ChoosingFacility.GetComponent<FacilityArea>().PlayersNum--;
+                ChoosingFacility = null;
             }
         }
     }
@@ -219,33 +267,9 @@ public class PlayerBehavior : MonoBehaviour
 
     void OnInteract()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, PickRadius);
-
-        if (colliders.Length > 0)
+        if(ChoosingFacility != null)
         {
-            float shortestDistance = 10;
-            Collider pick = null;
-
-            foreach (Collider collider in colliders)
-            {
-                if (collider.gameObject.tag != "SceneItem") continue;
-                if (pick == null)
-                {
-                    pick = collider;
-                    shortestDistance = Vector3.Distance(this.gameObject.transform.position, pick.transform.position);
-                }
-                float distance = Vector3.Distance(this.gameObject.transform.position, pick.transform.position);
-                if (distance < shortestDistance)
-                {
-                    pick = collider;
-                    shortestDistance = distance;
-                }
-            }
-
-            if (pick != null)
-            {
-                pick.GetComponent<Basic_SceneItem>().Trigger();
-            }
+            ChoosingFacility.GetComponent<FacilityArea>().OnUse();
         }
     }
     

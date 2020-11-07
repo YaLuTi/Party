@@ -17,6 +17,8 @@ public class BasicExplosion : MonoBehaviour
     LayerMask layerMask;
 
     List<PlayerHitten> playerHittens = new List<PlayerHitten>();
+    public int PlayerID;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,7 +51,7 @@ public class BasicExplosion : MonoBehaviour
 
                     if (!playerHittens.Contains(hitten))
                     {
-                        hitten.OnDamaged(damage);
+                        hitten.OnDamaged(damage, PlayerID);
                     }
 
                     hitten.OnHit(bulletHitInfo);

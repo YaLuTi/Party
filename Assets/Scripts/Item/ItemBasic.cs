@@ -10,7 +10,7 @@ public class ItemBasic : MonoBehaviour
     bool IsThrowing = false;
     public bool IsHolded = false;
     public Transform FollowTransform;
-    int PlayerID = -1;
+    public int PlayerID = -1;
 
     public GameObject HighLight;
     public int PlayerSelecting = 0;
@@ -71,9 +71,10 @@ public class ItemBasic : MonoBehaviour
     public virtual void Throw()
     {
         StartCoroutine(ThrowEvent());
+        PlayerID = -1;
     }
 
-    IEnumerator ThrowEvent()
+    protected IEnumerator ThrowEvent()
     {
         transform.parent = null;
         yield return new WaitForSeconds(0.5f);
@@ -122,6 +123,7 @@ public class ItemBasic : MonoBehaviour
         transform.localPosition = HoldedPosition;
         transform.localRotation = Quaternion.Euler(HoldedRotation);
         IsHolded = true;
+        PlayerID = GetComponentInParent<PlayerIdentity>().PlayerID;
     }
 
     public bool DurabilityCheck()

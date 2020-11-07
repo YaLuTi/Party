@@ -29,6 +29,7 @@ public class Basic_Bullet : MonoBehaviour
     protected bool IsEnable = true;
     
     List<PlayerHitten> playerHittens = new List<PlayerHitten>();
+    public int PlayerID;
     // Start is called before the first frame update
     public virtual void Start()
     {
@@ -76,7 +77,7 @@ public class Basic_Bullet : MonoBehaviour
 
                 if (!playerHittens.Contains(hitten))
                 {
-                    hitten.OnDamaged(damage);
+                    hitten.OnDamaged(damage, PlayerID);
                 }
 
                 hitten.OnHit(bulletHitInfo);

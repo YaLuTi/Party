@@ -16,7 +16,7 @@ public class StageManager : MonoBehaviour
     public static List<GameObject> players = new List<GameObject>();
     public static int[] PlayerProfile;
     public static int[] playerScore;
-    PlayerInputManager inputManager;
+    public static PlayerInputManager inputManager;
 
     public static int[] scores; // 暫時弄成玩家名次
 
@@ -133,6 +133,7 @@ public class StageManager : MonoBehaviour
             {
                 Destroy(g);
             }
+            inputManager.enabled = false;
         }
     }
 

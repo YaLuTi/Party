@@ -99,7 +99,7 @@ public class ItemBomb : ItemBasic
 
     public override void Throw()
     {
-        base.Throw();
+        StartCoroutine(ThrowEvent());
         OnUse();
     }
 
@@ -107,7 +107,8 @@ public class ItemBomb : ItemBasic
     {
         float PauseTime = 0;
         yield return new WaitForSeconds(delay);
-        Instantiate(ExplosionVFX, transform.position, Quaternion.identity);
+        GameObject g = Instantiate(ExplosionVFX, transform.position, Quaternion.identity);
+        g.GetComponent<BasicExplosion>().PlayerID = PlayerID;
         CameraController.CameraShake(CameraShakePower);
         Destroy(this.gameObject);
         yield return 0;

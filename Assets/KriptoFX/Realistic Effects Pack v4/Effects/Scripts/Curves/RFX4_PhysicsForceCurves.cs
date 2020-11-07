@@ -94,7 +94,7 @@ public class RFX4_PhysicsForceCurves : MonoBehaviour
 
                 if ((PlayerlayerMask.value & 1 << hitCollider.gameObject.layer) > 0)
                 {
-                    hitCollider.transform.root.GetComponent<PlayerHitten>().OnDamaged(damage);
+                    // hitCollider.transform.root.GetComponent<PlayerHitten>().OnDamaged(damage);
                 }
             }
         }
