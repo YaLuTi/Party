@@ -55,6 +55,7 @@ public class PlayerHitten : MonoBehaviour
     public event PlayerDeathHandler OnDeath;
 
     public FlagScore Flag;
+    public int LastDamagedID = -1;
     Gamepad gamepad;
     // Start is called before the first frame update
     void Start()
@@ -144,6 +145,7 @@ public class PlayerHitten : MonoBehaviour
     {
         yield return new WaitForFixedUpdate();
         ragdollControl.shotByBullet = true;
+        LastDamagedID = -1;
         ragdollControl.IsDead = true;
         pickItem.OnHit();
         yield return new WaitForFixedUpdate();
@@ -173,6 +175,13 @@ public class PlayerHitten : MonoBehaviour
         float oldH = Health;
         Health -= damage;
         Health = Mathf.Max(0, Health);
+
+        if (ID != playerIdentity.PlayerID)
+        {
+            BattleData.AddDamage(ID, damage);
+            LastDamagedID = ID;
+        }
+
         if (Health <= 0)
         {
             StartCoroutine(Respawn(2));

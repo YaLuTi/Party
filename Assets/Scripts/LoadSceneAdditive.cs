@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class LoadSceneAdditive : MonoBehaviour
 {
     public bool LoadDeathMatch;
+    public bool LoadDeathMatchTime;
     public bool LoadBattle;
     public bool LoadTitle;
     public bool Test;
@@ -36,6 +37,10 @@ public class LoadSceneAdditive : MonoBehaviour
         if (LoadDeathMatch)
         {
             SceneManager.LoadScene("DeathMatchBrawl", LoadSceneMode.Additive);
+        }
+        if (LoadDeathMatchTime)
+        {
+            SceneManager.LoadScene("DeathMatchBrawlTime", LoadSceneMode.Additive);
         }
 
     }

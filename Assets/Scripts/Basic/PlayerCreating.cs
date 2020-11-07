@@ -94,15 +94,16 @@ public class PlayerCreating : MonoBehaviour
                 Destroy(ClothClone[choosingArray]);
             }
             ClothClone[choosingArray] = Instantiate(clothDataArrays[choosingArray].clothDatas[ClothIDArray[choosingArray]].cloth);
-            Vector3 v = ClothClone[0].transform.position;
-            Quaternion q = ClothClone[0].transform.rotation;
-            Vector3 s = ClothClone[0].transform.localScale;
+            Vector3 v = ClothClone[choosingArray].transform.position;
+            Quaternion q = ClothClone[choosingArray].transform.rotation;
+            Vector3 s = ClothClone[choosingArray].transform.localScale;
 
-            ClothClone[0].transform.parent = clothOffset[0];
+            ClothClone[choosingArray].transform.parent = clothOffset[0];
 
-            ClothClone[0].transform.localPosition = v;
-            ClothClone[0].transform.localRotation = q;
-            ClothClone[0].transform.localScale = s;
+            ClothClone[choosingArray].transform.localPosition = v;
+            ClothClone[choosingArray].transform.localRotation = q;
+            ClothClone[choosingArray].transform.localScale = s;
+            ClothClone[choosingArray].GetComponent<MeshRenderer>().enabled = false;
 
             if (RigClothClone[choosingArray] != null)
             {

@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Playables;
 
 public class DeathmatchBrawl : MonoBehaviour
 {
+    public PlayableDirector Finish;
     public GameObject UI;
     public List<PlayerHitten> playerHittens = new List<PlayerHitten>();
     public List<GameObject> UIs = new List<GameObject>();
+    public int DefaultLife = 3;
     public List<int> Lifes = new List<int>();
 
     static bool First = false;
@@ -24,7 +27,7 @@ public class DeathmatchBrawl : MonoBehaviour
         {
             StageManager.players[i].GetComponent<PlayerHitten>().OnDeath += OnPlayerDeath;
             playerHittens.Add(StageManager.players[i].GetComponent<PlayerHitten>());
-            Lifes.Add(3);
+            Lifes.Add(DefaultLife);
             GameObject g = Instantiate(UI);
             g.transform.parent = GameObject.FindGameObjectWithTag("Canvas").transform;
             switch (i)
@@ -61,7 +64,7 @@ public class DeathmatchBrawl : MonoBehaviour
         Debug.Log(num);
         StageManager.players[num].GetComponent<PlayerHitten>().OnDeath += OnPlayerDeath;
         playerHittens.Add(StageManager.players[num].GetComponent<PlayerHitten>());
-        Lifes.Add(3);
+        Lifes.Add(DefaultLife);
         GameObject g = Instantiate(UI);
         g.transform.parent = GameObject.FindGameObjectWithTag("Canvas").transform;
         switch (num)
@@ -84,9 +87,10 @@ public class DeathmatchBrawl : MonoBehaviour
                 break;
         }
         UIs.Add(g);
+        UIs[num].GetComponent<Text>().text = Lifes[num].ToString();
     }
-    
-    void OnPlayerDeath(PlayerHitten playerHitten)
+
+    public virtual void OnPlayerDeath(PlayerHitten playerHitten)
     {
         int num = playerHittens.IndexOf(playerHitten);
         Lifes[num]--;

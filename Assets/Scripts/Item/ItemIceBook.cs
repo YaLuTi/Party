@@ -29,6 +29,7 @@ public class ItemIceBook : Item_Staff
         {
             GameObject b = Instantiate(bullet, FollowTransform.GetComponent<PlayerItemHand>().way.position + 1.2f * FollowTransform.GetComponent<PlayerItemHand>().way.transform.forward, FollowTransform.GetComponent<PlayerItemHand>().way.rotation);
             Destroy(b, DestroyTime);
+            b.GetComponentInChildren<Basic_Bullet>().PlayerID = PlayerID;
             if (Durability == 0)
             {
                 Destroy(this.gameObject);

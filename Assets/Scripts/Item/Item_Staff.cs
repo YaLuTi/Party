@@ -34,7 +34,15 @@ public class Item_Staff : ItemBasic
         {
             GameObject b = Instantiate(bullet, FollowTransform.GetComponent<PlayerItemHand>().way.position + 1.2f * FollowTransform.GetComponent<PlayerItemHand>().way.transform.forward, FollowTransform.GetComponent<PlayerItemHand>().way.rotation);
             Destroy(b, DestroyTime);
-            
+            if(b.GetComponentInChildren<RFX4_PhysicsMotion>() != null)
+            {
+                b.GetComponentInChildren<RFX4_PhysicsMotion>().PlayerID = PlayerID;
+            }
+            if (b.GetComponentInChildren<Basic_Bullet>() != null)
+            {
+                b.GetComponentInChildren<Basic_Bullet>().PlayerID = PlayerID;
+            }
+
             if (Durability == 0)
             {
                 Destroy(this.gameObject);

@@ -372,11 +372,10 @@ namespace AnimFollow
 
                         if (isInTransitionToGetup)
                         {
-                            Debug.Log("A");
                         }
                         if (getupState)
                         {
-                            Debug.Log("B");
+
                         }
                     }
 				}

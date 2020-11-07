@@ -36,6 +36,7 @@ public class Skull_Bullet : Basic_Bullet
         }
         cooldown = 0;
         GameObject g = Instantiate(CollisionEffect, transform.position, Quaternion.Euler(collision.transform.eulerAngles + new Vector3(-90,0,0)));
+        g.GetComponentInChildren<BasicExplosion>().PlayerID = PlayerID;
         Durability--;
         if(Durability <= 0)
         {
