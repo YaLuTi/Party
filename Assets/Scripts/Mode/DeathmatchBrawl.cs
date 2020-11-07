@@ -16,8 +16,10 @@ public class DeathmatchBrawl : MonoBehaviour
     static bool First = false;
 
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
+        Debug.Log("eaRDHHHHHHH");
+        Lifes = new List<int>();
         if (!First)
         {
             StageManager.instance.OnPlayerJoin += PlayerJoin;
@@ -59,12 +61,15 @@ public class DeathmatchBrawl : MonoBehaviour
         
     }
 
-    void PlayerJoin(GameObject player, int num)
+    public virtual void PlayerJoin(GameObject player, int num)
     {
         Debug.Log(num);
         StageManager.players[num].GetComponent<PlayerHitten>().OnDeath += OnPlayerDeath;
         playerHittens.Add(StageManager.players[num].GetComponent<PlayerHitten>());
+
         Lifes.Add(DefaultLife);
+        Debug.Log(Lifes.Count);
+
         GameObject g = Instantiate(UI);
         g.transform.parent = GameObject.FindGameObjectWithTag("Canvas").transform;
         switch (num)
@@ -87,7 +92,7 @@ public class DeathmatchBrawl : MonoBehaviour
                 break;
         }
         UIs.Add(g);
-        UIs[num].GetComponent<Text>().text = Lifes[num].ToString();
+        // UIs[num].GetComponent<Text>().text = Lifes[num].ToString();
     }
 
     public virtual void OnPlayerDeath(PlayerHitten playerHitten)

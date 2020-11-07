@@ -182,6 +182,8 @@ public class PlayerHitten : MonoBehaviour
             LastDamagedID = ID;
         }
 
+        OnHealthChanged?.Invoke(this, oldH, Health);
+
         if (Health <= 0)
         {
             StartCoroutine(Respawn(2));
@@ -189,7 +191,6 @@ public class PlayerHitten : MonoBehaviour
             Dead = true;
         }
 
-        OnHealthChanged?.Invoke(this, oldH, Health);
     }
 
     // Testing

@@ -115,7 +115,10 @@ public class PlayerItemHand : MonoBehaviour
 
     public void TriggerItem()
     {
-        HoldingItem.GetComponent<ItemBasic>().OnTrigger();
+        if (HoldingItem != null)
+        {
+            HoldingItem.GetComponent<ItemBasic>().OnTrigger();
+        }
     }
 
     public string UseItem(_playerItemStatus status)

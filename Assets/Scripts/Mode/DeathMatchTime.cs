@@ -14,8 +14,11 @@ public class DeathMatchTime : DeathmatchBrawl
     {
         if(Timer <= 0)
         {
+            if (!IsEnd)
+            {
+                Finish.Play();
+            }
             IsEnd = true;
-            Finish.Play();
         }
         else
         {
@@ -23,6 +26,11 @@ public class DeathMatchTime : DeathmatchBrawl
             Timer = Mathf.Max(0, Timer);
             text.text = ((int)(Timer/60)).ToString("00") + " : " + ((int)(Timer % 60)).ToString("00");
         }
+    }
+
+    public override void PlayerJoin(GameObject player, int num)
+    {
+        base.PlayerJoin(player, num);
     }
 
     public override void OnPlayerDeath(PlayerHitten playerHitten)
@@ -36,6 +44,7 @@ public class DeathMatchTime : DeathmatchBrawl
         }
         else
         {
+            Debug.Log(num);
             Lifes[num]++;
         }
         UIs[num].GetComponent<Text>().text = Lifes[num].ToString();

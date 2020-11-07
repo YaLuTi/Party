@@ -86,7 +86,7 @@ public class SceneChangeTest : MonoBehaviour
         {
             yield return null;
         }
-        // StageManager.ClearPlayer();
+        StageManager.ClearPlayer();
         PlayerHitten.TestHP = 0;
 
         asyncLoad = SceneManager.LoadSceneAsync(SceneArray[SceneChoosing]);
