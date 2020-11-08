@@ -28,6 +28,7 @@ public class StageManager : MonoBehaviour
     public bool Testing = false;
 
     public static CinemachineTargetGroup targetGroup;
+    public static CinemachineVirtualCamera virtualCamera;
     public PlayableDirector EndDirector;
 
     // 要移除
@@ -65,6 +66,7 @@ public class StageManager : MonoBehaviour
         }
 
         targetGroup = GameObject.FindGameObjectWithTag("CineGroup").GetComponent<CinemachineTargetGroup>();
+        virtualCamera = GameObject.FindGameObjectWithTag("Cine").GetComponent<CinemachineVirtualCamera>();
         // if (Testing)GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Play();
         // SceneManager.LoadScene("CharacterChoose", LoadSceneMode.Additive);
     }
@@ -189,6 +191,11 @@ public class StageManager : MonoBehaviour
         GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Play();
     }
 
+    public static void StopBGM()
+    {
+        GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Stop();
+    }
+
     // Load to end scene
     public static void LoadEnd()
     {
@@ -303,7 +310,8 @@ public class StageManager : MonoBehaviour
 
         // TARGET LOCK
         targetGroup = GameObject.FindGameObjectWithTag("CineGroup").GetComponent<CinemachineTargetGroup>();
-        if(targetGroup != null)
+        virtualCamera = GameObject.FindGameObjectWithTag("Cine").GetComponent<CinemachineVirtualCamera>();
+        if (targetGroup != null)
         {
             for(int i = 0; i < players.Count; i++)
             {
@@ -326,9 +334,22 @@ public class StageManager : MonoBehaviour
         targetGroup.RemoveMember(transform);
     }
 
+    public static void RemoveCameraTarget(int i)
+    {
+        targetGroup = GameObject.FindGameObjectWithTag("CineGroup").GetComponent<CinemachineTargetGroup>();
+        targetGroup.m_Targets[i+1].target = null;
+    }
+
+    public static void SetCloseUpCamera(int i)
+    {
+        virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_CameraDistance = 5;
+        // virtualCamera.transform.eulerAngles = players[i].GetComponentInChildren<PlayerInput>().transform.eulerAngles * -1;
+    }
+
     public static void LoadNewScene()
     {
         targetGroup = GameObject.FindGameObjectWithTag("CineGroup").GetComponent<CinemachineTargetGroup>();
+        virtualCamera = GameObject.FindGameObjectWithTag("Cine").GetComponent<CinemachineVirtualCamera>();
         if (targetGroup != null)
         {
             for (int i = 0; i < players.Count; i++)

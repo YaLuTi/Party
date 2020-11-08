@@ -8,18 +8,27 @@ public class DeathmatchBrawl : MonoBehaviour
 {
     public PlayableDirector Finish;
     public GameObject UI;
-    public List<PlayerHitten> playerHittens = new List<PlayerHitten>();
-    public List<GameObject> UIs = new List<GameObject>();
+    public static List<PlayerHitten> playerHittens = new List<PlayerHitten>();
+    public static List<GameObject> UIs = new List<GameObject>();
     public int DefaultLife = 3;
-    public List<int> Lifes = new List<int>();
+    public static List<int> Lifes = new List<int>();
 
     static bool First = false;
 
-    // Start is called before the first frame update
-    protected void Start()
+    private void Awake()
     {
-        Debug.Log("eaRDHHHHHHH");
-        Lifes = new List<int>();
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        UIs.Clear();
+        Lifes.Clear();
+        playerHittens.Clear();
+
+
         if (!First)
         {
             StageManager.instance.OnPlayerJoin += PlayerJoin;
@@ -92,6 +101,7 @@ public class DeathmatchBrawl : MonoBehaviour
                 break;
         }
         UIs.Add(g);
+        Debug.Log(UIs.Count);
         // UIs[num].GetComponent<Text>().text = Lifes[num].ToString();
     }
 
@@ -108,4 +118,8 @@ public class DeathmatchBrawl : MonoBehaviour
         }
     }
 
+    public virtual void FinishEvent()
+    {
+
+    }
 }

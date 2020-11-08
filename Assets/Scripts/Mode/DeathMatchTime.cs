@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class DeathMatchTime : DeathmatchBrawl
 {
@@ -12,11 +13,12 @@ public class DeathMatchTime : DeathmatchBrawl
 
     private void Update()
     {
-        if(Timer <= 0)
+        if (Timer <= 0)
         {
             if (!IsEnd)
             {
                 Finish.Play();
+                StartCoroutine(_FinishEvent());
             }
             IsEnd = true;
         }
@@ -32,7 +34,43 @@ public class DeathMatchTime : DeathmatchBrawl
     {
         base.PlayerJoin(player, num);
     }
+    public override void FinishEvent()
+    {
+        base.FinishEvent();
+    }
+    IEnumerator _FinishEvent()
+    {
+        Time.timeScale = 0.05f;
+        Time.fixedDeltaTime = Time.fixedDeltaTime * Time.timeScale;
+        StageManager.StopBGM();
+        BattleData.TEST_END_SHOW();
 
+        int[] rank;
+        int[] scores;
+        rank = new int[Lifes.Count];
+        scores = new int[Lifes.Count];
+        for (int i = 0; i < rank.Length; i++)
+        {
+            rank[i] = i;
+        }
+        for (int i = 0; i < scores.Length; i++)
+        {
+            scores[i] = Lifes[i];
+        }
+
+        Array.Sort(scores, rank);
+        Array.Reverse(rank);
+
+        yield return new WaitForSecondsRealtime(1.35f);
+
+        for(int i = 1; i < rank.Length; i++)
+        {
+            StageManager.RemoveCameraTarget(rank[i]);
+        }
+        StageManager.SetCloseUpCamera(rank[0]);
+
+        yield return null;
+    }
     public override void OnPlayerDeath(PlayerHitten playerHitten)
     {
         if (IsEnd) return;
