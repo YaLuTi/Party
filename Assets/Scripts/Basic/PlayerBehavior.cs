@@ -269,7 +269,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         if(ChoosingFacility != null)
         {
-            ChoosingFacility.GetComponent<FacilityArea>().OnUse();
+            ChoosingFacility.GetComponent<FacilityArea>().OnUse(this);
         }
     }
     

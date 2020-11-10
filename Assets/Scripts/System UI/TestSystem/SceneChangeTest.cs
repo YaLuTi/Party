@@ -65,7 +65,7 @@ public class SceneChangeTest : MonoBehaviour
 
         if (GUI.Button(new Rect(10 * dpiScale, 63 * dpiScale + offset, 285 * dpiScale, 37 * dpiScale), "LOAD") || (!isButtonPressed && Input.GetKeyDown(KeyCode.DownArrow)))
         {
-            LoadScene();
+            LoadScene(ModeChoosing, SceneChoosing);
         }
 
         /*GUI.Label(new Rect(350 * dpiScale, 15 * dpiScale + offset / 2, 500 * dpiScale, 20 * dpiScale),
@@ -74,29 +74,41 @@ public class SceneChangeTest : MonoBehaviour
             "Scene : " + SceneArray[SceneChoosing], guiStyleHeader);
     }
 
-    public void LoadScene()
+    public void LoadScene(int mode, int scene)
     {
-        StartCoroutine(_LoadScene());
+        StartCoroutine(_LoadScene(mode, scene));
     }
 
-    IEnumerator _LoadScene()
+    IEnumerator _LoadScene(int mode, int scene)
     {
-        AsyncOperation asyncLoad = SceneManager.UnloadSceneAsync(ModeArray[NowMode]);
+        StageManager.ClearPlayer();
+        AsyncOperation asyncLoad;
+        asyncLoad = SceneManager.UnloadSceneAsync(ModeArray[NowMode]);
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
-        StageManager.ClearPlayer();
         PlayerHitten.TestHP = 0;
 
-        asyncLoad = SceneManager.LoadSceneAsync(SceneArray[SceneChoosing]);
+        asyncLoad = SceneManager.LoadSceneAsync(SceneArray[scene]);
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
-        NowScene = SceneChoosing;
-        StageManager.LoadNewScene();
+        NowScene = scene;
 
+        yield return new WaitForFixedUpdate();
+
+        if (!StageManager.Static_Testing)
+        {
+            asyncLoad = SceneManager.LoadSceneAsync(ModeArray[mode], LoadSceneMode.Additive);
+            while (!asyncLoad.isDone)
+            {
+                yield return null;
+            }
+            NowMode = mode;
+        }
+        StageManager.LoadNewScene();
         /*asyncLoad = SceneManager.LoadSceneAsync(ModeArray[ModeChoosing], LoadSceneMode.Additive);
         while (!asyncLoad.isDone)
         {

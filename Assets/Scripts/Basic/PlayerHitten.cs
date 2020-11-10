@@ -69,6 +69,7 @@ public class PlayerHitten : MonoBehaviour
         Dead = false;
         Respawnable = true;
 
+        
         UI_copy = Instantiate(PlayerUI);
         UI_copy.GetComponent<PlayerUI>().SetUp(this);
 
@@ -77,22 +78,6 @@ public class PlayerHitten : MonoBehaviour
         {
             UI_copy.transform.parent = canvas.transform;
             UI_copy.transform.localScale = new Vector3(1, 1, 1);
-            switch (TestHP)
-            {
-                case 0:
-                    UI_copy.GetComponent<RectTransform>().anchoredPosition = new Vector2(-270, 170);
-                    break;
-                case 1:
-                    UI_copy.GetComponent<RectTransform>().anchoredPosition = new Vector2(270, 170);
-                    break;
-                case 2:
-                    UI_copy.GetComponent<RectTransform>().anchoredPosition = new Vector2(-270, -170);
-                    break;
-                case 3:
-                    UI_copy.GetComponent<RectTransform>().anchoredPosition = new Vector2(270, -170);
-                    break;
-            }
-            TestHP++;
         }
 
         for(int i = 0; i < Gamepad.all.Count; i++)
@@ -101,6 +86,25 @@ public class PlayerHitten : MonoBehaviour
             {
                 gamepad = Gamepad.all[i];
             }
+        }
+    }
+
+    public void Refresh()
+    {
+        playerIdentity.ResetStageData();
+
+        Health = MaxHealth;
+        Dead = false;
+        Respawnable = true;
+
+        UI_copy = Instantiate(PlayerUI);
+        UI_copy.GetComponent<PlayerUI>().SetUp(this);
+
+        GameObject canvas = GameObject.FindGameObjectWithTag("Canvas");
+        if (canvas != null)
+        {
+            UI_copy.transform.parent = canvas.transform;
+            UI_copy.transform.localScale = new Vector3(1, 1, 1);
         }
     }
 
@@ -145,7 +149,6 @@ public class PlayerHitten : MonoBehaviour
     {
         yield return new WaitForFixedUpdate();
         ragdollControl.shotByBullet = true;
-        LastDamagedID = -1;
         ragdollControl.IsDead = true;
         pickItem.OnHit();
         yield return new WaitForFixedUpdate();
@@ -156,6 +159,7 @@ public class PlayerHitten : MonoBehaviour
         {
             playerIdentity.Respawn();
             IsInvincible = true;
+            LastDamagedID = -1;
             ragdollControl.shotByBullet = true;
             Health = MaxHealth;
             OnHealthChanged?.Invoke(this, 0, Health);

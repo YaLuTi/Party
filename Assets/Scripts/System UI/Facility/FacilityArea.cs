@@ -18,7 +18,7 @@ public class FacilityArea : MonoBehaviour
         
     }
 
-    public virtual void OnUse()
+    public virtual void OnUse(PlayerBehavior playerBehavior)
     {
         if (IsNeedAll && PlayersNum < StageManager.players.Count)
         {

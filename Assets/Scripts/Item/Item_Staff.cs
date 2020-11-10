@@ -32,15 +32,20 @@ public class Item_Staff : ItemBasic
         base.OnTrigger();
         if (DurabilityCheck())
         {
-            GameObject b = Instantiate(bullet, FollowTransform.GetComponent<PlayerItemHand>().way.position + 1.2f * FollowTransform.GetComponent<PlayerItemHand>().way.transform.forward, FollowTransform.GetComponent<PlayerItemHand>().way.rotation);
-            Destroy(b, DestroyTime);
-            if(b.GetComponentInChildren<RFX4_PhysicsMotion>() != null)
+            List<RFX4_PhysicsMotion> list = new List<RFX4_PhysicsMotion>();
+            list.Add(Fire(0));
+            if (Enhaced)
             {
-                b.GetComponentInChildren<RFX4_PhysicsMotion>().PlayerID = PlayerID;
+                list.Add(Fire(30));
+                list.Add(Fire(-30));
             }
-            if (b.GetComponentInChildren<Basic_Bullet>() != null)
+
+            if (list.Count > 1)
             {
-                b.GetComponentInChildren<Basic_Bullet>().PlayerID = PlayerID;
+                foreach(RFX4_PhysicsMotion rFX4_Physics in list)
+                {
+                    rFX4_Physics.AddIgnore(list);
+                }
             }
 
             if (Durability == 0)
@@ -54,6 +59,23 @@ public class Item_Staff : ItemBasic
         }
     }
 
+    RFX4_PhysicsMotion Fire(float angle)
+    {
+        GameObject b = Instantiate(bullet, FollowTransform.GetComponent<PlayerItemHand>().way.position + 1.2f * FollowTransform.GetComponent<PlayerItemHand>().way.transform.forward, FollowTransform.GetComponent<PlayerItemHand>().way.rotation);
+        b.transform.eulerAngles += new Vector3(0, angle, 0);
+        Destroy(b, DestroyTime);
+        if (b.GetComponentInChildren<RFX4_PhysicsMotion>() != null)
+        {
+            b.GetComponentInChildren<RFX4_PhysicsMotion>().PlayerID = PlayerID;
+            return b.GetComponentInChildren<RFX4_PhysicsMotion>();
+        }
+        if (b.GetComponentInChildren<Basic_Bullet>() != null)
+        {
+            b.GetComponentInChildren<Basic_Bullet>().PlayerID = PlayerID;
+            return null;
+        }
+        return null;
+    }
 
     void StaffFire()
     {

@@ -83,7 +83,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""UI_Up"",
+                    ""name"": ""Pad_Up"",
                     ""type"": ""Button"",
                     ""id"": ""39b36c9d-b321-4af7-8418-fa1280169c31"",
                     ""expectedControlType"": """",
@@ -91,7 +91,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""UI_Down"",
+                    ""name"": ""Pad_Down"",
                     ""type"": ""Button"",
                     ""id"": ""2043ad6a-1557-462e-b38c-129ed837a476"",
                     ""expectedControlType"": """",
@@ -99,7 +99,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""UI_Left"",
+                    ""name"": ""Pad_Left"",
                     ""type"": ""Button"",
                     ""id"": ""a09874c5-db05-4d8d-b81d-0feaf234e8a3"",
                     ""expectedControlType"": """",
@@ -107,7 +107,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""UI_Right"",
+                    ""name"": ""Pad_Right"",
                     ""type"": ""Button"",
                     ""id"": ""50b8513b-073a-4948-ab49-10260f965bb8"",
                     ""expectedControlType"": """",
@@ -219,7 +219,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""UI_Up"",
+                    ""action"": ""Pad_Up"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -230,7 +230,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GamePad"",
-                    ""action"": ""UI_Up"",
+                    ""action"": ""Pad_Up"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -241,7 +241,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""UI_Down"",
+                    ""action"": ""Pad_Down"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -252,7 +252,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GamePad"",
-                    ""action"": ""UI_Down"",
+                    ""action"": ""Pad_Down"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -263,7 +263,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""UI_Left"",
+                    ""action"": ""Pad_Left"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -274,7 +274,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GamePad"",
-                    ""action"": ""UI_Left"",
+                    ""action"": ""Pad_Left"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -285,7 +285,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GamePad"",
-                    ""action"": ""UI_Right"",
+                    ""action"": ""Pad_Right"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -296,7 +296,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""UI_Right"",
+                    ""action"": ""Pad_Right"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -726,10 +726,10 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_GamePlay_Throw = m_GamePlay.FindAction("Throw", throwIfNotFound: true);
         m_GamePlay_Test = m_GamePlay.FindAction("Test", throwIfNotFound: true);
         m_GamePlay_Pause = m_GamePlay.FindAction("Pause", throwIfNotFound: true);
-        m_GamePlay_UI_Up = m_GamePlay.FindAction("UI_Up", throwIfNotFound: true);
-        m_GamePlay_UI_Down = m_GamePlay.FindAction("UI_Down", throwIfNotFound: true);
-        m_GamePlay_UI_Left = m_GamePlay.FindAction("UI_Left", throwIfNotFound: true);
-        m_GamePlay_UI_Right = m_GamePlay.FindAction("UI_Right", throwIfNotFound: true);
+        m_GamePlay_Pad_Up = m_GamePlay.FindAction("Pad_Up", throwIfNotFound: true);
+        m_GamePlay_Pad_Down = m_GamePlay.FindAction("Pad_Down", throwIfNotFound: true);
+        m_GamePlay_Pad_Left = m_GamePlay.FindAction("Pad_Left", throwIfNotFound: true);
+        m_GamePlay_Pad_Right = m_GamePlay.FindAction("Pad_Right", throwIfNotFound: true);
         m_GamePlay_Interact = m_GamePlay.FindAction("Interact", throwIfNotFound: true);
         // Creating(UI)
         m_CreatingUI = asset.FindActionMap("Creating(UI)", throwIfNotFound: true);
@@ -797,10 +797,10 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_GamePlay_Throw;
     private readonly InputAction m_GamePlay_Test;
     private readonly InputAction m_GamePlay_Pause;
-    private readonly InputAction m_GamePlay_UI_Up;
-    private readonly InputAction m_GamePlay_UI_Down;
-    private readonly InputAction m_GamePlay_UI_Left;
-    private readonly InputAction m_GamePlay_UI_Right;
+    private readonly InputAction m_GamePlay_Pad_Up;
+    private readonly InputAction m_GamePlay_Pad_Down;
+    private readonly InputAction m_GamePlay_Pad_Left;
+    private readonly InputAction m_GamePlay_Pad_Right;
     private readonly InputAction m_GamePlay_Interact;
     public struct GamePlayActions
     {
@@ -814,10 +814,10 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Throw => m_Wrapper.m_GamePlay_Throw;
         public InputAction @Test => m_Wrapper.m_GamePlay_Test;
         public InputAction @Pause => m_Wrapper.m_GamePlay_Pause;
-        public InputAction @UI_Up => m_Wrapper.m_GamePlay_UI_Up;
-        public InputAction @UI_Down => m_Wrapper.m_GamePlay_UI_Down;
-        public InputAction @UI_Left => m_Wrapper.m_GamePlay_UI_Left;
-        public InputAction @UI_Right => m_Wrapper.m_GamePlay_UI_Right;
+        public InputAction @Pad_Up => m_Wrapper.m_GamePlay_Pad_Up;
+        public InputAction @Pad_Down => m_Wrapper.m_GamePlay_Pad_Down;
+        public InputAction @Pad_Left => m_Wrapper.m_GamePlay_Pad_Left;
+        public InputAction @Pad_Right => m_Wrapper.m_GamePlay_Pad_Right;
         public InputAction @Interact => m_Wrapper.m_GamePlay_Interact;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
@@ -852,18 +852,18 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Pause.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPause;
-                @UI_Up.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Up;
-                @UI_Up.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Up;
-                @UI_Up.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Up;
-                @UI_Down.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Down;
-                @UI_Down.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Down;
-                @UI_Down.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Down;
-                @UI_Left.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Left;
-                @UI_Left.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Left;
-                @UI_Left.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Left;
-                @UI_Right.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Right;
-                @UI_Right.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Right;
-                @UI_Right.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnUI_Right;
+                @Pad_Up.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPad_Up;
+                @Pad_Up.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPad_Up;
+                @Pad_Up.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPad_Up;
+                @Pad_Down.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPad_Down;
+                @Pad_Down.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPad_Down;
+                @Pad_Down.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPad_Down;
+                @Pad_Left.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPad_Left;
+                @Pad_Left.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPad_Left;
+                @Pad_Left.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPad_Left;
+                @Pad_Right.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPad_Right;
+                @Pad_Right.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPad_Right;
+                @Pad_Right.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPad_Right;
                 @Interact.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnInteract;
@@ -895,18 +895,18 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
-                @UI_Up.started += instance.OnUI_Up;
-                @UI_Up.performed += instance.OnUI_Up;
-                @UI_Up.canceled += instance.OnUI_Up;
-                @UI_Down.started += instance.OnUI_Down;
-                @UI_Down.performed += instance.OnUI_Down;
-                @UI_Down.canceled += instance.OnUI_Down;
-                @UI_Left.started += instance.OnUI_Left;
-                @UI_Left.performed += instance.OnUI_Left;
-                @UI_Left.canceled += instance.OnUI_Left;
-                @UI_Right.started += instance.OnUI_Right;
-                @UI_Right.performed += instance.OnUI_Right;
-                @UI_Right.canceled += instance.OnUI_Right;
+                @Pad_Up.started += instance.OnPad_Up;
+                @Pad_Up.performed += instance.OnPad_Up;
+                @Pad_Up.canceled += instance.OnPad_Up;
+                @Pad_Down.started += instance.OnPad_Down;
+                @Pad_Down.performed += instance.OnPad_Down;
+                @Pad_Down.canceled += instance.OnPad_Down;
+                @Pad_Left.started += instance.OnPad_Left;
+                @Pad_Left.performed += instance.OnPad_Left;
+                @Pad_Left.canceled += instance.OnPad_Left;
+                @Pad_Right.started += instance.OnPad_Right;
+                @Pad_Right.performed += instance.OnPad_Right;
+                @Pad_Right.canceled += instance.OnPad_Right;
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
@@ -1023,10 +1023,10 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnThrow(InputAction.CallbackContext context);
         void OnTest(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
-        void OnUI_Up(InputAction.CallbackContext context);
-        void OnUI_Down(InputAction.CallbackContext context);
-        void OnUI_Left(InputAction.CallbackContext context);
-        void OnUI_Right(InputAction.CallbackContext context);
+        void OnPad_Up(InputAction.CallbackContext context);
+        void OnPad_Down(InputAction.CallbackContext context);
+        void OnPad_Left(InputAction.CallbackContext context);
+        void OnPad_Right(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
     }
     public interface ICreatingUIActions

@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: TEST
-  m_Shader: {fileID: 4800000, guid: f2963786d4da6394ebe808ecb4bfd50b, type: 3}
+  m_Shader: {fileID: 4800000, guid: f8a7b05d19e72e14782816683cd204af, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -44,7 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 8bd3845bbbeebd04b8a19ee995137147, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -94,6 +94,8 @@ Material:
     - _GlossyReflections: 1
     - _High_Power: 1
     - _High_Power1: 1
+    - _Intensity: 0.08
+    - _MKGlowPower: 0.5
     - _Metallic: 0
     - _Mode: 0
     - _Noise_Scale: 1
@@ -111,9 +113,11 @@ Material:
     - _SrcBlend: 1
     - _Stencil: 0
     - _StencilComp: 8
+    - _StencilMask: 0
     - _StencilOp: 0
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
+    - _Step1: 0.5
     - _UVSec: 0
     - _UseUIAlphaClip: 0
     - _ZWrite: 1
@@ -121,6 +125,8 @@ Material:
     m_Colors:
     - _Color: {r: 7.3772106, g: 7.3772106, b: 7.3772106, a: 1}
     - _Color0: {r: 8, g: 8, b: 8, a: 0}
+    - _Color1: {r: 1, g: 1, b: 1, a: 1}
+    - _Color2: {r: 1, g: 0.95, b: 0.8, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Emission_Color: {r: 2.6037736, g: 8, b: 7.3099637, a: 0}
     - _Emission_Color1: {r: 4, g: 0, b: 0, a: 1}
@@ -128,5 +134,6 @@ Material:
     - _High_Color1: {r: 4, g: 0, b: 0, a: 1}
     - _Low_Color: {r: 0.4704966, g: 0.9150943, b: 0.8351832, a: 1}
     - _Low_Color1: {r: 1, g: 1, b: 1, a: 1}
+    - _MKGlowColor: {r: 1, g: 0.95, b: 0.8, a: 1}
     - _Tiling_X_Y: {r: 0.5, g: 0.5, b: 0, a: 0}
     - _Vector0: {r: 1, g: 0, b: 1, a: 0}

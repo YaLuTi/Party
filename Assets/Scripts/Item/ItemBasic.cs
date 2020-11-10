@@ -30,6 +30,9 @@ public class ItemBasic : MonoBehaviour
     public string animation;
     public string Releaseanimation;
 
+    [SerializeField]
+    protected bool Enhaced = false;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -100,6 +103,11 @@ public class ItemBasic : MonoBehaviour
 
     public virtual void OnUse()
     {
+    }
+
+    public virtual void Enhance()
+    {
+        Enhaced = true;
     }
 
     public virtual string OnRelease(_playerItemStatus status)

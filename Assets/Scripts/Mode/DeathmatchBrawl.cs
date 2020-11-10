@@ -17,17 +17,14 @@ public class DeathmatchBrawl : MonoBehaviour
 
     private void Awake()
     {
-        Time.timeScale = 1f;
-        Time.fixedDeltaTime = 0.02f;
     }
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         UIs.Clear();
         Lifes.Clear();
         playerHittens.Clear();
-
 
         if (!First)
         {
@@ -44,11 +41,11 @@ public class DeathmatchBrawl : MonoBehaviour
             switch (i)
             {
                 case 0:
-                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(-330, 190);
-                    g.GetComponent<Text>().color = Color.blue;
+                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(-330, 170);
+                    g.GetComponent<Text>().color = new Color(0.5f,1,1);
                     break;
                 case 1:
-                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(330, 190);
+                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(330, 170);
                     g.GetComponent<Text>().color = Color.red;
                     break;
                 case 2:
@@ -84,11 +81,11 @@ public class DeathmatchBrawl : MonoBehaviour
         switch (num)
         {
             case 0:
-                g.GetComponent<RectTransform>().anchoredPosition = new Vector2(-330, 190);
-                g.GetComponent<Text>().color = Color.blue;
+                g.GetComponent<RectTransform>().anchoredPosition = new Vector2(-330, 170);
+                g.GetComponent<Text>().color = new Color(0.5f, 1, 1);
                 break;
             case 1:
-                g.GetComponent<RectTransform>().anchoredPosition = new Vector2(330, 190);
+                g.GetComponent<RectTransform>().anchoredPosition = new Vector2(330, 170);
                 g.GetComponent<Text>().color = Color.red;
                 break;
             case 2:

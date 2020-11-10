@@ -185,11 +185,30 @@ public class PlayerIdentity : MonoBehaviour
         yield return null;
     }
 
+    public void ResetStageData()
+    {
+        stageInfo = GameObject.FindGameObjectWithTag("StageInfo").GetComponent<StageInfo>();
+        StartCoroutine(SpawnToPositionLoad());
+    }
+
     public void Respawn()
     {
         if(respawn == null)
         {
             respawn = StartCoroutine(SpawnToPositionOnDeath());
+        }
+    }
+
+    public void Freeze()
+    {
+        footIK_AF.followTerrain = false;
+        foreach (Rigidbody rb in rbs)
+        {
+            rb.velocity = Vector3.zero;
+        }
+        foreach (Collider collider in colliders)
+        {
+            collider.isTrigger = true;
         }
     }
 

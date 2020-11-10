@@ -8,8 +8,15 @@ using System;
 public class DeathMatchTime : DeathmatchBrawl
 {
     public float Timer;
-    bool IsEnd = false;
+    public static bool IsEnd = false;
     public TextMeshProUGUI text;
+
+    public override void Start()
+    {
+        Debug.Log("WGERDG");
+        IsEnd = false;
+        base.Start();
+    }
 
     private void Update()
     {
@@ -17,10 +24,10 @@ public class DeathMatchTime : DeathmatchBrawl
         {
             if (!IsEnd)
             {
+                IsEnd = true;
                 Finish.Play();
                 StartCoroutine(_FinishEvent());
             }
-            IsEnd = true;
         }
         else
         {
@@ -40,7 +47,7 @@ public class DeathMatchTime : DeathmatchBrawl
     }
     IEnumerator _FinishEvent()
     {
-        Time.timeScale = 0.05f;
+        Time.timeScale = 0.0f;
         Time.fixedDeltaTime = Time.fixedDeltaTime * Time.timeScale;
         StageManager.StopBGM();
         BattleData.TEST_END_SHOW();
@@ -73,7 +80,14 @@ public class DeathMatchTime : DeathmatchBrawl
     }
     public override void OnPlayerDeath(PlayerHitten playerHitten)
     {
-        if (IsEnd) return;
+        Debug.Log("FFF");
+        if (IsEnd)
+        {
+            Debug.Log(IsEnd);
+            Debug.Log("XXX");
+            return;
+        }
+        Debug.Log("EEE");
         int num = playerHitten.LastDamagedID;
         if(num == -1)
         {

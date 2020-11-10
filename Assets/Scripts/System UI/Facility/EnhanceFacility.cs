@@ -2,18 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleFacility : FacilityArea
+public class EnhanceFacility : FacilityArea
 {
-    SceneChangeTest changeTest;
-    public static int ChoosingMode = 1;
-
-    MeshRenderer meshRenderer;
+    public ItemBasic item;
     // Start is called before the first frame update
     void Start()
     {
-        changeTest = GetComponent<SceneChangeTest>();
-
-        meshRenderer = GetComponent<MeshRenderer>();
+        
     }
 
     // Update is called once per frame
@@ -25,7 +20,9 @@ public class BattleFacility : FacilityArea
     public override void OnUse(PlayerBehavior playerBehavior)
     {
         base.OnUse(playerBehavior);
-        changeTest.LoadScene(1,1);
-        meshRenderer.enabled = false;
+        if (playerBehavior.IsHolding)
+        {
+
+        }
     }
 }

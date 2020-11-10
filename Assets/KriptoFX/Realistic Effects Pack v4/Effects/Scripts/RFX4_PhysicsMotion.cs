@@ -27,6 +27,8 @@ public class RFX4_PhysicsMotion : MonoBehaviour
     public bool LookAtNormal = true;
     public float CollisionEffectDestroyAfter = 5;
 
+    public List<RFX4_PhysicsMotion> Ignore = new List<RFX4_PhysicsMotion>();
+
     public GameObject[] DeactivateObjectsAfterCollision;
 
     [HideInInspector] public float HUE = -1;
@@ -101,6 +103,11 @@ public class RFX4_PhysicsMotion : MonoBehaviour
     {
         if (isCollided && !effectSettings.UseCollisionDetection) return;
         if ((ItemlayerMask.value & 1 << collision.gameObject.layer) > 0) return;
+        foreach(RFX4_PhysicsMotion rFX4_Physics in Ignore)
+        {
+            if (collision.transform == rFX4_Physics.transform) return;
+        }
+
         foreach (ContactPoint contact in collision.contacts)
         {
             if (!isCollided)
@@ -129,6 +136,7 @@ public class RFX4_PhysicsMotion : MonoBehaviour
             if (EffectOnCollision != null && !Spawn)
             {
                 var instance = Instantiate(EffectOnCollision, contact.point, new Quaternion()) as GameObject;
+                instance.GetComponent<BasicExplosion>().PlayerID = PlayerID;
 
                 if (HUE > -0.9f) RFX4_ColorHelper.ChangeObjectColorByHUE(instance, HUE);
                 
@@ -211,6 +219,16 @@ public class RFX4_PhysicsMotion : MonoBehaviour
             // if (!CollisionEffectInWorldSpace) instance.transform.parent = contact.otherCollider.transform.parent;
             Spawn = true;
             Destroy(instance, CollisionEffectDestroyAfter);
+        }
+    }
+
+    public void AddIgnore(List<RFX4_PhysicsMotion> list)
+    {
+        Collider collider = GetComponent<Collider>();
+        foreach(RFX4_PhysicsMotion rFX4_Physics in list)
+        {
+            Ignore.Add(rFX4_Physics);
+            Physics.IgnoreCollision(collider, rFX4_Physics.transform.GetComponent<Collider>());
         }
     }
 

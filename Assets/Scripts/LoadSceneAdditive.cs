@@ -26,6 +26,9 @@ public class LoadSceneAdditive : MonoBehaviour
             stageInfo.SetActive(false);
             Spawner.SetActive(false);
         }
+
+        if (!StageManager.Static_Testing) return;
+
         if (LoadBattle)
         {
             SceneManager.LoadScene("CrownScene", LoadSceneMode.Additive);

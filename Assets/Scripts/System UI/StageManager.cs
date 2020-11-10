@@ -26,6 +26,7 @@ public class StageManager : MonoBehaviour
     static bool TriggerLoadEnd = false;
 
     public bool Testing = false;
+    public static bool Static_Testing = true;
 
     public static CinemachineTargetGroup targetGroup;
     public static CinemachineVirtualCamera virtualCamera;
@@ -50,6 +51,7 @@ public class StageManager : MonoBehaviour
 
         if (instance == null)
         {
+            Static_Testing = Testing;
             DontDestroyOnLoad(this.gameObject);
             instance = this;
         }
@@ -325,6 +327,13 @@ public class StageManager : MonoBehaviour
 
     public static void ClearPlayer()
     {
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.01f;
+        foreach (GameObject g in players)
+        {
+            g.GetComponent<PlayerIdentity>().Freeze();
+        }
+        if (!StageManager.Static_Testing) return;
         players.Clear();
     }
 
@@ -354,9 +363,13 @@ public class StageManager : MonoBehaviour
         {
             for (int i = 0; i < players.Count; i++)
             {
-                Debug.Log("TYTYTYRH");
                 targetGroup.AddMember(players[i].GetComponentInChildren<PlayerInput>().transform, 1, 0);
             }
+        }
+
+        foreach(GameObject g in players)
+        {
+            g.GetComponent<PlayerHitten>().Refresh();
         }
     }
 }
