@@ -78,6 +78,13 @@ public class DeskFacility : FacilityArea
         }
     }
 
+    public void Ready()
+    {
+        IsReady = true;
+        choosing = 0;
+        // deskItems[choosing]
+    }
+
     void OnRXAxis(InputValue value)
     {
         h = value.Get<float>();

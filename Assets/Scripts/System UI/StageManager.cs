@@ -77,12 +77,15 @@ public class StageManager : MonoBehaviour
 
     private void Start()
     {
-        StageInfo stageInfo;
-        stageInfo = GameObject.FindGameObjectWithTag("StageInfo").GetComponent<StageInfo>();
-        for(int i = 0; i < 4; i++)
+        if (CreatingTest)
         {
-            GameObject g = Instantiate(Player, stageInfo.SpawnPosition[i], Quaternion.Euler(stageInfo.SpawnRotation[i]));
-            players.Add(g);
+            StageInfo stageInfo;
+            stageInfo = GameObject.FindGameObjectWithTag("StageInfo").GetComponent<StageInfo>();
+            for (int i = 0; i < 4; i++)
+            {
+                GameObject g = Instantiate(Player, stageInfo.SpawnPosition[i], Quaternion.Euler(stageInfo.SpawnRotation[i]));
+                players.Add(g);
+            }
         }
     }
 
@@ -193,6 +196,7 @@ public class StageManager : MonoBehaviour
         }
         else
         {
+            if (CreatingTest) return;
             Debug.Log("Add");
             DontDestroyOnLoad(playerInput.transform.root.gameObject);
             players.Add((playerInput.transform.root.gameObject));
