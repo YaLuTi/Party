@@ -42,6 +42,8 @@ public class StageManager : MonoBehaviour
     public delegate void PlayerJoinHandler(GameObject player, int num);
     public event PlayerJoinHandler OnPlayerJoin;
 
+    public GameObject Player;
+    public bool CreatingTest = true;
 
     // Start is called before the first frame update
     void Awake()
@@ -73,12 +75,24 @@ public class StageManager : MonoBehaviour
         // SceneManager.LoadScene("CharacterChoose", LoadSceneMode.Additive);
     }
 
+    private void Start()
+    {
+        StageInfo stageInfo;
+        stageInfo = GameObject.FindGameObjectWithTag("StageInfo").GetComponent<StageInfo>();
+        for(int i = 0; i < 4; i++)
+        {
+            GameObject g = Instantiate(Player, stageInfo.SpawnPosition[i], Quaternion.Euler(stageInfo.SpawnRotation[i]));
+            players.Add(g);
+        }
+    }
+
     private void Update()
     {
         if (TriggerLoadScene)
         {
             TriggerLoadScene = false;
             EndDirector.Play();
+            FacilityManager.UsingDirector = EndDirector;
         }
         if (TriggerLoadEnd)
         {
@@ -118,6 +132,22 @@ public class StageManager : MonoBehaviour
     public static void PlayerReady()
     {
         PlayerReadyNum++;
+    }
+
+    public static void DisablePlayerControl()
+    {
+        for(int i = 0; i < players.Count; i++)
+        {
+            players[i].GetComponent<PlayerIdentity>().InputCancel();
+        }
+    }
+
+    public static void EnablePlayerControl()
+    {
+        for (int i = 0; i < players.Count; i++)
+        {
+            players[i].GetComponent<PlayerIdentity>().InputEnable();
+        }
     }
 
     // 這邊一團亂 要整理！！！！！！！！！！！

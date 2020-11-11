@@ -442,6 +442,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "Cancel",
+                    "type": "Button",
+                    "id": "df1e007f-d5bb-4427-b1bb-ba0131a69f31",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "UI_Left",
                     "type": "Button",
                     "id": "b8b88bc6-b5c4-41d4-aa61-9c0a6327702a",
@@ -478,6 +486,22 @@
                     "type": "PassThrough",
                     "id": "a53a3ae3-c369-4e15-853f-e68f8b05b381",
                     "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "RXAxis",
+                    "type": "Value",
+                    "id": "51d134a7-2b87-40b5-8907-7fa15e4b30ef",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "RYAxis",
+                    "type": "Value",
+                    "id": "3ec8e582-189e-4e7f-a506-4cdb7d7e25cf",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": ""
                 }
@@ -669,6 +693,66 @@
                     "action": "UI_Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "96259b68-a89f-4711-8098-68ed89ae3731",
+                    "path": "<Gamepad>/rightStick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RXAxis",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eb4cb06b-1d41-4efd-96dc-49874dd76794",
+                    "path": "<Gamepad>/rightStick/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RYAxis",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4915d91f-fc6a-4d10-aaad-f2363826adeb",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "None",
+            "id": "251e0ea4-829a-43a4-a46c-d73c342fee46",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "7d3cc1b8-9adb-49d2-8c54-96387a4c8a1c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "eb89ff65-a446-4251-88de-d9b19d8a0272",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

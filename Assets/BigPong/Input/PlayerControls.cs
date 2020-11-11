@@ -455,6 +455,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""df1e007f-d5bb-4427-b1bb-ba0131a69f31"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""UI_Left"",
                     ""type"": ""Button"",
                     ""id"": ""b8b88bc6-b5c4-41d4-aa61-9c0a6327702a"",
@@ -491,6 +499,22 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""a53a3ae3-c369-4e15-853f-e68f8b05b381"",
                     ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""RXAxis"",
+                    ""type"": ""Value"",
+                    ""id"": ""51d134a7-2b87-40b5-8907-7fa15e4b30ef"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""RYAxis"",
+                    ""type"": ""Value"",
+                    ""id"": ""3ec8e582-189e-4e7f-a506-4cdb7d7e25cf"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -682,6 +706,66 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""UI_Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""96259b68-a89f-4711-8098-68ed89ae3731"",
+                    ""path"": ""<Gamepad>/rightStick/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RXAxis"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eb4cb06b-1d41-4efd-96dc-49874dd76794"",
+                    ""path"": ""<Gamepad>/rightStick/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RYAxis"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4915d91f-fc6a-4d10-aaad-f2363826adeb"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""None"",
+            ""id"": ""251e0ea4-829a-43a4-a46c-d73c342fee46"",
+            ""actions"": [
+                {
+                    ""name"": ""New action"",
+                    ""type"": ""Button"",
+                    ""id"": ""7d3cc1b8-9adb-49d2-8c54-96387a4c8a1c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""eb89ff65-a446-4251-88de-d9b19d8a0272"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""New action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -735,11 +819,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_CreatingUI = asset.FindActionMap("Creating(UI)", throwIfNotFound: true);
         m_CreatingUI_UI_Right = m_CreatingUI.FindAction("UI_Right", throwIfNotFound: true);
         m_CreatingUI_Yes = m_CreatingUI.FindAction("Yes", throwIfNotFound: true);
+        m_CreatingUI_Cancel = m_CreatingUI.FindAction("Cancel", throwIfNotFound: true);
         m_CreatingUI_UI_Left = m_CreatingUI.FindAction("UI_Left", throwIfNotFound: true);
         m_CreatingUI_UI_Down = m_CreatingUI.FindAction("UI_Down", throwIfNotFound: true);
         m_CreatingUI_UI_Up = m_CreatingUI.FindAction("UI_Up", throwIfNotFound: true);
         m_CreatingUI_Enter = m_CreatingUI.FindAction("Enter", throwIfNotFound: true);
         m_CreatingUI_UI_Move = m_CreatingUI.FindAction("UI_Move", throwIfNotFound: true);
+        m_CreatingUI_RXAxis = m_CreatingUI.FindAction("RXAxis", throwIfNotFound: true);
+        m_CreatingUI_RYAxis = m_CreatingUI.FindAction("RYAxis", throwIfNotFound: true);
+        // None
+        m_None = asset.FindActionMap("None", throwIfNotFound: true);
+        m_None_Newaction = m_None.FindAction("New action", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -920,22 +1010,28 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private ICreatingUIActions m_CreatingUIActionsCallbackInterface;
     private readonly InputAction m_CreatingUI_UI_Right;
     private readonly InputAction m_CreatingUI_Yes;
+    private readonly InputAction m_CreatingUI_Cancel;
     private readonly InputAction m_CreatingUI_UI_Left;
     private readonly InputAction m_CreatingUI_UI_Down;
     private readonly InputAction m_CreatingUI_UI_Up;
     private readonly InputAction m_CreatingUI_Enter;
     private readonly InputAction m_CreatingUI_UI_Move;
+    private readonly InputAction m_CreatingUI_RXAxis;
+    private readonly InputAction m_CreatingUI_RYAxis;
     public struct CreatingUIActions
     {
         private @PlayerControls m_Wrapper;
         public CreatingUIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @UI_Right => m_Wrapper.m_CreatingUI_UI_Right;
         public InputAction @Yes => m_Wrapper.m_CreatingUI_Yes;
+        public InputAction @Cancel => m_Wrapper.m_CreatingUI_Cancel;
         public InputAction @UI_Left => m_Wrapper.m_CreatingUI_UI_Left;
         public InputAction @UI_Down => m_Wrapper.m_CreatingUI_UI_Down;
         public InputAction @UI_Up => m_Wrapper.m_CreatingUI_UI_Up;
         public InputAction @Enter => m_Wrapper.m_CreatingUI_Enter;
         public InputAction @UI_Move => m_Wrapper.m_CreatingUI_UI_Move;
+        public InputAction @RXAxis => m_Wrapper.m_CreatingUI_RXAxis;
+        public InputAction @RYAxis => m_Wrapper.m_CreatingUI_RYAxis;
         public InputActionMap Get() { return m_Wrapper.m_CreatingUI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -951,6 +1047,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Yes.started -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnYes;
                 @Yes.performed -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnYes;
                 @Yes.canceled -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnYes;
+                @Cancel.started -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnCancel;
+                @Cancel.performed -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnCancel;
+                @Cancel.canceled -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnCancel;
                 @UI_Left.started -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnUI_Left;
                 @UI_Left.performed -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnUI_Left;
                 @UI_Left.canceled -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnUI_Left;
@@ -966,6 +1065,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @UI_Move.started -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnUI_Move;
                 @UI_Move.performed -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnUI_Move;
                 @UI_Move.canceled -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnUI_Move;
+                @RXAxis.started -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnRXAxis;
+                @RXAxis.performed -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnRXAxis;
+                @RXAxis.canceled -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnRXAxis;
+                @RYAxis.started -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnRYAxis;
+                @RYAxis.performed -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnRYAxis;
+                @RYAxis.canceled -= m_Wrapper.m_CreatingUIActionsCallbackInterface.OnRYAxis;
             }
             m_Wrapper.m_CreatingUIActionsCallbackInterface = instance;
             if (instance != null)
@@ -976,6 +1081,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Yes.started += instance.OnYes;
                 @Yes.performed += instance.OnYes;
                 @Yes.canceled += instance.OnYes;
+                @Cancel.started += instance.OnCancel;
+                @Cancel.performed += instance.OnCancel;
+                @Cancel.canceled += instance.OnCancel;
                 @UI_Left.started += instance.OnUI_Left;
                 @UI_Left.performed += instance.OnUI_Left;
                 @UI_Left.canceled += instance.OnUI_Left;
@@ -991,10 +1099,49 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @UI_Move.started += instance.OnUI_Move;
                 @UI_Move.performed += instance.OnUI_Move;
                 @UI_Move.canceled += instance.OnUI_Move;
+                @RXAxis.started += instance.OnRXAxis;
+                @RXAxis.performed += instance.OnRXAxis;
+                @RXAxis.canceled += instance.OnRXAxis;
+                @RYAxis.started += instance.OnRYAxis;
+                @RYAxis.performed += instance.OnRYAxis;
+                @RYAxis.canceled += instance.OnRYAxis;
             }
         }
     }
     public CreatingUIActions @CreatingUI => new CreatingUIActions(this);
+
+    // None
+    private readonly InputActionMap m_None;
+    private INoneActions m_NoneActionsCallbackInterface;
+    private readonly InputAction m_None_Newaction;
+    public struct NoneActions
+    {
+        private @PlayerControls m_Wrapper;
+        public NoneActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Newaction => m_Wrapper.m_None_Newaction;
+        public InputActionMap Get() { return m_Wrapper.m_None; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(NoneActions set) { return set.Get(); }
+        public void SetCallbacks(INoneActions instance)
+        {
+            if (m_Wrapper.m_NoneActionsCallbackInterface != null)
+            {
+                @Newaction.started -= m_Wrapper.m_NoneActionsCallbackInterface.OnNewaction;
+                @Newaction.performed -= m_Wrapper.m_NoneActionsCallbackInterface.OnNewaction;
+                @Newaction.canceled -= m_Wrapper.m_NoneActionsCallbackInterface.OnNewaction;
+            }
+            m_Wrapper.m_NoneActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Newaction.started += instance.OnNewaction;
+                @Newaction.performed += instance.OnNewaction;
+                @Newaction.canceled += instance.OnNewaction;
+            }
+        }
+    }
+    public NoneActions @None => new NoneActions(this);
     private int m_GamePadSchemeIndex = -1;
     public InputControlScheme GamePadScheme
     {
@@ -1033,10 +1180,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     {
         void OnUI_Right(InputAction.CallbackContext context);
         void OnYes(InputAction.CallbackContext context);
+        void OnCancel(InputAction.CallbackContext context);
         void OnUI_Left(InputAction.CallbackContext context);
         void OnUI_Down(InputAction.CallbackContext context);
         void OnUI_Up(InputAction.CallbackContext context);
         void OnEnter(InputAction.CallbackContext context);
         void OnUI_Move(InputAction.CallbackContext context);
+        void OnRXAxis(InputAction.CallbackContext context);
+        void OnRYAxis(InputAction.CallbackContext context);
+    }
+    public interface INoneActions
+    {
+        void OnNewaction(InputAction.CallbackContext context);
     }
 }

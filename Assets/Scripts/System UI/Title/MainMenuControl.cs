@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Timeline;
 using UnityEngine.Playables;
-using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using TMPro;
 
 public class MainMenuControl : MonoBehaviour
@@ -20,12 +19,20 @@ public class MainMenuControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        var gamepad = Gamepad.current;
+        if (gamepad == null)
+            return; // No gamepad connected.
+
+        if (gamepad.buttonNorth.wasPressedThisFrame && !FacilityManager.IsMenu)
+        {
+            Debug.Log("TEST");
+            StartCine.Stop();
+            StartMenu.Play();
+            FacilityManager.IsMenu = true;
+        }
     }
 
     void OnYes()
     {
-        StartCine.Stop();
-        StartMenu.Play();
     }
 }

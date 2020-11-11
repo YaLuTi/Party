@@ -42,8 +42,9 @@ public class PlayerIdentity : MonoBehaviour
     Rigidbody[] rbs;
     Collider[] colliders = new Collider[0];
 
-    // 亂寫的 要改
     PlayerInput playerInput;
+
+    // 亂寫的 要改
     PlayerMove _playerMove;
     PlayerBehavior _playerBehavior;
     // 亂寫的 要改
@@ -108,12 +109,13 @@ public class PlayerIdentity : MonoBehaviour
 
     public void InputCancel()
     {
-        // playerInput.enabled = false;
+        playerInput.SwitchCurrentActionMap("None");
     }
 
     public void InputEnable()
     {
-        StartCoroutine(_InputEnable());
+        playerInput.SwitchCurrentActionMap("GamePlay");
+        // StartCoroutine(_InputEnable());
     }
 
     IEnumerator _InputEnable()

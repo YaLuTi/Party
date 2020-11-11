@@ -69,15 +69,17 @@ public class PlayerHitten : MonoBehaviour
         Dead = false;
         Respawnable = true;
 
-        
-        UI_copy = Instantiate(PlayerUI);
-        UI_copy.GetComponent<PlayerUI>().SetUp(this);
-
-        GameObject canvas = GameObject.FindGameObjectWithTag("Canvas");
-        if (canvas != null)
+        if (StageManager.Static_Testing)
         {
-            UI_copy.transform.parent = canvas.transform;
-            UI_copy.transform.localScale = new Vector3(1, 1, 1);
+            UI_copy = Instantiate(PlayerUI);
+            UI_copy.GetComponent<PlayerUI>().SetUp(this);
+
+            GameObject canvas = GameObject.FindGameObjectWithTag("Canvas");
+            if (canvas != null)
+            {
+                UI_copy.transform.parent = canvas.transform;
+                UI_copy.transform.localScale = new Vector3(1, 1, 1);
+            }
         }
 
         for(int i = 0; i < Gamepad.all.Count; i++)

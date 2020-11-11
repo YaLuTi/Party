@@ -6,6 +6,7 @@ public class FacilityArea : MonoBehaviour
 {
     public int PlayersNum = 0;
     protected bool IsNeedAll = false;
+    public bool IsUsing = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,5 +25,10 @@ public class FacilityArea : MonoBehaviour
         {
             return;
         }
+    }
+
+    public virtual void OnCancel()
+    {
+
     }
 }
