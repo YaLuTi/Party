@@ -6,7 +6,7 @@ public class DeskItem : MonoBehaviour
 {
     MeshRenderer meshRenderer;
     public Material highLight;
-    Material instanceHighLight;
+    List<Material> instanceHighLight = new List<Material>();
 
     public string ItemName = "ItemName";
     [TextArea]
@@ -16,13 +16,31 @@ public class DeskItem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
-        Material[] mats = new Material[2];
-        mats[0] = meshRenderer.materials[0];
-        mats[1] = highLight;
-        meshRenderer.materials = mats;
-        instanceHighLight = meshRenderer.materials[1];
-        instanceHighLight.SetFloat("_Fresnel_Multiplier", 0);
+        if (GetComponent<MeshRenderer>())
+        {
+            meshRenderer = GetComponent<MeshRenderer>();
+            Material[] mats = new Material[2];
+            mats[0] = meshRenderer.materials[0];
+            mats[1] = highLight;
+            meshRenderer.materials = mats;
+            instanceHighLight.Add(meshRenderer.materials[1]);
+            instanceHighLight[0].SetFloat("_Fresnel_Multiplier", 0);
+        }
+
+        else if(GetComponentInChildren<MeshRenderer>())
+        {
+            MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
+            for(int i = 0; i < meshRenderers.Length; i++)
+            {
+                Material[] mats = new Material[2];
+                mats[0] = meshRenderers[i].materials[0];
+                mats[1] = highLight;
+                meshRenderers[i].materials = mats;
+                instanceHighLight.Add(meshRenderers[i].materials[1]);
+                instanceHighLight[i].SetFloat("_Fresnel_Multiplier", 0);
+            }
+        }
+        
     }
 
     // Update is called once per frame
@@ -33,11 +51,17 @@ public class DeskItem : MonoBehaviour
 
     public void Choose()
     {
-        instanceHighLight.SetFloat("_Fresnel_Multiplier", 1);
+        for(int i = 0; i < instanceHighLight.Count; i++)
+        {
+            instanceHighLight[i].SetFloat("_Fresnel_Multiplier", 1);
+        }
     }
 
     public void Cancel()
     {
-        instanceHighLight.SetFloat("_Fresnel_Multiplier", 0);
+        for (int i = 0; i < instanceHighLight.Count; i++)
+        {
+            instanceHighLight[i].SetFloat("_Fresnel_Multiplier", 0);
+        }
     }
 }
