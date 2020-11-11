@@ -10,7 +10,9 @@ public class DeskItem : MonoBehaviour
 
     public string ItemName = "ItemName";
     [TextArea]
-    public string ItemDescription = "ItemDescription";
+    public string ItemIntro = "ItemIntro";
+
+    public Vector3 RotationOffset;
     // Start is called before the first frame update
     void Start()
     {
