@@ -115,7 +115,12 @@ public class PlayerIdentity : MonoBehaviour
     public void InputEnable()
     {
         playerInput.SwitchCurrentActionMap("GamePlay");
-        // StartCoroutine(_InputEnable());
+    }
+
+    public void PlayerInputEnable()
+    {
+        // playerInput.SwitchCurrentActionMap("GamePlay");
+        StartCoroutine(_InputEnable());
     }
 
     IEnumerator _InputEnable()

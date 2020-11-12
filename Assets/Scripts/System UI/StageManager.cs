@@ -127,7 +127,7 @@ public class StageManager : MonoBehaviour
     {
         for (int i = 0; i < players.Count; i++)
         {
-            players[i].GetComponent<PlayerIdentity>().InputEnable();
+            players[i].GetComponent<PlayerIdentity>().PlayerInputEnable();
         }
     }
        
@@ -180,7 +180,7 @@ public class StageManager : MonoBehaviour
         if (Testing)
         {
             Debug.Log("Add");
-            playerInput.transform.root.GetComponent<PlayerIdentity>().InputEnable();
+            playerInput.transform.root.GetComponent<PlayerIdentity>().PlayerInputEnable();
             playerInput.SwitchCurrentActionMap("GamePlay");
             // Destroy(playerInput.transform.root.GetComponentInChildren<PlayerCreating>());
             players.Add((playerInput.transform.root.gameObject));

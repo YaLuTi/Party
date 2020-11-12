@@ -57,7 +57,7 @@ public class DeskFacility : FacilityArea
 
             if (gamepad.buttonSouth.wasPressedThisFrame)
             {
-                if (IsReady)
+                if (IsReady && !UI.activeSelf)
                 {
                     UI.SetActive(true);
 
@@ -83,10 +83,13 @@ public class DeskFacility : FacilityArea
                 {
                     playableDirector.Stop();
                     playBack.Play();
+
                     FacilityManager.UsingDirector = playBack;
+
                     StageManager.EnablePlayerControl();
                     deskItems[choosing].Cancel();
                     IsUsing = false;
+                    IsReady = false;
                 }
             }
 
