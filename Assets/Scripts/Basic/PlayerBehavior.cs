@@ -341,8 +341,9 @@ public class PlayerBehavior : MonoBehaviour
         if (IsHolding)
         {
             itemHand.DropHoldingItem(info.bulletForce / 10);
-            IsHolding = false;
             ThrowStrength = 3f;
+            ThrowPower1 = 0.01f;
+            IsHolding = false;
             IsThrowing = false;
             IsThrowing2 = false;
         }
@@ -363,6 +364,8 @@ public class PlayerBehavior : MonoBehaviour
         if (IsHolding)
         {
             itemHand.DropHoldingItem();
+            ThrowStrength = 3f;
+            ThrowPower1 = 0.01f;
             IsHolding = false;
             IsThrowing = false;
             IsThrowing2 = false;

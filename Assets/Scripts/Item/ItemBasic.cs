@@ -131,7 +131,22 @@ public class ItemBasic : MonoBehaviour
         transform.localPosition = HoldedPosition;
         transform.localRotation = Quaternion.Euler(HoldedRotation);
         IsHolded = true;
-        PlayerID = GetComponentInParent<PlayerIdentity>().PlayerID;
+        if (GetComponentInParent<PlayerIdentity>())
+        {
+            PlayerID = GetComponentInParent<PlayerIdentity>().PlayerID;
+        }
+    }
+
+    // 這邊寫的挺爛的 應該要由Call的人去Set位置
+
+    public void Put(Transform t)
+    {
+        transform.parent = t;
+        IsHolded = true;
+        if (GetComponentInParent<PlayerIdentity>())
+        {
+            PlayerID = GetComponentInParent<PlayerIdentity>().PlayerID;
+        }
     }
 
     public bool DurabilityCheck()

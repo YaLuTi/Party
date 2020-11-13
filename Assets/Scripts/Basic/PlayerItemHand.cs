@@ -103,7 +103,6 @@ public class PlayerItemHand : MonoBehaviour
     {
         HoldingItem.transform.parent = null;
         HoldingItem.GetComponent<ItemBasic>().IsHolded = false;
-        yield return new WaitForFixedUpdate();
         HoldingItem.GetComponent<Collider>().isTrigger = false;
         Rigidbody rb = HoldingItem.GetComponent<Rigidbody>();
         rb.isKinematic = false;
