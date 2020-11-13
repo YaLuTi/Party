@@ -30,6 +30,9 @@ public class Basic_Bullet : MonoBehaviour
     
     List<PlayerHitten> playerHittens = new List<PlayerHitten>();
     public int PlayerID;
+
+    public List<Basic_Bullet> basic_Bullets = new List<Basic_Bullet>();
+
     // Start is called before the first frame update
     public virtual void Start()
     {
@@ -46,13 +49,22 @@ public class Basic_Bullet : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (MaxDistnace > 0 && transform.localPosition.magnitude > MaxDistnace)
+        if (MaxDistnace > 0 && transform.localPosition.magnitude > MaxDistnace && !IsEnable)
         {
             GameObject g = Instantiate(CollisionEffect, transform.position, transform.rotation);
             Destroy(g, 2f);
             Destroy(this.gameObject, DestroyAfterCollision);
             rb.isKinematic = true;
             IsEnable = false;
+        }
+    }
+    public void AddIgnore(List<Basic_Bullet> list)
+    {
+        Collider collider = GetComponent<Collider>();
+        foreach (Basic_Bullet b in list)
+        {
+            basic_Bullets.Add(b);
+            Physics.IgnoreCollision(collider, b.transform.GetComponent<Collider>());
         }
     }
 
@@ -62,6 +74,13 @@ public class Basic_Bullet : MonoBehaviour
         if (time < CollisionDelay) return;
         if (!IsEnable) return;
         if (!((TargetMask.value & 1 << other.gameObject.layer) > 0)) return;
+        foreach (Basic_Bullet b in basic_Bullets)
+        {
+            if (b != null)
+            {
+                if (other.transform == b.transform) return;
+            }
+        }
 
         BulletHitInfo_AF bulletHitInfo = new BulletHitInfo_AF();
 

@@ -28,7 +28,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7093673167505153967}
+  m_Father: {fileID: 7323807326970977571}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!96 &3010884855923891854
@@ -146,7 +146,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7323807326970977571}
-  m_Layer: 0
+  - component: {fileID: 8924925067481218992}
+  - component: {fileID: 8924925067481218993}
+  - component: {fileID: 9097383041871424409}
+  - component: {fileID: 8198928019578520282}
+  m_Layer: 9
   m_Name: IceLance_Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160,58 +164,23 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3780011044116398394}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 7093673167505153967}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &7093673167505153962
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7093673167505153967}
-  - component: {fileID: 7093673167505153960}
-  - component: {fileID: 7093673167505153961}
-  - component: {fileID: 7487827654126046081}
-  - component: {fileID: 7521591513471951554}
-  m_Layer: 9
-  m_Name: Collision
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7093673167505153967
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7093673167505153962}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3.8782923, y: 0.3045075, z: 0.41374785}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7971473323322978074}
   - {fileID: 7971416776983445142}
   - {fileID: 6668249144230587886}
-  m_Father: {fileID: 7323807326970977571}
+  m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7093673167505153960
+--- !u!114 &8924925067481218992
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7093673167505153962}
+  m_GameObject: {fileID: 3780011044116398394}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e787e7867e4ec347be2554a24d96e34, type: 3}
@@ -275,13 +244,15 @@ MonoBehaviour:
     m_RotationOrder: 4
   MaxDistnace: -1
   MinSpeed: 0
---- !u!54 &7093673167505153961
+  PlayerID: 0
+  basic_Bullets: []
+--- !u!54 &8924925067481218993
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7093673167505153962}
+  m_GameObject: {fileID: 3780011044116398394}
   serializedVersion: 2
   m_Mass: 2
   m_Drag: 0
@@ -291,13 +262,13 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 2
---- !u!136 &7487827654126046081
+--- !u!136 &9097383041871424409
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7093673167505153962}
+  m_GameObject: {fileID: 3780011044116398394}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
@@ -305,13 +276,13 @@ CapsuleCollider:
   m_Height: 0.83357966
   m_Direction: 2
   m_Center: {x: 0, y: 0.029999971, z: 0.14082879}
---- !u!82 &7521591513471951554
+--- !u!82 &8198928019578520282
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7093673167505153962}
+  m_GameObject: {fileID: 3780011044116398394}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: de4cd94347295cf4995c8a6a1b8b23f8,
@@ -9868,7 +9839,7 @@ Transform:
   m_Children:
   - {fileID: 7971658048801386540}
   - {fileID: 7971689799752851074}
-  m_Father: {fileID: 7093673167505153967}
+  m_Father: {fileID: 7323807326970977571}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &7814238818034971482
@@ -14703,7 +14674,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7093673167505153967}
+  m_Father: {fileID: 7323807326970977571}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &7814033599144390804

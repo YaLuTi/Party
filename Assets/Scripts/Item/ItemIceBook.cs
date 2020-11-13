@@ -27,9 +27,22 @@ public class ItemIceBook : Item_Staff
     {
         if (DurabilityCheck())
         {
-            GameObject b = Instantiate(bullet, FollowTransform.GetComponent<PlayerItemHand>().way.position + 1.2f * FollowTransform.GetComponent<PlayerItemHand>().way.transform.forward, FollowTransform.GetComponent<PlayerItemHand>().way.rotation);
-            Destroy(b, DestroyTime);
-            b.GetComponentInChildren<Basic_Bullet>().PlayerID = PlayerID;
+            List<Basic_Bullet> basic_Bullets = new List<Basic_Bullet>();
+            basic_Bullets.Add(Fire(0));
+            if (Enhaced)
+            {
+                basic_Bullets.Add(Fire(30));
+                basic_Bullets.Add(Fire(-30));
+            }
+
+            if (basic_Bullets.Count > 1)
+            {
+                foreach (Basic_Bullet b in basic_Bullets)
+                {
+                    b.AddIgnore(basic_Bullets);
+                }
+            }
+            
             if (Durability == 0)
             {
                 Destroy(this.gameObject);
@@ -39,6 +52,19 @@ public class ItemIceBook : Item_Staff
         {
             Destroy(this.gameObject);
         }
+    }
+
+    Basic_Bullet Fire(float angle)
+    {
+        GameObject b = Instantiate(bullet, FollowTransform.GetComponent<PlayerItemHand>().way.position + 1.2f * FollowTransform.GetComponent<PlayerItemHand>().way.transform.forward, FollowTransform.GetComponent<PlayerItemHand>().way.rotation);
+        b.transform.eulerAngles += new Vector3(0, angle, 0);
+        Destroy(b, DestroyTime);
+        if (b.GetComponent<Basic_Bullet>() != null)
+        {
+            b.GetComponent<Basic_Bullet>().PlayerID = PlayerID;
+            return b.GetComponent<Basic_Bullet>();
+        }
+        return null;
     }
 
     public override string OnUse(_playerItemStatus status)

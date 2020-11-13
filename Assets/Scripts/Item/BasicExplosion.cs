@@ -22,6 +22,7 @@ public class BasicExplosion : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        radius = radius * transform.localScale.x;
         StartCoroutine(explosion());
     }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
+using DG.Tweening;
 
 public class ItemBomb : ItemBasic
 {
@@ -103,11 +104,18 @@ public class ItemBomb : ItemBasic
         OnUse();
     }
 
+    public override void Enhance()
+    {
+        base.Enhance();
+        transform.DOScale(transform.localScale * 2, 0.2f);
+    }
+
     IEnumerator Explosion()
     {
         float PauseTime = 0;
         yield return new WaitForSeconds(delay);
         GameObject g = Instantiate(ExplosionVFX, transform.position, Quaternion.identity);
+        g.transform.localScale = this.transform.localScale * 2;
         g.GetComponent<BasicExplosion>().PlayerID = PlayerID;
         CameraController.CameraShake(CameraShakePower);
         Destroy(this.gameObject);

@@ -13,6 +13,7 @@ public class PSMeshRendererUpdater : MonoBehaviour
     List<Material[]> skinnedMaterials = new List<Material[]>();
     public bool IsActive = true;
     public float FadeTime = 1.5f;
+    public ParticleSystem[] particleSystems;
 
     bool currentActiveStatus;
     private bool needUpdateAlpha;
@@ -261,6 +262,12 @@ public class PSMeshRendererUpdater : MonoBehaviour
         if (MeshObject == null) return;
         UpdatePSMesh(MeshObject);
         AddMaterialToMesh(MeshObject);
+
+        for(int i = 0; i < particleSystems.Length; i++)
+        {
+            particleSystems[i].Play();
+        }
+
     }
 
     void CheckScaleIncludedParticles()
