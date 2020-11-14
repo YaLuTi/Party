@@ -7,13 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat_Parallax
-  m_Shader: {fileID: 4800000, guid: 943e7b4ce1cd9f44d9caed77f3f0f7fb, type: 3}
+  m_Name: Mat_Hoe
+  m_Shader: {fileID: 4800000, guid: 48861dc9537b6504f9a2488d669154e1, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3001
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -56,15 +56,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureSample0:
-        m_Texture: {fileID: 2800000, guid: f5838d06cf436164885d5479f4c54f3b, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _TextureSample1:
-        m_Texture: {fileID: 2800000, guid: 2ab42dd1be19f16448bd1feab4b61388, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _TextureSample2:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: b894bbf2ceb215547bf39ba65a5d3d3c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -72,14 +64,20 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _B_Fresnel_Bias: 0
+    - _B_Fresnel_Power: 5
+    - _B_Fresnel_Scale: 0
+    - _B_Metallic: 0
+    - _B_Smoothness: 0.527
     - _BumpScale: 1
-    - _Clamp_Max: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _Float0: 0
-    - _Float1: 3.14
-    - _Float2: -0.52
+    - _G_Fresnel_Bias: 0
+    - _G_Fresnel_Power: 5
+    - _G_Fresnel_Scale: 0
+    - _G_Metallic: 1
+    - _G_Smoothness: 0.711
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -87,30 +85,23 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Parallax_Height: 10
-    - _Parallax_Height1: 10
-    - _Parallax_Scale: 0.1
-    - _Parallax_Scale1: 0.1
+    - _R_Fresnel_Bias: 0
+    - _R_Fresnel_Power: 5
+    - _R_Fresnel_Scale: 0
+    - _R_Metallic: 1
+    - _R_Smoothness: 0.706
     - _SmoothnessTextureChannel: 0
-    - _Smoothstep_Max: 1
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Texture_Multiply: 1
-    - _Texture_Multiply1: 1
-    - _Texture_Power: 2
-    - _Texture_Power1: 1
-    - _Texture_Radius: 0.5
     - _UVSec: 0
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
+    - _B_Color: {r: 0.945, g: 0.5118114, b: 0.16443002, a: 0}
+    - _B_Fresnel_Color: {r: 1, g: 1, b: 1, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Emission_Color: {r: 47.937256, g: 47.937256, b: 47.937256, a: 1}
-    - _Emission_Color1: {r: 2.996078, g: 2.996078, b: 2.996078, a: 0}
-    - _Panner_Speed_X_Y: {r: 0.05, g: 0.025, b: 0, a: 0}
-    - _Panner_Speed_X_Y1: {r: 0.2, g: 0.1, b: 0, a: 0}
-    - _Smoothstep_Max_X_Y_Z_W: {r: 1, g: 1, b: 1, a: 0}
-    - _UV_Offset: {r: 0, g: 0, b: 0, a: 0}
-    - _UV_Offset_X_Y: {r: 0, g: 0, b: 0, a: 0}
-    - _UV_Offset_X_Y1: {r: 0, g: 0, b: 0, a: 0}
+    - _G_Color: {r: 1, g: 1, b: 1, a: 0}
+    - _G_Fresnel_Color: {r: 1, g: 1, b: 1, a: 0}
+    - _R_Color: {r: 0.29799998, g: 0.29799998, b: 0.29799998, a: 0}
+    - _R_Fresnel_Color: {r: 1, g: 1, b: 1, a: 0}
