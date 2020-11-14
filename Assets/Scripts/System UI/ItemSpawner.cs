@@ -8,7 +8,7 @@ public class ItemSpawner : MonoBehaviour
 
     [Header("SpawnEvent")]
     [HideInInspector]
-    public List<SpawnEvent> spawnEvents = new List<SpawnEvent>();
+    public List<SpawnItem> spawnEvents = new List<SpawnItem>();
     int e = 0;
 
     [HideInInspector]
@@ -99,7 +99,7 @@ public class ItemSpawner : MonoBehaviour
 }
 
 [System.Serializable]
-public class SpawnEvent
+public class SpawnItem
 {
     public float Weights;
     public GameObject Item;
