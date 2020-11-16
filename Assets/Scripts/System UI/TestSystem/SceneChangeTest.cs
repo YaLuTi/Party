@@ -111,7 +111,7 @@ public class SceneChangeTest : MonoBehaviour
         PlayerHitten.TestHP = 0;
         sceneAnimation.BlackOut();
 
-        /*asyncLoad = SceneManager.LoadSceneAsync(SceneArray[scene]);
+        asyncLoad = SceneManager.LoadSceneAsync(SceneArray[scene]);
         while (!asyncLoad.isDone)
         {
             yield return null;
@@ -129,7 +129,7 @@ public class SceneChangeTest : MonoBehaviour
 
         sceneAnimation.BlackOut();
         yield return new WaitForSeconds(0.5f);
-        StageManager.LoadNewScene();*/
+        StageManager.LoadNewScene();
         /*asyncLoad = SceneManager.LoadSceneAsync(ModeArray[ModeChoosing], LoadSceneMode.Additive);
         while (!asyncLoad.isDone)
         {
