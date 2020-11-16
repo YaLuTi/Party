@@ -58,8 +58,6 @@ public class ScoreManager : MonoBehaviour
             Array.Sort(scores, rank);
             Array.Reverse(rank);
 
-            StageManager.scores = rank;
-
             playableDirector.Play();
         }
     }

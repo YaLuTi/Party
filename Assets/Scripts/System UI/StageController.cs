@@ -50,11 +50,6 @@ public class StageController : MonoBehaviour
         }*/
     }
 
-    public void LoadEndScene()
-    {
-        StageManager.LoadEnd();
-    }
-
     public void GameEnd()
     {
         Debug.Log("A");

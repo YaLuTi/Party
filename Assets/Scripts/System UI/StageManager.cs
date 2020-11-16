@@ -38,7 +38,6 @@ public class StageManager : MonoBehaviour
 
     public GameObject Canvas;
 
-
     public delegate void PlayerJoinHandler(GameObject player, int num);
     public event PlayerJoinHandler OnPlayerJoin;
 
@@ -96,11 +95,6 @@ public class StageManager : MonoBehaviour
             TriggerLoadScene = false;
             EndDirector.Play();
             FacilityManager.UsingDirector = EndDirector;
-        }
-        if (TriggerLoadEnd)
-        {
-            TriggerLoadEnd = false;
-            LoadEndScene();
         }
     }
 
@@ -232,63 +226,6 @@ public class StageManager : MonoBehaviour
         GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Stop();
     }
 
-    // Load to end scene
-    public static void LoadEnd()
-    {
-        TriggerLoadEnd = true;
-    }
-
-    public void LoadEndScene()
-    {
-        StartCoroutine(_LoadEndScene());
-    }
-
-    IEnumerator _LoadEndScene()
-    {
-        for (int i = 0; i < players.Count; i++)
-        {
-            players[i].GetComponent<PlayerIdentity>().SetToAnimationMode();
-        }
-        yield return new WaitForSeconds(1.2f);
-        // AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(2);
-
-        // Wait until the asynchronous scene fully loads
-        /*while (!asyncLoad.isDone)
-        {
-            yield return null;
-        }*/
-
-        yield return new WaitForFixedUpdate();
-
-        StageInfo stageInfo;
-        stageInfo = GameObject.FindGameObjectWithTag("StageInfo").GetComponent<StageInfo>();
-
-        Debug.Log(players.Count);
-        for (int i = 0; i < players.Count; i++)
-        {
-            if (i == 0)
-            {
-                players[scores[i]].GetComponent<PlayerIdentity>().SetToPosition(stageInfo.SpawnPosition[0]);
-                players[scores[i]].GetComponent<PlayerIdentity>().SetToRotation(stageInfo.SpawnRotation[0]);
-                players[scores[i]].GetComponent<PlayerIdentity>().SetKing();
-                players[scores[i]].GetComponentInChildren<Animator>().SetTrigger("Sit");
-            }
-            else if (i == players.Count - 1)
-            {
-                players[scores[i]].GetComponent<PlayerIdentity>().SetToPosition(stageInfo.SpawnPosition[3]);
-                players[scores[i]].GetComponent<PlayerIdentity>().SetToRotation(stageInfo.SpawnRotation[3]);
-                players[scores[i]].GetComponentInChildren<Animator>().SetTrigger("Die");
-            }
-            else
-            {
-                players[scores[i]].GetComponent<PlayerIdentity>().SetToPosition(stageInfo.SpawnPosition[i]);
-                players[scores[i]].GetComponent<PlayerIdentity>().SetToRotation(stageInfo.SpawnRotation[i]);
-                players[scores[i]].GetComponentInChildren<Animator>().SetTrigger("Clap");
-            }
-        }
-        yield return null;
-    }
-
     // Set End scene
 
     // Load normal Scene
@@ -304,58 +241,6 @@ public class StageManager : MonoBehaviour
         {
             players[i].GetComponent<PlayerIdentity>().SetRagData();
         }
-        yield return null;
-    }
-
-    // Load normal Scene
-    public void LoadScene()
-    {
-        inputManager.enabled = false;
-        StartCoroutine(_LoadScene());
-    }
-
-    IEnumerator _LoadScene()
-    {
-        // TransitionsPanel.DOAnchorPosY(0, 0.4f);
-        // TitleAudioSource.PlayOneShot(TitleAudioSource.clip);
-        yield return new WaitForSeconds(0.5f);
-
-        foreach(GameObject g in PlayerCraftUIList)
-        {
-            Destroy(g);
-        }
-
-        for (int i = 0; i < players.Count; i++)
-        {
-            players[i].GetComponent<PlayerIdentity>().SetRagData();
-        }
-        yield return new WaitForSeconds(1.2f);
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("DeathMatchBrawl", LoadSceneMode.Additive);
-
-        // Wait until the asynchronous scene fully loads
-        while (!asyncLoad.isDone)
-        {
-            yield return null;
-        }
-
-        AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync("CharacterChoose");
-        while (!asyncUnload.isDone)
-        {
-            yield return null;
-        }
-
-        // TARGET LOCK
-        targetGroup = GameObject.FindGameObjectWithTag("CineGroup").GetComponent<CinemachineTargetGroup>();
-        virtualCamera = GameObject.FindGameObjectWithTag("Cine").GetComponent<CinemachineVirtualCamera>();
-        if (targetGroup != null)
-        {
-            for(int i = 0; i < players.Count; i++)
-            {
-                targetGroup.AddMember(players[i].GetComponentInChildren<PlayerInput>().transform, 1, 0);
-            }
-        }
-
-        OnBattleScene();
         yield return null;
     }
 

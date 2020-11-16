@@ -82,6 +82,14 @@ public class ItemSpawner : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        foreach(GameObject g in SpawnItem)
+        {
+            Destroy(g);
+        }
+    }
+
     /*IEnumerator RunSpawnEvent()
     {
         for (int i = 0; i < spawnEvents[e].ItemQuantity; i++)

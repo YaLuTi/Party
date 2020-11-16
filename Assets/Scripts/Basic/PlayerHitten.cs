@@ -166,9 +166,9 @@ public class PlayerHitten : MonoBehaviour
             Health = MaxHealth;
             OnHealthChanged?.Invoke(this, 0, Health);
             ragdollControl.IsDead = false;
-            Dead = false;
         }
         yield return new WaitForSeconds(4.5f);
+        Dead = false;
         IsInvincible = false;
         yield return null;
     }
@@ -203,9 +203,9 @@ public class PlayerHitten : MonoBehaviour
     public void AddtionalDeath()
     {
         if (Dead) return;
+        Dead = true;
         StartCoroutine(Respawn(0.1f));
         OnDeath?.Invoke(this);
-        Dead = true;
     }
 
     public bool IsGettingUp()

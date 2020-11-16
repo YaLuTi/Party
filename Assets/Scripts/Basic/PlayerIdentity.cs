@@ -209,6 +209,7 @@ public class PlayerIdentity : MonoBehaviour
     public void Freeze()
     {
         footIK_AF.followTerrain = false;
+        playerInput.SwitchCurrentActionMap("None");
         foreach (Rigidbody rb in rbs)
         {
             rb.velocity = Vector3.zero;

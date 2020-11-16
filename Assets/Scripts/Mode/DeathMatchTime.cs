@@ -25,7 +25,11 @@ public class DeathMatchTime : DeathmatchBrawl
             if (!IsEnd)
             {
                 IsEnd = true;
+
+                // Finish改成由SceneManager發
+
                 Finish.Play();
+                FinishEvent();
                 StartCoroutine(_FinishEvent());
             }
         }
@@ -80,14 +84,11 @@ public class DeathMatchTime : DeathmatchBrawl
     }
     public override void OnPlayerDeath(PlayerHitten playerHitten)
     {
-        Debug.Log("FFF");
         if (IsEnd)
         {
             Debug.Log(IsEnd);
-            Debug.Log("XXX");
             return;
         }
-        Debug.Log("EEE");
         int num = playerHitten.LastDamagedID;
         if(num == -1)
         {

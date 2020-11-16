@@ -159,6 +159,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (!transform.root.GetComponent<PlayerHitten>().Dead)
         {
+            Debug.Log("Death");
             BulletHitInfo_AF bulletHitInfo_AF = new BulletHitInfo_AF();
             transform.root.GetComponent<PlayerHitten>().OnHit(bulletHitInfo_AF);
             transform.root.GetComponent<PlayerHitten>().AddtionalDeath();

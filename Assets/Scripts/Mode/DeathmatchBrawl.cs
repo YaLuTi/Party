@@ -26,9 +26,10 @@ public class DeathmatchBrawl : MonoBehaviour
         Lifes.Clear();
         playerHittens.Clear();
 
+        StageManager.instance.OnPlayerJoin += PlayerJoin;
+
         if (!First)
         {
-            StageManager.instance.OnPlayerJoin += PlayerJoin;
             First = true;
         }
         for(int i = 0; i < StageManager.players.Count; i++)
@@ -107,6 +108,7 @@ public class DeathmatchBrawl : MonoBehaviour
         int num = playerHittens.IndexOf(playerHitten);
         Lifes[num]--;
         UIs[num].GetComponent<Text>().text = Lifes[num].ToString();
+        Debug.Log(Lifes[num].ToString());
         if(Lifes[num] <= 0)
         {
             UIs[num].GetComponent<Text>().color = Color.red;
@@ -117,6 +119,11 @@ public class DeathmatchBrawl : MonoBehaviour
 
     public virtual void FinishEvent()
     {
+    }
 
+    private void OnDestroy()
+    {
+        Debug.Log("DDDDDDDD");
+        StageManager.instance.OnPlayerJoin -= PlayerJoin;
     }
 }

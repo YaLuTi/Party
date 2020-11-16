@@ -13,6 +13,7 @@ public class RoamingAI : MonoBehaviour
     public void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
+        RoamingArea = GameObject.FindGameObjectWithTag("Area").GetComponent<Area>();
 
         // PickNewDestination();
 
