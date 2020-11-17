@@ -100,7 +100,7 @@ public class DeathmatchBrawl : MonoBehaviour
         }
         UIs.Add(g);
         Debug.Log(UIs.Count);
-        // UIs[num].GetComponent<Text>().text = Lifes[num].ToString();
+        UIs[num].GetComponent<Text>().text = Lifes[num].ToString();
     }
 
     public virtual void OnPlayerDeath(PlayerHitten playerHitten)
