@@ -38,6 +38,7 @@ public class EnhanceFacility : FacilityArea
         if (playerBehavior.IsHolding)
         {
             GameObject g = playerBehavior.itemHand.HoldingItem;
+            if (g.GetComponent<ItemBasic>().Durability <= 0) return;
             playerBehavior.OnHit();
             
             g.GetComponent<Collider>().isTrigger = true;
@@ -76,9 +77,12 @@ public class EnhanceFacility : FacilityArea
         rb.velocity = Vector3.zero;
         g.transform.parent = null;
 
-        g.GetComponentInChildren<PSMeshRendererUpdater>(true).transform.gameObject.SetActive(true);
+        if (g.GetComponentInChildren<PSMeshRendererUpdater>(true))
+        {
+            g.GetComponentInChildren<PSMeshRendererUpdater>(true).transform.gameObject.SetActive(true);
+            g.GetComponentInChildren<PSMeshRendererUpdater>().UpdateMeshEffect();
+        }
 
-        g.GetComponentInChildren<PSMeshRendererUpdater>().UpdateMeshEffect();
         g.GetComponent<ItemBasic>().IsHolded = false;
         g.GetComponent<ItemBasic>().Enhance();
         

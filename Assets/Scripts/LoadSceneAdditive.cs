@@ -24,7 +24,6 @@ public class LoadSceneAdditive : MonoBehaviour
             SceneManager.LoadScene("TrueMainMenu", LoadSceneMode.Additive);
             MainCamera.SetActive(false);
             stageInfo.SetActive(false);
-            Spawner.SetActive(false);
         }
 
         if (!StageManager.Static_Testing) return;

@@ -16,6 +16,8 @@ public class SceneChangeTest : MonoBehaviour
     int NowScene = 0;
     int NowMode = 0;
 
+    public bool Title = false;
+
     float dpiScale;
     public GUIStyle guiStyleHeader = new GUIStyle();
 
@@ -26,7 +28,10 @@ public class SceneChangeTest : MonoBehaviour
     {
         if (instance == null)
         {
-            SceneManager.LoadSceneAsync(ModeArray[ModeChoosing], LoadSceneMode.Additive);
+            if (!Title)
+            {
+                SceneManager.LoadSceneAsync(ModeArray[ModeChoosing], LoadSceneMode.Additive);
+            }
             DontDestroyOnLoad(this.gameObject);
             instance = this;
         }
