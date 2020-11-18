@@ -255,7 +255,7 @@ namespace Aura2API
         {
             get
             {
-                return LightComponent.shadows != LightShadows.None && useShadow;
+                return QualitySettings.shadows != ShadowQuality.Disable && LightComponent.shadows != LightShadows.None && useShadow;
             }
         }
 
@@ -268,6 +268,15 @@ namespace Aura2API
             {
                 return LightComponent.cookie != null && useCookie;
             }
+        }
+
+        /// <summary>
+        /// Tells if this component is actively computing data (directly related to the existence of any enabled AuraCamera)
+        /// </summary>
+        public bool IsActive
+        {
+            get;
+            private set;
         }
         #endregion
 
@@ -314,63 +323,18 @@ namespace Aura2API
 
         #region Functions
         /// <summary>
-        /// Function run when the OnPreCullEvent is raised on the Aura main component
-        /// </summary>
-        private void Camera_onPreCull(Camera camera)
-        {
-            if(this == null)
-            {
-                Camera.onPreCull -= Camera_onPreCull;
-                return;
-            }
-
-            if(CastsShadows)
-            {
-                switch(Type)
-                {
-                    case LightType.Point :
-                        {
-                            _copyShadowmapCommandBuffer.Clear();
-                        }
-                        break;
-                }
-            }
-
-            UpdateBoundingSphere();
-        }
-
-        /// <summary>
-        ///     Called when any camera is a about to render
-        /// </summary>
-        private void Camera_onPreRender(Camera camera)
-        {
-            if(this == null)
-            {
-                Camera.onPreRender -= Camera_onPreRender;
-                return;
-            }
-
-            if(CastsCookie)
-            {
-                CopyCookieMap();
-            }
-
-            PackParameters(camera);
-        }
-
-        /// <summary>
-        /// Called when the amount of cascades is changed
-        /// </summary>
-        private void LightsCommonDataManager_OnCascadesCountChanged()
-        {
-            Reinitialize();
-        }
-
-        /// <summary>
         /// Initializes the component (command buffers, registrations, events, managed members ...)
         /// </summary>
         private void Initialize()
         {
+            AuraCamera.OnRegisteredAuraCamerasListChanged += AuraCamera_OnRegistredAuraCamerasListChanged;
+            
+            IsActive = AuraCamera.HasRegisteredAuraCameras;
+            if (!IsActive)
+            {
+                return;
+            }
+
             InitializeResources();
 
             _lightComponent = GetComponent<Light>();
@@ -435,7 +399,7 @@ namespace Aura2API
 
                             _storeShadowDataCommandBuffer.Blit(null, new RenderTargetIdentifier(shadowDataRenderTexture), _storeShadowDataMaterial);
 
-                            AuraCamera.CommonDataManager.LightsCommonDataManager.OnCascadesCountChanged += LightsCommonDataManager_OnCascadesCountChanged;
+                            AuraCamera.CommonDataManager.LightsCommonDataManager.OnShadowsSettingsChanged += LightsCommonDataManager_OnCascadesCountChanged;
                         }
                         break;
                 }
@@ -501,6 +465,8 @@ namespace Aura2API
         /// </summary>
         private void Uninitialize()
         {
+            AuraCamera.OnRegisteredAuraCamerasListChanged -= AuraCamera_OnRegistredAuraCamerasListChanged;
+
             if (_isInitialized)
             {
                 if (OnUninitialize != null)
@@ -540,7 +506,7 @@ namespace Aura2API
                                 shadowDataRenderTexture.Release();
                                 shadowDataRenderTexture.Destroy();
 
-                                AuraCamera.CommonDataManager.LightsCommonDataManager.OnCascadesCountChanged -= LightsCommonDataManager_OnCascadesCountChanged;
+                                AuraCamera.CommonDataManager.LightsCommonDataManager.OnShadowsSettingsChanged -= LightsCommonDataManager_OnCascadesCountChanged;
                             }
                             break;
                     }
@@ -568,6 +534,84 @@ namespace Aura2API
         {
             Uninitialize();
             Initialize();
+        }
+
+        /// <summary>
+        /// Functions called when any AuraCamera register or unregister
+        /// </summary>
+        private void AuraCamera_OnRegistredAuraCamerasListChanged()
+        {
+            if ((!IsActive && AuraCamera.HasRegisteredAuraCameras) || (IsActive && !AuraCamera.HasRegisteredAuraCameras))
+            {
+                Reinitialize();
+            }
+        }
+
+        /// <summary>
+        /// Function run when the OnPreCullEvent is raised on the Aura main component
+        /// </summary>
+        private void Camera_onPreCull(Camera camera)
+        {
+#if UNITY_EDITOR
+            if (IsActive && (AuraCamera.IsFirstRegisteredCamera(camera) || CameraExtensions.IsSceneViewCamera(camera)))
+#else
+            if (IsActive && AuraCamera.IsFirstRegisteredCamera(camera))
+#endif
+            {
+                if (this == null)
+                {
+                    Camera.onPreCull -= Camera_onPreCull;
+                    return;
+                }
+
+                if (CastsShadows)
+                {
+                    switch (Type)
+                    {
+                        case LightType.Point:
+                            {
+                                _copyShadowmapCommandBuffer.Clear();
+                            }
+                            break;
+                    }
+                }
+
+                UpdateBoundingSphere();
+            }
+        }
+
+        /// <summary>
+        ///     Called when any camera is a about to render
+        /// </summary>
+        private void Camera_onPreRender(Camera camera)
+        {
+#if UNITY_EDITOR
+            if (IsActive && ((AuraCamera.IsFirstRegisteredCamera(camera) || CameraExtensions.IsSceneViewCamera(camera)) || Type == LightType.Directional))
+#else
+            if (IsActive && (AuraCamera.IsFirstRegisteredCamera(camera) || Type == LightType.Directional))
+#endif
+            {
+                if (this == null)
+                {
+                    Camera.onPreRender -= Camera_onPreRender;
+                    return;
+                }
+
+                if (CastsCookie)
+                {
+                    CopyCookieMap();
+                }
+
+                PackParameters(camera);
+            }
+        }
+
+        /// <summary>
+        /// Called when the amount of cascades is changed
+        /// </summary>
+        private void LightsCommonDataManager_OnCascadesCountChanged()
+        {
+            Reinitialize();
         }
 
         /// <summary>

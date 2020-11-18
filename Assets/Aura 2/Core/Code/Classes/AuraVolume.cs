@@ -248,6 +248,15 @@ namespace Aura2API
                         || (tintInjection.injectionParameters.enable && tintInjection.injectionParameters.useNoiseMask));
             }
         }
+
+        /// <summary>
+        /// Tells if this component is actively computing data (directly related to the existence of any enabled AuraCamera)
+        /// </summary>
+        public bool IsActive
+        {
+            get;
+            private set;
+        }
         #endregion
 
         #region Events
@@ -281,10 +290,7 @@ namespace Aura2API
 
         private void OnDisable()
         {
-            if (_isInitialized)
-            {
-                Uninitialize();
-            }
+            Uninitialize();
         }
 
         private void Reset()
@@ -299,6 +305,14 @@ namespace Aura2API
         /// </summary>
         private void Initialize()
         {
+            AuraCamera.OnRegisteredAuraCamerasListChanged += AuraCamera_OnRegistredAuraCamerasListChanged;
+
+            IsActive = AuraCamera.HasRegisteredAuraCameras;
+            if (!IsActive)
+            {
+                return;
+            }
+
             AuraCamera.CommonDataManager.VolumesCommonDataManager.RegisterVolume(this);
 
             Camera.onPreCull += Camera_onPreCull;
@@ -320,15 +334,20 @@ namespace Aura2API
         /// </summary>
         private void Uninitialize()
         {
-            if (OnUninitialize != null)
+            AuraCamera.OnRegisteredAuraCamerasListChanged -= AuraCamera_OnRegistredAuraCamerasListChanged;
+
+            if(_isInitialized)
             {
-                OnUninitialize(this);
+                if (OnUninitialize != null)
+                {
+                    OnUninitialize(this);
+                }
+
+                Camera.onPreCull -= Camera_onPreCull;
+                Camera.onPreRender -= Camera_onPreRender;
+
+                _isInitialized = false;
             }
-
-            Camera.onPreCull -= Camera_onPreCull;
-            Camera.onPreRender -= Camera_onPreRender;
-
-            _isInitialized = false;
         }
 
         /// <summary>
@@ -341,17 +360,35 @@ namespace Aura2API
         }
 
         /// <summary>
+        /// Functions called when any AuraCamera register or unregister
+        /// </summary>
+        private void AuraCamera_OnRegistredAuraCamerasListChanged()
+        {
+            if ((!IsActive && AuraCamera.HasRegisteredAuraCameras) || (IsActive && !AuraCamera.HasRegisteredAuraCameras))
+            {
+                Reinitialize();
+            }
+        }
+
+        /// <summary>
         ///     Called when Aura raises OnPreCullEvent
         /// </summary>
         private void Camera_onPreCull(Camera camera)
         {
-            if (this == null)
+#if UNITY_EDITOR
+            if (IsActive && (AuraCamera.IsFirstRegisteredCamera(camera) || CameraExtensions.IsSceneViewCamera(camera)))
+#else
+            if (IsActive && AuraCamera.IsFirstRegisteredCamera(camera))
+#endif
             {
-                Camera.onPreCull -= Camera_onPreCull;
-                return;
-            }
+                if (this == null)
+                {
+                    Camera.onPreCull -= Camera_onPreCull;
+                    return;
+                }
 
-            UpdateBoundingSphere();
+                UpdateBoundingSphere();
+            }
         }
 
         /// <summary>
@@ -359,13 +396,20 @@ namespace Aura2API
         /// </summary>
         private void Camera_onPreRender(Camera camera)
         {
-            if (this == null)
+#if UNITY_EDITOR
+            if (IsActive && (AuraCamera.IsFirstRegisteredCamera(camera) || CameraExtensions.IsSceneViewCamera(camera)))
+#else
+            if (IsActive && AuraCamera.IsFirstRegisteredCamera(camera))
+#endif
             {
-                Camera.onPreRender -= Camera_onPreRender;
-                return;
-            }
+                if (this == null)
+                {
+                    Camera.onPreRender -= Camera_onPreRender;
+                    return;
+                }
 
-            PackData();
+                PackData();
+            }
         }
 
         /// <summary>

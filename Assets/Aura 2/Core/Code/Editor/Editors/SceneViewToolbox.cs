@@ -403,8 +403,7 @@ namespace Aura2API
         {
             get
             {
-                return _toolboxExpansionWeight > 0.0f || _toolboxExpansionWeight < 1.0f
-                    || _toolboxApparitionWeight > 0.0f || _toolboxApparitionWeight < 1.0f;
+                return (_toolboxExpansionWeight > 0.0f && _toolboxExpansionWeight < 1.0f) || (_toolboxApparitionWeight > 0.0f && _toolboxApparitionWeight < 1.0f) || (_presetsApparitionWeight > 0.0f && _presetsApparitionWeight < 1.0f);
             }
         }
 
@@ -499,8 +498,12 @@ namespace Aura2API
 
                 if (_sceneViewEvent.type == EventType.Layout)
                 {
-                    DrawActivationToggleButton();
                     DrawDisplayToggleButton();
+                    
+                    if( AuraEditorPrefs.DisplayPreviewButtonInSceneView)
+                    {
+                        DrawActivationToggleButton();
+                    }
                 }
 
                 if (ShouldRepaintSceneView)

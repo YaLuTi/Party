@@ -332,6 +332,14 @@ namespace Aura2API
             Matrix4x4 projectionMatrix = cameraComponent.GetProjectionMatrix(eye);
             matrixToFill = projectionMatrix * worldToCameraMatrix; // worldToClipMatrix
 
+            if (cameraComponent.orthographic)
+            {
+                matrixToFill[2,0] = -worldToCameraMatrix[2,0];
+                matrixToFill[2,1] = -worldToCameraMatrix[2,1];
+                matrixToFill[2,2] = -worldToCameraMatrix[2,2];
+                matrixToFill[2,3] = -worldToCameraMatrix[2,3];
+            }
+
             cameraComponent.nearClipPlane = tmpNear;
             cameraComponent.farClipPlane = tmpFar;
         }

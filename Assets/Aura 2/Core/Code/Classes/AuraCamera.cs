@@ -17,6 +17,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Profiling;
+using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -81,6 +82,10 @@ namespace Aura2API
         /// The manager in charge of registering Aura lights and collecting their common (unculled) data
         /// </summary>
         private static CommonDataManager _commonDataManager;
+        /// <summary>
+        /// List of registred (active) AuraCamera components
+        /// </summary>
+        private static List<AuraCamera> _registeredAuraCamerasList = new List<AuraCamera>();
         #endregion
 
         #region Properties
@@ -163,6 +168,24 @@ namespace Aura2API
             get;
             private set;
         }
+
+        /// <summary>
+        /// Tells if any AuraCamera is registred
+        /// </summary>
+        public static bool HasRegisteredAuraCameras
+        {
+            get
+            {
+                return _registeredAuraCamerasList.Count > 0;
+            }
+        }
+        #endregion
+
+        #region Events
+        /// <summary>
+        /// Event raised when any AuraCamera register or unregister
+        /// </summary>
+        public static event Action OnRegisteredAuraCamerasListChanged; 
         #endregion
 
         #region Monobehaviour functions
@@ -216,12 +239,12 @@ namespace Aura2API
                 }
                 else
                 {
-                    Graphics.CopyTexture(src, dest);
+                    Graphics.Blit(src, dest);
                 }
             }
             catch
             {
-                Graphics.CopyTexture(src, dest);
+                Graphics.Blit(src, dest);
             }
 
             GL.Flush();
@@ -238,7 +261,8 @@ namespace Aura2API
             double currentTime = EditorApplication.timeSinceStartup;
             _editorDeltaTime = (float)(currentTime - Time);
             _editorTime = currentTime;
-            //editorTime += 1.0f/60.0f; //For recorder fixed framerate
+
+            //editorTime += 1.0f/60.0f; /////////////////////////////////////For recorder fixed framerate
         }
 #endif
 
@@ -258,6 +282,49 @@ namespace Aura2API
         public void SetLightProbesProxyGridResolution(Vector3Int resolution)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Registers the given AuraCamera to the static list
+        /// </summary>
+        /// <param name="auraCamera">The AuraCamera to register</param>
+        private static void Register(AuraCamera auraCamera)
+        {
+            _registeredAuraCamerasList.Add(auraCamera);
+            FireOnRegisteredAuraCamerasListChanged();
+        }
+
+        /// <summary>
+        /// Unregisters the given AuraCamera from the static list
+        /// </summary>
+        /// <param name="auraCamera">The AuraCamera to unregister</param>
+        /// 
+        private static void Unregister(AuraCamera auraCamera)
+        {
+            _registeredAuraCamerasList.Remove(auraCamera);
+            FireOnRegisteredAuraCamerasListChanged();
+        }
+
+        /// <summary>
+        /// Tells if the given camera is linked to the first registred AuraCamera.
+        /// This functions is useful to only run operations once per frame event if there are multiple cameras
+        /// </summary>
+        /// <param name="camera">The camera to test against</param>
+        /// <returns>True if the given camera is linked to the first registred AuraCamera, false otherwise</returns>
+        public static bool IsFirstRegisteredCamera(Camera camera)
+        {
+            return camera == _registeredAuraCamerasList[0].CameraComponent;
+        }
+
+        /// <summary>
+        /// Fires the OnRegisteredAuraCamerasListChanged event
+        /// </summary>
+        private static void FireOnRegisteredAuraCamerasListChanged()
+        {
+            if (OnRegisteredAuraCamerasListChanged != null)
+            {
+                OnRegisteredAuraCamerasListChanged();
+            }
         }
 
         /// <summary>
@@ -281,6 +348,8 @@ namespace Aura2API
 
             Shader.EnableKeyword("AURA");
 
+            Register(this);
+
             IsInitialized = true;
         }
 
@@ -297,6 +366,8 @@ namespace Aura2API
                 _frustum = null;
 
                 CommonDataManager.Dispose();
+
+                Unregister(this);
 
                 IsInitialized = false;
             }

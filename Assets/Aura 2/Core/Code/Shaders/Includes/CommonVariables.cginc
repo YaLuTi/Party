@@ -4,7 +4,7 @@
 *  Copyright (c) Raphaël Ernaelsten (@RaphErnaelsten)                      *
 *  All Rights Reserved.                                                    *
 *                                                                          *
-*  NOTICE: Aura 2 is a commercial project.                                 * 
+*  NOTICE: Aura 2 is a commercial project.                                 *
 *  All information contained herein is, and remains the property of        *
 *  Raphaël Ernaelsten.                                                     *
 *  The intellectual and technical concepts contained herein are            *
@@ -14,16 +14,40 @@
 *                                                                          *
 ***************************************************************************/
 
+#ifndef AURA2_COMMON_VARIABLES
+#define AURA2_COMMON_VARIABLES
+
 // Time (to be set from code)
 uniform float time;
 // Frame ID (to be set from code)
 uniform int _frameID;
 
+#if defined(SHADER_STAGE_COMPUTE)
 // SamplerStates
 uniform SamplerState _LinearClamp;
 uniform SamplerState _LinearRepeat;
 uniform SamplerState _PointClamp;
 uniform SamplerState _PointRepeat;
+#endif
+
+#if SHADER_TARGET < 50
+FP rcp(FP x)
+{
+	return 1.0f / x;
+}
+FP2 rcp(FP2 x)
+{
+	return 1.0f / x;
+}
+FP3 rcp(FP3 x)
+{
+	return 1.0f / x;
+}
+FP4 rcp(FP4 x)
+{
+	return 1.0f / x;
+}
+#endif
 
 // Const variables
 static const float pi = 3.141592653589793f;
@@ -43,3 +67,5 @@ uniform FP4 cameraDirection;
 uniform FP4 cameraRanges;
 uniform FP Aura_DepthBiasCoefficient;
 uniform FP Aura_DepthBiasReciproqualCoefficient;
+
+#endif // AURA2_COMMON_VARIABLES

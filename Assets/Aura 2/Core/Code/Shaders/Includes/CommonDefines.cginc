@@ -4,7 +4,7 @@
 *  Copyright (c) Raphaël Ernaelsten (@RaphErnaelsten)                      *
 *  All Rights Reserved.                                                    *
 *                                                                          *
-*  NOTICE: Aura 2 is a commercial project.                                 * 
+*  NOTICE: Aura 2 is a commercial project.                                 *
 *  All information contained herein is, and remains the property of        *
 *  Raphaël Ernaelsten.                                                     *
 *  The intellectual and technical concepts contained herein are            *
@@ -14,6 +14,9 @@
 *                                                                          *
 ***************************************************************************/
 
+#ifndef AURA2_COMMON_DEFINES
+#define AURA2_COMMON_DEFINES
+
 // Global define helpers
 //#define CONCATENATE_DEFINES(a, b) a##b // This seems to be a problem on some platforms :-/
 
@@ -21,21 +24,21 @@
 #define PRECISION_HALF
 
 #if defined(PRECISION_SIMPLE)
-	#define FP		float
-	#define FP2		float2
-	#define FP3		float3
-	#define FP4		float4
-	#define FP2x2	float2x2
-	#define FP3x3	float3x3
-	#define FP4x4	float4x4
+#define FP		float
+#define FP2		float2
+#define FP3		float3
+#define FP4		float4
+#define FP2x2	float2x2
+#define FP3x3	float3x3
+#define FP4x4	float4x4
 #elif defined(PRECISION_HALF)
-	#define FP		half
-	#define FP2		half2
-	#define FP3		half3
-	#define FP4		half4
-	#define FP2x2	half2x2
-	#define FP3x3	half3x3
-	#define FP4x4	half4x4
+#define FP		half
+#define FP2		half2
+#define FP3		half3
+#define FP4		half4
+#define FP2x2	half2x2
+#define FP3x3	half3x3
+#define FP4x4	half4x4
 #endif
 
 //#define FP2		CONCATENATE_DEFINES(FP, 2)
@@ -49,9 +52,9 @@
 #define NUM_THREAD_X 8
 #define NUM_THREAD_Y 8
 #if defined(SHADER_API_METAL) || defined(SHADER_API_VULKAN)
-	#define NUM_THREAD_Z 4
+#define NUM_THREAD_Z 4
 #else
-	#define NUM_THREAD_Z 8
+#define NUM_THREAD_Z 8
 #endif
 
 #define VISIBILITY_GROUPS_SIZE_X NUM_THREAD_X
@@ -61,17 +64,19 @@
 
 // Compilation defines
 #if defined(UNITY_COMPILER_HLSL) // HLSL only attributes
-	#define BRANCH					//[branch]
-	#define FLATTEN					//[flatten]
-	#define UNROLL					//[unroll]
-	#define LOOP					//[loop]
-	#define FASTOPT					//[fastopt]
-	#define ALLOW_UAV_CONDITION		//[allow_uav_condition]
+#define BRANCH					//[branch]
+#define FLATTEN					//[flatten]
+#define UNROLL					//[unroll]
+#define LOOP					//[loop]
+#define FASTOPT					//[fastopt]
+#define ALLOW_UAV_CONDITION		//[allow_uav_condition]
 #else
-	#define BRANCH
-	#define FLATTEN
-	#define UNROLL
-	#define LOOP
-	#define FASTOPT
-	#define ALLOW_UAV_CONDITION
+#define BRANCH
+#define FLATTEN
+#define UNROLL
+#define LOOP
+#define FASTOPT
+#define ALLOW_UAV_CONDITION
 #endif
+
+#endif // AURA2_COMMON_DEFINES

@@ -43,7 +43,8 @@ Shader "Hidden/Aura2/StorePointLightShadowMap"
 			#include "UnityCG.cginc"
 			#include "UnityShadowLibrary.cginc"
 			#include "../../Aura.cginc"
-		
+			
+			uniform SamplerState _LinearClamp;
 			float4x4 _WorldViewProj;
 
 			struct appdata
@@ -71,7 +72,7 @@ Shader "Hidden/Aura2/StorePointLightShadowMap"
 				float3 ray = GetNormalizedVectorFromNormalizedYawPitch(uv);
 				
 				#if UNITY_VERSION >= 201730
-					float depth = _ShadowMapTexture.SampleLevel(_PointClamp, ray, 0).x;
+					float depth = _ShadowMapTexture.SampleLevel(_LinearClamp, ray, 0).x;
 					return float4(depth, _LightProjectionParams.z, _LightProjectionParams.w, 0);
 				#else
 					float depth = SampleCubeDistance(ray);

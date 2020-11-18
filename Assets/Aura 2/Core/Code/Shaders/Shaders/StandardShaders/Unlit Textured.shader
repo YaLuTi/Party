@@ -4,7 +4,7 @@ Shader "Aura 2/Standard/Unlit Textured"
 {
 	Properties
 	{
-		_MainTex("Texture", 2D) = "gray" {}
+		_MainTex("Texture", 2D) = "white" {}
 		_Tint("Tint", Color) = (1,1,1,1)
 		[Toggle(_USEILLUMINATION_ON)] _UseIllumination("Use Illumination", Float) = 1
 		_IlluminationStrength("Illumination Strength", Float) = 1
@@ -148,17 +148,17 @@ Shader "Aura 2/Standard/Unlit Textured"
 				float4 staticSwitch4 = Color7;
 				#endif
 				float4 ColorAfterIllumination14 = staticSwitch4;
-				float localApplyAuraFog13_g18 = ( 0.0 );
-				float4 Color13_g18 = ColorAfterIllumination14;
-				float Depth1_g19 = eyeDepth;
-				float localRescaleDepth1_g19 = RescaleDepth( Depth1_g19 );
-				float3 appendResult2_g19 = (float3(ase_grabScreenPosNorm.r , ase_grabScreenPosNorm.g , localRescaleDepth1_g19));
-				float3 temp_output_36_0_g18 = appendResult2_g19;
-				float3 BufferCoordinates13_g18 = temp_output_36_0_g18;
-				float4 fogValue13_g18 = tex3D( Aura_VolumetricLightingTexture, temp_output_36_0_g18 );
-				Aura2_ApplyFog(Color13_g18, BufferCoordinates13_g18, fogValue13_g18);
+				float localApplyAuraFog13_g22 = ( 0.0 );
+				float4 Color13_g22 = ColorAfterIllumination14;
+				float Depth1_g23 = eyeDepth;
+				float localRescaleDepth1_g23 = RescaleDepth( Depth1_g23 );
+				float3 appendResult2_g23 = (float3(ase_grabScreenPosNorm.r , ase_grabScreenPosNorm.g , localRescaleDepth1_g23));
+				float3 temp_output_36_0_g22 = appendResult2_g23;
+				float3 BufferCoordinates13_g22 = temp_output_36_0_g22;
+				float4 fogValue13_g22 = tex3D( Aura_VolumetricLightingTexture, temp_output_36_0_g22 );
+				Aura2_ApplyFog(Color13_g22, BufferCoordinates13_g22, fogValue13_g22);
 				#ifdef _USEFOG_ON
-				float4 staticSwitch19 = Color13_g18;
+				float4 staticSwitch19 = Color13_g22;
 				#else
 				float4 staticSwitch19 = ColorAfterIllumination14;
 				#endif
@@ -177,27 +177,27 @@ Shader "Aura 2/Standard/Unlit Textured"
 }
 /*ASEBEGIN
 Version=16807
-1148;92;1150;775;1366.364;182.3197;1;False;False
+74;29;1087;913;3076.935;1275.948;3.133322;True;False
 Node;AmplifyShaderEditor.CommentaryNode;25;-1200,-544;Float;False;1093;472;Initiate Base Color;5;7;13;2;1;12;;1,0.4344828,0,1;0;0
-Node;AmplifyShaderEditor.TexturePropertyNode;1;-1152,-304;Float;True;Property;_MainTex;Texture;0;0;Create;False;0;0;False;0;None;None;False;gray;LockedToTexture2D;Texture2D;0;1;SAMPLER2D;0
-Node;AmplifyShaderEditor.SamplerNode;2;-880,-304;Float;True;Property;_TextureSample0;Texture Sample 0;1;0;Create;True;0;0;False;0;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.TexturePropertyNode;1;-1152,-304;Float;True;Property;_MainTex;Texture;0;0;Create;False;0;0;False;0;None;None;False;white;LockedToTexture2D;Texture2D;0;1;SAMPLER2D;0
 Node;AmplifyShaderEditor.ColorNode;12;-800,-496;Float;False;Property;_Tint;Tint;1;0;Create;True;0;0;False;0;1,1,1,1;1,1,1,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;2;-880,-304;Float;True;Property;_TextureSample0;Texture Sample 0;1;0;Create;True;0;0;False;0;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;13;-544,-400;Float;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.RegisterLocalVarNode;7;-352,-400;Float;False;Color;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.CommentaryNode;24;-1344,-48;Float;False;1372;358;Then apply Aura Illumination (with a material switch to leave the choice);5;5;14;4;9;8;;0.0147059,0.6738335,1,1;0;0
-Node;AmplifyShaderEditor.RangedFloatNode;5;-1296,192;Float;False;Property;_IlluminationStrength;Illumination Strength;3;0;Create;True;0;0;False;0;1;1;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RegisterLocalVarNode;7;-352,-400;Float;False;Color;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.GetLocalVarNode;8;-1232,64;Float;False;7;Color;1;0;OBJECT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.FunctionNode;31;-1006.854,112;Float;False;Apply Aura Illumination;5;;20;689e7cb88e5f45447bdfd7327e649316;0;2;13;COLOR;0,0,0,0;False;22;FLOAT;1;False;1;FLOAT4;17
+Node;AmplifyShaderEditor.RangedFloatNode;5;-1296,192;Float;False;Property;_IlluminationStrength;Illumination Strength;3;0;Create;True;0;0;False;0;1;1;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;9;-816,0;Float;False;7;Color;1;0;OBJECT;0;False;1;COLOR;0
+Node;AmplifyShaderEditor.FunctionNode;31;-1006.854,112;Float;False;Apply Aura Illumination;5;;20;689e7cb88e5f45447bdfd7327e649316;0;2;13;COLOR;0,0,0,0;False;22;FLOAT;1;False;1;FLOAT4;17
 Node;AmplifyShaderEditor.StaticSwitch;4;-592,48;Float;False;Property;_UseIllumination;Use Illumination;2;0;Create;True;0;0;False;0;0;1;1;True;;Toggle;2;Key0;Key1;Create;False;9;1;COLOR;0,0,0,0;False;0;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;3;COLOR;0,0,0,0;False;4;COLOR;0,0,0,0;False;5;COLOR;0,0,0,0;False;6;COLOR;0,0,0,0;False;7;COLOR;0,0,0,0;False;8;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.CommentaryNode;22;-1248,336;Float;False;1157;261;And finally apply Aura Fog  (with a material switch to leave the choice);4;18;19;20;15;;0.9779412,0.9779412,0.9779412,1;0;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;14;-272,48;Float;False;ColorAfterIllumination;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.CommentaryNode;22;-1248,336;Float;False;1157;261;And finally apply Aura Fog  (with a material switch to leave the choice);4;18;19;20;15;;0.9779412,0.9779412,0.9779412,1;0;0
 Node;AmplifyShaderEditor.GetLocalVarNode;15;-1200,496;Float;False;14;ColorAfterIllumination;1;0;OBJECT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.FunctionNode;29;-880,496;Float;False;Apply Aura Fog;7;;18;fb1436f7d9c811346a67189ce659e93e;0;1;3;COLOR;0,0,0,0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.GetLocalVarNode;18;-896,400;Float;False;14;ColorAfterIllumination;1;0;OBJECT;0;False;1;COLOR;0
+Node;AmplifyShaderEditor.FunctionNode;29;-880,496;Float;False;Apply Aura Fog;7;;22;fb1436f7d9c811346a67189ce659e93e;0;1;3;COLOR;0,0,0,0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.StaticSwitch;19;-592,432;Float;False;Property;_UseFog;Use Fog;4;0;Create;True;0;0;False;0;0;1;1;True;;Toggle;2;Key0;Key1;Create;False;9;1;COLOR;0,0,0,0;False;0;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;3;COLOR;0,0,0,0;False;4;COLOR;0,0,0,0;False;5;COLOR;0,0,0,0;False;6;COLOR;0,0,0,0;False;7;COLOR;0,0,0,0;False;8;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.CommentaryNode;27;-928,624;Float;False;522.1458;164.501;Output;2;0;26;;0.03448272,1,0,1;0;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;20;-336,432;Float;False;ColorAfterFog;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.CommentaryNode;27;-928,624;Float;False;522.1458;164.501;Output;2;0;26;;0.03448272,1,0,1;0;0
 Node;AmplifyShaderEditor.GetLocalVarNode;26;-880,672;Float;False;20;ColorAfterFog;1;0;OBJECT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;0;-640,672;Float;False;True;2;Float;ASEMaterialInspector;0;1;Aura 2/Standard/Unlit Textured;0770190933193b94aaa3065e307002fa;True;Unlit;0;0;Unlit;2;True;2;5;False;-1;10;False;-1;2;5;False;-1;10;False;-1;True;0;False;-1;0;False;-1;True;False;True;2;False;-1;True;True;True;True;True;0;False;-1;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;True;2;False;-1;True;3;False;-1;True;False;0;False;-1;0;False;-1;True;2;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;2;0;False;False;False;False;False;False;False;False;False;True;1;LightMode=ForwardBase;False;0;Unlit/Texture;0;0;Standard;1;Vertex Position,InvertActionOnDeselection;1;0;1;True;False;2;0;FLOAT4;0,0,0,0;False;1;FLOAT3;0,0,0;False;0
 WireConnection;2;0;1;0
@@ -215,4 +215,4 @@ WireConnection;19;0;29;0
 WireConnection;20;0;19;0
 WireConnection;0;0;26;0
 ASEEND*/
-//CHKSM=98C04D9C7C6FC2FECD8104D63F096B2BBB07BB9E
+//CHKSM=879BC199BA922C88DCA3C05C54C38AFA6DF7992C
