@@ -112,7 +112,7 @@ public class SpawnItem
     public float Weights;
     public GameObject Item;
 }
-/*
+
 [CustomEditor(typeof(ItemSpawner))]
 [CanEditMultipleObjects]
 public class ItemSpawnerEditor : Editor
@@ -194,8 +194,8 @@ public class ItemSpawnerEditor : Editor
         {
             Undo.RecordObject(m_Target, "Add new Type");
 
-            m_Target.spawnEvents.Add(new SpawnEvent { Weights = 0 });
+            m_Target.spawnEvents.Add(new SpawnItem { Weights = 0 });
             EditorUtility.SetDirty(m_Target);
         }
     }
-}*/
+}

@@ -88,7 +88,11 @@ public class PlayerMove : MonoBehaviour
         }
         transform.position += ForceSpeed * Time.deltaTime / 10;
         ForceSpeed *= 0.9f;
-        if (inhibitMove) return;
+        if (inhibitMove)
+        {
+            playerStatus.MoveSpeedUpdate(0);
+            return;
+        }
 
         if (MoveEnable)
         {

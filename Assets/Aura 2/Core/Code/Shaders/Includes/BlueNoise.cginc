@@ -14,6 +14,9 @@
 *                                                                          *
 ***************************************************************************/
 
+#ifndef AURA2_BLUE_NOISE
+#define AURA2_BLUE_NOISE
+
 #if defined(SHADER_STAGE_FRAGMENT)
 UNITY_DECLARE_TEX2DARRAY(_blueNoiseTexturesArray);
 #endif
@@ -33,3 +36,5 @@ FP4 GetBlueNoise(FP2 screenPos, int idOffset)
 	return FP4(0, 0, 0, 0);
 #endif
 }
+
+#endif // AURA2_BLUE_NOISE

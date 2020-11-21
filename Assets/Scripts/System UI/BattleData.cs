@@ -19,8 +19,10 @@ public class BattleData : MonoBehaviour
 
     public static void AddDamage(int ID, float damage)
     {
-        Players_DealDamage[ID] += damage;
-        Debug.Log(Players_DealDamage[ID]);
+        if (ID >= 0)
+        {
+            Players_DealDamage[ID] += damage;
+        }
     }
 
     public static void TEST_END_SHOW()

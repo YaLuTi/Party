@@ -31,7 +31,10 @@ namespace Aura2API
         /// </summary>
         public LightsCommonDataManager()
         {
-            _previousCascadesCount = QualitySettings.shadowCascades;
+            _cascadesCount = QualitySettings.shadowCascades;
+            _qualityLevelId = QualitySettings.GetQualityLevel();
+
+            _directionalShadowsCasterCount = 0;
         }
         #endregion
 
@@ -53,13 +56,21 @@ namespace Aura2API
         /// </summary>
         private DirectionalShadowDataCollector _directionalLightsShadowDataCollector;
         /// <summary>
+        /// The amount of directional shadow casters
+        /// </summary>
+        private int _directionalShadowsCasterCount;
+        /// <summary>
         /// The composer that will collect the cookie maps and stack them in a Texture2DArray
         /// </summary>
         private Texture2DArrayComposer _directionalLightsCookieMapsCollector;
         /// <summary>
         /// Used for checking changes in the number of shadow cascades
         /// </summary>
-        private static int _previousCascadesCount;
+        private static int _cascadesCount;
+        /// <summary>
+        /// Used for checking changes in the quality levels
+        /// </summary>
+        private static int _qualityLevelId;
         /// <summary>
         /// List of registered spot Aura Lights
         /// </summary>
@@ -138,6 +149,7 @@ namespace Aura2API
             get
             {
                 return _directionalLightsShadowMapsCollector != null ? _directionalLightsShadowMapsCollector.HasTexture : false;
+                //return DirectionalShadowsCasterCount > 0;
             }
         }
 
@@ -160,6 +172,17 @@ namespace Aura2API
             get
             {
                 return _directionalLightsShadowDataCollector.Texture;
+            }
+        }
+
+        /// <summary>
+        /// The amount of directional shadow casters
+        /// </summary>
+        public int DirectionalShadowsCasterCount
+        {
+            get
+            {
+                return _directionalShadowsCasterCount;
             }
         }
 
@@ -332,7 +355,7 @@ namespace Aura2API
         /// <summary>
         /// Event raised when the number of shadow cascades changes
         /// </summary>
-        public event Action OnCascadesCountChanged;
+        public event Action OnShadowsSettingsChanged;
         /// <summary>
         /// Event raised when a spot light is being registred
         /// </summary>
@@ -358,6 +381,7 @@ namespace Aura2API
         public void Dispose()
         {
             ReleaseLightsManagers();
+            ReleaseDirectionalShadowsCollectors();
         }
 
         /// <summary>
@@ -370,30 +394,57 @@ namespace Aura2API
                 DirectionalLightsManager.Dispose();
             }
         }
+
+        /// <summary>
+        /// Releases the directional shadows managers
+        /// </summary>
+        private void ReleaseDirectionalShadowsCollectors()
+        {
+            if (_directionalLightsShadowMapsCollector != null)
+            {
+                _directionalLightsShadowMapsCollector = null;
+            }
+
+            if (_directionalLightsShadowDataCollector != null)
+            {
+                _directionalLightsShadowDataCollector = null;
+            }
+        }
+
+        /// <summary>
+        /// Creates the directional shadows managers
+        /// </summary>
+        private void CreateDirectionalShadowsCollectors()
+        {
+            if (_directionalLightsShadowMapsCollector == null)
+            {
+                _directionalLightsShadowMapsCollector = new ShadowmapsCollector(DirectionalLightsManager.ShadowMapSize.x, DirectionalLightsManager.ShadowMapSize.y);
+            }
+
+            if (_directionalLightsShadowDataCollector == null)
+            {
+                _directionalLightsShadowDataCollector = new DirectionalShadowDataCollector();
+            }
+        }
         
         /// <summary>
         /// Updates all the data
         /// </summary>
         public void Update()
         {
-            if (_previousCascadesCount != QualitySettings.shadowCascades)
+            int currentQualityLevelId = QualitySettings.GetQualityLevel();
+            if (_directionalShadowsCasterCount > 0 && (_cascadesCount != QualitySettings.shadowCascades || _qualityLevelId != currentQualityLevelId))
             {
-                if (_directionalLightsShadowMapsCollector != null)
+                ReleaseDirectionalShadowsCollectors();
+
+                _cascadesCount = QualitySettings.shadowCascades;
+                _qualityLevelId = currentQualityLevelId;
+
+                if (OnShadowsSettingsChanged != null)
                 {
-                    _directionalLightsShadowMapsCollector.Resize(DirectionalLightsManager.ShadowMapSize.x, DirectionalLightsManager.ShadowMapSize.y);
+                    OnShadowsSettingsChanged();
                 }
 
-                if (_directionalLightsShadowDataCollector != null)
-                {
-                    _directionalLightsShadowDataCollector.ClearTexturesList(true);
-                }
-
-                if (OnCascadesCountChanged != null)
-                {
-                    OnCascadesCountChanged();
-                }
-
-                _previousCascadesCount = QualitySettings.shadowCascades;
             }
             
             GenerateLightsMaps();
@@ -417,19 +468,12 @@ namespace Aura2API
 
                             if (auraLight.CastsShadows)
                             {
-                                if (_directionalLightsShadowMapsCollector == null)
-                                {
-                                    _directionalLightsShadowMapsCollector = new ShadowmapsCollector(DirectionalLightsManager.ShadowMapSize.x, DirectionalLightsManager.ShadowMapSize.y);
-                                }
-
+                                CreateDirectionalShadowsCollectors();
                                 _directionalLightsShadowMapsCollector.AddTexture(auraLight.shadowMapRenderTexture);
                                 SetDirectionalShadowMapsId();
-
-                                if (_directionalLightsShadowDataCollector == null)
-                                {
-                                    _directionalLightsShadowDataCollector = new DirectionalShadowDataCollector();
-                                }
                                 _directionalLightsShadowDataCollector.AddTexture(auraLight.shadowDataRenderTexture);
+
+                                ++_directionalShadowsCasterCount;
                             }
 
 
@@ -534,6 +578,12 @@ namespace Aura2API
                             {
                                 _directionalLightsShadowDataCollector.RemoveTexture(auraLight.shadowDataRenderTexture);
                                 SetDirectionalShadowMapsId();
+
+                            }
+
+                            if(auraLight.CastsShadows)
+                            {
+                                --_directionalShadowsCasterCount;
                             }
 
                             if (_directionalLightsCookieMapsCollector != null && _directionalLightsCookieMapsCollector.RemoveTexture(auraLight.cookieMapRenderTexture))

@@ -213,6 +213,12 @@ namespace Aura2API
                 {
                     if(NeedsToUpdateTexture)
                     {
+                        if(Texture != null)
+                        {
+                            Texture.Destroy();
+                            Texture = null;
+                        }
+
                         Texture = new Texture2DArray(RequiredSizeX, RequiredSizeY, _texturesList.Count, _requiredTextureFormat, false, _linear);
                     }
 
@@ -225,7 +231,11 @@ namespace Aura2API
                 }
                 else
                 {
-                    Texture = null;
+                    if (Texture != null)
+                    {
+                        Texture.Destroy();
+                        Texture = null;
+                    }
                     HasTexture = false;
                 }
 

@@ -14,6 +14,9 @@
 *                                                                          *
 ***************************************************************************/
 
+#ifndef AURA2_STRUCTS
+#define AURA2_STRUCTS
+
 ///
 ///			MatrixFloats
 ///
@@ -208,3 +211,5 @@ struct CellData
 	FP4 localPosition; //(x, y, z-biased, z-unbiased)
 	FP3 jitteredLocalPosition;
 };
+
+#endif // AURA2_STRUCTS

@@ -14,8 +14,15 @@
 *                                                                          *
 ***************************************************************************/
 
+#ifndef AURA2_USAGE
+#define AURA2_USAGE
+
+#ifndef AURA2_COMMON
 #include "Common.cginc"
+#endif
+#ifndef AURA2_BLUE_NOISE
 #include "BlueNoise.cginc"
+#endif
 
 FP4 Aura_FrustumRanges;
 sampler3D Aura_VolumetricDataTexture;
@@ -47,15 +54,16 @@ FP3 Aura2_GetFrustumSpaceCoordinates(FP4 inVertex)
 	
 	frustumPosition.z = lerp(perspectiveFrustumZ, orthographicFrustumZ, unity_OrthoParams.w);
 
-    return frustumPosition;
+    return frustumPosition.xyz;
 }
 
 //////////// Lighting
-FP4 Aura2_SampleDataTexture(FP3 position)
+inline FP4 Aura2_SampleDataTexture(FP3 position)
 {
-    return SampleTexture3D(Aura_VolumetricDataTexture, position, Aura_BufferTexelSize);
+    return SampleTexture3D(Aura_VolumetricDataTexture, position, Aura_BufferTexelSize.xyz);
 }
-FP4 Aura2_GetData(FP3 screenSpacePosition)
+
+inline FP4 Aura2_GetData(FP3 screenSpacePosition)
 {
     return Aura2_SampleDataTexture(FP3(screenSpacePosition.xy, Aura2_RescaleDepth(screenSpacePosition.z)));
 }
@@ -78,12 +86,12 @@ void Aura2_ApplyLighting(inout FP3 colorToApply, FP3 screenSpacePosition, FP lig
 }
 
 //////////// Fog
-FP4 Aura2_SampleFogTexture(FP3 position)
+inline FP4 Aura2_SampleFogTexture(FP3 position)
 {
-    return SampleTexture3D(Aura_VolumetricLightingTexture, position, Aura_BufferTexelSize);
+    return SampleTexture3D(Aura_VolumetricLightingTexture, position, Aura_BufferTexelSize.xyz);
 }
 
-FP4 Aura2_GetFogValue(FP3 screenSpacePosition)
+inline FP4 Aura2_GetFogValue(FP3 screenSpacePosition)
 {
     return Aura2_SampleFogTexture(FP3(screenSpacePosition.xy, Aura2_RescaleDepth(screenSpacePosition.z)));
 }
@@ -130,4 +138,6 @@ void Aura2_ApplyFog(inout FP4 colorToApply, FP3 screenSpacePosition)
 
     FP4 fogValue = Aura2_GetFogValue(screenSpacePosition);
     Aura2_ApplyFog(colorToApply, screenSpacePosition, fogValue);
-} 
+}
+
+#endif // AURA2_USAGE

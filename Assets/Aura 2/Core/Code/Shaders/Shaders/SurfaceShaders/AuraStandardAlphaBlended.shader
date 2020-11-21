@@ -30,67 +30,56 @@ Shader "Aura 2/Surface/Standard Alpha Blend"
    
 		CGPROGRAM
 
-		#pragma surface surf Standard fullforwardshadows alpha finalcolor:Aura2_Fog
+		#pragma exclude_renderers glcore gles gles3 d3d11_9x n3ds wiiu
+		//						↓	 			 			   ↓↓↓↓↓↓↓ AURA 2 COPY THIS TOO ↓↓↓↓↓↓↓ (ATTENTION : Please verify the shading model used by your shader at the begining of the line here under. Use metaPass_Standard If your shading model is "Standard", or metaPass_StandardSpecular if your shading model is "StandardSpecular")
+		#pragma surface surf Standard fullforwardshadows alpha finalcolor:metaPass_Standard
+		//						↑							   ↑↑↑↑↑↑↑ AURA 2 COPY THIS TOO ↑↑↑↑↑↑↑ (ATTENTION : Please verify the shading model used by your shader at the begining of the line here over. Use metaPass_Standard If your shading model is "Standard", or metaPass_StandardSpecular if your shading model is "StandardSpecular")
 		#pragma target 4.5
-		#pragma multi_compile _ AURA
-		#pragma multi_compile _ AURA_USE_CUBIC_FILTERING
-		#pragma multi_compile _ AURA_DISPLAY_VOLUMETRIC_LIGHTING_ONLY
 
-		sampler2D _MainTex;
-		sampler2D _CameraDepthTexture;
-
-		// TODO : MAKE THIS PROPER WITH INCLUDES (SURFACE SHADERS ARE A NIGHTMARE)
-		float4 Aura_FrustumRanges;
-		sampler3D Aura_VolumetricLightingTexture;
-		float InverseLerp(float lowThreshold, float hiThreshold, float value)
-		{
-			return (value - lowThreshold) / (hiThreshold - lowThreshold);
-		}
-		float4 Aura2_GetFogValue(float3 screenSpacePosition)
-		{
-			return tex3Dlod(Aura_VolumetricLightingTexture, float4(screenSpacePosition, 0));
-		}
-		void Aura2_ApplyFog(inout fixed4 colorToApply, float3 screenSpacePosition)
-		{    
-			float4 fogValue = Aura2_GetFogValue(screenSpacePosition);
-			// Always apply fog attenuation - also in the forward add pass.
-			colorToApply.xyz *= fogValue.w;
-			// Alpha premultiply mode (used with alpha and Standard lighting function, or explicitly alpha:premul)
-			#if _ALPHAPREMULTIPLY_ON
-			fogValue.xyz *= colorToApply.w;
-			#endif
-			// Add inscattering only once, so in forward base, but not forward add.
-			#ifndef UNITY_PASS_FORWARDADD
-			colorToApply.xyz += fogValue.xyz;
-			#endif
-		}
-		
 		struct Input
 		{
 			float2 uv_MainTex;
-			float4 screenPos;
+			float4 screenPos; // Needed for Aura 2
 		};
-		
-		// From https://github.com/Unity-Technologies/VolumetricLighting/blob/master/Assets/Scenes/Materials/StandardAlphaBlended-VolumetricFog.shader
-		void Aura2_Fog(Input IN, SurfaceOutputStandard o, inout fixed4 color)
+
+//↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+//	AURA 2 : COPY THIS BLOCK AFTER THE Input STRUCT	(ATTENTION THE Input STRUCT NEEDS "screenPos")	↓↓
+//↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+		///-------------------------------------------------------------------------------------------
+		///			Aura 2 variants
+		///-------------------------------------------------------------------------------------------
+		#pragma multi_compile _ AURA
+		#pragma multi_compile _ AURA_USE_DITHERING
+		#pragma multi_compile _ AURA_USE_CUBIC_FILTERING
+		#pragma multi_compile _ AURA_DISPLAY_VOLUMETRIC_LIGHTING_ONLY
+		///-------------------------------------------------------------------------------------------
+		///			Aura 2 surface shaders specific include
+		///-------------------------------------------------------------------------------------------
+		#if defined(AURA)
+			#include "Assets/Aura 2/Core/Code/Shaders/Includes/AuraSurface.cginc"
+		#endif // AURA
+	
+		///-------------------------------------------------------------------------------------------
+		///			Apply Aura 2 after surface shader has been rendered
+		///-------------------------------------------------------------------------------------------
+		void metaPass_Standard(Input IN, SurfaceOutputStandard o, inout fixed4 color)
 		{
-				//////////////////// Start : AURA
-				#if defined(AURA)
-				half3 screenSpacePosition = IN.screenPos.xyz/IN.screenPos.w;
-				screenSpacePosition.z = InverseLerp(Aura_FrustumRanges.x, Aura_FrustumRanges.y, LinearEyeDepth(screenSpacePosition.z));
-
-				//// Debug fog only
-				//////////////////// Start : AURA_DISPLAY_VOLUMETRIC_LIGHTING_ONLY
-				#if defined(AURA_DISPLAY_VOLUMETRIC_LIGHTING_ONLY)
-				color.xyz = float3(0.0f,0.0f,0.0f);
-				#endif
-				//////////////////// End : AURA_DISPLAY_VOLUMETRIC_LIGHTING_ONLY
-
-				Aura2_ApplyFog(color, screenSpacePosition);
-				#endif
-				//////////////////// End : AURA
+			#if defined(AURA)
+			Aura2_MetaPass_Standard(IN, o, color); // ATTENTION Input struct needs "screenPos"
+			#endif // AURA
 		}
+		
+		void metaPass_StandardSpecular(Input IN, SurfaceOutputStandardSpecular o, inout fixed4 color)
+		{
+			#if defined(AURA)
+			Aura2_MetaPass_StandardSpecular(IN, o, color); // ATTENTION Input struct needs "screenPos"
+			#endif // AURA
+		}
+//↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+//	END OF AURA 2 BLOCK																				↑↑
+//↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
+		sampler2D _MainTex;
 		half _Glossiness;
 		half _Metallic;
 		fixed4 _Color;
@@ -104,6 +93,5 @@ Shader "Aura 2/Surface/Standard Alpha Blend"
 			o.Alpha = c.a;
 		}
 		ENDCG
-	}
-	FallBack "Standard"
+	}	
 }

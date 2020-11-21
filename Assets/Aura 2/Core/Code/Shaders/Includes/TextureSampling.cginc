@@ -14,28 +14,33 @@
 *                                                                          *
 ***************************************************************************/
 
+#ifndef AURA2_TEXTURE_SAMPLING
+#define AURA2_TEXTURE_SAMPLING
+
 // Sampler declaration
 #if defined(SHADER_STAGE_COMPUTE)
-	#define TEXTURE3D_SAMPLER_DECLARATION Texture3D<FP4>
+	#define TEXTURE3D_SAMPLER_DECLARATION Texture3D
 #else
 	#define TEXTURE3D_SAMPLER_DECLARATION sampler3D
 #endif
 
+#if defined(SHADER_STAGE_COMPUTE)
+#define SAMPLE_TEX3D_LINEAR(tex, texCoords) tex.SampleLevel(_LinearClamp, texCoords, 0)
+#elif defined(SHADER_STAGE_FRAGMENT)
+#define SAMPLE_TEX3D_LINEAR(tex, texCoords) tex3D(tex, texCoords)
+#else
+#define SAMPLE_TEX3D_LINEAR(tex, texCoords) tex3Dlod(tex, float4(texCoords, 0.0f))
+#endif
+
 // Linear sampling
-FP4 SampleTexture3D_Linear(TEXTURE3D_SAMPLER_DECLARATION tex, FP3 texCoords)
+inline FP4 SampleTexture3D_Linear(TEXTURE3D_SAMPLER_DECLARATION tex, float3 texCoords)
 {
-    #if defined(SHADER_STAGE_COMPUTE)
-        return tex.SampleLevel(_LinearClamp, texCoords, 0);
-    #elif defined(SHADER_STAGE_FRAGMENT)
-        return tex3D(tex, texCoords);
-    #else
-        return tex3Dlod(tex, FP4(texCoords, 0.0f));
-    #endif
+    return SAMPLE_TEX3D_LINEAR(tex, texCoords);
 }
 
 // Cubic Texture3D Sampling
 // Based on : http://www.dannyruijters.nl/cubicinterpolation/
-FP4 SampleTexture3D_Cubic(TEXTURE3D_SAMPLER_DECLARATION tex, FP3 texCoords, FP3 texelSize)
+inline FP4 SampleTexture3D_Cubic(TEXTURE3D_SAMPLER_DECLARATION tex, float3 texCoords, float3 texelSize)
 {
     texCoords /= texelSize;
 
@@ -58,35 +63,34 @@ FP4 SampleTexture3D_Cubic(TEXTURE3D_SAMPLER_DECLARATION tex, FP3 texCoords, FP3 
     FP3 h0 = (w1 / g0) - 0.5f + index; //h0 = w1/g0 - 1, move from [-0.5, extent-0.5] to [0, extent]
     FP3 h1 = (w3 / g1) + 1.5f + index; //h1 = w3/g1 + 1, move from [-0.5, extent-0.5] to [0, extent]
 
-
 	// fetch the eight linear interpolations
 	// weighting and fetching is interleaved for performance and stability reasons
 	// TODO : USE LERP
-    FP4 tex000 = SampleTexture3D_Linear(tex, FP3(h0.x, h0.y, h0.z) * texelSize);
-    FP4 tex100 = SampleTexture3D_Linear(tex, FP3(h1.x, h0.y, h0.z) * texelSize);
+    FP4 tex000 = SAMPLE_TEX3D_LINEAR(tex, FP3(h0.x, h0.y, h0.z) * texelSize);
+    FP4 tex100 = SAMPLE_TEX3D_LINEAR(tex, FP3(h1.x, h0.y, h0.z) * texelSize);
     tex000 = g0.x * tex000 + g1.x * tex100; //weigh along the x-direction
-    FP4 tex010 = SampleTexture3D_Linear(tex, FP3(h0.x, h1.y, h0.z) * texelSize);
-    FP4 tex110 = SampleTexture3D_Linear(tex, FP3(h1.x, h1.y, h0.z) * texelSize);
+    FP4 tex010 = SAMPLE_TEX3D_LINEAR(tex, FP3(h0.x, h1.y, h0.z) * texelSize);
+    FP4 tex110 = SAMPLE_TEX3D_LINEAR(tex, FP3(h1.x, h1.y, h0.z) * texelSize);
     tex010 = g0.x * tex010 + g1.x * tex110; //weigh along the x-direction
     tex000 = g0.y * tex000 + g1.y * tex010; //weigh along the y-direction
-    FP4 tex001 = SampleTexture3D_Linear(tex, FP3(h0.x, h0.y, h1.z) * texelSize);
-    FP4 tex101 = SampleTexture3D_Linear(tex, FP3(h1.x, h0.y, h1.z) * texelSize);
+    FP4 tex001 = SAMPLE_TEX3D_LINEAR(tex, FP3(h0.x, h0.y, h1.z) * texelSize);
+    FP4 tex101 = SAMPLE_TEX3D_LINEAR(tex, FP3(h1.x, h0.y, h1.z) * texelSize);
     tex001 = g0.x * tex001 + g1.x * tex101; //weigh along the x-direction
-    FP4 tex011 = SampleTexture3D_Linear(tex, FP3(h0.x, h1.y, h1.z) * texelSize);
-    FP4 tex111 = SampleTexture3D_Linear(tex, FP3(h1.x, h1.y, h1.z) * texelSize);
+    FP4 tex011 = SAMPLE_TEX3D_LINEAR(tex, FP3(h0.x, h1.y, h1.z) * texelSize);
+    FP4 tex111 = SAMPLE_TEX3D_LINEAR(tex, FP3(h1.x, h1.y, h1.z) * texelSize);
     tex011 = g0.x * tex011 + g1.x * tex111; //weigh along the x-direction
     tex001 = g0.y * tex001 + g1.y * tex011; //weigh along the y-direction
     return g0.z * tex000 + g1.z * tex001;	//weigh along the z-direction
 }
 
 // Generic texture sampling function
-FP4 SampleTexture3D(TEXTURE3D_SAMPLER_DECLARATION tex, FP3 texCoords, FP3 texelSize)
+inline float4 SampleTexture3D(TEXTURE3D_SAMPLER_DECLARATION tex, float3 texCoords, float3 texelSize)
 {
-	//////////////////// Start : AURA_USE_CUBIC_FILTERING
 	#if defined(AURA_USE_CUBIC_FILTERING)
 		return SampleTexture3D_Cubic(tex, texCoords, texelSize);
 	#else
-		return SampleTexture3D_Linear(tex, texCoords);
-	#endif
-	//////////////////// End : AURA_USE_CUBIC_FILTERING
+		return SAMPLE_TEX3D_LINEAR(tex, texCoords);
+	#endif // AURA_USE_CUBIC_FILTERING
 }
+
+#endif //  AURA2_TEXTURE_SAMPLING

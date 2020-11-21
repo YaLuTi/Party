@@ -89,7 +89,6 @@ Shader "Hidden/Aura2/PostProcessShader"
 				//float4 thumbnail = tex2D(_MainTex, uv / thumbnailFactor);
 				//float thumbnailMask = step(uv.x, thumbnailFactor) * step(uv.y, thumbnailFactor);
 				//backColor = lerp(backColor, thumbnail, thumbnailMask);
-
 				#endif
 				//////////////////// End : AURA
 

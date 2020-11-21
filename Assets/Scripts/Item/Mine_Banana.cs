@@ -45,6 +45,7 @@ public class Mine_Banana : ItemMine
                     bulletHitInfo.bulletForce = (rays[i].ClosestPoint(transform.position) - transform.position).normalized * 1000;
                     // bulletHitInfo.hitNormal = raycastHit.normal;
                     bulletHitInfo.hitPoint = rays[i].ClosestPoint(transform.position);
+                    bulletHitInfo.IsShot = true;
                     rays[i].gameObject.transform.root.GetComponent<PlayerHitten>().OnHit(bulletHitInfo);
                     Destroy(Instantiate(VFX, transform.position, Quaternion.identity), 3f);
                     Destroy(this.gameObject);

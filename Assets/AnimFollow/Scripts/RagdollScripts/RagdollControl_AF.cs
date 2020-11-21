@@ -283,8 +283,9 @@ namespace AnimFollow
 				fellOnSpeed = TestgameObjects.Count > 0 && collisionSpeed > graceSpeed; // For tuning. If you want to know if the fall was triggered by the speed of the collision
 			}
 			else if (falling || gettingUp) // Code do not run in normal operation
-			{	
-				if (gettingUp && !IsDead)
+            {
+                master.transform.Translate(ragdollRootBone.position - masterRootBone.position, Space.World);
+                if (gettingUp && !IsDead)
 				{
 					// Wait until transition to getUp is done so that the master animation is lying down before orientating the master to the ragdoll rotation and position
 					if (orientate && !isInTransitionToGetup && wasInTransitionToGetup)
@@ -295,6 +296,7 @@ namespace AnimFollow
 						master.transform.rotation = ragdollRootBone.rotation * Quaternion.Inverse(masterRootBone.rotation) * master.transform.rotation;
 						master.transform.rotation = Quaternion.LookRotation(new Vector3(master.transform.forward.x, 0f, master.transform.forward.z), Vector3.up); 
 						master.transform.Translate(ragdollRootBone.position - masterRootBone.position, Space.World);
+                        Debug.Log("TESTRAG");
 #if SIMPLEFOOTIK
 						simpleFootIK.extraYLerp = .02f;
 						simpleFootIK.leftFootPosition = ragdollRootBone.position + Vector3.up;

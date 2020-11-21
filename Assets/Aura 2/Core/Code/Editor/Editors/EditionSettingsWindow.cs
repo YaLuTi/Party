@@ -161,6 +161,13 @@ namespace Aura2API
             {
                 AuraEditorPrefs.DisplayButtonsInHierarchy = !AuraEditorPrefs.DisplayButtonsInHierarchy;
             }
+            EditorGUILayout.Separator();
+            EditorGUI.BeginChangeCheck();
+            GuiHelpers.DrawToggleChecker(AuraEditorPrefs.DisplayPreviewButtonInSceneView, " Display preview button in the Scene View");
+            if (EditorGUI.EndChangeCheck())
+            {
+                AuraEditorPrefs.DisplayPreviewButtonInSceneView = !AuraEditorPrefs.DisplayPreviewButtonInSceneView;
+            }
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.Separator();

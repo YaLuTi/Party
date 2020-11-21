@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class EventSpawner : MonoBehaviour
 {
@@ -71,7 +72,10 @@ public class EventSpawner : MonoBehaviour
             {
                 int r = Random.Range(0, spawnEvents[i].positoin.Length);
                 Debug.Log(r);
-                SpawnItem.Add(Instantiate(spawnEvents[i].Item, spawnEvents[i].positoin[r], Quaternion.Euler(spawnEvents[i].rotation[r])));
+                GameObject g = Instantiate(spawnEvents[i].Item, spawnEvents[i].positoin[r], Quaternion.Euler(spawnEvents[i].rotation[r]));
+                SpawnItem.Add(g);
+                CinemachineTargetGroup targetGroup = GameObject.FindGameObjectWithTag("CineGroup").GetComponent<CinemachineTargetGroup>();
+                targetGroup.AddMember(g.transform, 0.3f, 0);
                 return;
             }
         }

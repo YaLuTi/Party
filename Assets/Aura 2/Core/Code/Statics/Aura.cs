@@ -14,8 +14,12 @@
 *                                                                          *
 ***************************************************************************/
 
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace Aura2API
 {
@@ -29,6 +33,14 @@ namespace Aura2API
         /// Collection of all referenced resources required to make aura2 work
         /// </summary>
         private static AuraResourcesCollection _auraResourcesCollection;
+        /// <summary>
+        /// Tells if the compatibility check has already been done
+        /// </summary>
+        private static bool _hasCheckedCompatibility;
+        /// <summary>
+        /// Checks if the environment is able to run Aura 2
+        /// </summary>
+        private static bool _isCompatible;
         #endregion
 
         #region Properties
@@ -40,28 +52,72 @@ namespace Aura2API
         {
             get
             {
-#if UNITY_2017_2_OR_NEWER
-                bool isCompatible =
-                    SystemInfo.supports2DArrayTextures &&       // Uses Texture2DArrays for packing textures
-                    SystemInfo.supports3DTextures &&            // For volumetric texture masks and point shadows
-                    SystemInfo.supports3DRenderTextures &&      // For point shadows
-                    SystemInfo.supportsComputeShaders &&        // Checks compute shader support
-                    SystemInfo.supportsRawShadowDepthSampling;  // Shadow maps are stored in raw float format.
-
-                if (!isCompatible)
+                if (!_hasCheckedCompatibility)
                 {
-                    Debug.LogWarning("This plateform is not supported, Aura 2 will be disabled. Please check the requirements "
-#if UNITY_EDITOR
-                                + "by double-clicking on this message or "
-#endif
-                                + "in the documentation.");
-                }
+                    _isCompatible = true;
+                    List<string> errorReasons = new List<string>(); // should be replaced with a bitfield but it's overkill now
 
-                return isCompatible;
+#if UNITY_2017_2_OR_NEWER
+                    if (!SystemInfo.supports2DArrayTextures)
+                    {
+                        _isCompatible = false;
+                        errorReasons.Add("2D Texture Arrays not supported");
+                    }
+
+                    if (!SystemInfo.supports3DTextures)
+                    {
+                        _isCompatible = false;
+                        errorReasons.Add("3D Textures not supported");
+                    }
+
+                    if (!SystemInfo.supports3DRenderTextures)
+                    {
+                        _isCompatible = false;
+                        errorReasons.Add("3D Render Textures not supported");
+                    }
+
+                    if (!SystemInfo.supportsComputeShaders)
+                    {
+                        _isCompatible = false;
+                        errorReasons.Add("Compute Shaders not supported");
+                    }
+
+                    if (!SystemInfo.supportsRawShadowDepthSampling)
+                    {
+                        _isCompatible = false;
+                        errorReasons.Add("Raw Shadow Maps not supported");
+                    }
 #else
-            Debug.LogError("The current version of Unity is not supported, Aura 2 will be disabled.");
-            return false;
+                    _isCompatible = false;
+                    errorReasons.Add("Unity version is lower than 2017.2");
 #endif
+
+                    if (!_isCompatible)
+                    {
+                        string errorMessage = "Aura 2 is not supported for this target";
+#if UNITY_EDITOR
+                        errorMessage += " (" + (BuildPipeline.isBuildingPlayer ? ("building for " + EditorUserBuildSettings.activeBuildTarget.ToString()) : Application.platform.ToString()) + ")";
+#else
+                        errorMessage += " (" + Application.platform.ToString() + ")";
+#endif
+                        errorMessage += " and will be disabled.";
+                        errorMessage += "\nReason" + (errorReasons.Count > 1 ? "s" : "") + " : ";
+                        for (int i = 0; i < errorReasons.Count; ++i)
+                        {
+                            errorMessage += errorReasons[i];
+                            if(i != (errorReasons.Count - 1))
+                            {
+                                errorMessage += ", ";
+                            }
+                        }
+
+                        Debug.LogWarning(errorMessage);
+                    }
+
+                    _hasCheckedCompatibility = true;
+                }
+                
+                return _isCompatible;
             }
         }
 
@@ -80,9 +136,9 @@ namespace Aura2API
                 return _auraResourcesCollection;
             }
         }
-        #endregion
+#endregion
 
-        #region Functions
+#region Functions
         /// <summary>
         /// Returns an array with all the aura cameras
         /// </summary>
@@ -176,7 +232,7 @@ namespace Aura2API
             AuraPreset.ApplyPreset(preset);
         }
 
-        #region Add Aura to GameObjects
+#region Add Aura to GameObjects
         /// <summary>
         /// Adds the Aura component to all the Cameras
         /// </summary>
@@ -261,7 +317,7 @@ namespace Aura2API
 
             return GetAuraLights(LightType.Point, amountToCreateIfNone);
         }
-        #endregion
-        #endregion
+#endregion
+#endregion
     }
 }
