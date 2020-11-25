@@ -24,6 +24,14 @@ public class FlagScore : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        StageInfo stageInfo = GameObject.FindGameObjectWithTag("StageInfo").GetComponent<StageInfo>();
+        Vector3 v = new Vector3();
+        for(int i = 0; i < stageInfo.SpawnPosition.Count; i++)
+        {
+            v += stageInfo.SpawnPosition[i];
+        }
+        transform.position = v / stageInfo.SpawnPosition.Count;
+        transform.position += new Vector3(0, 3, 0);
     }
 
     // Update is called once per frame
