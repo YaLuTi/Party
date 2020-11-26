@@ -113,6 +113,7 @@ public class SpawnItem
     public GameObject Item;
 }
 
+/*
 [CustomEditor(typeof(ItemSpawner))]
 [CanEditMultipleObjects]
 public class ItemSpawnerEditor : Editor
@@ -198,4 +199,4 @@ public class ItemSpawnerEditor : Editor
             EditorUtility.SetDirty(m_Target);
         }
     }
-}
+}*/

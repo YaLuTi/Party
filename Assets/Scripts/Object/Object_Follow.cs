@@ -16,6 +16,13 @@ public class Object_Follow : MonoBehaviour
     void Update()
     {
         if (Follow == null) return;
+
+        float OldRange = (1.5f - 0f);
+        float NewRange = (1 - 0);
+        float NewValue = (((Follow.transform.localScale.x - 0f) * NewRange) / OldRange) + 0;
+        transform.localScale = new Vector3(NewValue, NewValue, transform.localScale.z);
+
+
         Vector3 v = Follow.transform.position;
         if (!Y_Follow)
         {

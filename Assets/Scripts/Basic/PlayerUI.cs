@@ -7,7 +7,9 @@ public class PlayerUI : MonoBehaviour
 {
     public PlayerHitten playerHitten;
     public Slider slider;
-    
+
+    public Image Fill;
+
     public Transform follow;
     public float y = 1.8f;
     // Start is called before the first frame update
@@ -19,6 +21,7 @@ public class PlayerUI : MonoBehaviour
             slider.maxValue = playerHitten.GetMaxHealth();
             slider.value = slider.maxValue;
         }
+        Fill.color = Color.green;
     }
 
     public void SetUp(PlayerHitten _playerHitten)
@@ -39,5 +42,19 @@ public class PlayerUI : MonoBehaviour
     void OnPlayerHealthChanged(PlayerHitten playerHitten, float oldHP, float newHP)
     {
         slider.value = newHP;
+        if(slider.normalizedValue >= 0.5f)
+        {
+            float OldRange = (1 - 0.5f);
+            float NewRange = (1 - 0);
+            float NewValue = (((slider.normalizedValue - 0.5f) * NewRange) / OldRange) + 0;
+            Fill.color = Color.Lerp(Color.yellow, Color.green, NewValue);
+        }
+        else
+        {
+            float OldRange = (0.5f - 0);
+            float NewRange = (1 - 0f);
+            float NewValue = (((slider.normalizedValue - 0) * NewRange) / OldRange) - 0.8f;
+            Fill.color = Color.Lerp(Color.red, Color.yellow, NewValue);
+        }
     }
 }

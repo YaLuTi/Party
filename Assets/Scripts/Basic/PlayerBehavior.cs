@@ -328,6 +328,8 @@ public class PlayerBehavior : MonoBehaviour
     public void OnHit(BulletHitInfo_AF info)
     {
         // GetComponent<Rigidbody>().AddForce(info.bulletForce);
+        ThrowStrength = 3f;
+        ThrowPower1 = 0.01f;
 
         if (IsCharging)
         {
@@ -341,8 +343,6 @@ public class PlayerBehavior : MonoBehaviour
         if (IsHolding)
         {
             itemHand.DropHoldingItem(info.bulletForce / 10);
-            ThrowStrength = 3f;
-            ThrowPower1 = 0.01f;
             IsHolding = false;
             IsThrowing = false;
             IsThrowing2 = false;

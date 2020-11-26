@@ -21,6 +21,8 @@ public class FlagScore : MonoBehaviour
     
     public bool IsHolded = false;
     float cooldown = 0;
+
+    RoamingAI roamingAI;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +34,10 @@ public class FlagScore : MonoBehaviour
         }
         transform.position = v / stageInfo.SpawnPosition.Count;
         transform.position += new Vector3(0, 3, 0);
+        spawnPosition = transform.position;
+
+        roamingAI = GetComponent<RoamingAI>();
+        InvokeRepeating("RespawnEvent", 5, 5);
     }
 
     // Update is called once per frame
@@ -97,9 +103,34 @@ public class FlagScore : MonoBehaviour
             id = -1;
             follow = null;
             g = 0;
-            transform.rotation = Quaternion.identity;
-            transform.position = spawnPosition;
+            Vector3 p = roamingAI.PickNewDestination();
+            transform.localScale = Vector3.zero;
+            transform.DOScale(1.5f, 1f);
+            transform.position = p;
         }
+    }
+
+    void RespawnEvent()
+    {
+        StartCoroutine(Respawn());
+    }
+
+    IEnumerator Respawn()
+    {
+        transform.DOScale(0, 0.5f);
+        yield return new WaitForSeconds(0.5f);
+        IsHolded = false;
+        transform.parent = null;
+        id = -1;
+        follow = null;
+        g = 0;
+        yield return new WaitForSeconds(1);
+        Vector3 p = roamingAI.PickNewDestination();
+        transform.localScale = Vector3.zero;
+        transform.DOScale(1.5f, 1f);
+        transform.position = p;
+
+        yield return null;
     }
 
     public void Throw()
@@ -127,6 +158,7 @@ public class FlagScore : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (IsHolded) return;
+        if (transform.localScale.x < 1.2f) return;
         if (collision.transform.root.tag == "Player")
         {
             Debug.Log("Shit");
