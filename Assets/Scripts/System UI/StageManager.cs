@@ -270,6 +270,9 @@ public class StageManager : MonoBehaviour
 
     public static void SetCloseUpCamera(int i)
     {
+        targetGroup = GameObject.FindGameObjectWithTag("CineGroup").GetComponent<CinemachineTargetGroup>();
+        targetGroup.m_Targets = null;
+        targetGroup.AddMember(players[i].GetComponent<PlayerHitten>().Hips, 1, 0);
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_CameraDistance = 5;
         // virtualCamera.transform.eulerAngles = players[i].GetComponentInChildren<PlayerInput>().transform.eulerAngles * -1;
     }

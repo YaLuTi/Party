@@ -22,6 +22,8 @@ public class FlagScore : MonoBehaviour
     public bool IsHolded = false;
     float cooldown = 0;
 
+    public int RespawnTime = 30;
+
     RoamingAI roamingAI;
     // Start is called before the first frame update
     void Start()
@@ -37,7 +39,7 @@ public class FlagScore : MonoBehaviour
         spawnPosition = transform.position;
 
         roamingAI = GetComponent<RoamingAI>();
-        InvokeRepeating("RespawnEvent", 5, 5);
+        InvokeRepeating("RespawnEvent", RespawnTime, RespawnTime);
     }
 
     // Update is called once per frame

@@ -202,7 +202,7 @@ public class PlayerHitten : MonoBehaviour
     // Testing
     public void AddtionalDeath()
     {
-        if (Dead) return;
+        if (Dead || !Respawnable) return;
         Dead = true;
         StartCoroutine(Respawn(0.1f));
         OnDeath?.Invoke(this);
@@ -228,7 +228,7 @@ public class PlayerHitten : MonoBehaviour
             if (gamepad != null)
             {
                 gamepad.SetMotorSpeeds(0.8f, 1f);
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSecondsRealtime(0.2f);
                 gamepad.PauseHaptics();
             }
         }

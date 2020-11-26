@@ -12,6 +12,7 @@ public class DeathmatchBrawl : MonoBehaviour
     public static List<GameObject> UIs = new List<GameObject>();
     public int DefaultLife = 3;
     public static List<int> Lifes = new List<int>();
+    public static List<int> DeadPlayer = new List<int>();
 
     static bool First = false;
 
@@ -25,6 +26,7 @@ public class DeathmatchBrawl : MonoBehaviour
         UIs.Clear();
         Lifes.Clear();
         playerHittens.Clear();
+        DeadPlayer.Clear();
 
         StageManager.instance.OnPlayerJoin += PlayerJoin;
 
@@ -114,7 +116,36 @@ public class DeathmatchBrawl : MonoBehaviour
             UIs[num].GetComponent<Text>().color = Color.red;
             playerHitten.SetRespawnable(false);
             StageManager.RemoveCameraTarget(playerHitten.playerMove.transform);
+            DeadPlayer.Add(num);
+            if (DeadPlayer.Count >= Lifes.Count - 1)
+            {
+                StartCoroutine(_FinishEvent());
+            }
         }
+    }
+    IEnumerator _FinishEvent()
+    {
+        Time.timeScale = 0.0f;
+        Time.fixedDeltaTime = Time.fixedDeltaTime * Time.timeScale;
+        StageManager.StopBGM();
+        BattleData.TEST_END_SHOW();
+
+        yield return new WaitForSecondsRealtime(1.35f);
+        for(int i = 0; i < Lifes.Count; i++)
+        {
+            if (DeadPlayer.Contains(i))
+            {
+
+            }
+            else
+            {
+                Debug.Log(i);
+                StageManager.SetCloseUpCamera(i);
+            }
+        }
+        // StageManager.SetCloseUpCamera(rank[0]);
+
+        yield return null;
     }
 
     public virtual void FinishEvent()
