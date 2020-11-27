@@ -126,11 +126,13 @@ public class FlagScore : MonoBehaviour
         id = -1;
         follow = null;
         g = 0;
-        yield return new WaitForSeconds(1);
+
         Vector3 p = roamingAI.PickNewDestination();
         transform.localScale = Vector3.zero;
+        transform.position = p + new Vector3(0, 1, 0);
+
+        yield return new WaitForSeconds(1);
         transform.DOScale(1.5f, 1f);
-        transform.position = p;
 
         yield return null;
     }

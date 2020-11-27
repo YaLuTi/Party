@@ -97,11 +97,10 @@ public class Basic_Bullet : MonoBehaviour
                 if (!playerHittens.Contains(hitten))
                 {
                     hitten.OnDamaged(damage, PlayerID);
+                    hitten.OnHit(bulletHitInfo);
+                    playerHittens.Add(hitten);
                 }
 
-                hitten.OnHit(bulletHitInfo);
-
-                playerHittens.Add(hitten);
             }
         }
         GameObject g = Instantiate(CollisionEffect, transform.position, transform.rotation);

@@ -16,6 +16,7 @@ public class StageManager : MonoBehaviour
     public static List<GameObject> players = new List<GameObject>();
     public static int[] PlayerProfile;
     public static int[] playerScore;
+    public static bool InGame = false;
     public static PlayerInputManager inputManager;
 
     public static int[] scores; // 暫時弄成玩家名次
@@ -119,9 +120,14 @@ public class StageManager : MonoBehaviour
 
     public void StageStart()
     {
+        InGame = true;
         for (int i = 0; i < players.Count; i++)
         {
             players[i].GetComponent<PlayerIdentity>().PlayerInputEnable();
+        }
+        foreach (GameObject player in players)
+        {
+            player.GetComponentInChildren<PlayerInput>().SwitchCurrentActionMap("GamePlay");
         }
     }
        
@@ -175,7 +181,7 @@ public class StageManager : MonoBehaviour
         {
             Debug.Log("Add");
             playerInput.transform.root.GetComponent<PlayerIdentity>().PlayerInputEnable();
-            playerInput.SwitchCurrentActionMap("GamePlay");
+            // playerInput.SwitchCurrentActionMap("GamePlay");
             // Destroy(playerInput.transform.root.GetComponentInChildren<PlayerCreating>());
             players.Add((playerInput.transform.root.gameObject));
 
@@ -214,7 +220,7 @@ public class StageManager : MonoBehaviour
             // LoadTestScene();
         }
     }
-
+    
     public static void PlayBGM()
     {
         Debug.Log("a");
@@ -246,6 +252,7 @@ public class StageManager : MonoBehaviour
 
     public static void ClearPlayer()
     {
+        InGame = false;
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.01f;
         foreach (GameObject g in players)

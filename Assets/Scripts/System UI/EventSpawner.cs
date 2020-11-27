@@ -28,7 +28,7 @@ public class EventSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (StageController.IsPaused) return;
+        if (StageController.IsPaused || !StageManager.InGame) return;
         if (CooldownCount > CooldownValue + SpawnItem.Count * CooldownValuePerItem && SpawnItem.Count < 1)
         {
             CooldownCount = 0;

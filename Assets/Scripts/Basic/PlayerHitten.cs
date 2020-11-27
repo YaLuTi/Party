@@ -144,7 +144,10 @@ public class PlayerHitten : MonoBehaviour
         {
 
         }
-        pickItem.OnHit(info);
+        if (!IsInvincible)
+        {
+            pickItem.OnHit(info);
+        }
     }
 
     IEnumerator Respawn(float time)

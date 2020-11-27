@@ -9,17 +9,21 @@ public class DeathMatchTime : DeathmatchBrawl
 {
     public float Timer;
     public static bool IsEnd = false;
+    public bool IsStart = false;
     public TextMeshProUGUI text;
 
     public override void Start()
     {
         Debug.Log("WGERDG");
         IsEnd = false;
+        IsStart = false;
         base.Start();
     }
 
     private void Update()
     {
+        text.text = ((int)(Timer / 60)).ToString("00") + " : " + ((int)(Timer % 60)).ToString("00");
+        if (!IsStart) return;
         if (Timer <= 0)
         {
             if (!IsEnd)
@@ -37,8 +41,13 @@ public class DeathMatchTime : DeathmatchBrawl
         {
             Timer -= Time.deltaTime;
             Timer = Mathf.Max(0, Timer);
-            text.text = ((int)(Timer/60)).ToString("00") + " : " + ((int)(Timer % 60)).ToString("00");
+            // text.text = ((int)(Timer/60)).ToString("00") + " : " + ((int)(Timer % 60)).ToString("00");
         }
+    }
+
+    public void GameStart()
+    {
+        IsStart = true;
     }
 
     public override void PlayerJoin(GameObject player, int num)
@@ -73,11 +82,6 @@ public class DeathMatchTime : DeathmatchBrawl
         Array.Reverse(rank);
 
         yield return new WaitForSecondsRealtime(1.35f);
-
-        for(int i = 1; i < rank.Length; i++)
-        {
-            StageManager.RemoveCameraTarget(rank[i]);
-        }
         StageManager.SetCloseUpCamera(rank[0]);
 
         yield return null;

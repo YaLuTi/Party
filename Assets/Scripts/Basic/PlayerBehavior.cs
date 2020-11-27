@@ -325,6 +325,11 @@ public class PlayerBehavior : MonoBehaviour
         itemHand.TriggerItem();
     }
 
+    void ItemEnd()
+    {
+        itemHand.ItemEnd();
+    }
+
     public void OnHit(BulletHitInfo_AF info)
     {
         // GetComponent<Rigidbody>().AddForce(info.bulletForce);

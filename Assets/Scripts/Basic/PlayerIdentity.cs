@@ -212,11 +212,17 @@ public class PlayerIdentity : MonoBehaviour
         playerInput.SwitchCurrentActionMap("None");
         foreach (Rigidbody rb in rbs)
         {
-            rb.velocity = Vector3.zero;
+            if (rb != null)
+            {
+                rb.velocity = Vector3.zero;
+            }
         }
         foreach (Collider collider in colliders)
         {
-            collider.isTrigger = true;
+            if (collider != null)
+            {
+                collider.isTrigger = true;
+            }
         }
     }
 

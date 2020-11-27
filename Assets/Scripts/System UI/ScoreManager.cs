@@ -16,12 +16,12 @@ public class ScoreManager : MonoBehaviour
 
     static TextMeshProUGUI[] texts;
     static bool IsEnd = false;
-    static PlayableDirector playableDirector;
+    static bool EndEvent = false;
+    public PlayableDirector playableDirector;
     // Start is called before the first frame update
     void Start()
     {
         IsEnd = false;
-        playableDirector = GetComponent<PlayableDirector>();
         texts = GetComponentsInChildren<TextMeshProUGUI>();
         for(int i = 0; i < scores.Length; i++)
         {
@@ -33,6 +33,12 @@ public class ScoreManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (EndEvent)
+        {
+            EndEvent = false;
+            playableDirector.Play();
+            StartCoroutine(_FinishEvent());
+        }
     }
 
     public static void AddScore(int id, int score)
@@ -47,18 +53,35 @@ public class ScoreManager : MonoBehaviour
         if(scores[id] >= WinScore)
         {
             IsEnd = true;
-
-            rank = new int[StageManager.scores.Length];
-            for(int i = 0; i < rank.Length; i++)
-            {
-                rank[i] = i;
-            }
-            Array.Resize(ref scores, rank.Length);
-
-            Array.Sort(scores, rank);
-            Array.Reverse(rank);
-
-            playableDirector.Play();
+            EndEvent = true;
         }
+    }
+
+    IEnumerator _FinishEvent()
+    {
+        IsEnd = true;
+        Time.timeScale = 0.0f;
+        Time.fixedDeltaTime = Time.fixedDeltaTime * Time.timeScale;
+        StageManager.StopBGM();
+        BattleData.TEST_END_SHOW();
+        
+        rank = new int[scores.Length];
+        for (int i = 0; i < rank.Length; i++)
+        {
+            rank[i] = i;
+        }
+
+        Array.Sort(scores, rank);
+        Array.Reverse(rank);
+
+        for(int i = 0; i < rank.Length; i++)
+        {
+            Debug.Log(rank[i]);
+        }
+
+        yield return new WaitForSecondsRealtime(1.35f);
+        StageManager.SetCloseUpCamera(rank[0]);
+
+        yield return null;
     }
 }

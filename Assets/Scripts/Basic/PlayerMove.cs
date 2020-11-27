@@ -87,6 +87,7 @@ public class PlayerMove : MonoBehaviour
             StartCoroutine(ReSpawn());
         }
         transform.position += ForceSpeed * Time.deltaTime / 10;
+        transform.position += (glideFree * Time.deltaTime);
         ForceSpeed *= 0.9f;
         if (inhibitMove)
         {
@@ -124,7 +125,7 @@ public class PlayerMove : MonoBehaviour
 
             if (MoveEnable)
             {
-                transform.position += speed * Time.deltaTime + (glideFree * Time.deltaTime);
+                transform.position += speed * Time.deltaTime;
             }
 
             if (Mathf.Abs(speed.x) + Mathf.Abs(speed.z) > 0)
@@ -243,6 +244,7 @@ public class PlayerMove : MonoBehaviour
 
     public void AddForceSpeed(Vector3 v)
     {
+        v.y = 0;
         ForceSpeed += v;
     }
 

@@ -124,6 +124,11 @@ public class ItemBasic : MonoBehaviour
     {
 
     }
+    
+    public virtual void OnTriggerEnd()
+    {
+
+    }
 
     public void Hold(Transform t)
     {

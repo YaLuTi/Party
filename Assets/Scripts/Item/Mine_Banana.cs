@@ -53,4 +53,12 @@ public class Mine_Banana : ItemMine
             }
         }
     }
+
+    public override void Enhance()
+    {
+        base.Enhance();
+        Vector3 s = transform.localScale;
+        s += new Vector3(1, 1, 1);
+        transform.DOScale(s, 0.1f);
+    }
 }

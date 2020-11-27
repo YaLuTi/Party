@@ -119,6 +119,7 @@ public class DeathmatchBrawl : MonoBehaviour
             DeadPlayer.Add(num);
             if (DeadPlayer.Count >= Lifes.Count - 1)
             {
+                Finish.Play();
                 StartCoroutine(_FinishEvent());
             }
         }

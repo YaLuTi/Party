@@ -120,6 +120,14 @@ public class PlayerItemHand : MonoBehaviour
         }
     }
 
+    public void ItemEnd()
+    {
+        if (HoldingItem != null)
+        {
+            HoldingItem.GetComponent<ItemBasic>().OnTriggerEnd();
+        }
+    }
+
     public string UseItem(_playerItemStatus status)
     {
         return HoldingItem.GetComponent<ItemBasic>().OnUse(status);
