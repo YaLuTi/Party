@@ -75,7 +75,7 @@ public class EventSpawner : MonoBehaviour
                 GameObject g = Instantiate(spawnEvents[i].Item, spawnEvents[i].positoin[r], Quaternion.Euler(spawnEvents[i].rotation[r]));
                 SpawnItem.Add(g);
                 CinemachineTargetGroup targetGroup = GameObject.FindGameObjectWithTag("CineGroup").GetComponent<CinemachineTargetGroup>();
-                targetGroup.AddMember(g.transform, 0.3f, 0);
+                targetGroup.AddMember(g.transform, 0.7f, 0);
                 return;
             }
         }

@@ -77,6 +77,11 @@ public class StageManager : MonoBehaviour
 
     private void Start()
     {
+        Invoke("TestCreate", 0);
+    }
+
+    void TestCreate()
+    {
         if (CreatingTest)
         {
             StageInfo stageInfo;
