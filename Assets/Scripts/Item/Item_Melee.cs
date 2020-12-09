@@ -10,7 +10,6 @@ public class Item_Melee : ItemBasic
     public override void OnTrigger()
     {
         base.OnTrigger();
-        Debug.Log("ERSX");
         weaponCollider.Attack(PlayerID);
     }
 
