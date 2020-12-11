@@ -213,6 +213,7 @@ public class StageManager : MonoBehaviour
             g.GetComponent<Transform>().position = v;
 
             players[players.Count - 1].GetComponentInChildren<PlayerCreating>().profileChooseUI = g.GetComponent<ProfileChooseUI>();
+            playerInput.SwitchCurrentActionMap("Creating(UI)");
 
             OnBattleScene += players[players.Count - 1].GetComponent<PlayerIdentity>().OnTest;
 
