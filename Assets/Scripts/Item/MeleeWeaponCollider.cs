@@ -18,6 +18,8 @@ public class MeleeWeaponCollider : MonoBehaviour
     public float velocity;
     [SerializeField]
     MeleeWeaponTrail weaponTrail;
+    [SerializeField]
+    public float AttackTime;
 
     bool IsAttacking = false;
 
@@ -43,7 +45,7 @@ public class MeleeWeaponCollider : MonoBehaviour
     }
     IEnumerator CancelAttack()
     {
-        yield return new WaitForSeconds(0.38f);
+        yield return new WaitForSeconds(AttackTime);
         IsAttacking = false;
         weaponTrail.Emit = false;
         yield return null;
