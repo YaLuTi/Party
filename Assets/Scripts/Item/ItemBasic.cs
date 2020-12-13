@@ -130,7 +130,7 @@ public class ItemBasic : MonoBehaviour
 
     }
 
-    public void Hold(Transform t)
+    public virtual void Hold(Transform t)
     {
         transform.parent = t;
         transform.localPosition = HoldedPosition;
