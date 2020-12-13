@@ -107,6 +107,7 @@ public class ItemBomb : ItemBasic
     public override void Enhance()
     {
         base.Enhance();
+        
         transform.DOScale(transform.localScale * 2, 0.2f);
     }
 
