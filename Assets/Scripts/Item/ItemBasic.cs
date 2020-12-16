@@ -23,9 +23,9 @@ public class ItemBasic : MonoBehaviour
     [SerializeField]
     public float Durability = 1;
     [SerializeField]
-    Vector3 HoldedPosition;
+    protected Vector3 HoldedPosition;
     [SerializeField]
-    Vector3 HoldedRotation;
+    protected Vector3 HoldedRotation;
 
     public string animation;
     public string Releaseanimation;

@@ -105,6 +105,7 @@ namespace AnimFollow
 		float getupLerp2 = 2f;			// Determines the regaining of strength during the later part of the get up state
 		float wakeUpStrength = .2f;		// A number that defines the degree of strength the ragdoll must reach before it is assumed to match the master pose and start the later part of the get up state
         public float GetUpTime = 1.3f;
+        float GetUpTimeCount = 0;
 		
 		float toContactLerp = 70f;				// Determines how fast the character loses strength when in contact
 		float fromContactLerp = 1f;				// Determines how fast the character gains strength after freed from contact
@@ -275,6 +276,7 @@ namespace AnimFollow
 				shotByBullet = false;
                 noContactTime = 0;
                 contactTime = 0;
+                GetUpTimeCount = 0;
                 falling = true;
 				gettingUp = false;
 				orientated = false;
@@ -346,17 +348,21 @@ namespace AnimFollow
 								IceOnGetup[m].GetComponent<Collider>().material.staticFriction = noIceStatFriction[m];
 							}
 
-							if (limbErrorMagnitude < maxErrorWhenMatching * 10) // Do not go to full strength unless ragdoll is matching master (delay)
+                            /*gettingUp = false;
+                            delayedGetupDone = true;
+                            playerMovement.inhibitRun = true;*/
+
+                            if (limbErrorMagnitude < maxErrorWhenMatching * 10) // Do not go to full strength unless ragdoll is matching master (delay)
                             {
                                 gettingUp = false; // Getting up is done
 								delayedGetupDone = false;
 								playerMovement.inhibitRun = false;
 							}
 							else
-                            {
+                            {// Inhibit running until ragdoll is matching master again
                                 delayedGetupDone = true;
-								playerMovement.inhibitRun = true; // Inhibit running until ragdoll is matching master again
-							}
+                                playerMovement.inhibitRun = true;
+                            }
 						}
 						else // Lerp the ragdoll to contact strength during get up
                         {
@@ -390,7 +396,7 @@ namespace AnimFollow
 					animFollow.SetJointTorque (animFollow.maxJointTorque); // Do not wait for animfollow.secondaryUpdate
 
                     // Orientate master to ragdoll and start transition to getUp when settled on the ground. Falling is over, getting up commences
-                    if (ragdollRootBone.GetComponent<Rigidbody>().velocity.magnitude < settledSpeed && contactTime + noContactTime > GetUpTime) // && contactTime + noContactTime > .4f)
+                    if (ragdollRootBone.GetComponent<Rigidbody>().velocity.magnitude < settledSpeed * 10000 && GetUpTimeCount > GetUpTime) // && contactTime + noContactTime > .4f)
                     {
                         gettingUp = true;
 						orientate = true;
@@ -430,7 +436,8 @@ namespace AnimFollow
 			if (TestgameObjects.Count == 0) // Not in contact
 			{
 				noContactTime += Time.fixedDeltaTime;
-				contactTime = 0f;
+                GetUpTimeCount += Time.fixedDeltaTime;
+                contactTime = 0f;
 
 				// When not in contact character has maxStrenth strength
 				if (!(gettingUp || falling) || delayedGetupDone)
@@ -443,7 +450,8 @@ namespace AnimFollow
 			else // In contact
 			{
 				contactTime += Time.fixedDeltaTime;
-				noContactTime = 0f;
+                GetUpTimeCount += Time.fixedDeltaTime;
+                noContactTime = 0f;
 
 				// When in contact character has only contact strength
 				if (!(gettingUp || falling) || delayedGetupDone)

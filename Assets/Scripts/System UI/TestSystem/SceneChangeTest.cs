@@ -145,6 +145,25 @@ public class SceneChangeTest : MonoBehaviour
         yield return null;
     }
 
+    public void LoadLobby(string scene)
+    {
+        StartCoroutine(_LoadLobby(scene));
+    }
+
+    IEnumerator _LoadLobby(string scene)
+    {
+        AsyncOperation asyncLoad;
+        asyncLoad = SceneManager.LoadSceneAsync(scene);
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+        StageManager.LoadNewScene();
+        yield return new WaitForSeconds(2.5f);
+        StageManager.ThrowPlayer();
+        yield return null;
+    }
+
     void ChangeScene(int delta)
     {
         SceneChoosing += delta;

@@ -25,6 +25,10 @@ public class PlayerHitten : MonoBehaviour
     public GameObject Decal;
     public GameObject RespawnPortal;
 
+    [Header("SFX")]
+    AudioSource audioSource;
+    public AudioClip deathSound;
+
     [Header("Health & UI")]
     [SerializeField]
     float MaxHealth;
@@ -64,6 +68,7 @@ public class PlayerHitten : MonoBehaviour
         pickItem = GetComponentInChildren<PlayerBehavior>();
         playerMove = GetComponentInChildren<PlayerMove>();
         playerIdentity = GetComponentInChildren<PlayerIdentity>();
+        audioSource = GetComponentInChildren<AudioSource>();
 
         Health = MaxHealth;
         Dead = false;
@@ -195,6 +200,7 @@ public class PlayerHitten : MonoBehaviour
 
         if (Health <= 0)
         {
+            audioSource.PlayOneShot(deathSound);
             StartCoroutine(Respawn(2));
             OnDeath?.Invoke(this);
             Dead = true;
@@ -214,6 +220,23 @@ public class PlayerHitten : MonoBehaviour
     public bool IsGettingUp()
     {
         return ragdollControl.PlayerInhibit();
+    }
+
+    public void AxeMode(GameObject Particle)
+    {
+        StartCoroutine(AxeModeEvent(Particle));
+    }
+
+    IEnumerator AxeModeEvent(GameObject Particle)
+    {
+        IsInvincible = true;
+        playerMove.inhibitMove = true;
+        GetComponentInChildren<Animator>().SetTrigger("Taunt");
+        yield return new WaitForSeconds(1.5f);
+        Instantiate(Particle, Hips.position, Hips.rotation);
+        yield return new WaitForSeconds(1f);
+        playerMove.inhibitMove = false;
+        yield return null;
     }
 
     IEnumerator AddForceToLimb(BulletHitInfo_AF bulletHitInfo)

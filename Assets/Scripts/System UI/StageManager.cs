@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using DG.Tweening;
 using UnityEngine.Playables;
 using Cinemachine;
+using AnimFollow;
 
 public delegate void OnBattleScene();
 
@@ -36,6 +37,8 @@ public class StageManager : MonoBehaviour
     // 要移除
     public GameObject PlayerCraftUI;
     public static List<GameObject> PlayerCraftUIList = new List<GameObject>();
+
+    public SceneChangeTest changeTest;
 
     public GameObject Canvas;
 
@@ -245,6 +248,40 @@ public class StageManager : MonoBehaviour
     {
         if (inputManager == null) return; // Not sure why I need this
         StartCoroutine(_LoadTestScene());
+    }
+
+    public void LoadLobby()
+    {
+        foreach (GameObject player in players)
+        {
+            player.GetComponentInChildren<SimpleFootIK_AF>().followTerrain = false;
+        }
+        changeTest.LoadLobby("BlockoutTest 2");
+    }
+    public static void ThrowPlayer()
+    {
+        int i = 0;
+        foreach(GameObject player in players)
+        {
+            /*player.GetComponentInChildren<SimpleFootIK_AF>().followTerrain = true;
+            player.GetComponentInChildren<PlayerMove>().AddForceSpeed(new Vector3(0, 0, 200));*/
+            BulletHitInfo_AF bulletHitInfo_AF = new BulletHitInfo_AF();
+
+            Collider[] colliders = player.GetComponent<PlayerHitten>().Hips.GetComponentsInChildren<Collider>();
+            // Vector3 p = player.GetComponent<PlayerHitten>().Hips.position - new Vector3( 0, 0, -1);
+            Vector3 p = new Vector3(0, 3.5f, -13.5f);
+            foreach (Collider collider in colliders)
+            {
+                bulletHitInfo_AF.IsShot = true;
+                bulletHitInfo_AF.hitTransform = collider.transform;
+                bulletHitInfo_AF.bulletForce = (collider.ClosestPoint(p) - p).normalized * 1300;
+                bulletHitInfo_AF.hitPoint = collider.ClosestPoint(p);
+
+                player.GetComponent<PlayerHitten>().OnHit(bulletHitInfo_AF);
+            }
+            player.GetComponentInChildren<SimpleFootIK_AF>().followTerrain = true;
+            i++;
+        }
     }
 
     IEnumerator _LoadTestScene()

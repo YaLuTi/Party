@@ -11,6 +11,7 @@ public class Item_Melee : ItemBasic
     {
         base.OnTrigger();
         weaponCollider.Attack(PlayerID);
+        audioSource.PlayOneShot(UsingSound[0]);
     }
 
     public override void OnTriggerEnd()
