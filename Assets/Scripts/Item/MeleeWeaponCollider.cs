@@ -96,10 +96,6 @@ public class MeleeWeaponCollider : MonoBehaviour
                         bulletHitInfo.bulletForce = (other.ClosestPoint(transform.position) - transform.position).normalized * velocity / 30;
                         bulletHitInfo.hitPoint = other.ClosestPoint(transform.position);
                         itemBasic.AddForce(bulletHitInfo);
-                        if (other.gameObject.GetComponent<ItemBomb>())
-                        {
-                            other.gameObject.GetComponent<ItemBomb>().OnUse();
-                        }
                     }
                 }
             }
