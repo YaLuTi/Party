@@ -318,10 +318,13 @@ public class PlayerIdentity : MonoBehaviour
         }
         yield return new WaitForFixedUpdate();
 
-        playerMove.transform.position = stageInfo.SpawnPosition[PlayerID];
-        playerMove.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID];
-        playerRigHips.transform.position = stageInfo.SpawnPosition[PlayerID];
-        playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID];
+        if (GameObject.FindGameObjectWithTag("StageInfoTransform") == null)
+        {
+            playerMove.transform.position = stageInfo.SpawnPosition[PlayerID];
+            playerMove.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID];
+            playerRigHips.transform.position = stageInfo.SpawnPosition[PlayerID];
+            playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID];
+        }
 
         yield return new WaitForFixedUpdate();
         foreach (Rigidbody rb in rbs)

@@ -87,11 +87,12 @@ public class StageManager : MonoBehaviour
     {
         if (CreatingTest)
         {
-            StageInfo stageInfo;
-            stageInfo = GameObject.FindGameObjectWithTag("StageInfo").GetComponent<StageInfo>();
+            StageInfoTransform stageInfo;
+            stageInfo = GameObject.FindGameObjectWithTag("StageInfoTransform").GetComponent<StageInfoTransform>();
             for (int i = 0; i < 4; i++)
             {
-                GameObject g = Instantiate(Player, stageInfo.SpawnPosition[i], Quaternion.Euler(stageInfo.SpawnRotation[i]));
+                Debug.Log("RTH");
+                GameObject g = Instantiate(Player, stageInfo.transforms[i].position, Quaternion.Euler(stageInfo.transforms[i].eulerAngles));
                 players.Add(g);
             }
         }
