@@ -270,7 +270,7 @@ public class PlayerIdentity : MonoBehaviour
             if (collider == null) continue;
             collider.isTrigger = false;
         }
-        footIK_AF.followTerrain = true;
+        // footIK_AF.followTerrain = true;
         respawn = null;
 
         yield return null;
@@ -302,7 +302,7 @@ public class PlayerIdentity : MonoBehaviour
         {
             collider.isTrigger = false;
         }
-        footIK_AF.followTerrain = true;
+        // footIK_AF.followTerrain = true;
         yield return null;
     }
     IEnumerator SpawnToPosition()
@@ -336,7 +336,7 @@ public class PlayerIdentity : MonoBehaviour
             collider.isTrigger = false;
         }
 
-        footIK_AF.followTerrain = true;
+        // footIK_AF.followTerrain = true;
         yield return new WaitForFixedUpdate();
         SetRagData();
         yield return new WaitForFixedUpdate();

@@ -161,7 +161,13 @@ public class SceneChangeTest : MonoBehaviour
         }
         StageManager.LoadNewScene();
         yield return new WaitForSeconds(2.5f);
-        StageManager.ThrowPlayer();
+        StageManager.ThrowPlayer(0);
+        yield return new WaitForSeconds(0.5f);
+        StageManager.ThrowPlayer(1);
+        yield return new WaitForSeconds(0.5f);
+        StageManager.ThrowPlayer(2);
+        yield return new WaitForSeconds(0.5f);
+        StageManager.ThrowPlayer(3);
         yield return null;
     }
 

@@ -259,30 +259,34 @@ public class StageManager : MonoBehaviour
         }
         changeTest.LoadLobby("BlockoutTest 2");
     }
-    public static void ThrowPlayer()
+    public static void ThrowPlayer(int i)
     {
-        int i = 0;
-        foreach(GameObject player in players)
+        /*player.GetComponentInChildren<SimpleFootIK_AF>().followTerrain = true;
+        player.GetComponentInChildren<PlayerMove>().AddForceSpeed(new Vector3(0, 0, 200));*/
+        if (i >= players.Count) return;
+
+        BulletHitInfo_AF bulletHitInfo_AF = new BulletHitInfo_AF();
+
+        Collider[] colliders = players[i].GetComponent<PlayerHitten>().Hips.GetComponentsInChildren<Collider>();
+        // Vector3 p = player.GetComponent<PlayerHitten>().Hips.position - new Vector3( 0, 0, -1);
+        Vector3 p = new Vector3(0, 3f, -15f + i * -1f);
+
+        int j = 0;
+        foreach (Collider collider in colliders)
         {
-            /*player.GetComponentInChildren<SimpleFootIK_AF>().followTerrain = true;
-            player.GetComponentInChildren<PlayerMove>().AddForceSpeed(new Vector3(0, 0, 200));*/
-            BulletHitInfo_AF bulletHitInfo_AF = new BulletHitInfo_AF();
+            if (j % 2 != 0) continue;
+            bulletHitInfo_AF.IsShot = true;
+            bulletHitInfo_AF.hitTransform = collider.transform;
+            bulletHitInfo_AF.bulletForce = (collider.ClosestPoint(p) - p).normalized * (20000 + i * 10000);
+            bulletHitInfo_AF.hitPoint = collider.ClosestPoint(p);
 
-            Collider[] colliders = player.GetComponent<PlayerHitten>().Hips.GetComponentsInChildren<Collider>();
-            // Vector3 p = player.GetComponent<PlayerHitten>().Hips.position - new Vector3( 0, 0, -1);
-            Vector3 p = new Vector3(0, 3.5f, -13.5f);
-            foreach (Collider collider in colliders)
-            {
-                bulletHitInfo_AF.IsShot = true;
-                bulletHitInfo_AF.hitTransform = collider.transform;
-                bulletHitInfo_AF.bulletForce = (collider.ClosestPoint(p) - p).normalized * 1300;
-                bulletHitInfo_AF.hitPoint = collider.ClosestPoint(p);
-
-                player.GetComponent<PlayerHitten>().OnHit(bulletHitInfo_AF);
-            }
-            player.GetComponentInChildren<SimpleFootIK_AF>().followTerrain = true;
-            i++;
+            players[i].GetComponent<PlayerHitten>().OnHit(bulletHitInfo_AF);
+            j++;
         }
+        players[i].GetComponentInChildren<SimpleFootIK_AF>().followTerrain = true;
+        /*foreach (GameObject player in players)
+        {
+        }*/
     }
 
     IEnumerator _LoadTestScene()
