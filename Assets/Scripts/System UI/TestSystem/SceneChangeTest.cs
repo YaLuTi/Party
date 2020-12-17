@@ -56,7 +56,7 @@ public class SceneChangeTest : MonoBehaviour
 
     bool isButtonPressed;
     private void OnGUI()
-    {
+    {/*
         if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.DownArrow))
             isButtonPressed = false;
 
@@ -89,10 +89,11 @@ public class SceneChangeTest : MonoBehaviour
 
         /*GUI.Label(new Rect(350 * dpiScale, 15 * dpiScale + offset / 2, 500 * dpiScale, 20 * dpiScale),
             "press left mouse button for the camera rotating and scroll wheel for zooming", guiStyleHeader);*/
-        GUI.Label(new Rect(350 * dpiScale, 15 * dpiScale + offset / 2, 160 * dpiScale, 20 * dpiScale),
+
+       /* GUI.Label(new Rect(350 * dpiScale, 15 * dpiScale + offset / 2, 160 * dpiScale, 20 * dpiScale),
             "Scene : " + SceneArray[SceneChoosing], guiStyleHeader);
         GUI.Label(new Rect(350 * dpiScale, 30 * dpiScale + offset / 2, 160 * dpiScale, 20 * dpiScale),
-            "Mode : " + ModeArray[ModeChoosing], guiStyleHeader);
+            "Mode : " + ModeArray[ModeChoosing], guiStyleHeader);*/
     }
 
     public void LoadScene(int mode, int scene)
