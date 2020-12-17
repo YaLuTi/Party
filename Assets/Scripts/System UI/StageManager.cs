@@ -269,7 +269,7 @@ public class StageManager : MonoBehaviour
 
         Collider[] colliders = players[i].GetComponent<PlayerHitten>().Hips.GetComponentsInChildren<Collider>();
         // Vector3 p = player.GetComponent<PlayerHitten>().Hips.position - new Vector3( 0, 0, -1);
-        Vector3 p = new Vector3(0, 3f, -15f + i * -1f);
+        Vector3 p = new Vector3(0, 3f, -15.5f + i * -1f);
 
         int j = 0;
         foreach (Collider collider in colliders)
