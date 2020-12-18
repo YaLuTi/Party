@@ -109,10 +109,14 @@ public class SceneChangeTest : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         AsyncOperation asyncLoad;
-        asyncLoad = SceneManager.UnloadSceneAsync(ModeArray[NowMode]);
-        while (!asyncLoad.isDone)
+        if (!Title)
         {
-            yield return null;
+            asyncLoad = SceneManager.UnloadSceneAsync(ModeArray[NowMode]);
+
+            while (!asyncLoad.isDone)
+            {
+                yield return null;
+            }
         }
         PlayerHitten.TestHP = 0;
         sceneAnimation.BlackOut();

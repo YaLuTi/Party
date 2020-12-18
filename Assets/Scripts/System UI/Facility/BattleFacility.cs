@@ -5,13 +5,14 @@ using UnityEngine;
 public class BattleFacility : FacilityArea
 {
     SceneChangeTest changeTest;
-    public static int ChoosingMode = 1;
+    int ChoosingMode = 0;
+    int ChoosingMap = 0;
 
     MeshRenderer meshRenderer;
     // Start is called before the first frame update
     void Start()
     {
-        changeTest = GetComponent<SceneChangeTest>();
+        changeTest = GameObject.FindGameObjectWithTag("SceneChangeTester").GetComponent<SceneChangeTest>();
 
         meshRenderer = GetComponent<MeshRenderer>();
     }
@@ -25,7 +26,21 @@ public class BattleFacility : FacilityArea
     public override void OnUse(PlayerBehavior playerBehavior)
     {
         base.OnUse(playerBehavior);
-        changeTest.LoadScene(1,1);
-        meshRenderer.enabled = false;
+        // meshRenderer.enabled = false;
+    }
+
+    public void GO()
+    {
+        changeTest.LoadScene(ChoosingMode, ChoosingMap);
+    }
+
+    public void SetMode(int i)
+    {
+        ChoosingMode = i;
+    }
+
+    public void SetMap(int i)
+    {
+        ChoosingMap = i;
     }
 }

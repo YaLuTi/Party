@@ -18,6 +18,7 @@ public class StageManager : MonoBehaviour
     public static int[] PlayerProfile;
     public static int[] playerScore;
     public static bool InGame = false;
+    public static bool InLobby = false;
     public static PlayerInputManager inputManager;
 
     public static int[] scores; // 暫時弄成玩家名次
@@ -258,6 +259,7 @@ public class StageManager : MonoBehaviour
             player.GetComponentInChildren<SimpleFootIK_AF>().followTerrain = false;
         }
         changeTest.LoadLobby("BlockoutTest 2");
+        InLobby = true;
     }
     public static void ThrowPlayer(int i)
     {

@@ -189,11 +189,25 @@ public class PlayerMove : MonoBehaviour
 
     void OnMoveX(InputValue value)
     {
-        h = value.Get<float>();
+        if (StageManager.InLobby)
+        {
+            v = value.Get<float>();
+        }
+        else
+        {
+            h = value.Get<float>();
+        }
     }
     void OnMoveY(InputValue value)
     {
-        v = value.Get<float>();
+        if (StageManager.InLobby)
+        {
+            h = -value.Get<float>();
+        }
+        else
+        {
+            v = value.Get<float>();
+        }
     }
 
     void OnPick()

@@ -270,7 +270,10 @@ public class PlayerIdentity : MonoBehaviour
             if (collider == null) continue;
             collider.isTrigger = false;
         }
-        // footIK_AF.followTerrain = true;
+        if (!StageManager.InLobby)
+        {
+            footIK_AF.followTerrain = true;
+        }
         respawn = null;
 
         yield return null;
@@ -302,7 +305,10 @@ public class PlayerIdentity : MonoBehaviour
         {
             collider.isTrigger = false;
         }
-        // footIK_AF.followTerrain = true;
+        if (!StageManager.InLobby)
+        {
+            footIK_AF.followTerrain = true;
+        }
         yield return null;
     }
     IEnumerator SpawnToPosition()
@@ -317,14 +323,12 @@ public class PlayerIdentity : MonoBehaviour
             collider.isTrigger = true;
         }
         yield return new WaitForFixedUpdate();
-
-        if (GameObject.FindGameObjectWithTag("StageInfoTransform") == null)
-        {
+        
             playerMove.transform.position = stageInfo.SpawnPosition[PlayerID];
             playerMove.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID];
             playerRigHips.transform.position = stageInfo.SpawnPosition[PlayerID];
             playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID];
-        }
+        
 
         yield return new WaitForFixedUpdate();
         foreach (Rigidbody rb in rbs)
@@ -336,7 +340,11 @@ public class PlayerIdentity : MonoBehaviour
             collider.isTrigger = false;
         }
 
-        // footIK_AF.followTerrain = true;
+        if (!StageManager.InLobby)
+        {
+            footIK_AF.followTerrain = true;
+        }
+
         yield return new WaitForFixedUpdate();
         SetRagData();
         yield return new WaitForFixedUpdate();
