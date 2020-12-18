@@ -106,6 +106,7 @@ public class SceneChangeTest : MonoBehaviour
         StageManager.ClearPlayer();
 
         sceneAnimation.BlackIn();
+
         yield return new WaitForSeconds(1f);
 
         AsyncOperation asyncLoad;
@@ -119,7 +120,8 @@ public class SceneChangeTest : MonoBehaviour
             }
         }
         PlayerHitten.TestHP = 0;
-        sceneAnimation.BlackOut();
+
+        // sceneAnimation.BlackOut();
 
         asyncLoad = SceneManager.LoadSceneAsync(SceneArray[scene]);
         while (!asyncLoad.isDone)
@@ -137,9 +139,12 @@ public class SceneChangeTest : MonoBehaviour
             }
             NowMode = mode;
 
-        sceneAnimation.BlackOut();
         yield return new WaitForSeconds(0.5f);
+
+        sceneAnimation.BlackOut();
+
         StageManager.LoadNewScene();
+        StageManager.InLobby = false;
         /*asyncLoad = SceneManager.LoadSceneAsync(ModeArray[ModeChoosing], LoadSceneMode.Additive);
         while (!asyncLoad.isDone)
         {

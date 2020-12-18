@@ -141,7 +141,7 @@ public class DeathmatchBrawl : MonoBehaviour
             else
             {
                 Debug.Log(i);
-                StageManager.SetCloseUpCamera(i);
+                // StageManager.SetCloseUpCamera(i);
             }
         }
         // StageManager.SetCloseUpCamera(rank[0]);

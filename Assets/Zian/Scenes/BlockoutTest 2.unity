@@ -197,7 +197,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6500
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1, y: 1, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 9.12e-43, y: 1, z: 1, w: 1}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -3268,7 +3268,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2356
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1, y: 1, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 8e-45, y: 0, z: 5.84e-43, w: 1.4e-44}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -33277,6 +33277,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 69
       objectReference: {fileID: 0}
+    - target: {fileID: 4001558713801516385, guid: 6cefad6aad6eb404c8dfd1bcd50ad05f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4001747154860670047, guid: 6cefad6aad6eb404c8dfd1bcd50ad05f,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -33439,6 +33444,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayersNum: 0
   IsUsing: 0
+--- !u!4 &1202742374 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4002773523956849013, guid: 6cefad6aad6eb404c8dfd1bcd50ad05f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1202742371}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1210271397
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42193,7 +42204,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2356
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 2.9977e-41, z: 0, w: 1.1878269e+10}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -49696,6 +49707,99 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1822559634}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1823411036
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1202742374}
+    m_Modifications:
+    - target: {fileID: 1387503225583106, guid: 09598e6bfa691714cb6313b3c35e7a91, type: 3}
+      propertyPath: m_Name
+      value: Portal_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500339626083120, guid: 09598e6bfa691714cb6313b3c35e7a91, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4559225260321526, guid: 09598e6bfa691714cb6313b3c35e7a91, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 4559225260321526, guid: 09598e6bfa691714cb6313b3c35e7a91, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 4559225260321526, guid: 09598e6bfa691714cb6313b3c35e7a91, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 4559225260321526, guid: 09598e6bfa691714cb6313b3c35e7a91, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.00000006657903
+      objectReference: {fileID: 0}
+    - target: {fileID: 4559225260321526, guid: 09598e6bfa691714cb6313b3c35e7a91, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4559225260321526, guid: 09598e6bfa691714cb6313b3c35e7a91, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4559225260321526, guid: 09598e6bfa691714cb6313b3c35e7a91, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4559225260321526, guid: 09598e6bfa691714cb6313b3c35e7a91, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4559225260321526, guid: 09598e6bfa691714cb6313b3c35e7a91, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4559225260321526, guid: 09598e6bfa691714cb6313b3c35e7a91, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4559225260321526, guid: 09598e6bfa691714cb6313b3c35e7a91, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4559225260321526, guid: 09598e6bfa691714cb6313b3c35e7a91, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.1234847
+      objectReference: {fileID: 0}
+    - target: {fileID: 4559225260321526, guid: 09598e6bfa691714cb6313b3c35e7a91, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.1234847
+      objectReference: {fileID: 0}
+    - target: {fileID: 4559225260321526, guid: 09598e6bfa691714cb6313b3c35e7a91, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.1234847
+      objectReference: {fileID: 0}
+    - target: {fileID: 198017586399670018, guid: 09598e6bfa691714cb6313b3c35e7a91,
+        type: 3}
+      propertyPath: scalingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198221945669340828, guid: 09598e6bfa691714cb6313b3c35e7a91,
+        type: 3}
+      propertyPath: scalingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198398669295474302, guid: 09598e6bfa691714cb6313b3c35e7a91,
+        type: 3}
+      propertyPath: scalingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198422467316417176, guid: 09598e6bfa691714cb6313b3c35e7a91,
+        type: 3}
+      propertyPath: scalingMode
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 09598e6bfa691714cb6313b3c35e7a91, type: 3}
 --- !u!4 &1823687081 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4853932170256924010, guid: c8ea8218313d4164da5f1719df64d21d,
@@ -52853,7 +52957,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2356
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: NaN, y: NaN, z: NaN, w: NaN}
+  m_BoundingSphereOverride: {x: 1, y: 1, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0

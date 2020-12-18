@@ -83,6 +83,11 @@ public class DeathMatchTime : DeathmatchBrawl
 
         yield return new WaitForSecondsRealtime(1.35f);
         StageManager.SetCloseUpCamera(rank[0]);
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.01f;
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>().LoadLobby();
 
         yield return null;
     }
