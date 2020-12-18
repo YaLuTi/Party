@@ -323,11 +323,22 @@ public class PlayerIdentity : MonoBehaviour
             collider.isTrigger = true;
         }
         yield return new WaitForFixedUpdate();
-        
+
+        if (GameObject.FindGameObjectWithTag("StageInfoTransform") == null)
+        {
             playerMove.transform.position = stageInfo.SpawnPosition[PlayerID];
             playerMove.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID];
             playerRigHips.transform.position = stageInfo.SpawnPosition[PlayerID];
             playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID];
+        }
+        else
+        {
+            StageInfoTransform stageInfoTransform = GameObject.FindGameObjectWithTag("StageInfoTransform").GetComponent<StageInfoTransform>();
+            playerMove.transform.position = stageInfoTransform.transforms[PlayerID].position;
+            playerMove.transform.eulerAngles = stageInfoTransform.transforms[PlayerID].eulerAngles;
+            playerRigHips.transform.position = stageInfoTransform.transforms[PlayerID].position;
+            playerRigHips.transform.eulerAngles = stageInfoTransform.transforms[PlayerID].eulerAngles;
+        }
         
 
         yield return new WaitForFixedUpdate();
