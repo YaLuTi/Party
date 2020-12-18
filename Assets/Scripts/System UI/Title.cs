@@ -9,6 +9,7 @@ public class Title : MonoBehaviour
     [SerializeField]
     string[] Scenes;
     SceneChangeTest changeTest;
+    public int TestScene;
 
     public PlayableDirector playableDirector;
     // Start is called before the first frame update
@@ -26,7 +27,7 @@ public class Title : MonoBehaviour
     IEnumerator LoadScene()
     {
         AsyncOperation asyncLoad;
-        asyncLoad = SceneManager.LoadSceneAsync(Scenes[0], LoadSceneMode.Additive);
+        asyncLoad = SceneManager.LoadSceneAsync(Scenes[TestScene], LoadSceneMode.Additive);
         while (!asyncLoad.isDone)
         {
             yield return null;

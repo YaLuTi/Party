@@ -73,8 +73,11 @@ public class StageManager : MonoBehaviour
             }
         }
 
-        targetGroup = GameObject.FindGameObjectWithTag("CineGroup").GetComponent<CinemachineTargetGroup>();
-        virtualCamera = GameObject.FindGameObjectWithTag("Cine").GetComponent<CinemachineVirtualCamera>();
+        if (GameObject.FindGameObjectWithTag("CineGroup") != null)
+        {
+            targetGroup = GameObject.FindGameObjectWithTag("CineGroup").GetComponent<CinemachineTargetGroup>();
+            virtualCamera = GameObject.FindGameObjectWithTag("Cine").GetComponent<CinemachineVirtualCamera>();
+        }
         // if (Testing)GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>().Play();
         // SceneManager.LoadScene("CharacterChoose", LoadSceneMode.Additive);
     }
@@ -104,8 +107,12 @@ public class StageManager : MonoBehaviour
         if (TriggerLoadScene)
         {
             TriggerLoadScene = false;
-            EndDirector.Play();
-            FacilityManager.UsingDirector = EndDirector;
+            if(GameObject.FindGameObjectWithTag("EndDirector") != null)
+            {
+                GameObject.FindGameObjectWithTag("EndDirector").GetComponent<PlayableDirector>().Play();
+            }
+            // EndDirector.Play();
+            // FacilityManager.UsingDirector = EndDirector;
         }
     }
 
@@ -180,7 +187,8 @@ public class StageManager : MonoBehaviour
             {
                 Destroy(g);
             }
-            inputManager.enabled = false;
+            // inputManager.enabled = false;
+            // inputManager.enabled = false;
         }
     }
 
