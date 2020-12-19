@@ -197,7 +197,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6500
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 5.97e-43, y: 3.2673e-41, z: 0, w: -1}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: -1}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1542,7 +1542,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 68217104}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 179739072}
+        m_MethodName: PlayOneShot
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: b63229fb4a6931a499319bdb71181446,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &68217109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3250,7 +3262,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2356
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 5.97e-43, y: 3.3612e-41, z: 0, w: -1}
+  m_BoundingSphereOverride: {x: 5.97e-43, y: 9.4e-44, z: 0, w: 61.594574}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -37001,7 +37013,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2356
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 5.97e-43, y: 3.3373e-41, z: 0, w: -1}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 2.8180974e+20}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -37420,7 +37432,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1552019625}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 179739072}
+        m_MethodName: PlayOneShot
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: b63229fb4a6931a499319bdb71181446,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1552019630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41011,6 +41035,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1684318041}
   - component: {fileID: 1684318040}
+  - component: {fileID: 1684318042}
   m_Layer: 0
   m_Name: BGM
   m_TagString: BGM
@@ -41128,6 +41153,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1684318042
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684318039}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &1688085037
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41867,6 +41911,8 @@ PlayableDirector:
     value: {fileID: 1721890717}
   - key: {fileID: 30354900866469172, guid: 5f90178f91f7b7d4e83fe995bd6f0deb, type: 2}
     value: {fileID: 2112996878}
+  - key: {fileID: -2155411614942989069, guid: 5f90178f91f7b7d4e83fe995bd6f0deb, type: 2}
+    value: {fileID: 1684318042}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &1721890721
@@ -47314,7 +47360,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2356
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 5.97e-43, y: 3.3617e-41, z: 0, w: -1}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: -1}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0

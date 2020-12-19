@@ -5,11 +5,16 @@ using UnityEngine;
 public class SpotLightControll : MonoBehaviour
 {
     public GameObject[] lights;
+    AudioSource audioSource;
+    public AudioClip audioClip;
+    StageManager stageManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>().OnPlayerJoin += Light;
+        audioSource = GetComponent<AudioSource>();
+        stageManager = GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>();
+        stageManager.OnPlayerJoin += Light;
     }
 
     // Update is called once per frame
@@ -20,11 +25,12 @@ public class SpotLightControll : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>().OnPlayerJoin -= Light;
+        stageManager.OnPlayerJoin -= Light;
     }
 
     void Light(GameObject player, int n)
     {
         lights[n].SetActive(true);
+        audioSource.PlayOneShot(audioClip);
     }
 }
