@@ -104,6 +104,7 @@ public class SceneChangeTest : MonoBehaviour
     IEnumerator _LoadScene(int mode, int scene)
     {
         StageManager.ClearPlayer();
+        StageManager.InLobby = false;
 
         sceneAnimation.BlackIn();
 
@@ -144,7 +145,6 @@ public class SceneChangeTest : MonoBehaviour
         sceneAnimation.BlackOut();
 
         StageManager.LoadNewScene();
-        StageManager.InLobby = false;
         /*asyncLoad = SceneManager.LoadSceneAsync(ModeArray[ModeChoosing], LoadSceneMode.Additive);
         while (!asyncLoad.isDone)
         {

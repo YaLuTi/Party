@@ -720,6 +720,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""b473d878-36d6-463c-892b-544ba7d81345"",
+                    ""path"": ""<DualShockGamepad>/dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""UI_Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""96259b68-a89f-4711-8098-68ed89ae3731"",
                     ""path"": ""<Gamepad>/rightStick/x"",
                     ""interactions"": """",

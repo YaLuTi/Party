@@ -33,7 +33,7 @@ public class Title : MonoBehaviour
             yield return null;
         }
         playableDirector.Play();
-        GameObject.FindGameObjectWithTag("GameController").GetComponent<PlayableDirector>().Play();
+        // GameObject.FindGameObjectWithTag("GameController").GetComponent<PlayableDirector>().Play();
         yield return null;
     }
 }

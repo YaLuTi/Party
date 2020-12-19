@@ -210,7 +210,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -311,7 +311,8 @@ MonoBehaviour:
   PlayerID: -1
   HighLight: {fileID: 1932006426042408910}
   PlayerSelecting: 0
-  UsingSound: []
+  UsingSound:
+  - {fileID: 8300000, guid: 9f05115c4d7ad714593fe7b5ec5c4fba, type: 3}
   Durability: 3
   HoldedPosition: {x: -0.065, y: 0.14, z: 0}
   HoldedRotation: {x: -5.433, y: 0, z: 0}
@@ -445,6 +446,7 @@ MonoBehaviour:
   damage: 10
   velocity: 10000
   weaponTrail: {fileID: 6510500786790986108}
+  AttackTime: 0
 --- !u!54 &6510500786860566756
 Rigidbody:
   m_ObjectHideFlags: 0

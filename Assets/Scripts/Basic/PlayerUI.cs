@@ -17,15 +17,22 @@ public class PlayerUI : MonoBehaviour
     {
         if(playerHitten != null)
         {
-            playerHitten.OnHealthChanged += OnPlayerHealthChanged;
+            // playerHitten.OnHealthChanged += this.OnPlayerHealthChanged;
             slider.maxValue = playerHitten.GetMaxHealth();
             slider.value = slider.maxValue;
         }
         Fill.color = Color.green;
     }
 
+    private void OnDestroy()
+    {
+        Debug.Log("!?");
+        playerHitten.OnHealthChanged -= this.OnPlayerHealthChanged;
+    }
+
     public void SetUp(PlayerHitten _playerHitten)
     {
+        Debug.Log("A");
         playerHitten = _playerHitten;
         follow = playerHitten.playerMove.transform;
         _playerHitten.OnHealthChanged += OnPlayerHealthChanged;

@@ -220,8 +220,8 @@ public class StageManager : MonoBehaviour
             players.Add((playerInput.transform.root.gameObject));
 
             GameObject g = Instantiate(PlayerCraftUI);
-            StageInfo stageInfo = GameObject.FindGameObjectWithTag("StageInfo").GetComponent<StageInfo>();
-            Vector3 v = stageInfo.SpawnPosition[players.Count - 1];
+            StageInfoTransform stageInfo = GameObject.FindGameObjectWithTag("StageInfoTransform").GetComponent<StageInfoTransform>();
+            Vector3 v = stageInfo.transforms[players.Count - 1].position;
             v += new Vector3(2.25f, 2.5f, 0);
             g.GetComponent<Transform>().position = v;
 

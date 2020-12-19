@@ -8,6 +8,8 @@ public class BattleFacility : FacilityArea
     int ChoosingMode = 0;
     int ChoosingMap = 0;
 
+    public GameObject UI;
+
     MeshRenderer meshRenderer;
     // Start is called before the first frame update
     void Start()
@@ -26,6 +28,7 @@ public class BattleFacility : FacilityArea
     public override void OnUse(PlayerBehavior playerBehavior)
     {
         base.OnUse(playerBehavior);
+        UI.SetActive(true);
         // meshRenderer.enabled = false;
     }
 
