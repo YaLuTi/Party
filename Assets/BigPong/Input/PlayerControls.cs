@@ -731,6 +731,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""673d8877-556e-458c-8704-3ec3bba3c302"",
+                    ""path"": ""<Gamepad>/dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""UI_Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""96259b68-a89f-4711-8098-68ed89ae3731"",
                     ""path"": ""<Gamepad>/rightStick/x"",
                     ""interactions"": """",
