@@ -210,8 +210,8 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
-  m_Pitch: 1
+  m_Volume: 0.7
+  m_Pitch: 0.8
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -316,8 +316,9 @@ MonoBehaviour:
   Durability: 3
   HoldedPosition: {x: -0.065, y: 0.14, z: 0}
   HoldedRotation: {x: -5.433, y: 0, z: 0}
-  animation: Baseball
+  animation: Axe
   Releaseanimation: 
+  IdleAnimation: AxeIdle
   Enhaced: 0
   weaponCollider: {fileID: 6510500786860566757}
 --- !u!114 &6510500786790986108
@@ -391,7 +392,7 @@ GameObject:
   - component: {fileID: 6510500786860566756}
   m_Layer: 2
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: IgnoreMe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -446,7 +447,8 @@ MonoBehaviour:
   damage: 10
   velocity: 10000
   weaponTrail: {fileID: 6510500786790986108}
-  AttackTime: 0
+  HitSFX: {fileID: 8300000, guid: 4b822c8bf52704f47944d1df220103c3, type: 3}
+  AttackTime: 0.5
 --- !u!54 &6510500786860566756
 Rigidbody:
   m_ObjectHideFlags: 0

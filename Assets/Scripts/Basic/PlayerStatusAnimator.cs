@@ -8,7 +8,7 @@ public class PlayerStatusAnimator : MonoBehaviour
     public event EventHandler<StatusEventArgs> StatusUpdateHandler;
     List<StatusEventArgs> status = new List<StatusEventArgs>();
 
-    Animator animator;
+    public Animator animator;
     AnimatorClipInfo[] CurrentClipInfo;
 
     float MoveSpeed;

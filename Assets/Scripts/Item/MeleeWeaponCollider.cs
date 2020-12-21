@@ -20,6 +20,10 @@ public class MeleeWeaponCollider : MonoBehaviour
     MeleeWeaponTrail weaponTrail;
     [SerializeField]
     AudioClip HitSFX;
+
+    [SerializeField]
+    float volume;
+
     [SerializeField]
     public float AttackTime;
 
@@ -75,7 +79,7 @@ public class MeleeWeaponCollider : MonoBehaviour
                     hitten.OnHit(bulletHitInfo);
                     playerHittens.Add(hitten);
                     Instantiate(HitParticle, bulletHitInfo.hitPoint, Quaternion.identity);
-                    audioSource.PlayOneShot(HitSFX);
+                    audioSource.PlayOneShot(HitSFX, volume);
                 }
             }
             else if (other.gameObject.transform.root.GetComponent<CreatureBasic>())

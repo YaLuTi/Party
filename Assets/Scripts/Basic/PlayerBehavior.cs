@@ -209,6 +209,19 @@ public class PlayerBehavior : MonoBehaviour
                 {
                     SetMine();
                 }
+                else if(animation == "Axe")
+                {
+                    AnimatorClipInfo[] CurrentClipInfo;
+                    CurrentClipInfo = playerStatus.animator.GetCurrentAnimatorClipInfo(1);
+                    if (CurrentClipInfo[0].clip.name == "Twinblades_attack02_Inplace")
+                    {
+
+                    }
+                    else
+                    {
+                        playerStatus.PlayerItemAnimation(animation);
+                    }
+                }
                 else
                 {
                     if (IsThrowing) return;
@@ -257,6 +270,10 @@ public class PlayerBehavior : MonoBehaviour
                 {
                     IsHolding = true;
                     itemHand.SetHoldingItem(pick.gameObject);
+                    if(pick.gameObject.GetComponent<ItemBasic>().IdleAnimation != "")
+                    {
+                        playerStatus.PlayerItemAnimationBool(pick.gameObject.GetComponent<ItemBasic>().IdleAnimation, true);
+                    }
                     GameObject g = Instantiate(PickUpParticle, transform.position, Quaternion.identity);
                     g.transform.parent = this.gameObject.transform;
                     Destroy(g, 1);
@@ -278,6 +295,10 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (IsThrowing)
         {
+            if (itemHand.HoldingItem.gameObject.GetComponent<ItemBasic>().IdleAnimation != "")
+            {
+                playerStatus.PlayerItemAnimationBool(itemHand.HoldingItem.gameObject.GetComponent<ItemBasic>().IdleAnimation, false);
+            }
             playerStatus.PlayerItem_Throw();
             IsThrowing = false;
             IsCharging = false;

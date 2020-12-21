@@ -20,8 +20,19 @@ public class Item_Melee : ItemBasic
         Durability--;
         if(Durability <= 0)
         {
+            transform.root.GetComponentInChildren<Animator>().SetBool(IdleAnimation, false);
             Destroy(this.gameObject);
         }
+    }
+
+    public override void Hold(Transform t)
+    {
+        base.Hold(t);
+    }
+
+    public override void Throw()
+    {
+        base.Throw();
     }
 
     public override void Enhance()

@@ -176,10 +176,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a4b2487d5c3333846b10f247535a2a76, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 3ba35a81363782944ac41fbeff0f75ca, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.23
-  m_Pitch: 1
+  m_Volume: 0.15
+  m_Pitch: 1.05
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -313,6 +313,7 @@ MonoBehaviour:
   HoldedRotation: {x: 111.378, y: 15.418, z: 118.453}
   animation: Axe
   Releaseanimation: 
+  IdleAnimation: AxeIdle
   Enhaced: 0
   weaponCollider: {fileID: 7343341841845613802}
   ChargeParticle: {fileID: 1514568597600605707, guid: b9801e6aa0122004185b7fd673cabdb5,
@@ -403,6 +404,7 @@ MonoBehaviour:
   velocity: 0
   weaponTrail: {fileID: 1641886873861663178}
   HitSFX: {fileID: 0}
+  volume: 1
   AttackTime: 0.5
 --- !u!1 &7343341842098429026
 GameObject:

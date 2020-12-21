@@ -30,6 +30,8 @@ public class ItemBasic : MonoBehaviour
     public string animation;
     public string Releaseanimation;
 
+    public string IdleAnimation;
+
     [SerializeField]
     protected bool Enhaced = false;
 
