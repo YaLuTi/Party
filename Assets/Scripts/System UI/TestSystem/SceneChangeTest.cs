@@ -159,7 +159,6 @@ public class SceneChangeTest : MonoBehaviour
     {
         StartCoroutine(_LoadLobby(scene));
     }
-
     IEnumerator _LoadLobby(string scene)
     {
         AsyncOperation asyncLoad;
@@ -188,7 +187,6 @@ public class SceneChangeTest : MonoBehaviour
         else if (SceneChoosing < 0)
             SceneChoosing = SceneArray.Length - 1;
     }
-
     void ChangeMode(int delta)
     {
         ModeChoosing += delta;
@@ -196,5 +194,22 @@ public class SceneChangeTest : MonoBehaviour
             ModeChoosing = 0;
         else if (ModeChoosing < 0)
             ModeChoosing = ModeArray.Length - 1;
+    }
+
+    public void LoadWinScene()
+    {
+        StartCoroutine(_LoadWinScene());
+    }
+
+    IEnumerator _LoadWinScene()
+    {
+        AsyncOperation asyncLoad;
+        asyncLoad = SceneManager.LoadSceneAsync(SceneArray[NowScene]);
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+        StageManager.SetWin();
+        yield return null;
     }
 }

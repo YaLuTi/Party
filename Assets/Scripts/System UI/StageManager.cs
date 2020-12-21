@@ -25,6 +25,8 @@ public class StageManager : MonoBehaviour
 
     static int PlayerReadyNum = 0;
 
+    static int[] WinPlayer;
+
     static bool TriggerLoadScene = false;
     static bool TriggerLoadEnd = false;
 
@@ -135,6 +137,14 @@ public class StageManager : MonoBehaviour
         }
     }
 
+    public static void UIOn()
+    {
+        for (int i = 0; i < players.Count; i++)
+        {
+            players[i].GetComponent<PlayerIdentity>().InputUI();
+        }
+    }
+
     public void StageStart()
     {
         InGame = true;
@@ -229,6 +239,7 @@ public class StageManager : MonoBehaviour
             playerInput.SwitchCurrentActionMap("Creating(UI)");
 
             OnBattleScene += players[players.Count - 1].GetComponent<PlayerIdentity>().OnTest;
+            players[players.Count - 1].GetComponent<PlayerIdentity>().SetToTransform();
 
             if (targetGroup != null) targetGroup.AddMember(playerInput.transform, 1, 0);
             PlayerCraftUIList.Add(g);
@@ -340,6 +351,25 @@ public class StageManager : MonoBehaviour
         targetGroup.AddMember(players[i].GetComponent<PlayerHitten>().Hips, 1, 0);
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_CameraDistance = 5;
         // virtualCamera.transform.eulerAngles = players[i].GetComponentInChildren<PlayerInput>().transform.eulerAngles * -1;
+    }
+
+    public void GameEnd(int[] Winplayer)
+    {
+        WinPlayer = Winplayer;
+        InGame = false;
+        // changeTest = GameObject.FindGameObjectWithTag("SceneChangeTester").GetComponent<SceneChangeTest>();
+        changeTest.LoadWinScene();
+    }
+
+    public static void SetWin()
+    {
+        for(int i = 0; i < WinPlayer.Length; i++)
+        {
+            players[WinPlayer[i]].GetComponent<PlayerIdentity>().SetToTransform();
+        }
+        GameObject.FindGameObjectWithTag("WinSceneTimeline").GetComponent<PlayableDirector>().Play();
+        players[WinPlayer[0]].GetComponentInChildren<Animator>().applyRootMotion = true;
+        players[WinPlayer[0]].GetComponentInChildren<Animator>().SetTrigger("Win");
     }
 
     public static void LoadNewScene()

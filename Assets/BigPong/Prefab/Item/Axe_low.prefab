@@ -1,5 +1,53 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2129000078
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2129000080}
+  - component: {fileID: 2129000079}
+  m_Layer: 8
+  m_Name: PP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2129000080
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2129000078}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2347077655736638426}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2129000079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2129000078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: da4a98922dad7064083d2ed151b7a202, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 1
+  priority: 0
 --- !u!1 &1641886873861663177
 GameObject:
   m_ObjectHideFlags: 0
@@ -15,7 +63,7 @@ GameObject:
   - component: {fileID: 7343341843100007965}
   - component: {fileID: 7343341843100007967}
   - component: {fileID: 1641886873861663178}
-  - component: {fileID: 1641886873861663179}
+  - component: {fileID: 112397608}
   m_Layer: 10
   m_Name: Axe_low
   m_TagString: Item
@@ -30,13 +78,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1641886873861663177}
-  m_LocalRotation: {x: 0.6830113, y: -0.18301404, z: 0.6830133, w: 0.18301463}
+  m_LocalRotation: {x: 0.68301266, y: -0.18301286, z: 0.6830127, w: 0.1830126}
   m_LocalPosition: {x: -3.852941, y: 1.24, z: 1.175}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7343341841845613801}
   - {fileID: 7343341843148676037}
   - {fileID: 7343341842098429027}
+  - {fileID: 2129000080}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 30.000002, y: 90.00001, z: 180.00002}
@@ -127,9 +176,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
+  m_audioClip: {fileID: 8300000, guid: a4b2487d5c3333846b10f247535a2a76, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.23
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -240,7 +289,7 @@ MonoBehaviour:
   subdivisions: 4
   _base: {fileID: 7343341842098429027}
   _tip: {fileID: 7343341843148676037}
---- !u!114 &1641886873861663179
+--- !u!114 &112397608
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -249,7 +298,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1641886873861663177}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 135f2cc5d244f0d4d9094cabf1374697, type: 3}
+  m_Script: {fileID: 11500000, guid: cddbbb21b798d0744b63d51441b40522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   IsHolded: 0
@@ -266,6 +315,9 @@ MonoBehaviour:
   Releaseanimation: 
   Enhaced: 0
   weaponCollider: {fileID: 7343341841845613802}
+  ChargeParticle: {fileID: 1514568597600605707, guid: b9801e6aa0122004185b7fd673cabdb5,
+    type: 3}
+  PP: {fileID: 2129000078}
 --- !u!1 &7343341841845613800
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,6 +402,7 @@ MonoBehaviour:
   damage: 10
   velocity: 0
   weaponTrail: {fileID: 1641886873861663178}
+  HitSFX: {fileID: 0}
   AttackTime: 0.5
 --- !u!1 &7343341842098429026
 GameObject:

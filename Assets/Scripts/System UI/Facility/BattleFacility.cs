@@ -29,6 +29,7 @@ public class BattleFacility : FacilityArea
     {
         base.OnUse(playerBehavior);
         UI.SetActive(true);
+        StageManager.UIOn();
         // meshRenderer.enabled = false;
     }
 

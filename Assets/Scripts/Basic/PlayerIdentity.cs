@@ -82,7 +82,10 @@ public class PlayerIdentity : MonoBehaviour
         material = RingMaterialsArray[PlayerID];
         Decal.GetComponent<Projector>().material = material;
 
-        StartCoroutine(SpawnToPosition());
+        if (StageManager.Static_Testing)
+        {
+            StartCoroutine(SpawnToPosition());
+        }
     }
 
     // Start is called before the first frame update
@@ -110,6 +113,11 @@ public class PlayerIdentity : MonoBehaviour
     public void InputCancel()
     {
         playerInput.SwitchCurrentActionMap("None");
+    }
+
+    public void InputUI()
+    {
+            playerInput.SwitchCurrentActionMap("Creating(UI)");
     }
 
     public void InputEnable()
@@ -311,7 +319,60 @@ public class PlayerIdentity : MonoBehaviour
         }
         yield return null;
     }
+
+    public void SetToPosition()
+    {
+        StartCoroutine(SpawnToPosition());
+    }
     IEnumerator SpawnToPosition()
+    {
+        footIK_AF.followTerrain = false;
+        foreach (Rigidbody rb in rbs)
+        {
+            rb.velocity = Vector3.zero;
+        }
+        foreach (Collider collider in colliders)
+        {
+            collider.isTrigger = true;
+        }
+        yield return new WaitForFixedUpdate();
+        
+            playerMove.transform.position = stageInfo.SpawnPosition[PlayerID];
+            playerMove.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID];
+            playerRigHips.transform.position = stageInfo.SpawnPosition[PlayerID];
+            playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID];
+        
+        
+
+        yield return new WaitForFixedUpdate();
+        foreach (Rigidbody rb in rbs)
+        {
+            rb.velocity = Vector3.zero;
+        }
+        foreach (Collider collider in colliders)
+        {
+            collider.isTrigger = false;
+        }
+
+        if (!StageManager.InLobby)
+        {
+            footIK_AF.followTerrain = true;
+        }
+
+        yield return new WaitForFixedUpdate();
+        SetRagData();
+        yield return new WaitForFixedUpdate();
+        // BodyMeshRenderer2.enabled = true;
+        playerCreating.Creat();
+
+        yield return null;
+    }
+
+    public void SetToTransform()
+    {
+        StartCoroutine(SpawnToTransform());
+    }
+    IEnumerator SpawnToTransform()
     {
         footIK_AF.followTerrain = false;
         foreach (Rigidbody rb in rbs)
@@ -339,7 +400,7 @@ public class PlayerIdentity : MonoBehaviour
             playerRigHips.transform.position = stageInfoTransform.transforms[PlayerID].position;
             playerRigHips.transform.eulerAngles = stageInfoTransform.transforms[PlayerID].eulerAngles;
         }
-        
+
 
         yield return new WaitForFixedUpdate();
         foreach (Rigidbody rb in rbs)
