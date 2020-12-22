@@ -308,7 +308,7 @@ public class StageManager : MonoBehaviour
             bulletHitInfo_AF.bulletForce = (collider.ClosestPoint(p) - p).normalized * (20000 + i * 10000);
             bulletHitInfo_AF.hitPoint = collider.ClosestPoint(p);
 
-            players[i].GetComponent<PlayerHitten>().OnHit(bulletHitInfo_AF);
+            players[i].GetComponent<PlayerHitten>().EventOnHit(bulletHitInfo_AF);
             players[i].GetComponent<PlayerIdentity>().InputEnable();
             j++;
         }

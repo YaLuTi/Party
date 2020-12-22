@@ -159,6 +159,28 @@ public class PlayerHitten : MonoBehaviour
         }
     }
 
+    public void EventOnHit(BulletHitInfo_AF info)
+    {
+
+
+        StartCoroutine(EventAddForceToLimb(info));
+
+        if (ragdollControl.shotByBullet) return;
+
+        if (info.IsShot)
+        {
+            ragdollControl.shotByBullet = true;
+        }
+        else
+        {
+
+        }
+        if (!IsInvincible)
+        {
+            pickItem.OnHit(info);
+        }
+    }
+
     IEnumerator Respawn(float time)
     {
         yield return new WaitForFixedUpdate();
@@ -274,5 +296,22 @@ public class PlayerHitten : MonoBehaviour
                 gamepad.PauseHaptics();
             }
         }
+    }
+    IEnumerator EventAddForceToLimb(BulletHitInfo_AF bulletHitInfo)
+    {
+            yield return new WaitForFixedUpdate();
+            if (bulletHitInfo.hitTransform != null)
+            {
+                if (bulletHitInfo.hitTransform.GetComponent<Rigidbody>() != null) bulletHitInfo.hitTransform.GetComponent<Rigidbody>().AddForceAtPosition(bulletHitInfo.bulletForce, bulletHitInfo.hitPoint);
+            }
+            playerMove.AddForceSpeed(bulletHitInfo.bulletForce / 100f);
+
+            // 最好設成一個Global Ienumertor 比較方便
+            if (gamepad != null)
+            {
+                gamepad.SetMotorSpeeds(0.8f, 1f);
+                yield return new WaitForSecondsRealtime(0.2f);
+                gamepad.PauseHaptics();
+            }
     }
 }
