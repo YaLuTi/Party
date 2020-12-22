@@ -18,6 +18,8 @@ public class ScoreManager : MonoBehaviour
     static bool IsEnd = false;
     static bool EndEvent = false;
     public PlayableDirector playableDirector;
+
+    public GameObject Crown;
     // Start is called before the first frame update
     void Start()
     {
@@ -81,7 +83,16 @@ public class ScoreManager : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(1.35f);
         StageManager.SetCloseUpCamera(rank[0]);
+        yield return new WaitForSecondsRealtime(2f);
+        GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>().LoadLobby();
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.01f;
 
         yield return null;
+    }
+
+    private void OnDestroy()
+    {
+        Destroy(Crown);
     }
 }

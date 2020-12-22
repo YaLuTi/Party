@@ -61,6 +61,7 @@ public class DeathmatchBrawl : MonoBehaviour
                     break;
             }
             UIs.Add(g);
+            UIs[i].GetComponent<Text>().text = Lifes[i].ToString();
         }
     }
 
@@ -141,10 +142,14 @@ public class DeathmatchBrawl : MonoBehaviour
             else
             {
                 Debug.Log(i);
-                // StageManager.SetCloseUpCamera(i);
+                StageManager.SetCloseUpCamera(i);
             }
         }
         // StageManager.SetCloseUpCamera(rank[0]);
+        yield return new WaitForSecondsRealtime(2f);
+        GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>().LoadLobby();
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.01f;
 
         yield return null;
     }
@@ -156,6 +161,10 @@ public class DeathmatchBrawl : MonoBehaviour
     private void OnDestroy()
     {
         Debug.Log("DDDDDDDD");
-        StageManager.instance.OnPlayerJoin -= PlayerJoin;
+        for (int i = 0; i < StageManager.players.Count; i++)
+        {
+            StageManager.players[i].GetComponent<PlayerHitten>().OnDeath -= OnPlayerDeath;
+        }
+            StageManager.instance.OnPlayerJoin -= PlayerJoin;
     }
 }

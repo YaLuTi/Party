@@ -82,13 +82,16 @@ public class DeathMatchTime : DeathmatchBrawl
         Array.Reverse(rank);
 
         yield return new WaitForSecondsRealtime(1.35f);
-        // StageManager.SetCloseUpCamera(rank[0]);
-        Time.timeScale = 1f;
-        Time.fixedDeltaTime = 0.01f;
-        GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>().GameEnd(rank);
+        StageManager.SetCloseUpCamera(rank[0]);
+        /*Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.01f;*/
+        // GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>().GameEnd(rank);
         yield return new WaitForSecondsRealtime(0.5f);
 
-        // GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>().LoadLobby();
+        yield return new WaitForSecondsRealtime(2f);
+        GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>().LoadLobby();
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.01f;
 
         yield return null;
     }
