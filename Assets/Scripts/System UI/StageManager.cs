@@ -199,8 +199,8 @@ public class StageManager : MonoBehaviour
             playerScore = new int[players.Count];
             scores = new int[players.Count];
             TriggerLoadScene = true;
-            
-            foreach(GameObject g in PlayerCraftUIList)
+
+            foreach (GameObject g in PlayerCraftUIList)
             {
                 Destroy(g);
             }

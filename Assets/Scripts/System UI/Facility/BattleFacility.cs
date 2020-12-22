@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.UI;
+
 
 public class BattleFacility : FacilityArea
 {
@@ -10,6 +12,9 @@ public class BattleFacility : FacilityArea
     int ChoosingMap = 0;
 
     public GameObject UI;
+    public GoodEventSystem eventSystem;
+    public Button button;
+
     public GameObject HintUI;
 
     bool Using = false;
@@ -44,6 +49,7 @@ public class BattleFacility : FacilityArea
         UI.SetActive(true);
         Using = true;
         StageManager.UIOn();
+        eventSystem.Select(button);
         playableDirector.Play();
         // meshRenderer.enabled = false;
     }
