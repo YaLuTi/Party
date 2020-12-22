@@ -32,8 +32,8 @@ public class PlayerCreating : MonoBehaviour
     public void Creat()
     {
         //
-        StageManager.PlayerProfile[playerIdentity.PlayerID] = 0;
-        selecting = 0;
+        StageManager.PlayerProfile[playerIdentity.PlayerID] = playerIdentity.PlayerID;
+        selecting = playerIdentity.PlayerID;
 
         if (profileChooseUI != null)
         {
@@ -129,7 +129,7 @@ public class PlayerCreating : MonoBehaviour
     }
 
     // 這寫法目前不可逆 要再修正
-    void OnYes()
+    void OnEnter()
     {
         // StageManager.LoadSceneCheck(); // 在增加玩家數字前檢查 才可以進到全員OK?畫面
         if (!this.enabled || !IsEnable) return;
@@ -151,7 +151,7 @@ public class PlayerCreating : MonoBehaviour
         playerInput.SwitchCurrentActionMap(state);
     }
 
-    void OnEnter()
+    void OnYes()
     {
         StageManager.LoadSceneCheck();
 

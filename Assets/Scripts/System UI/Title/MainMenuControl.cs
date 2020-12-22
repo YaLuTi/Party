@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.InputSystem;
 using TMPro;
+using System.Linq;
+using UnityEngine.InputSystem.Controls;
 
 public class MainMenuControl : MonoBehaviour
 {
@@ -23,7 +25,7 @@ public class MainMenuControl : MonoBehaviour
         if (gamepad == null)
             return; // No gamepad connected.
 
-        if (gamepad.buttonNorth.wasPressedThisFrame && !FacilityManager.IsMenu)
+        if ((Gamepad.current.allControls.Any(x => x is ButtonControl button && x.IsPressed(0) && !x.synthetic) || Keyboard.current.anyKey.IsPressed(0)) && !FacilityManager.IsMenu)
         {
             Debug.Log("TEST");
             StartCine.Stop();

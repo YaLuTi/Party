@@ -151,6 +151,7 @@ public class PlayerIdentity : MonoBehaviour
 
     public void SetToAnimationMode()
     {
+        /*
         // playerInput.enabled = false;
         // _playerMove.enabled = false;
         Decal.SetActive(false);
@@ -159,13 +160,26 @@ public class PlayerIdentity : MonoBehaviour
         playerRig.gameObject.SetActive(false);
         // BodyMeshRenderer2.enabled = true;
 
-        /*MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
+        MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
         for(int i = 0; i < meshRenderers.Length; i++)
         {
             meshRenderers[i].enabled = true;
-        }*/
+        }
 
-        footIK_AF.enabled = false;
+        footIK_AF.enabled = false;*/
+
+        foreach (Rigidbody rb in rbs)
+        {
+            if (rb == null) continue;
+            rb.velocity = Vector3.zero;
+        }
+        foreach (Collider collider in colliders)
+        {
+            if (collider == null) continue;
+            collider.isTrigger = true;
+        }
+        footIK_AF.followTerrain = false;
+
     }
     public void SetToPosition(Vector3 p)
     {

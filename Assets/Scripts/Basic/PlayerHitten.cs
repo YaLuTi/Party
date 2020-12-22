@@ -11,7 +11,7 @@ public class PlayerHitten : MonoBehaviour
     [SerializeField]
     RagdollControl_AF ragdollControl;
 
-    PlayerBehavior pickItem;
+    public PlayerBehavior pickItem;
     public PlayerMove playerMove;
     PlayerInput playerInput;
     PlayerIdentity playerIdentity;
@@ -238,8 +238,20 @@ public class PlayerHitten : MonoBehaviour
         GetComponentInChildren<Animator>().SetTrigger("Taunt");
         yield return new WaitForSeconds(1.5f);
         Instantiate(Particle, Hips.position, Hips.rotation);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.3f);
         playerMove.inhibitMove = false;
+        yield return null;
+    }
+
+    public void OutAxeMode()
+    {
+        StartCoroutine(_OutAxeMode());
+    }
+
+    IEnumerator _OutAxeMode()
+    {
+        IsInvincible = false;
+        pickItem.OnHit();
         yield return null;
     }
 

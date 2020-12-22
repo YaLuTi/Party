@@ -355,7 +355,7 @@ public class StageManager : MonoBehaviour
     {
         WinPlayer = Winplayer;
         InGame = false;
-        // changeTest = GameObject.FindGameObjectWithTag("SceneChangeTester").GetComponent<SceneChangeTest>();
+        changeTest = GameObject.FindGameObjectWithTag("SceneChangeTester").GetComponent<SceneChangeTest>();
         changeTest.LoadWinScene();
     }
 
@@ -363,10 +363,13 @@ public class StageManager : MonoBehaviour
     {
         for(int i = 0; i < WinPlayer.Length; i++)
         {
-            players[WinPlayer[i]].GetComponent<PlayerIdentity>().SetToTransform();
         }
+        players[WinPlayer[0]].GetComponent<PlayerIdentity>().SetToAnimationMode();
+        players[WinPlayer[0]].GetComponent<PlayerIdentity>().SetToTransform();
+
+        players[WinPlayer[0]].GetComponent<PlayerHitten>().pickItem.OnHit();
         GameObject.FindGameObjectWithTag("WinSceneTimeline").GetComponent<PlayableDirector>().Play();
-        players[WinPlayer[0]].GetComponentInChildren<Animator>().applyRootMotion = true;
+        // players[WinPlayer[0]].GetComponentInChildren<Animator>().applyRootMotion = true;
         players[WinPlayer[0]].GetComponentInChildren<Animator>().SetTrigger("Win");
     }
 
