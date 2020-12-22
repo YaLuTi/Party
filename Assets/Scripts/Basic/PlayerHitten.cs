@@ -204,7 +204,7 @@ public class PlayerHitten : MonoBehaviour
 
         if (Health <= 0)
         {
-            audioSource.PlayOneShot(deathSound);
+            audioSource.PlayOneShot(deathSound, 0.5f);
             StartCoroutine(Respawn(2));
             OnDeath?.Invoke(this);
             Dead = true;

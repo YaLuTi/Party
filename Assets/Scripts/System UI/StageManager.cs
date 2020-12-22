@@ -19,6 +19,7 @@ public class StageManager : MonoBehaviour
     public static int[] playerScore;
     public static bool InGame = false;
     public static bool InLobby = false;
+    public static bool LoadWin = false;
     public static PlayerInputManager inputManager;
 
     public static int[] scores; // 暫時弄成玩家名次
@@ -50,6 +51,8 @@ public class StageManager : MonoBehaviour
 
     public GameObject Player;
     public bool CreatingTest = true;
+
+
 
     // Start is called before the first frame update
     void Awake()
@@ -116,6 +119,12 @@ public class StageManager : MonoBehaviour
             }
             // EndDirector.Play();
             // FacilityManager.UsingDirector = EndDirector;
+        }
+
+        if (LoadWin)
+        {
+            LoadWin = false;
+            StartCoroutine(WinDelay());
         }
     }
 
@@ -371,6 +380,15 @@ public class StageManager : MonoBehaviour
         GameObject.FindGameObjectWithTag("WinSceneTimeline").GetComponent<PlayableDirector>().Play();
         // players[WinPlayer[0]].GetComponentInChildren<Animator>().applyRootMotion = true;
         players[WinPlayer[0]].GetComponentInChildren<Animator>().SetTrigger("Win");
+        LoadWin = true;
+    }
+
+    IEnumerator WinDelay()
+    {
+        yield return new WaitForSeconds(5);
+        InLobby = true;
+        changeTest.LoadLobby("BlockoutTest 2");
+        yield return null;
     }
 
     public static void LoadNewScene()

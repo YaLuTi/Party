@@ -263,6 +263,7 @@ public class PlayerIdentity : MonoBehaviour
         footIK_AF.followTerrain = false;
         yield return new WaitForFixedUpdate();
 
+        stageInfo = GameObject.FindGameObjectWithTag("StageInfo").GetComponent<StageInfo>();
         playerMove.transform.position = stageInfo.SpawnPosition[PlayerID] + new Vector3(0,0,0);
         playerMove.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID] + new Vector3(0, 0, 0);
         playerRigHips.transform.position = stageInfo.SpawnPosition[PlayerID] + new Vector3(0, -3, 0);
@@ -313,6 +314,7 @@ public class PlayerIdentity : MonoBehaviour
         }
         yield return new WaitForFixedUpdate();
 
+        stageInfo = GameObject.FindGameObjectWithTag("StageInfo").GetComponent<StageInfo>();
         playerMove.transform.position = stageInfo.SpawnPosition[PlayerID];
         playerMove.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID];
         playerRigHips.transform.position = stageInfo.SpawnPosition[PlayerID];
@@ -350,8 +352,9 @@ public class PlayerIdentity : MonoBehaviour
             collider.isTrigger = true;
         }
         yield return new WaitForFixedUpdate();
-        
-            playerMove.transform.position = stageInfo.SpawnPosition[PlayerID];
+
+        stageInfo = GameObject.FindGameObjectWithTag("StageInfo").GetComponent<StageInfo>();
+        playerMove.transform.position = stageInfo.SpawnPosition[PlayerID];
             playerMove.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID];
             playerRigHips.transform.position = stageInfo.SpawnPosition[PlayerID];
             playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID];
