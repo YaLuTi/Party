@@ -112,6 +112,7 @@ public class StageManager : MonoBehaviour
             if(GameObject.FindGameObjectWithTag("EndDirector") != null)
             {
                 GameObject.FindGameObjectWithTag("EndDirector").GetComponent<PlayableDirector>().Play();
+                inputManager.enabled = false;
             }
             // EndDirector.Play();
             // FacilityManager.UsingDirector = EndDirector;

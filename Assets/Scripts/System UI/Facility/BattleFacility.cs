@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class BattleFacility : FacilityArea
 {
@@ -9,6 +10,7 @@ public class BattleFacility : FacilityArea
     int ChoosingMap = 0;
 
     public GameObject UI;
+    public PlayableDirector playableDirector;
 
     MeshRenderer meshRenderer;
     // Start is called before the first frame update
@@ -30,6 +32,7 @@ public class BattleFacility : FacilityArea
         base.OnUse(playerBehavior);
         UI.SetActive(true);
         StageManager.UIOn();
+        playableDirector.Play();
         // meshRenderer.enabled = false;
     }
 
