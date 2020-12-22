@@ -198,6 +198,7 @@ public class PlayerIdentity : MonoBehaviour
 
     public void SetPlayerMaterial(int num, string name, float value)
     {
+        EffectMeshRenderer.gameObject.SetActive(true); // x
         Material[] mats = EffectMeshRenderer.materials;
         mats[num].SetFloat(name, value);
     }

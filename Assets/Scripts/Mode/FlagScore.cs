@@ -162,6 +162,7 @@ public class FlagScore : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (IsHolded) return;
+        if (!StageManager.InGame) return;
         if (transform.localScale.x < 1.2f) return;
         if (collision.transform.root.tag == "Player")
         {

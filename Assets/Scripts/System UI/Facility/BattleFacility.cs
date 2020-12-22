@@ -10,6 +10,10 @@ public class BattleFacility : FacilityArea
     int ChoosingMap = 0;
 
     public GameObject UI;
+    public GameObject HintUI;
+
+    bool Using = false;
+
     public PlayableDirector playableDirector;
 
     MeshRenderer meshRenderer;
@@ -24,13 +28,21 @@ public class BattleFacility : FacilityArea
     // Update is called once per frame
     void Update()
     {
-        
+        if(PlayersNum > 0 && !Using)
+        {
+            HintUI.SetActive(true);
+        }
+        else
+        {
+            HintUI.SetActive(false);
+        }
     }
 
     public override void OnUse(PlayerBehavior playerBehavior)
     {
         base.OnUse(playerBehavior);
         UI.SetActive(true);
+        Using = true;
         StageManager.UIOn();
         playableDirector.Play();
         // meshRenderer.enabled = false;

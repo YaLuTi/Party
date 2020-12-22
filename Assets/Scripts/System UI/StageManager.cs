@@ -45,6 +45,7 @@ public class StageManager : MonoBehaviour
     public SceneChangeTest changeTest;
 
     public GameObject Canvas;
+    public GameObject HintText;
 
     public delegate void PlayerJoinHandler(GameObject player, int num);
     public event PlayerJoinHandler OnPlayerJoin;
