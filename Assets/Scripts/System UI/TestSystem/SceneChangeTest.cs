@@ -203,6 +203,7 @@ public class SceneChangeTest : MonoBehaviour
 
     IEnumerator _LoadWinScene()
     {
+        StageManager.DisablePlayerControl();
         AsyncOperation asyncLoad;
         asyncLoad = SceneManager.LoadSceneAsync(SceneArray[NowScene]);
         while (!asyncLoad.isDone)

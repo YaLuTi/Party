@@ -188,11 +188,7 @@ public class StageManager : MonoBehaviour
             playerScore = new int[players.Count];
             scores = new int[players.Count];
             TriggerLoadScene = true;
-
-            foreach(GameObject g in players)
-            {
-                g.GetComponentInChildren<PlayerCreating>().ChangeInput("GamePlay");
-            }
+            
             foreach(GameObject g in PlayerCraftUIList)
             {
                 Destroy(g);
@@ -302,6 +298,7 @@ public class StageManager : MonoBehaviour
             bulletHitInfo_AF.hitPoint = collider.ClosestPoint(p);
 
             players[i].GetComponent<PlayerHitten>().OnHit(bulletHitInfo_AF);
+            players[i].GetComponent<PlayerIdentity>().InputEnable();
             j++;
         }
         players[i].GetComponentInChildren<SimpleFootIK_AF>().followTerrain = true;

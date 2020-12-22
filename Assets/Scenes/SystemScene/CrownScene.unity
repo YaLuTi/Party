@@ -258,7 +258,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 51191925}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
   m_Name: 
@@ -841,7 +841,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 290728560}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
   m_Name: 
@@ -1340,6 +1340,16 @@ PrefabInstance:
     - target: {fileID: 4016300570142754893, guid: 0b4d5fcb09374fa48a93b1d379755f9d,
         type: 3}
       propertyPath: spawnEvents.Array.data[5].Weights
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4016300570142754893, guid: 0b4d5fcb09374fa48a93b1d379755f9d,
+        type: 3}
+      propertyPath: CooldownValuePerItem
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4016300570142754893, guid: 0b4d5fcb09374fa48a93b1d379755f9d,
+        type: 3}
+      propertyPath: CooldownValue
       value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2657,8 +2667,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3791b3986adba054682ce84a2f04308a, type: 2}
-  m_sharedMaterial: {fileID: -6650782970254017807, guid: 3791b3986adba054682ce84a2f04308a,
+  m_fontAsset: {fileID: 11400000, guid: c1f68b63aaf25e2429ca49d90bdb6b41, type: 2}
+  m_sharedMaterial: {fileID: -6650782970254017807, guid: c1f68b63aaf25e2429ca49d90bdb6b41,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2845,22 +2855,22 @@ PrefabInstance:
     - target: {fileID: 5294554146012973056, guid: 882b940a479f5fa41a507fefbe0683bf,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5294554146012973056, guid: 882b940a479f5fa41a507fefbe0683bf,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5294554146012973056, guid: 882b940a479f5fa41a507fefbe0683bf,
         type: 3}
       propertyPath: m_textInfo.lineCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5294554146012973056, guid: 882b940a479f5fa41a507fefbe0683bf,
         type: 3}
       propertyPath: m_textInfo.pageCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5294554146012973056, guid: 882b940a479f5fa41a507fefbe0683bf,
         type: 3}
@@ -3260,8 +3270,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c1f68b63aaf25e2429ca49d90bdb6b41, type: 2}
-  m_sharedMaterial: {fileID: -6650782970254017807, guid: c1f68b63aaf25e2429ca49d90bdb6b41,
+  m_fontAsset: {fileID: 11400000, guid: 3791b3986adba054682ce84a2f04308a, type: 2}
+  m_sharedMaterial: {fileID: -6650782970254017807, guid: 3791b3986adba054682ce84a2f04308a,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -3618,7 +3628,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -59.22499, y: -50}
+  m_AnchoredPosition: {x: 368, y: -50}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6244647965065207119
@@ -3719,7 +3729,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 352.675, y: -50}
+  m_AnchoredPosition: {x: 352.675, y: -419}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &6244647965681011716
@@ -3794,7 +3804,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 159.225, y: -50}
+  m_AnchoredPosition: {x: -276, y: -419}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &7649646913536781598
