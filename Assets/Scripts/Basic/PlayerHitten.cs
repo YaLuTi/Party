@@ -42,6 +42,8 @@ public class PlayerHitten : MonoBehaviour
     float Health;
     public bool Dead = false;
     public bool IsInvincible = false;
+    public bool IsAxe = false;
+
     bool Respawnable = true;
     public void SetRespawnable(bool b)
     {
@@ -153,7 +155,7 @@ public class PlayerHitten : MonoBehaviour
         {
 
         }
-        if (!IsInvincible)
+        if (!IsInvincible && !IsAxe)
         {
             pickItem.OnHit(info);
         }
@@ -210,7 +212,7 @@ public class PlayerHitten : MonoBehaviour
     public void OnDamaged(float damage, int ID)
     {
         if (ragdollControl.shotByBullet || Dead || IsInvincible) return;
-
+        if (IsAxe) damage /= 2;
 
         float oldH = Health;
         Health -= damage;
@@ -255,6 +257,7 @@ public class PlayerHitten : MonoBehaviour
 
     IEnumerator AxeModeEvent(GameObject Particle)
     {
+        IsAxe = true;
         IsInvincible = true;
         playerMove.inhibitMove = true;
         GetComponentInChildren<Animator>().SetTrigger("Taunt");
@@ -262,6 +265,8 @@ public class PlayerHitten : MonoBehaviour
         Instantiate(Particle, Hips.position, Hips.rotation);
         yield return new WaitForSeconds(1.3f);
         playerMove.inhibitMove = false;
+        Health = MaxHealth;
+        IsInvincible = false;
         yield return null;
     }
 
@@ -273,13 +278,14 @@ public class PlayerHitten : MonoBehaviour
     IEnumerator _OutAxeMode()
     {
         IsInvincible = false;
+        IsAxe = false;
         pickItem.OnHit();
         yield return null;
     }
 
     IEnumerator AddForceToLimb(BulletHitInfo_AF bulletHitInfo)
     {
-        if (!IsInvincible)
+        if (!IsInvincible && !IsAxe)
         {
             yield return new WaitForFixedUpdate();
             if (bulletHitInfo.hitTransform != null)

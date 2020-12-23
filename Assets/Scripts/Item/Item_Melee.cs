@@ -46,7 +46,10 @@ public class Item_Melee : ItemBasic
 
     public override void Throw()
     {
-        p.root.GetComponentInChildren<Animator>().SetBool(IdleAnimation, false);
+        if (p != null)
+        {
+            p.root.GetComponentInChildren<Animator>().SetBool(IdleAnimation, false);
+        }
         base.Throw();
     }
 
