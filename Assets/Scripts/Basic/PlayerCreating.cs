@@ -32,8 +32,8 @@ public class PlayerCreating : MonoBehaviour
     public void Creat()
     {
         //
-        StageManager.PlayerProfile[playerIdentity.PlayerID] = 0; // playerIdentity.PlayerID
-        selecting = 0;
+        StageManager.PlayerProfile[playerIdentity.PlayerID] = playerIdentity.PlayerID; // playerIdentity.PlayerID
+        selecting = playerIdentity.PlayerID;
 
         if (profileChooseUI != null)
         {
