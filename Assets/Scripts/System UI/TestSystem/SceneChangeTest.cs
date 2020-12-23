@@ -167,6 +167,8 @@ public class SceneChangeTest : MonoBehaviour
     }
     IEnumerator _LoadLobby(string scene)
     {
+        StageManager.ClearPlayer();
+        yield return new WaitForFixedUpdate();
         AsyncOperation asyncLoad;
         asyncLoad = SceneManager.LoadSceneAsync(scene);
         while (!asyncLoad.isDone)

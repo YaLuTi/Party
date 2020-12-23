@@ -335,6 +335,8 @@ public class StageManager : MonoBehaviour
         foreach (GameObject g in players)
         {
             g.GetComponent<PlayerIdentity>().Freeze();
+            g.GetComponentInChildren<PlayerBehavior>().OnHit();
+
         }
         if (!StageManager.Static_Testing) return;
         players.Clear();

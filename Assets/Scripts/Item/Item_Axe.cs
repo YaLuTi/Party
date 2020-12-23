@@ -89,6 +89,17 @@ public class Item_Axe : Item_Melee
         yield return null;
     }
 
+    private void OnDestroy()
+    {
+        if (tt != null)
+        {
+            tt.root.GetComponentInChildren<Animator>().SetBool(IdleAnimation, false);
+            tt.root.GetComponentInChildren<PlayerHitten>().OutAxeMode();
+            AudioSource audioSource = GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>();
+            audioSource.DOFade(BGMVoice, 1.5f);
+        }
+    }
+
     IEnumerator ReEvent()
     {
         tt.root.GetComponentInChildren<Animator>().SetBool(IdleAnimation, false);
@@ -96,6 +107,7 @@ public class Item_Axe : Item_Melee
         GetComponent<AudioSource>().DOFade(0, 1f);
         AudioSource audioSource = GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>();
         audioSource.DOFade(BGMVoice, 1.5f);
+        IsHolded = true;
         yield return new WaitForSeconds(0.1f);
         PP.SetActive(false);
         transform.DOScale(0, 1.5f);
