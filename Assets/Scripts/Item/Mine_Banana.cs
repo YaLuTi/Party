@@ -36,6 +36,7 @@ public class Mine_Banana : ItemMine
         Collider[] rays = Physics.OverlapSphere(transform.position, Radius);
         for (int i = 0; i < rays.Length; i++)
         {
+            if (rays[i].transform.tag == "Item" || rays[i].transform.tag == "IgnoreMe") continue;
             if (rays[i].transform.root.gameObject.tag == "Player")
             {
                 if (rays[i].gameObject.transform.root.GetComponent<PlayerHitten>())
