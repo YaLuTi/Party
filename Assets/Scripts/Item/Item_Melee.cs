@@ -50,6 +50,11 @@ public class Item_Melee : ItemBasic
         base.Throw();
     }
 
+    private void OnDestroy()
+    {
+        p.root.GetComponentInChildren<Animator>().SetBool(IdleAnimation, false);
+    }
+
     public override void Enhance()
     {
         base.Enhance();
