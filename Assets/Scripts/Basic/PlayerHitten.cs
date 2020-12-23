@@ -265,7 +265,12 @@ public class PlayerHitten : MonoBehaviour
         Instantiate(Particle, Hips.position, Hips.rotation);
         yield return new WaitForSeconds(1.3f);
         playerMove.inhibitMove = false;
+
+        float oldH = Health;
         Health = MaxHealth;
+        OnHealthChanged?.Invoke(this, oldH, Health);
+
+
         IsInvincible = false;
         yield return null;
     }
