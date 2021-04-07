@@ -22,12 +22,18 @@ public class MainMenuControl : MonoBehaviour
     void Update()
     {
         var gamepad = Gamepad.current;
+        bool gamepadPressed = false;
         if (gamepad == null)
-            return; // No gamepad connected.
-
-        if ((Gamepad.current.allControls.Any(x => x is ButtonControl button && x.IsPressed(0) && !x.synthetic) || Keyboard.current.anyKey.IsPressed(0)) && !FacilityManager.IsMenu)
         {
-            Debug.Log("TEST");
+            gamepadPressed = false;
+        }
+        else
+        {
+            gamepadPressed = (Gamepad.current.allControls.Any(x => x is ButtonControl button && x.IsPressed(0) && !x.synthetic)) ? true : false;
+        }
+
+        if (gamepadPressed || Keyboard.current.anyKey.IsPressed(0) && !FacilityManager.IsMenu)
+        {
             StartCine.Stop();
             StartMenu.Play();
             FacilityManager.IsMenu = true;

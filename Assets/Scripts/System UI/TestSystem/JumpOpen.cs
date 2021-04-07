@@ -18,10 +18,17 @@ public class JumpOpen : MonoBehaviour
     void Update()
     {
         var gamepad = Gamepad.current;
+        bool gamepadPressed = false;
         if (gamepad == null)
-            return; // No gamepad connected.
+        {
+            gamepadPressed = false;
+        }
+        else
+        {
+            gamepadPressed = Gamepad.current.startButton.isPressed ? true : false;
+        }
 
-        if ((Gamepad.current.startButton.isPressed && !IsUse))
+        if ((gamepadPressed && !IsUse) || (Keyboard.current.escapeKey.IsPressed(0) && !IsUse))
         {
             playableDirector.Play();
             IsUse = true;

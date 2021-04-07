@@ -22,6 +22,11 @@ public class LoadScene : MonoBehaviour
         StartCoroutine(Load(s));
     }
 
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
     IEnumerator Load(string scene)
     {
         AsyncOperation asyncLoad;
