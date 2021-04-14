@@ -15,6 +15,7 @@ public class Tutorial : MonoBehaviour
 
     [SerializeField]
     GameObject bomb;
+
     [SerializeField]
     FacilityArea MoveArea;
 
@@ -23,6 +24,8 @@ public class Tutorial : MonoBehaviour
 
     [SerializeField]
     PlayerHitten Doll;
+    [SerializeField]
+    PlayerHitten Doll2;
 
     [SerializeField]
     TMP_Animated textMesh;
@@ -64,7 +67,7 @@ public class Tutorial : MonoBehaviour
                 break;
             // Use Bomb kill enemy
             case 2:
-                if (Doll.Dead)
+                if (Doll2.Dead)
                 {
                     num++;
                 }
@@ -116,6 +119,16 @@ public class Tutorial : MonoBehaviour
         textMesh.ReadText("Now let study how to use bomb.");
         PlaySound();
         yield return new WaitForSeconds(3f);
+        bomb.SetActive(true);
+        Doll2.gameObject.SetActive(true);
+        yield return null;
+    }
+
+    IEnumerator Step3()
+    {
+        textMesh.ReadText("EXCELLENT!");
+        PlaySound();
+        yield return new WaitForSeconds(2f);
         yield return null;
     }
 }

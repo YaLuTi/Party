@@ -45,6 +45,7 @@ public class PlayerHitten : MonoBehaviour
     public bool IsInvincible = false;
     public bool IsAxe = false;
 
+    [SerializeField]
     bool Respawnable = true;
     public void SetRespawnable(bool b)
     {
@@ -75,7 +76,8 @@ public class PlayerHitten : MonoBehaviour
 
         Health = MaxHealth;
         Dead = false;
-        Respawnable = true;
+
+        // Respawnable = true;
 
         if (StageManager.Static_Testing)
         {
@@ -186,6 +188,7 @@ public class PlayerHitten : MonoBehaviour
 
     IEnumerator Respawn(float time)
     {
+        Destroy(UI_copy);
         yield return new WaitForFixedUpdate();
         ragdollControl.shotByBullet = true;
         ragdollControl.IsDead = true;
@@ -230,6 +233,7 @@ public class PlayerHitten : MonoBehaviour
         if (Health <= 0)
         {
             audioSource.PlayOneShot(deathSound, 0.5f);
+
             StartCoroutine(Respawn(2));
             OnDeath?.Invoke(this);
             Dead = true;
