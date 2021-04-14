@@ -43,9 +43,10 @@ public class Tutorial : MonoBehaviour
         {
             // Move to master
             case 0:
-                if(StageManager.players.Count == MoveArea.PlayersNum)
+                if(StageManager.players.Count == MoveArea.PlayersNum && MoveArea.PlayersNum != 0)
                 {
                     num++;
+                    coroutine = StartCoroutine(Step1());
                 }
                 break;
             // Use Fire ball kill enemy
@@ -70,9 +71,11 @@ public class Tutorial : MonoBehaviour
     IEnumerator Step1()
     {
         textMesh.ReadText("Great! Now we are going to learn how to use magic.");
-        yield return new WaitForSeconds(3);
-        textMesh.ReadText("Great! Now we are going to learn how to use magic.");
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(4);
+        textMesh.ReadText("I will creat fire magic book and doll.");
+        yield return new WaitForSeconds(4);
+        textMesh.ReadText("Now use your magic destroy that son of bitch.");
+        yield return new WaitForSeconds(7);
         yield return null;
     }
 }
