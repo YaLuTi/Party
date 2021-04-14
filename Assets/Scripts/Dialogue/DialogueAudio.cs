@@ -33,12 +33,12 @@ public class DialogueAudio : MonoBehaviour
 
     public void ReproduceSound(char c)
     {
-        if (char.IsPunctuation(c) && !punctuationSource.isPlaying)
+        /*if (char.IsPunctuation(c) && !punctuationSource.isPlaying)
         {
             voiceSource.Stop();
             punctuationSource.clip = punctuations[Random.Range(0, punctuations.Length)];
             punctuationSource.Play();
-        }
+        }*/
 
         if (char.IsLetter(c) && !voiceSource.isPlaying)
         {

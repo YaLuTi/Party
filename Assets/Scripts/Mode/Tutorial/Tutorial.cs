@@ -28,6 +28,11 @@ public class Tutorial : MonoBehaviour
     TMP_Animated textMesh;
 
     Coroutine coroutine;
+    [SerializeField]
+    AudioSource voiceSource;
+    [SerializeField]
+    AudioClip[] voices;
+
 
     // Start is called before the first frame update
     void Start()
@@ -54,6 +59,7 @@ public class Tutorial : MonoBehaviour
                 if (Doll.Dead)
                 {
                     num++;
+                    coroutine = StartCoroutine(Step2());
                 }
                 break;
             // Use Bomb kill enemy
@@ -68,16 +74,48 @@ public class Tutorial : MonoBehaviour
         }
     }
 
+    void PlaySound()
+    {
+        voiceSource.clip = voices[Random.Range(0, voices.Length)];
+        voiceSource.Play();
+    }
+
     IEnumerator Step1()
     {
         textMesh.ReadText("Great! Now we are going to learn how to use magic.");
+        PlaySound();
         yield return new WaitForSeconds(3.5f);
+
         textMesh.ReadText("I will creat fire magic book and doll.");
+        PlaySound();
         yield return new WaitForSeconds(3.5f);
+
         FireBallSpawn.SetActive(true);
         Doll.gameObject.SetActive(true);
         textMesh.ReadText("Now use your magic destroy that son of bitch.");
+        PlaySound();
         yield return new WaitForSeconds(4f);
+
+        yield return null;
+    }
+
+    IEnumerator Step2()
+    {
+        textMesh.ReadText("Well Done!");
+        PlaySound();
+        yield return new WaitForSeconds(2f);
+
+        textMesh.ReadText("There will be lots of different magic book.");
+        PlaySound();
+        yield return new WaitForSeconds(3.5f);
+
+        textMesh.ReadText("But they are used in same way.");
+        PlaySound();
+        yield return new WaitForSeconds(3f);
+
+        textMesh.ReadText("Now let study how to use bomb.");
+        PlaySound();
+        yield return new WaitForSeconds(3f);
         yield return null;
     }
 }
