@@ -12,6 +12,14 @@ public class PlayerUI : MonoBehaviour
 
     public Transform follow;
     public float y = 1.8f;
+
+    [SerializeField]
+    Color FullHealth;
+    [SerializeField]
+    Color HalfHealth;
+    [SerializeField]
+    Color LowHealth;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +29,7 @@ public class PlayerUI : MonoBehaviour
             slider.maxValue = playerHitten.GetMaxHealth();
             slider.value = slider.maxValue;
         }
-        Fill.color = Color.green;
+        Fill.color = FullHealth;
     }
 
     private void OnDestroy()
@@ -54,14 +62,14 @@ public class PlayerUI : MonoBehaviour
             float OldRange = (1 - 0.5f);
             float NewRange = (1 - 0);
             float NewValue = (((slider.normalizedValue - 0.5f) * NewRange) / OldRange) + 0;
-            Fill.color = Color.Lerp(Color.yellow, Color.green, NewValue);
+            Fill.color = Color.Lerp(HalfHealth, FullHealth, NewValue);
         }
         else
         {
             float OldRange = (0.5f - 0);
             float NewRange = (1 - 0f);
             float NewValue = (((slider.normalizedValue - 0) * NewRange) / OldRange) - 0.8f;
-            Fill.color = Color.Lerp(Color.red, Color.yellow, NewValue);
+            Fill.color = Color.Lerp(LowHealth, HalfHealth, NewValue);
         }
     }
 }
