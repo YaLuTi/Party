@@ -94,10 +94,16 @@ public class Tutorial : MonoBehaviour
         voiceSource.Play();
     }
 
+    IEnumerator TutorialStart()
+    {
+        yield return null;
+    }
+
     IEnumerator Step1()
     {
         textMesh.ReadText("Great! Now we are going to learn how to use magic.");
         PlaySound();
+        Destroy(MoveArea);
         yield return new WaitForSeconds(3.5f);
 
         textMesh.ReadText("I will creat fire magic book and doll.");

@@ -7,6 +7,8 @@ public class SceneChangeTest : MonoBehaviour
 {
     public static SceneChangeTest instance;
 
+    public static bool IsLoadingTutorial;
+
     public string[] SceneArray;
     int SceneChoosing = 0;
 

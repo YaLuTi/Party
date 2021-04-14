@@ -51,6 +51,9 @@ public class PlayerIdentity : MonoBehaviour
 
     Coroutine respawn = null;
 
+    [SerializeField]
+    bool IsCPU = false;
+
     public int PlayerID;
 
     private void Awake()
@@ -65,6 +68,7 @@ public class PlayerIdentity : MonoBehaviour
         colliders = GetComponentsInChildren<Collider>();
         rbs = GetComponentsInChildren<Rigidbody>();
 
+        if (IsCPU) return;
         Material[] mats = BodyMeshRenderer1.materials;
         mats[0] = MaterialsArray[PlayerID];
         BodyMeshRenderer1.materials = mats;

@@ -187,7 +187,11 @@ public class PlayerHitten : MonoBehaviour
 
     IEnumerator Respawn(float time)
     {
-        Destroy(UI_copy);
+        if (!Respawnable)
+        {
+            Destroy(UI_copy);
+        }
+        Decal.SetActive(false);
         yield return new WaitForFixedUpdate();
         ragdollControl.shotByBullet = true;
         ragdollControl.IsDead = true;
@@ -208,6 +212,7 @@ public class PlayerHitten : MonoBehaviour
         }
         yield return new WaitForSeconds(4.5f);
         Dead = false;
+        Decal.SetActive(true);
         IsInvincible = false;
         yield return null;
     }

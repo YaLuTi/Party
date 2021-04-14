@@ -32,7 +32,7 @@ public class MainMenuControl : MonoBehaviour
             gamepadPressed = (Gamepad.current.allControls.Any(x => x is ButtonControl button && x.IsPressed(0) && !x.synthetic)) ? true : false;
         }
 
-        if (gamepadPressed || Keyboard.current.anyKey.IsPressed(0) && !FacilityManager.IsMenu)
+        if ((gamepadPressed || Keyboard.current.anyKey.IsPressed(0)) && !FacilityManager.IsMenu)
         {
             StartCine.Stop();
             StartMenu.Play();
