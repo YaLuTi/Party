@@ -23,7 +23,6 @@ public class PlayerHitten : MonoBehaviour
 
     [Header("FX")]
     public GameObject Decal;
-    public GameObject RespawnPortal;
 
     [Header("SFX")]
     AudioSource audioSource;

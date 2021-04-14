@@ -270,7 +270,7 @@ public class PlayerIdentity : MonoBehaviour
         playerRigHips.transform.position = stageInfo.SpawnPosition[PlayerID] + new Vector3(0, -3, 0);
         playerRigHips.transform.eulerAngles = stageInfo.SpawnRotation[PlayerID] + new Vector3(0, -3, 0);
 
-        Destroy(Instantiate(RespawnPortal, stageInfo.SpawnPosition[PlayerID] + new Vector3(0, 0.1f, 0), Quaternion.Euler(0,0,0)), 8f);
+        Destroy(Instantiate(RespawnPortal, stageInfo.SpawnPosition[PlayerID] + new Vector3(0, 0.1f, 0), Quaternion.Euler(-90,0,0)), 8f);
 
         GlobalAudioPlayer.PlayRespawn();
 
