@@ -23,6 +23,9 @@ public class Tutorial : MonoBehaviour
     GameObject FireBallSpawn;
 
     [SerializeField]
+    GameObject EnhanceTable;
+
+    [SerializeField]
     PlayerHitten Doll;
     [SerializeField]
     PlayerHitten Doll2;
@@ -70,6 +73,14 @@ public class Tutorial : MonoBehaviour
                 if (Doll2.Dead)
                 {
                     num++;
+                    coroutine = StartCoroutine(Step3());
+                }
+                break;
+            case 3:
+                if (EnhanceTable == null)
+                {
+                    num++;
+                    coroutine = StartCoroutine(Step4());
                 }
                 break;
             default:
@@ -116,7 +127,7 @@ public class Tutorial : MonoBehaviour
         PlaySound();
         yield return new WaitForSeconds(3f);
 
-        textMesh.ReadText("Now let study how to use bomb.");
+        textMesh.ReadText("Now let's study how to use bomb.");
         PlaySound();
         yield return new WaitForSeconds(3f);
         bomb.SetActive(true);
@@ -129,6 +140,36 @@ public class Tutorial : MonoBehaviour
         textMesh.ReadText("EXCELLENT!");
         PlaySound();
         yield return new WaitForSeconds(2f);
+
+        textMesh.ReadText("Let's Do the final part.");
+        PlaySound();
+        yield return new WaitForSeconds(2.5f);
+
+        textMesh.ReadText("Sometimes you will find enhance table.");
+        PlaySound();
+        yield return new WaitForSeconds(3f);
+
+        textMesh.ReadText("It can make your weapon more powerful.\r\nHave a Try.");
+        EnhanceTable.SetActive(true);
+        PlaySound();
+        yield return new WaitForSeconds(3.5f);
+        yield return null;
+    }
+
+    IEnumerator Step4()
+    {
+        textMesh.ReadText("You are the most promising apprentice I ever seen!");
+        PlaySound();
+        yield return new WaitForSeconds(3f);
+
+        textMesh.ReadText("You have study all of basic skills you need.");
+        PlaySound();
+        yield return new WaitForSeconds(3f);
+
+        textMesh.ReadText("Now use the portal to create chaos.\r\nBecome the true Chaos Master!");
+        PlaySound();
+        yield return new WaitForSeconds(3f);
+
         yield return null;
     }
 }
