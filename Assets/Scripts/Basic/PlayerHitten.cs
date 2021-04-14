@@ -28,6 +28,7 @@ public class PlayerHitten : MonoBehaviour
     [Header("SFX")]
     AudioSource audioSource;
     public AudioClip deathSound;
+    public AudioClip[] hurtSound;
 
     [Header("Health & UI")]
     [SerializeField]
@@ -232,6 +233,11 @@ public class PlayerHitten : MonoBehaviour
             StartCoroutine(Respawn(2));
             OnDeath?.Invoke(this);
             Dead = true;
+        }
+        else if(damage > 1)
+        {
+            int r = Random.Range(0, hurtSound.Length);
+            audioSource.PlayOneShot(hurtSound[r], 1f);
         }
 
     }

@@ -7,6 +7,8 @@ public class InfinityeItemSpawner : MonoBehaviour
     public GameObject SpawnItem;
     public GameObject Copy;
 
+    public bool SpawnOnObjectDestroy = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,9 +18,21 @@ public class InfinityeItemSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Copy == null || Copy.transform.parent != null)
+        if(Copy != null)
+        {
+            if (Copy.transform.parent != null && !SpawnOnObjectDestroy)
+            {
+                Copy = Instantiate(SpawnItem, transform.position, transform.rotation);
+            }
+        }
+        else
         {
             Copy = Instantiate(SpawnItem, transform.position, transform.rotation);
         }
+    }
+
+    private void OnDestroy()
+    {
+        Destroy(Copy);
     }
 }

@@ -1698,7 +1698,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: GamePad
-  m_DefaultActionMap: Creating(UI)
+  m_DefaultActionMap: GamePlay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &9022271611662433031
@@ -1713,6 +1713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68484d567f8e766488895639bd556237, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!114 &2699411662212168452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1829,6 +1830,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PickUpParticle: {fileID: 3229996091083998333, guid: cc2d5431bd9864f4b8b6dd8355eff0dc,
     type: 3}
+  SpellSounds:
+  - {fileID: 8300000, guid: 95082d7b46c30c04e9eb1868e613e5c9, type: 3}
+  - {fileID: 8300000, guid: e35f2c0c402a1df47a8f2d660f98e228, type: 3}
+  - {fileID: 8300000, guid: 38b6734c225c9bb47a95beb009441082, type: 3}
+  - {fileID: 8300000, guid: 8deccc5d08ffc474b98ff899270fdec1, type: 3}
   IsHolding: 0
   IsCharging: 0
   IsThrowing: 0
@@ -1851,8 +1857,8 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.3
-  m_Pitch: 0.6
+  m_Volume: 0.35
+  m_Pitch: 1.2
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -4549,6 +4555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ragdollControl: {fileID: 3649270470876360371}
+  pickItem: {fileID: 0}
   playerMove: {fileID: 2141157010212903046}
   test: 0
   Hips: {fileID: 8507612295208271077}
@@ -4558,9 +4565,15 @@ MonoBehaviour:
   RespawnPortal: {fileID: 5137702982872309538, guid: 980972c7e917fff43a7ed84787e136f6,
     type: 3}
   deathSound: {fileID: 8300000, guid: c579c7a41415ee6469626b82966a2525, type: 3}
+  hurtSound:
+  - {fileID: 8300000, guid: ad9ab64709904b746a742cefd312a1f2, type: 3}
+  - {fileID: 8300000, guid: dcfcbcd85d5b30a42b0b98d5e9356508, type: 3}
+  - {fileID: 8300000, guid: 828d5f484f9ea5f4d92cd87ade6950dc, type: 3}
+  - {fileID: 8300000, guid: 3f320c95e853e4646a24cc4c6e313114, type: 3}
   MaxHealth: 20
   Dead: 0
   IsInvincible: 0
+  IsAxe: 0
   PlayerUI: {fileID: 2383896703354539456, guid: 85926009e9d656746b326eb88aa94862,
     type: 3}
   Flag: {fileID: 0}

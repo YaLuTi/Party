@@ -7,6 +7,7 @@ public class SpotLightControll : MonoBehaviour
     public GameObject[] lights;
     AudioSource audioSource;
     public AudioClip audioClip;
+    public AudioClip GreetingClip;
     StageManager stageManager;
 
     // Start is called before the first frame update
@@ -32,5 +33,6 @@ public class SpotLightControll : MonoBehaviour
     {
         lights[n].SetActive(true);
         audioSource.PlayOneShot(audioClip);
+        audioSource.PlayOneShot(GreetingClip, 1f);
     }
 }

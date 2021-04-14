@@ -8,8 +8,12 @@ public class PlayerBehavior : MonoBehaviour
     [Header("Game VFX")]
     // public GameObject HitParticle;
     public GameObject PickUpParticle;
+    [Header("Game SFX")]
+    [SerializeField]
+    AudioClip[] SpellSounds;
+    AudioSource audioSource;
 
-    
+
 
     public bool IsHolding = false;
     public bool IsCharging = false;
@@ -37,6 +41,7 @@ public class PlayerBehavior : MonoBehaviour
     private void Awake()
     {
         playerStatus = GetComponent<PlayerStatusAnimator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Start()
@@ -343,6 +348,8 @@ public class PlayerBehavior : MonoBehaviour
 
     void TriggerItem()
     {
+        int r = Random.Range(0, SpellSounds.Length);
+        audioSource.PlayOneShot(SpellSounds[r], 1f);
         itemHand.TriggerItem();
     }
 
