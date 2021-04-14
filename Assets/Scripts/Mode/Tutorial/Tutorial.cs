@@ -71,11 +71,13 @@ public class Tutorial : MonoBehaviour
     IEnumerator Step1()
     {
         textMesh.ReadText("Great! Now we are going to learn how to use magic.");
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(3.5f);
         textMesh.ReadText("I will creat fire magic book and doll.");
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(3.5f);
+        FireBallSpawn.SetActive(true);
+        Doll.gameObject.SetActive(true);
         textMesh.ReadText("Now use your magic destroy that son of bitch.");
-        yield return new WaitForSeconds(7);
+        yield return new WaitForSeconds(4f);
         yield return null;
     }
 }

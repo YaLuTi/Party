@@ -73,7 +73,7 @@ LightmapSettings:
     m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
-    m_BakeBackend: 2
+    m_BakeBackend: 1
     m_PVRSampling: 1
     m_PVRDirectSampleCount: 128
     m_PVRSampleCount: 750
@@ -197,7 +197,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6500
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 4.3990674e+21, y: 0, z: 0, w: 3e-44}
+  m_BoundingSphereOverride: {x: 0, y: 4.812e-41, z: 0, w: 0.0000000031577656}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -3801,7 +3801,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2356
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 7.83e-43, y: 0, z: 0, w: 3.5e-44}
+  m_BoundingSphereOverride: {x: 0, y: 8.492e-42, z: 0, w: 0.000000018742867}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -7130,10 +7130,10 @@ MonoBehaviour:
   animatedText: {fileID: 1575951925}
   mouthQuad: {fileID: 0}
   voices:
-  - {fileID: 8300000, guid: 3e4d7abb60d46834e82e8858ff54c7f0, type: 3}
-  - {fileID: 8300000, guid: ee970d4910ca69042b72cd39132827de, type: 3}
-  - {fileID: 8300000, guid: b1da17bade5b75c40817cff8c2e92665, type: 3}
-  - {fileID: 8300000, guid: 3194245ace84af144b908f05fc9ae125, type: 3}
+  - {fileID: 8300000, guid: b48590d5e44affc4f899e0e2dbb75544, type: 3}
+  - {fileID: 8300000, guid: cec89a08ae264ac41b3af550983d47e6, type: 3}
+  - {fileID: 8300000, guid: c8b9c9add4a501f409830d2fc9801225, type: 3}
+  - {fileID: 8300000, guid: 16e5b83b055311c4d92b8b5d27352aea, type: 3}
   punctuations:
   - {fileID: 8300000, guid: b1da17bade5b75c40817cff8c2e92665, type: 3}
   voiceSource: {fileID: 211840834}
@@ -14720,7 +14720,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &476938888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15492,7 +15492,7 @@ MonoBehaviour:
   LoadDeathMatchTime: 0
   LoadBattle: 0
   LoadTitle: 0
-  Test: 0
+  Test: 1
   MainCamera: {fileID: 963194225}
   stageInfo: {fileID: 823837565}
   Spawner: {fileID: 2106914280}
@@ -22571,7 +22571,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &744847941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25346,7 +25346,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &823837566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28835,7 +28835,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.32650557, y: -0.6272114, z: 0.32650557, w: 0}
+  m_LocalRotation: {x: 0.32650557, y: -0.6272114, z: 0.32650557, w: 0.6272114}
   m_LocalPosition: {x: 8.283831, y: 12.511219, z: 0.0000008940697}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -30663,7 +30663,7 @@ GameObject:
   - component: {fileID: 1024186606}
   m_Layer: 0
   m_Name: CineChoose
-  m_TagString: Untagged
+  m_TagString: Cine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34172,7 +34172,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1150142513
 Transform:
   m_ObjectHideFlags: 0
@@ -35542,7 +35542,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &1197441463
 Animator:
   serializedVersion: 3
@@ -43835,7 +43835,7 @@ MonoBehaviour:
   Teacher: {fileID: 211840831}
   bomb: {fileID: 0}
   MoveArea: {fileID: 1249132583}
-  FireBallSpawn: {fileID: 0}
+  FireBallSpawn: {fileID: 1150142512}
   Doll: {fileID: 8879871389336906349}
   textMesh: {fileID: 1575951925}
 --- !u!4 &1512233716
@@ -45308,7 +45308,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2356
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 7.83e-43, y: 7.0127e-41, z: 0, w: -1}
+  m_BoundingSphereOverride: {x: 0, y: 2.9988e-41, z: 0, w: 3.09485e+27}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -54597,7 +54597,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2356
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 7.83e-43, y: 7.0121e-41, z: 0, w: -1}
+  m_BoundingSphereOverride: {x: 0, y: 4.4074e-41, z: 0, w: NaN}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -55520,7 +55520,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2356
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 7.83e-43, y: 7.0132e-41, z: 0, w: -1}
+  m_BoundingSphereOverride: {x: 0, y: 4.404e-41, z: 0, w: -1}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
