@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Playables;
 
 public class SceneChangeTest : MonoBehaviour
 {
     public static SceneChangeTest instance;
 
-    public static bool IsLoadingTutorial;
+    public static bool IsLoadingTutorial = true;
 
     public string[] SceneArray;
     int SceneChoosing = 0;
@@ -178,6 +179,14 @@ public class SceneChangeTest : MonoBehaviour
             yield return null;
         }
         StageManager.LoadNewScene();
+        if (IsLoadingTutorial)
+        {
+            GameObject.FindGameObjectWithTag("Tutorial").GetComponent<PlayableDirector>().Play();
+        }
+        else
+        {
+            GameObject.FindGameObjectWithTag("Enter").GetComponent<PlayableDirector>().Play();
+        }
         yield return new WaitForSeconds(2.5f);
         StageManager.ThrowPlayer(0);
         yield return new WaitForSeconds(0.5f);
@@ -186,6 +195,11 @@ public class SceneChangeTest : MonoBehaviour
         StageManager.ThrowPlayer(2);
         yield return new WaitForSeconds(0.5f);
         StageManager.ThrowPlayer(3);
+
+        if (IsLoadingTutorial)
+        {
+            IsLoadingTutorial = false;
+        }
         yield return null;
     }
 

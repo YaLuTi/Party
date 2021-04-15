@@ -4,6 +4,7 @@ using UnityEngine;
 using Cinemachine;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.Playables;
 
 public class Tutorial : MonoBehaviour
 {
@@ -41,6 +42,9 @@ public class Tutorial : MonoBehaviour
     AudioSource voiceSource;
     [SerializeField]
     AudioClip[] voices;
+
+    [SerializeField]
+    PlayableDirector FinishTimeline;
 
 
     // Start is called before the first frame update
@@ -91,7 +95,7 @@ public class Tutorial : MonoBehaviour
 
     public void TutorialStart()
     {
-        CineGroup.AddMember(Teacher.transform, 1, 0);
+        CineGroup.AddMember(Teacher.transform, 0.2f, 0);
         DialogueBubble.transform.DOScale(new Vector3(1, 1, 1), 0.5f);
         textMesh.ReadText("Come here");
     }
@@ -176,10 +180,15 @@ public class Tutorial : MonoBehaviour
         PlaySound();
         yield return new WaitForSeconds(3f);
 
-        textMesh.ReadText("Now use the portal to create chaos.\r\nBecome the true Chaos Master!");
+        textMesh.ReadText("Now use the portal to create chaos.");
         PlaySound();
-        yield return new WaitForSeconds(3.5f);
-        DialogueBubble.transform.DOScale(new Vector3(1, 0, 1), 1f);
+        yield return new WaitForSeconds(2.5f);
+        textMesh.ReadText("Become the true Chaos Master!");
+        PlaySound();
+        FinishTimeline.Play();
+        StageManager.InLobby = true;
+        yield return new WaitForSeconds(2.5f);
+        DialogueBubble.transform.DOScale(new Vector3(1, 0, 1), 0.5f);
 
         yield return null;
     }

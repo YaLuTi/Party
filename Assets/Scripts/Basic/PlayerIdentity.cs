@@ -298,7 +298,7 @@ public class PlayerIdentity : MonoBehaviour
             if (collider == null) continue;
             collider.isTrigger = false;
         }
-        if (!StageManager.InLobby)
+        if (!StageManager.InLobby && !SceneChangeTest.IsLoadingTutorial)
         {
             footIK_AF.followTerrain = true;
         }
@@ -334,7 +334,7 @@ public class PlayerIdentity : MonoBehaviour
         {
             collider.isTrigger = false;
         }
-        if (!StageManager.InLobby)
+        if (!StageManager.InLobby && !SceneChangeTest.IsLoadingTutorial)
         {
             footIK_AF.followTerrain = true;
         }
@@ -376,7 +376,7 @@ public class PlayerIdentity : MonoBehaviour
             collider.isTrigger = false;
         }
 
-        if (!StageManager.InLobby)
+        if (!StageManager.InLobby && !SceneChangeTest.IsLoadingTutorial)
         {
             footIK_AF.followTerrain = true;
         }
@@ -434,7 +434,7 @@ public class PlayerIdentity : MonoBehaviour
             collider.isTrigger = false;
         }
 
-        if (!StageManager.InLobby)
+        if (!StageManager.InLobby && !SceneChangeTest.IsLoadingTutorial)
         {
             footIK_AF.followTerrain = true;
         }

@@ -108,7 +108,7 @@ public class PlayerHitten : MonoBehaviour
         Dead = false;
         Respawnable = true;
 
-        if (!StageManager.InLobby)
+        if (!StageManager.InLobby && !SceneChangeTest.IsLoadingTutorial)
         {
             UI_copy = Instantiate(PlayerUI);
             UI_copy.GetComponent<PlayerUI>().SetUp(this);
