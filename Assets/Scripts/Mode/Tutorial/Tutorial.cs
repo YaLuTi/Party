@@ -8,7 +8,7 @@ using UnityEngine.Playables;
 
 public class Tutorial : MonoBehaviour
 {
-    public int num = 0;
+    public int num = -1;
 
     [SerializeField]
     CinemachineTargetGroup CineGroup;
@@ -95,6 +95,7 @@ public class Tutorial : MonoBehaviour
 
     public void TutorialStart()
     {
+        num = 0;
         CineGroup.AddMember(Teacher.transform, 0.2f, 0);
         DialogueBubble.transform.DOScale(new Vector3(1, 1, 1), 0.5f);
         textMesh.ReadText("Come here");
