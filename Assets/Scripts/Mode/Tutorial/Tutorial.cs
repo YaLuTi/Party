@@ -144,6 +144,7 @@ public class Tutorial : MonoBehaviour
 
         textMesh.ReadText("Now let's study how to use bomb.");
         PlaySound();
+        Destroy(FireBallSpawn);
         yield return new WaitForSeconds(3f);
         bomb.SetActive(true);
         Doll2.gameObject.SetActive(true);
