@@ -73,7 +73,7 @@ LightmapSettings:
     m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
-    m_BakeBackend: 2
+    m_BakeBackend: 1
     m_PVRSampling: 1
     m_PVRDirectSampleCount: 128
     m_PVRSampleCount: 750
@@ -197,7 +197,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6500
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 2.4091e-41, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 2.4803e-41, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -624,14 +624,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9075618}
-  m_LocalRotation: {x: 0.32650557, y: -0.6272114, z: 0.32650557, w: 0.6272114}
-  m_LocalPosition: {x: 8.283831, y: 12.511219, z: 0.0000008940697}
+  m_LocalRotation: {x: 0.46174863, y: 0, z: 0, w: 0.8870109}
+  m_LocalPosition: {x: 0, y: 12.51122, z: -8.283829}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1160670692}
   m_Father: {fileID: 0}
   m_RootOrder: 30
-  m_LocalEulerAnglesHint: {x: 55, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 55, y: 0, z: 0}
 --- !u!114 &9075622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1333,13 +1333,74 @@ MonoBehaviour:
     - {fileID: 11400000, guid: bc7ec9269d1feb947a0f25359705787d, type: 2}
     - {fileID: 11400000, guid: 4a7fc3a971fa8cd4eb4326e795b324ab, type: 2}
     - {fileID: 11400000, guid: 7acd19ddf22ed3b4aaa7d4fb1a3dc4c8, type: 2}
+    - {fileID: 11400000, guid: 1f8f13a7a4a9cc7458fdc4f2023d60be, type: 2}
+    - {fileID: 11400000, guid: aede535c25193f146a4c90df9fce00c6, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls: []
     - m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 40533918}
+          m_MethodName: Pause
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     - m_PersistentCalls:
         m_Calls: []
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1512233715}
+          m_MethodName: TutorialStart
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 435350097}
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 342328772}
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 836433045}
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
 --- !u!95 &40533917
 Animator:
   serializedVersion: 3
@@ -1408,6 +1469,10 @@ PlayableDirector:
     value: {fileID: 1992398245}
   - key: {fileID: 6681013817350009796, guid: 19a945337030bf44893ef2e137eefc08, type: 2}
     value: {fileID: 316095023}
+  - key: {fileID: 5375020052103584627, guid: 19a945337030bf44893ef2e137eefc08, type: 2}
+    value: {fileID: 40533915}
+  - key: {fileID: -3958194856701810264, guid: 19a945337030bf44893ef2e137eefc08, type: 2}
+    value: {fileID: 1202742375}
   m_ExposedReferences:
     m_References:
     - 87937fb58f8f35c45ba4d6299fc97015: {fileID: 377469303}
@@ -4306,7 +4371,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2356
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 4.5845e-41, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 4.2874e-41, z: 0, w: -1}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -7968,7 +8033,12 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'mixamorig:RightFoot'\n\tTransform 'mixamorig:LeftLeg'\n\tTransform
+    'mixamorig:LeftHand'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform 'mixamorig:Spine1'\n\tTransform
+    'mixamorig:Spine2'\n\tTransform 'mixamorig:RightUpLeg'\n\tTransform 'mixamorig:RightForeArm'\n\tTransform
+    'mixamorig:LeftUpLeg'\n\tTransform 'mixamorig:Head'\n\tand more ..."
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
@@ -16791,7 +16861,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &476938888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17437,7 +17507,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &489996346
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23527,13 +23597,23 @@ PrefabInstance:
     - target: {fileID: 2530514489993338092, guid: d12374f6e067425498e0184a95d33d49,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2530514489993338128, guid: d12374f6e067425498e0184a95d33d49,
         type: 3}
       propertyPath: follow
       value: 
       objectReference: {fileID: 211840833}
+    - target: {fileID: 2530514489993338131, guid: d12374f6e067425498e0184a95d33d49,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2530514489993338131, guid: d12374f6e067425498e0184a95d33d49,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d12374f6e067425498e0184a95d33d49, type: 3}
 --- !u!1 &686344034
@@ -28177,7 +28257,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &823837566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31747,7 +31827,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.016025482, y: 0.040595952, z: -0.000651197, w: 0.9990469}
+  m_LocalRotation: {x: 0.02031245, y: 0.05145576, z: -0.00082539837, w: 0.8870109}
   m_LocalPosition: {x: 0.96, y: 2.4, z: 3.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -37813,6 +37893,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1166464758 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2530514489993338092, guid: d12374f6e067425498e0184a95d33d49,
+    type: 3}
+  m_PrefabInstance: {fileID: 684352299}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1170371809
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38772,7 +38858,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &1197441463
 Animator:
   serializedVersion: 3
@@ -38802,7 +38888,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 774418899aad4674e865230dcf0eac3c, type: 2}
-  m_InitialState: 1
+  m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
@@ -41528,12 +41614,12 @@ PrefabInstance:
     - target: {fileID: 6758999994660713949, guid: db209fd067a9c974c90d95f929f1622c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.003297
+      value: 0.443
       objectReference: {fileID: 0}
     - target: {fileID: 6758999994660713949, guid: db209fd067a9c974c90d95f929f1622c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.023343086
+      value: -2.22
       objectReference: {fileID: 0}
     - target: {fileID: 6758999994660713949, guid: db209fd067a9c974c90d95f929f1622c,
         type: 3}
@@ -48183,7 +48269,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1512233715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48199,6 +48285,7 @@ MonoBehaviour:
   num: 0
   CineGroup: {fileID: 517669945}
   Teacher: {fileID: 211840831}
+  DialogueBubble: {fileID: 1166464758}
   bomb: {fileID: 1498341363}
   MoveArea: {fileID: 1249132583}
   FireBallSpawn: {fileID: 1150142512}
@@ -49717,7 +49804,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2356
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 4.0755e-41, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 1.2623e-41, z: 0, w: -1}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -59872,7 +59959,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2356
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 4.5548e-41, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 2.0459e-41, z: 0, w: 0.0000000022846507}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -60795,7 +60882,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2356
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 4.4791e-41, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 4.5385e-41, z: 0, w: -1}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0

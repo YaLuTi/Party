@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using TMPro;
+using DG.Tweening;
 
 public class Tutorial : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class Tutorial : MonoBehaviour
     CinemachineTargetGroup CineGroup;
     [SerializeField]
     GameObject Teacher;
+    [SerializeField]
+    GameObject DialogueBubble;
 
     [SerializeField]
     GameObject bomb;
@@ -43,8 +46,6 @@ public class Tutorial : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CineGroup.AddMember(Teacher.transform, 1, 0);
-        textMesh.ReadText("Come here");
     }
 
     // Update is called once per frame
@@ -88,22 +89,25 @@ public class Tutorial : MonoBehaviour
         }
     }
 
+    public void TutorialStart()
+    {
+        CineGroup.AddMember(Teacher.transform, 1, 0);
+        DialogueBubble.transform.DOScale(new Vector3(1, 1, 1), 0.5f);
+        textMesh.ReadText("Come here");
+    }
+
     void PlaySound()
     {
         voiceSource.clip = voices[Random.Range(0, voices.Length)];
         voiceSource.Play();
     }
-
-    IEnumerator TutorialStart()
-    {
-        yield return null;
-    }
+    
 
     IEnumerator Step1()
     {
         textMesh.ReadText("Great! Now we are going to learn how to use magic.");
         PlaySound();
-        Destroy(MoveArea);
+        Destroy(MoveArea.gameObject);
         yield return new WaitForSeconds(3.5f);
 
         textMesh.ReadText("I will creat fire magic book and doll.");
@@ -174,7 +178,8 @@ public class Tutorial : MonoBehaviour
 
         textMesh.ReadText("Now use the portal to create chaos.\r\nBecome the true Chaos Master!");
         PlaySound();
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(3.5f);
+        DialogueBubble.transform.DOScale(new Vector3(1, 0, 1), 1f);
 
         yield return null;
     }
