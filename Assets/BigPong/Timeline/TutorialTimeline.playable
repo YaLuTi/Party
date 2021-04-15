@@ -1151,6 +1151,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fde0d25a170598d46a0b9dc16b4527a5, type: 3}
   m_Name: ActivationPlayableAsset
   m_EditorClassIdentifier: 
+--- !u!114 &-4558275993877557674
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f10dd60657c6004587f237a7e90f8e4, type: 3}
+  m_Name: AudioPlayableAsset
+  m_EditorClassIdentifier: 
+  m_Clip: {fileID: 8300000, guid: 74f429805bafd094d9c5475080363e72, type: 3}
+  m_Loop: 0
+  m_bufferingTime: 0.1
+  m_ClipProperties:
+    volume: 1
 --- !u!114 &-4234847048061941689
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1338,7 +1355,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: Pain1
   - m_Version: 1
-    m_Start: 5.766666666666667
+    m_Start: 5.564715219421101
     m_ClipIn: 0
     m_Asset: {fileID: 3164988223864137899}
     m_Duration: 0.4241963452047486
@@ -1407,7 +1424,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: Pain2
   - m_Version: 1
-    m_Start: 6.566666666666666
+    m_Start: 6.416530612244898
     m_ClipIn: 0
     m_Asset: {fileID: -2115838557880994131}
     m_Duration: 0.2920861678004535
@@ -1476,7 +1493,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: Pain3
   - m_Version: 1
-    m_Start: 7.05
+    m_Start: 6.9
     m_ClipIn: 0
     m_Asset: {fileID: 4291128367041453154}
     m_Duration: 0.46010582010582013
@@ -2216,6 +2233,7 @@ MonoBehaviour:
   - {fileID: -3958194856701810264}
   - {fileID: 5344693831170978726}
   - {fileID: -4107394514561587338}
+  - {fileID: 4188915280580843369}
   - {fileID: -4234847048061941689}
   - {fileID: -2992955522928861813}
   - {fileID: -1544563644465038168}
@@ -2879,6 +2897,23 @@ MonoBehaviour:
   m_Retroactive: 0
   m_EmitOnce: 0
   m_Asset: {fileID: 11400000, guid: 1f8f13a7a4a9cc7458fdc4f2023d60be, type: 2}
+--- !u!114 &1497914503968638663
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f10dd60657c6004587f237a7e90f8e4, type: 3}
+  m_Name: AudioPlayableAsset(Clone)(Clone)
+  m_EditorClassIdentifier: 
+  m_Clip: {fileID: 8300000, guid: 74f429805bafd094d9c5475080363e72, type: 3}
+  m_Loop: 0
+  m_bufferingTime: 0.1
+  m_ClipProperties:
+    volume: 1
 --- !u!114 &1956169823826868186
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2912,6 +2947,135 @@ MonoBehaviour:
   m_bufferingTime: 0.1
   m_ClipProperties:
     volume: 1
+--- !u!114 &4188915280580843369
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b22792c3b570444eb18cb78c2af3a74, type: 3}
+  m_Name: Audio Track (3)
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children: []
+  m_Clips:
+  - m_Version: 1
+    m_Start: 4.778948458488387
+    m_ClipIn: 0
+    m_Asset: {fileID: -4558275993877557674}
+    m_Duration: 2.121051541511614
+    m_TimeScale: 0.7499999999999999
+    m_ParentTrack: {fileID: 4188915280580843369}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: -1
+    m_BlendOutDuration: -1
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: Magic Missiles
+  - m_Version: 1
+    m_Start: 6.9
+    m_ClipIn: 0.9124999999999993
+    m_Asset: {fileID: 1497914503968638663}
+    m_Duration: 1
+    m_TimeScale: 0.7499999999999999
+    m_ParentTrack: {fileID: 4188915280580843369}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: -1
+    m_BlendOutDuration: -1
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: Magic Missiles
+  m_Markers:
+    m_Objects: []
+  m_TrackProperties:
+    volume: 1
+    stereoPan: 0
+    spatialBlend: 0
 --- !u!114 &4291128367041453154
 MonoBehaviour:
   m_ObjectHideFlags: 1
