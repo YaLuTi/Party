@@ -37,6 +37,9 @@ public class Tutorial : MonoBehaviour
     [SerializeField]
     TMP_Animated textMesh;
 
+    [SerializeField]
+    TextMeshPro textMeshPro;
+
     Coroutine coroutine;
     [SerializeField]
     AudioSource voiceSource;
@@ -115,11 +118,12 @@ public class Tutorial : MonoBehaviour
         Destroy(MoveArea.gameObject);
         yield return new WaitForSeconds(3.5f);
 
-        textMesh.ReadText("I will creat fire magic book and doll.");
+        textMesh.ReadText("I will create fire magic book and doll.");
         PlaySound();
         yield return new WaitForSeconds(3.5f);
 
         FireBallSpawn.SetActive(true);
+        textMeshPro.DOColor(new Color(1, 1, 1, 1), 2f);
         Doll.gameObject.SetActive(true);
         textMesh.ReadText("Now use your magic destroy that son of bitch.");
         PlaySound();
