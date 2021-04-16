@@ -76,6 +76,7 @@ public class Tutorial : MonoBehaviour
                 if (Doll.Dead)
                 {
                     num++;
+                    StopCoroutine(coroutine);
                     coroutine = StartCoroutine(Step2());
                 }
                 break;
@@ -84,6 +85,7 @@ public class Tutorial : MonoBehaviour
                 if (Doll2.Dead)
                 {
                     num++;
+                    StopCoroutine(coroutine);
                     coroutine = StartCoroutine(Step3());
                 }
                 break;
@@ -91,6 +93,7 @@ public class Tutorial : MonoBehaviour
                 if (EnhanceTable == null)
                 {
                     num++;
+                    StopCoroutine(coroutine);
                     coroutine = StartCoroutine(Step4());
                 }
                 break;
@@ -135,15 +138,20 @@ public class Tutorial : MonoBehaviour
         textMesh.ReadText("Now use your magic destroy the dummy.");
         PlaySound();
         yield return new WaitForSeconds(4f);
+        DialogueBubble.transform.DOScale(new Vector3(1, 0, 1), 0.2f);
 
         yield return null;
     }
 
     IEnumerator Step2()
     {
+        DialogueBubble.transform.DOKill();
+        DialogueBubble.transform.DOScale(new Vector3(1, 1, 1), 0.4f);
         textMesh.ReadText("Well Done!");
         PlaySound();
         hintDirector[0].time = 0;
+        hintDirector[0].initialTime = 0;
+        hintDirector[0].Evaluate();
         hintDirector[0].Stop();
         yield return new WaitForSeconds(2f);
 
@@ -160,17 +168,30 @@ public class Tutorial : MonoBehaviour
         Destroy(FireBallSpawn);
         yield return new WaitForSeconds(3f);
         bomb.SetActive(true);
+        hintDirector[1].Play();
+        hintDirector[2].Play();
         Doll2.gameObject.SetActive(true);
+        DialogueBubble.transform.DOScale(new Vector3(1, 0, 1), 0.2f);
         yield return null;
     }
 
     IEnumerator Step3()
     {
+        DialogueBubble.transform.DOKill();
+        DialogueBubble.transform.DOScale(new Vector3(1, 1, 1), 0.4f);
         textMesh.ReadText("EXCELLENT!");
         PlaySound();
+        hintDirector[1].time = 0;
+        hintDirector[1].initialTime = 0;
+        hintDirector[1].Evaluate();
+        hintDirector[1].Stop();
+        hintDirector[2].time = 0;
+        hintDirector[2].initialTime = 0;
+        hintDirector[2].Evaluate();
+        hintDirector[2].Stop();
         yield return new WaitForSeconds(2f);
 
-        textMesh.ReadText("Let's Do the final part.");
+        textMesh.ReadText("Let's do the final part.");
         PlaySound();
         yield return new WaitForSeconds(2.5f);
 
@@ -180,15 +201,23 @@ public class Tutorial : MonoBehaviour
 
         textMesh.ReadText("It can make your weapon more powerful.\r\nHave a Try.");
         EnhanceTable.SetActive(true);
+        hintDirector[3].Play();
         PlaySound();
         yield return new WaitForSeconds(3.5f);
+        DialogueBubble.transform.DOScale(new Vector3(1, 0, 1), 0.2f);
         yield return null;
     }
 
     IEnumerator Step4()
     {
+        DialogueBubble.transform.DOKill();
+        DialogueBubble.transform.DOScale(new Vector3(1, 1, 1), 0.4f);
         textMesh.ReadText("You are the most promising apprentice I ever seen!");
         PlaySound();
+        hintDirector[3].time = 0;
+        hintDirector[3].initialTime = 0;
+        hintDirector[3].Evaluate();
+        hintDirector[3].Stop();
         yield return new WaitForSeconds(3f);
 
         textMesh.ReadText("You have study all of basic skills you need.");
@@ -203,7 +232,7 @@ public class Tutorial : MonoBehaviour
         FinishTimeline.Play();
         StageManager.InLobby = true;
         yield return new WaitForSeconds(2.5f);
-        DialogueBubble.transform.DOScale(new Vector3(1, 0, 1), 0.5f);
+        DialogueBubble.transform.DOScale(new Vector3(1, 0, 1), 0.2f);
 
         yield return null;
     }
