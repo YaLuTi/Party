@@ -187,6 +187,7 @@ public class PlayerHitten : MonoBehaviour
 
     IEnumerator Respawn(float time)
     {
+        yield return new WaitForFixedUpdate();
         if (!Respawnable)
         {
             Destroy(UI_copy);
@@ -236,6 +237,7 @@ public class PlayerHitten : MonoBehaviour
 
         if (Health <= 0)
         {
+            if (Dead) return;
             audioSource.PlayOneShot(deathSound, 0.5f);
 
             StartCoroutine(Respawn(2));

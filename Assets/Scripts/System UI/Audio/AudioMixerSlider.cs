@@ -23,6 +23,13 @@ public class AudioMixerSlider : MonoBehaviour
 
     public void SetLevel(float sliderValue)
     {
-        audioMixer.SetFloat(name, Mathf.Log10(sliderValue) * 20);
+        if (sliderValue > 0)
+        {
+            audioMixer.SetFloat(name, Mathf.Log10(sliderValue) * 30);
+        }
+        else
+        {
+            audioMixer.SetFloat(name, -80);
+        }
     }
 }

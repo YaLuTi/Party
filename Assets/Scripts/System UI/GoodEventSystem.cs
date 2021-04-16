@@ -25,7 +25,13 @@ public class GoodEventSystem : MonoBehaviour
                            // Highlight the button
         myButton.OnSelect(null);
     }
-    
+    public void SelectSlider(Slider slider)
+    { // Select the button
+        slider.Select(); // Or EventSystem.current.SetSelectedGameObject(myButton.gameObject)
+                         // Highlight the button
+        slider.OnSelect(null);
+    }
+
 
     IEnumerator FirstSelect()
     {
