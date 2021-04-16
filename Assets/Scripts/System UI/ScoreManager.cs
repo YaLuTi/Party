@@ -19,6 +19,9 @@ public class ScoreManager : MonoBehaviour
     static bool EndEvent = false;
     public PlayableDirector playableDirector;
 
+    [SerializeField]
+    GameObject[] ScoresUI;
+
     public GameObject Crown;
     // Start is called before the first frame update
     void Start()
@@ -28,6 +31,10 @@ public class ScoreManager : MonoBehaviour
         for(int i = 0; i < scores.Length; i++)
         {
             scores[i] = 0;
+        }
+        for (int i = 0; i < StageManager.players.Count; i++)
+        {
+            ScoresUI[i].gameObject.SetActive(true);
         }
         WinScore = _WinScore;
     }

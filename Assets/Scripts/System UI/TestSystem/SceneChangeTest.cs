@@ -56,10 +56,11 @@ public class SceneChangeTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (Input.GetButtonDown("Cancel"))
         {
             ISGUI = !ISGUI;
-        }
+        }*/
     }
 
     bool isButtonPressed;
