@@ -143,6 +143,7 @@ public class Tutorial : MonoBehaviour
     {
         textMesh.ReadText("Well Done!");
         PlaySound();
+        hintDirector[0].time = 0;
         hintDirector[0].Stop();
         yield return new WaitForSeconds(2f);
 
