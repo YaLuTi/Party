@@ -40,6 +40,9 @@ public class Tutorial : MonoBehaviour
     [SerializeField]
     TextMeshPro textMeshPro;
 
+    [SerializeField]
+    PlayableDirector[] hintDirector;
+
     Coroutine coroutine;
     [SerializeField]
     AudioSource voiceSource;
@@ -113,19 +116,23 @@ public class Tutorial : MonoBehaviour
 
     IEnumerator Step1()
     {
-        textMesh.ReadText("Great! Now we are going to learn how to use magic.");
+        textMesh.ReadText("Seems you are here to study magic.");
         PlaySound();
         Destroy(MoveArea.gameObject);
         yield return new WaitForSeconds(3.5f);
 
-        textMesh.ReadText("I will create fire magic book and doll.");
+        textMesh.ReadText("Great! Now I'm going to teach you the basic of magic.");
+        PlaySound();
+        yield return new WaitForSeconds(3.5f);
+
+        textMesh.ReadText("I will create some magic books and dummy.");
         PlaySound();
         yield return new WaitForSeconds(3.5f);
 
         FireBallSpawn.SetActive(true);
-        textMeshPro.DOColor(new Color(1, 1, 1, 1), 2f);
+        hintDirector[0].Play();
         Doll.gameObject.SetActive(true);
-        textMesh.ReadText("Now use your magic destroy that son of bitch.");
+        textMesh.ReadText("Now use your magic destroy the dummy.");
         PlaySound();
         yield return new WaitForSeconds(4f);
 
@@ -136,9 +143,10 @@ public class Tutorial : MonoBehaviour
     {
         textMesh.ReadText("Well Done!");
         PlaySound();
+        hintDirector[0].Stop();
         yield return new WaitForSeconds(2f);
 
-        textMesh.ReadText("There will be lots of different magic book.");
+        textMesh.ReadText("There will be lots of different magic books.");
         PlaySound();
         yield return new WaitForSeconds(3.5f);
 
