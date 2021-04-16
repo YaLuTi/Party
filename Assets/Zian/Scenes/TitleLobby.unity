@@ -197,7 +197,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6500
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 4.5083e-41, z: 0, w: 9.6875}
+  m_BoundingSphereOverride: {x: 0, y: 3e-45, z: 8.86e-42, w: 5.9e-44}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1307,6 +1307,7 @@ GameObject:
   - component: {fileID: 68217104}
   - component: {fileID: 68217108}
   - component: {fileID: 68217109}
+  - component: {fileID: 68217110}
   m_Layer: 0
   m_Name: Text (TMP) (2)
   m_TagString: Untagged
@@ -1572,9 +1573,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 68217104}
-          m_MethodName: set_alpha
-          m_Mode: 4
+        - m_Target: {fileID: 68217110}
+          m_MethodName: ChangeColor
+          m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1599,17 +1600,32 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 68217104}
-          m_MethodName: set_alpha
-          m_Mode: 4
+        - m_Target: {fileID: 68217110}
+          m_MethodName: ChangeColor
+          m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
+            m_IntArgument: 1
             m_FloatArgument: 0.2
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &68217110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68217102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca16d99d31b237242b7d3fe710daa781, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  choose:
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0.3882353, g: 0.3882353, b: 0.3882353, a: 1}
 --- !u!1001 &71185055
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3262,7 +3278,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2356
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 5.5e-43, y: 3.9985e-41, z: 0, w: -1}
+  m_BoundingSphereOverride: {x: 0, y: 61.12729, z: 8.16e-43, w: 2.17e-43}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -25521,6 +25537,7 @@ GameObject:
   - component: {fileID: 1017392103}
   - component: {fileID: 1017392107}
   - component: {fileID: 1017392108}
+  - component: {fileID: 1017392109}
   m_Layer: 0
   m_Name: Text (TMP) (3)
   m_TagString: Untagged
@@ -25785,9 +25802,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1017392103}
-          m_MethodName: set_alpha
-          m_Mode: 4
+        - m_Target: {fileID: 1017392109}
+          m_MethodName: ChangeColor
+          m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -25812,17 +25829,32 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1017392103}
-          m_MethodName: set_alpha
-          m_Mode: 4
+        - m_Target: {fileID: 1017392109}
+          m_MethodName: ChangeColor
+          m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
+            m_IntArgument: 1
             m_FloatArgument: 0.2
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &1017392109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017392101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca16d99d31b237242b7d3fe710daa781, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  choose:
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0.3882353, g: 0.3882353, b: 0.3882353, a: 1}
 --- !u!1001 &1018086712
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37799,7 +37831,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2356
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 6.457e-42, z: 0, w: -1}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -39285,7 +39317,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1605026552}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 0}
   m_CullingMode: 0
@@ -46440,6 +46472,7 @@ GameObject:
   - component: {fileID: 1894514003}
   - component: {fileID: 1894514008}
   - component: {fileID: 1894514007}
+  - component: {fileID: 1894514009}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -46651,9 +46684,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1894514003}
-          m_MethodName: set_alpha
-          m_Mode: 4
+        - m_Target: {fileID: 1894514009}
+          m_MethodName: ChangeColor
+          m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -46678,13 +46711,13 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1894514003}
-          m_MethodName: set_alpha
-          m_Mode: 4
+        - m_Target: {fileID: 1894514009}
+          m_MethodName: ChangeColor
+          m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
+            m_IntArgument: 1
             m_FloatArgument: 0.2
             m_StringArgument: 
             m_BoolArgument: 0
@@ -46766,6 +46799,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1894514009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894514001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca16d99d31b237242b7d3fe710daa781, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  choose:
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0.3882353, g: 0.3882353, b: 0.3882353, a: 1}
 --- !u!1001 &1895691642
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47163,7 +47211,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2356
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: -1, y: 1, z: 0, w: -1}
+  m_BoundingSphereOverride: {x: 0, y: 1.0206699e-22, z: 8.14e-43, w: 66.17395}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -47989,7 +48037,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2356
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1, y: 1, z: 0, w: -1}
+  m_BoundingSphereOverride: {x: 0, y: 72.21594, z: 8.16e-43, w: 112.93347}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0

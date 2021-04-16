@@ -52,4 +52,8 @@ public class ProfileChooseUI : MonoBehaviour
     {
         animator.SetTrigger("Play");
     }
+    public void UnReady()
+    {
+        animator.SetTrigger("Re");
+    }
 }

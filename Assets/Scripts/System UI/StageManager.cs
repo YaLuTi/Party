@@ -174,6 +174,10 @@ public class StageManager : MonoBehaviour
     {
         PlayerReadyNum++;
     }
+    public static void PlayerUnReady()
+    {
+        PlayerReadyNum--;
+    }
 
     public static void DisablePlayerControl()
     {

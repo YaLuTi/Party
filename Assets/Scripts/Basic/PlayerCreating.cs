@@ -138,12 +138,17 @@ public class PlayerCreating : MonoBehaviour
 
         // playerInput.SwitchCurrentActionMap("GamePlay");
 
-        this.enabled = false;
+        IsEnable = false;
     }
 
-    void OnNo()
+    void OnCancel()
     {
-
+        if (!IsEnable)
+        {
+            IsEnable = true;
+            StageManager.PlayerUnReady();
+            profileChooseUI.UnReady();
+        }
     }
 
     public void ChangeInput(string state)
