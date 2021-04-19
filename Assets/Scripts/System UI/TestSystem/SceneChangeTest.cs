@@ -188,7 +188,16 @@ public class SceneChangeTest : MonoBehaviour
         {
             GameObject.FindGameObjectWithTag("Enter").GetComponent<PlayableDirector>().Play();
         }
-        yield return new WaitForSeconds(2.5f);
+        yield return null;
+    }
+
+    public void ThrowPlayer()
+    {
+        StartCoroutine(_ThrowPlayer());
+    }
+
+    IEnumerator _ThrowPlayer()
+    {
         StageManager.ThrowPlayer(0);
         yield return new WaitForSeconds(0.5f);
         StageManager.ThrowPlayer(1);

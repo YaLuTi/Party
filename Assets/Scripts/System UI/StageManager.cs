@@ -343,6 +343,7 @@ public class StageManager : MonoBehaviour
         {
             g.GetComponent<PlayerIdentity>().Freeze();
             g.GetComponentInChildren<PlayerBehavior>().OnHit();
+            g.GetComponent<PlayerHitten>().IsInvincible = false;
 
         }
         if (!StageManager.Static_Testing) return;

@@ -53,7 +53,7 @@ public class PlayerCreating : MonoBehaviour
     {
         if (!this.enabled || !IsEnable) return;
         selecting++;
-        if(selecting >= PlayerPrefs.GetInt("Profile_Count"))
+        if(selecting >= 6) //PlayerPrefs.GetInt("Profile_Count")
         {
             selecting = 0;
         }
@@ -69,7 +69,7 @@ public class PlayerCreating : MonoBehaviour
         selecting--;
         if (selecting < 0)
         {
-            selecting = PlayerPrefs.GetInt("Profile_Count") - 1;
+            selecting = 5; // PlayerPrefs.GetInt("Profile_Count") - 1
         }
         profileChooseUI.Left(selecting);
 

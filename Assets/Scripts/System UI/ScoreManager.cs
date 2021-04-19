@@ -20,7 +20,7 @@ public class ScoreManager : MonoBehaviour
     public PlayableDirector playableDirector;
 
     [SerializeField]
-    GameObject[] ScoresUI;
+    TextMeshProUGUI[] ScoresUI;
 
     public GameObject Crown;
     // Start is called before the first frame update
@@ -34,7 +34,7 @@ public class ScoreManager : MonoBehaviour
         }
         for (int i = 0; i < StageManager.players.Count; i++)
         {
-            ScoresUI[i].gameObject.SetActive(true);
+            ScoresUI[i].alpha = 1;
         }
         WinScore = _WinScore;
     }
