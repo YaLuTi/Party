@@ -107,7 +107,7 @@ public class Tutorial : MonoBehaviour
         num = 0;
         CineGroup.AddMember(Teacher.transform, 0.2f, 0);
         DialogueBubble.transform.DOScale(new Vector3(1, 1, 1), 0.5f);
-        textMesh.ReadText("Come here");
+        textMesh.ReadText("Come here!");
     }
 
     void PlaySound()
