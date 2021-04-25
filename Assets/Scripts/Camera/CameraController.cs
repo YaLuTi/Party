@@ -13,7 +13,7 @@ public class CameraController : MonoBehaviour
     {
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
         perlin = virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-        virtualCamera.Follow = GameObject.FindGameObjectWithTag("CineGroup").transform;
+        // virtualCamera.Follow = GameObject.FindGameObjectWithTag("CineGroup").transform;
     }
 
     // Update is called once per frame
