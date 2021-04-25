@@ -199,11 +199,11 @@ public class SceneChangeTest : MonoBehaviour
     IEnumerator _ThrowPlayer()
     {
         StageManager.ThrowPlayer(0);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         StageManager.ThrowPlayer(1);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         StageManager.ThrowPlayer(2);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         StageManager.ThrowPlayer(3);
 
         if (IsLoadingTutorial)

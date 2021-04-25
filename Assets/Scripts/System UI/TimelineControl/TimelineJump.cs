@@ -32,7 +32,7 @@ public class TimelineJump : MonoBehaviour
             gamepadPressed = Gamepad.current.startButton.isPressed ? true : false;
         }
 
-        if ((gamepadPressed && !IsUse) || (Keyboard.current.escapeKey.IsPressed(0) && !IsUse) && playableDirector.time < enableTime && CanJump)
+        if ((gamepadPressed && !IsUse) || (Keyboard.current.escapeKey.IsPressed(0) && !IsUse) && playableDirector.time > 0.5f && playableDirector.time < enableTime && CanJump)
         {
             playableDirector.time = enableTime;
             IsUse = true;
