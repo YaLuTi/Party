@@ -161,7 +161,15 @@ namespace AnimFollow
 				return;
 			}
 
-			animatorSpeed = playerMovement.animatorSpeed; // Read user setting
+            if (playerMovement != null)
+            {
+                animatorSpeed = playerMovement.animatorSpeed; // Read user setting
+            }
+            else
+            {
+                animatorSpeed = 1.3f;
+            }
+
 			animator.speed = animatorSpeed; // set the animator speed to the setting in player movement. RagdollControl varies the animator speed, best to not set animator speed anywhere else
 			secondaryUpdateSet = animFollow.secondaryUpdate;
 
@@ -272,7 +280,11 @@ namespace AnimFollow
 					animFollow.drag = drag;
 				}
 
-                playerMovement.Hitten();
+                if (playerMovement != null)
+                {
+                    playerMovement.Hitten();
+                }
+
 				shotByBullet = false;
                 noContactTime = 0;
                 contactTime = 0;
@@ -465,12 +477,15 @@ namespace AnimFollow
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             // Adjust player movements if ragdoll distortion is large, e.g. if we are walking into a wall                   gettingUp || 
-            if (noContactTime < .1f && !(falling))
+            if (playerMovement != null)
             {
-                playerMovement.glideFree = new Vector3(-limbError.x, 0f, -limbError.z) * glideFree;
+                if (noContactTime < .1f && !(falling))
+                {
+                    playerMovement.glideFree = new Vector3(-limbError.x, 0f, -limbError.z) * glideFree;
+                }
+                else
+                    playerMovement.glideFree = Vector3.zero;
             }
-			else
-				playerMovement.glideFree = Vector3.zero;
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

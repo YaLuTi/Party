@@ -78,11 +78,17 @@ namespace AnimFollow
             //Test
             if(raycastHitRightFoot.transform == null)
             {
-                transform.GetComponent<PlayerMove>().StairRotation = 0;
+                if (transform.GetComponent<PlayerMove>() != null)
+                {
+                    transform.GetComponent<PlayerMove>().StairRotation = 0;
+                }
             }
             else
             {
-                transform.GetComponent<PlayerMove>().StairRotation = raycastHitRightFoot.transform.eulerAngles.x;
+                if (transform.GetComponent<PlayerMove>() != null)
+                {
+                    transform.GetComponent<PlayerMove>().StairRotation = raycastHitRightFoot.transform.eulerAngles.x;
+                }
                 // transform.DORotate(new Vector3(raycastHitRightFoot.transform.eulerAngles.x, transform.eulerAngles.y, 0), 0);
             }
             // Debug.Log(raycastHitRightFoot.transform.gameObject.name);
