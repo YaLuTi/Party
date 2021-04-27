@@ -26,10 +26,18 @@ public class KungFuPlayerControll : MonoBehaviour
     float OffsetY;
 
     [SerializeField]
-    float cooldownSpeed = 2;
+    float JumpcooldownSpeed = 2;
 
-    float cooldown = 0;
-    float t;
+    float Jumpcooldown = 0;
+    float JumpTime;
+
+    [SerializeField]
+    GameObject Shield;
+    [SerializeField]
+    float ShieldcooldownSpeed = 2;
+
+    float Shieldcooldown = 0;
+    float ShieldTime;
 
     // Start is called before the first frame update
     void Start()
@@ -56,12 +64,12 @@ public class KungFuPlayerControll : MonoBehaviour
     {
         if (gamePad == null) return;
 
-        if (gamePad.buttonSouth.IsPressed(0) && cooldown == 0)
+        if (gamePad.buttonSouth.IsPressed(0) && Jumpcooldown == 0)
         {
             animator.SetTrigger("Jump");
             animator.SetBool("Jumping", true);
             Now_a = a;
-            cooldown = -1;
+            Jumpcooldown = -1;
         }
         if(Now_a > -a)
         {
@@ -71,19 +79,23 @@ public class KungFuPlayerControll : MonoBehaviour
             {
                 animator.SetBool("Jumping", false);
                 transform.DOMoveY(OffsetY, 0.05f);
-                cooldown = 1;
+                Jumpcooldown = 1;
                 Now_a = -a;
             }
         }
-        if(cooldown > 0)
+        if(Jumpcooldown > 0)
         {
-            cooldown = Mathf.Lerp(1, 0, t);
-            t += cooldownSpeed * Time.deltaTime;
+            Jumpcooldown = Mathf.Lerp(1, 0, JumpTime);
+            JumpTime += JumpcooldownSpeed * Time.deltaTime;
         }
         else
         {
-            t = 0;
+            JumpTime = 0;
         }
 
+        if(gamePad.buttonEast.IsPressed(0) && Shieldcooldown == 0)
+        {
+            Shield.SetActive(true);
+        }
     }
 }
