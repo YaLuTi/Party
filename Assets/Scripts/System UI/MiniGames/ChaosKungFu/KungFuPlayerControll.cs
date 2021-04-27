@@ -33,8 +33,13 @@ public class KungFuPlayerControll : MonoBehaviour
 
     [SerializeField]
     GameObject Shield;
+    public bool IsInvisable;
+
+
     [SerializeField]
-    float ShieldcooldownSpeed = 2;
+    float ShieldExistTime = 0.3f;
+    [SerializeField]
+    float ShieldcooldownSpeed = 0.5f;
 
     float Shieldcooldown = 0;
     float ShieldTime;
@@ -74,8 +79,8 @@ public class KungFuPlayerControll : MonoBehaviour
         if(Now_a > -a)
         {
             transform.position += new Vector3(0, Now_a, 0) * Time.deltaTime * (Mathf.Abs(Now_a) / 2);
-            Now_a -= s;
-            if (-a - Now_a >= -s)
+            Now_a -= s * Time.deltaTime;
+            if (-a - Now_a >= (-s * Time.deltaTime))
             {
                 animator.SetBool("Jumping", false);
                 transform.DOMoveY(OffsetY, 0.05f);
@@ -93,9 +98,22 @@ public class KungFuPlayerControll : MonoBehaviour
             JumpTime = 0;
         }
 
-        if(gamePad.buttonEast.IsPressed(0) && Shieldcooldown == 0)
+        if(gamePad.buttonWest.IsPressed(0) && Shieldcooldown == 0)
         {
-            Shield.SetActive(true);
+            Shieldcooldown = 1;
+            StartCoroutine(ShieldEvent());
         }
+    }
+
+    IEnumerator ShieldEvent()
+    {
+        Shield.SetActive(true);
+        IsInvisable = true;
+        yield return new WaitForSeconds(ShieldExistTime);
+        Shield.SetActive(false);
+        IsInvisable = false;
+        yield return new WaitForSeconds(ShieldcooldownSpeed);
+        Shieldcooldown = 0;
+        yield return null;
     }
 }

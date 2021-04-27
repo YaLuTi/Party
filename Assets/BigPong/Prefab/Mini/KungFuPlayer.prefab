@@ -335,10 +335,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 0}
-  a: 5.2
-  s: 0.14
+  a: 5.3
+  s: 16
   Now_a: 0
   JumpcooldownSpeed: 2
+  Shield: {fileID: 6802094635249749337}
+  ShieldExistTime: 0.2
+  ShieldcooldownSpeed: 0.2
 --- !u!1 &495058050779649726
 GameObject:
   m_ObjectHideFlags: 0
@@ -1962,7 +1965,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4221107332271176081
 Transform:
   m_ObjectHideFlags: 0
@@ -3601,13 +3604,14 @@ GameObject:
   - component: {fileID: 611444706732708331}
   - component: {fileID: 1802957672623378616}
   - component: {fileID: 1122421260020644832}
+  - component: {fileID: 10981427074626047}
   m_Layer: 4
   m_Name: Shield
   m_TagString: Pause
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5516545942230183469
 Transform:
   m_ObjectHideFlags: 0
@@ -3616,7 +3620,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6802094635249749337}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.529, z: -0.072}
+  m_LocalPosition: {x: 0, y: 0.486, z: -0.079}
   m_LocalScale: {x: 0.86828804, y: 1.0023758, z: 1.0023758}
   m_Children: []
   m_Father: {fileID: 8816625375298031449}
@@ -3680,8 +3684,24 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.4
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &10981427074626047
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6802094635249749337}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
 --- !u!1 &6869382192987381884
 GameObject:
   m_ObjectHideFlags: 0
