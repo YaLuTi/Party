@@ -46,6 +46,18 @@ public class KungFuManager : MonoBehaviour
     {
         PlayerLifes--;
         Debug.Log(PlayerLifes);
+        GameObject[] gs = GameObject.FindGameObjectsWithTag("DeskObject");
+        foreach(GameObject g in gs)
+        {
+            if ((int)Random.Range(0, 2) == 0)
+            {
+                g.GetComponent<AudienceAnimator>().Play("Cheer");
+            }
+            else
+            {
+                g.GetComponent<AudienceAnimator>().Play("Clap");
+            }
+        }
         if (PlayerLifes <= 1)
         {
             GameObject.FindGameObjectWithTag("Finish").GetComponent<PlayableDirector>().Play();
