@@ -191,6 +191,24 @@ public class SceneChangeTest : MonoBehaviour
         yield return null;
     }
 
+    public void LoadMiniGame(string scene)
+    {
+        StartCoroutine(_LoadMiniGame(scene));
+    }
+    IEnumerator _LoadMiniGame(string scene)
+    {
+        StageManager.ClearPlayer();
+        yield return new WaitForFixedUpdate();
+        AsyncOperation asyncLoad;
+        asyncLoad = SceneManager.LoadSceneAsync(scene);
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+        // StageManager.LoadNewScene();
+        yield return null;
+    }
+
     public void ThrowPlayer()
     {
         StartCoroutine(_ThrowPlayer());

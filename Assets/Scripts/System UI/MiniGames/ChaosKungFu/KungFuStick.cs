@@ -27,6 +27,7 @@ public class KungFuStick : MonoBehaviour
             if (collision.gameObject.transform.root.GetComponentInChildren<RagdollControl_AF>())
             {
                 collision.gameObject.transform.root.GetComponentInChildren<RagdollControl_AF>().shotByBullet = true;
+                collision.gameObject.transform.root.GetComponent<KungFuPlayerControll>().Death();
             }
         }
     }
