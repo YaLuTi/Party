@@ -205,6 +205,7 @@ public class SceneChangeTest : MonoBehaviour
         {
             yield return null;
         }
+        StageManager.LoadMiniGame();
         // StageManager.LoadNewScene();
         yield return null;
     }

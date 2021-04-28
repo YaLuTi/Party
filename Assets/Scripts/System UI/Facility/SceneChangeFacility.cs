@@ -40,17 +40,18 @@ public class SceneChangeFacility : FacilityArea
     public override void OnUse(PlayerBehavior playerBehavior)
     {
         base.OnUse(playerBehavior);
-        changeTest.LoadMiniGame("MiniGame");
+        StartCoroutine(GOGO());
         // meshRenderer.enabled = false;
     }
 
     public void GO()
     {
-        changeTest.LoadMiniGame("MiniGame");
+        StartCoroutine(GOGO());
     }
 
     IEnumerator GOGO()
     {
+        Debug.Log("CX");
         playableDirector.Play();
         yield return new WaitForSeconds(1);
         changeTest.LoadMiniGame("MiniGame");

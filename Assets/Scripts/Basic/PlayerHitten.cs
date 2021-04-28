@@ -296,6 +296,17 @@ public class PlayerHitten : MonoBehaviour
         StartCoroutine(_OutAxeMode());
     }
 
+    public void FollowTerrainDelay(float t, bool b)
+    {
+        StartCoroutine(_FollowTerrainDelay(t, b));
+    }
+    IEnumerator _FollowTerrainDelay(float t, bool b)
+    {
+        yield return new WaitForSeconds(t);
+        GetComponentInChildren<SimpleFootIK_AF>().followTerrain = b;
+        yield return null;
+    }
+
     IEnumerator _OutAxeMode()
     {
         IsInvincible = false;

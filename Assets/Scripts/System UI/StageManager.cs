@@ -419,4 +419,13 @@ public class StageManager : MonoBehaviour
             g.GetComponent<PlayerHitten>().Refresh();
         }
     }
+
+    public static void LoadMiniGame()
+    {
+        foreach (GameObject g in players)
+        {
+            g.GetComponent<PlayerHitten>().Refresh();
+            g.GetComponentInChildren<PlayerHitten>().FollowTerrainDelay(3.5f, false);
+        }
+    }
 }
