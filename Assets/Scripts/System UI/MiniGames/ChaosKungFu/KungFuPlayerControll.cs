@@ -106,10 +106,13 @@ public class KungFuPlayerControll : MonoBehaviour
                 Now_a -= 3 * Time.deltaTime;
             }
             // if (-a - Now_a >= ((-s - 3) * Time.deltaTime))
-            if (Now_a < JumpDelay)
+            if(Now_a < JumpDelay)
             {
                 animator.SetBool("Jumping", false);
-                transform.DOMoveY(OffsetY, 0.1f);
+            }
+            if (-a - Now_a >= ((-s - 3) * Time.deltaTime))
+            {
+                transform.DOMoveY(OffsetY, Time.deltaTime);
                 Jumpcooldown = 1;
                 Now_a = -a;
             }
