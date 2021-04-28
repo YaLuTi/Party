@@ -336,6 +336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 0}
+  HelmetNum: 0
   materials:
   - {fileID: 2100000, guid: e93829bd2ff2da043af03ea04420cfef, type: 2}
   - {fileID: 2100000, guid: 1ccb2407e4f56c049bc43c91a63a9530, type: 2}
@@ -346,8 +347,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e35f2c0c402a1df47a8f2d660f98e228, type: 3}
   - {fileID: 8300000, guid: 8deccc5d08ffc474b98ff899270fdec1, type: 3}
   - {fileID: 8300000, guid: 828d5f484f9ea5f4d92cd87ade6950dc, type: 3}
-  a: 5.5
-  s: 18
+  - {fileID: 8300000, guid: 4b822c8bf52704f47944d1df220103c3, type: 3}
+  a: 6.5
+  s: 25
   Now_a: 0
   JumpcooldownSpeed: 2.2
   Jumpcooldown: 0
@@ -355,6 +357,7 @@ MonoBehaviour:
   IsInvisable: 0
   ShieldExistTime: 0.2
   ShieldcooldownSpeed: 0.4
+  JumpDelay: -4.5
 --- !u!82 &3536079624979287860
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3071,6 +3074,7 @@ GameObject:
   - component: {fileID: 3683606634161853842}
   - component: {fileID: 5399215284712490011}
   - component: {fileID: 1880616261956767583}
+  - component: {fileID: 6828338671049882204}
   m_Layer: 10
   m_Name: Clean
   m_TagString: Untagged
@@ -3301,6 +3305,30 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6828338671049882204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4919305577623868379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bc04945ca406e04486d8e908088b1fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profileChooseUI: {fileID: 0}
+  playerIdentity: {fileID: 0}
+  clothDataArrays:
+  - {fileID: 11400000, guid: 2c0ac7b2b5f49b447b2d1c1c2f74e854, type: 2}
+  - {fileID: 11400000, guid: c76e660d01cf884439bd3def4fa06548, type: 2}
+  clothOffset:
+  - {fileID: 2168627185118644031}
+  - {fileID: 2168627185118644031}
+  RigclothOffset:
+  - {fileID: 2258465173194316347}
+  - {fileID: 2258465173194316347}
+  selecting: 0
 --- !u!1 &5004630635945176706
 GameObject:
   m_ObjectHideFlags: 0

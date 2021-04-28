@@ -9,6 +9,8 @@ public class KungFuPlayerControll : MonoBehaviour
     [SerializeField]
     PlayerInput playerInput;
 
+    public int HelmetNum;
+
     [SerializeField]
     Material[] materials;
     [SerializeField]
@@ -55,6 +57,8 @@ public class KungFuPlayerControll : MonoBehaviour
     float ShieldTime;
 
     bool IsDeath = false;
+    [SerializeField]
+    float JumpDelay = -3;
     // Start is called before the first frame update
     void Start()
     {
@@ -97,10 +101,15 @@ public class KungFuPlayerControll : MonoBehaviour
         {
             transform.position += new Vector3(0, Now_a, 0) * Time.deltaTime * (Mathf.Abs(Now_a) / 2);
             Now_a -= s * Time.deltaTime;
-            if (-a - Now_a >= (-s * Time.deltaTime))
+            if(Now_a < 0)
+            {
+                Now_a -= 3 * Time.deltaTime;
+            }
+            // if (-a - Now_a >= ((-s - 3) * Time.deltaTime))
+            if (Now_a < JumpDelay)
             {
                 animator.SetBool("Jumping", false);
-                transform.DOMoveY(OffsetY, 0.05f);
+                transform.DOMoveY(OffsetY, 0.1f);
                 Jumpcooldown = 1;
                 Now_a = -a;
             }
@@ -125,8 +134,11 @@ public class KungFuPlayerControll : MonoBehaviour
 
     public void Death()
     {
+        if (IsDeath) return;
         IsDeath = true;
-        audioSource.PlayOneShot(clips[2]);
+        audioSource.PlayOneShot(clips[2], 0.4f);
+        audioSource.PlayOneShot(clips[3], 0.4f);
+        KungFuManager.PlayerDeath();
     }
 
     IEnumerator ShieldEvent()

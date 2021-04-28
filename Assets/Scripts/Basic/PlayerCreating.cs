@@ -48,6 +48,25 @@ public class PlayerCreating : MonoBehaviour
         ChangeHat();
         IsEnable = true;
     }
+    public void CreatMini()
+    {
+        //
+        // StageManager.PlayerProfile[playerIdentity.PlayerID] = playerIdentity.Helmetnum; // playerIdentity.PlayerID
+        selecting = GetComponentInParent<KungFuPlayerControll>().HelmetNum; // 這邊現在對之後擴增不友善
+
+        if (profileChooseUI != null)
+        {
+            profileChooseUI.Set(playerIdentity.PlayerID);
+        }
+
+        ClothIDArray = new int[1]; // 手動設定吧
+        ClothIDArray[0] = PlayerPrefs.GetInt("Profile_" + selecting + "_HAT");
+
+        ClothClone = new GameObject[clothDataArrays.Length];
+        RigClothClone = new GameObject[clothDataArrays.Length];
+        ChangeHat();
+        IsEnable = true;
+    }
 
     void OnUI_Right()
     {
@@ -135,6 +154,8 @@ public class PlayerCreating : MonoBehaviour
         if (!this.enabled || !IsEnable) return;
         profileChooseUI.Ready();
         StageManager.PlayerReady();
+        playerIdentity.Helmetnum = selecting;
+
 
         // playerInput.SwitchCurrentActionMap("GamePlay");
 

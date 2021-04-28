@@ -11,6 +11,7 @@ public class SceneChangeFacility : FacilityArea
     int ChoosingMap = 0;
     
     public GameObject HintUI;
+    public PlayableDirector playableDirector;
 
     bool Using = false;
 
@@ -46,6 +47,14 @@ public class SceneChangeFacility : FacilityArea
     public void GO()
     {
         changeTest.LoadMiniGame("MiniGame");
+    }
+
+    IEnumerator GOGO()
+    {
+        playableDirector.Play();
+        yield return new WaitForSeconds(1);
+        changeTest.LoadMiniGame("MiniGame");
+        yield return null;
     }
 
     public void SetMode(int i)

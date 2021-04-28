@@ -14,15 +14,19 @@ public class ObjectRotate : MonoBehaviour
 
     public bool Way = true;
     bool S = false;
+    public bool End = false;
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(enumerator());
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (End)
+        {
+            speed *= 0.93f;
+        }
         if (!S) return;
         if (Way)
         {
@@ -36,6 +40,19 @@ public class ObjectRotate : MonoBehaviour
         {
             speed += a * Time.deltaTime;
         }
+        else
+        {
+            speed += Time.deltaTime;
+        }
+    }
+
+    public void GO()
+    {
+        S = true;
+    }
+    public void Stop()
+    {
+        End = true;
     }
 
     IEnumerator enumerator()

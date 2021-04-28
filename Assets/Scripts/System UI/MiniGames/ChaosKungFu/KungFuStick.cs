@@ -7,16 +7,24 @@ using UnityEngine;
 public class KungFuStick : MonoBehaviour
 {
     ObjectRotate objectRotate;
+    AudioSource audioSource;
+    [SerializeField]
+    AudioClip audioClip;
 
     // Start is called before the first frame update
     void Start()
     {
         objectRotate = GetComponentInParent<ObjectRotate>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (objectRotate.End)
+        {
+            this.enabled = false;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -37,6 +45,8 @@ public class KungFuStick : MonoBehaviour
         if (other.transform.tag == "Pause")
         {
             objectRotate.Way = !objectRotate.Way;
+            audioSource.PlayOneShot(audioClip);
+            objectRotate.speed++;
         }
     }
 }
