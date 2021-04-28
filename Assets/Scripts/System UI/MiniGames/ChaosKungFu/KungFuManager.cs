@@ -22,6 +22,6 @@ public class KungFuManager : MonoBehaviour
         Vector3 p = GameObject.FindGameObjectWithTag("StageInfoTransform").GetComponent<StageInfo>().SpawnPosition[num];
         Vector3 r = GameObject.FindGameObjectWithTag("StageInfoTransform").GetComponent<StageInfo>().SpawnRotation[num];
         GameObject g = Instantiate(KungFuPlayer, p, Quaternion.Euler(r));
-        g.GetComponent<KungFuPlayerControll>().Set(player);
+        g.GetComponent<KungFuPlayerControll>().Set(player, num);
     }
 }

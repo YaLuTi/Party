@@ -9,6 +9,15 @@ public class KungFuPlayerControll : MonoBehaviour
     [SerializeField]
     PlayerInput playerInput;
 
+    [SerializeField]
+    Material[] materials;
+    [SerializeField]
+    SkinnedMeshRenderer BodyMeshRenderer1;
+
+    AudioSource audioSource;
+    [SerializeField]
+    AudioClip[] clips;
+
     InputDevice inputDevice;
     Gamepad gamePad;
 
@@ -28,6 +37,7 @@ public class KungFuPlayerControll : MonoBehaviour
     [SerializeField]
     float JumpcooldownSpeed = 2;
 
+    [SerializeField]
     float Jumpcooldown = 0;
     float JumpTime;
 
@@ -44,13 +54,15 @@ public class KungFuPlayerControll : MonoBehaviour
     float Shieldcooldown = 0;
     float ShieldTime;
 
+    bool IsDeath = false;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
-    public void Set(GameObject player)
+    public void Set(GameObject player, int num)
     {
         inputDevice = player.GetComponentInChildren<PlayerInput>().devices[0];
         foreach(Gamepad g in Gamepad.all)
@@ -62,18 +74,23 @@ public class KungFuPlayerControll : MonoBehaviour
         }
         OffsetY = transform.position.y;
         Now_a = -a;
+        Material[] mats = BodyMeshRenderer1.materials;
+        mats[0] = materials[num];
+        BodyMeshRenderer1.materials = mats;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (IsDeath) return;
         if (gamePad == null) return;
 
-        if (gamePad.buttonSouth.IsPressed(0) && Jumpcooldown == 0)
+        if (gamePad.buttonSouth.IsPressed(0) && Jumpcooldown == 0 && Shieldcooldown == 0)
         {
             animator.SetTrigger("Jump");
             animator.SetBool("Jumping", true);
             Now_a = a;
+            audioSource.PlayOneShot(clips[1]);
             Jumpcooldown = -1;
         }
         if(Now_a > -a)
@@ -98,17 +115,25 @@ public class KungFuPlayerControll : MonoBehaviour
             JumpTime = 0;
         }
 
-        if(gamePad.buttonWest.IsPressed(0) && Shieldcooldown == 0)
+        if(gamePad.buttonWest.IsPressed(0) && Jumpcooldown == 0 && Shieldcooldown == 0)
         {
             Shieldcooldown = 1;
+            audioSource.PlayOneShot(clips[0]);
             StartCoroutine(ShieldEvent());
         }
+    }
+
+    public void Death()
+    {
+        IsDeath = true;
+        audioSource.PlayOneShot(clips[2]);
     }
 
     IEnumerator ShieldEvent()
     {
         Shield.SetActive(true);
         IsInvisable = true;
+        animator.SetTrigger("Swing");
         yield return new WaitForSeconds(ShieldExistTime);
         Shield.SetActive(false);
         IsInvisable = false;
