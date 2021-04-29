@@ -68,4 +68,9 @@ public class KungFuManager : MonoBehaviour
     {
         GameObject.FindGameObjectWithTag("StageManager").GetComponent<StageManager>().LoadLobby();
     }
+
+    public void LoadMini()
+    {
+        GameObject.FindGameObjectWithTag("SceneChangeTester").GetComponent<SceneChangeTest>().LoadMiniGame("MiniGame");
+    }
 }
