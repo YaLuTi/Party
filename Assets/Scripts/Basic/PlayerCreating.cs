@@ -37,11 +37,11 @@ public class PlayerCreating : MonoBehaviour
 
         if (profileChooseUI != null)
         {
-            profileChooseUI.Set(playerIdentity.PlayerID);
+            profileChooseUI.Set(clothDataArrays[0].clothDatas[selecting].name);
         }
 
         ClothIDArray = new int[1]; // 手動設定吧
-        ClothIDArray[0] = PlayerPrefs.GetInt("Profile_" + selecting + "_HAT");
+        ClothIDArray[0] = selecting;
 
         ClothClone = new GameObject[clothDataArrays.Length];
         RigClothClone = new GameObject[clothDataArrays.Length];
@@ -56,11 +56,11 @@ public class PlayerCreating : MonoBehaviour
 
         if (profileChooseUI != null)
         {
-            profileChooseUI.Set(playerIdentity.PlayerID);
+            profileChooseUI.Set(clothDataArrays[0].clothDatas[selecting].name);
         }
 
         ClothIDArray = new int[1]; // 手動設定吧
-        ClothIDArray[0] = PlayerPrefs.GetInt("Profile_" + selecting + "_HAT");
+        ClothIDArray[0] = selecting;
 
         ClothClone = new GameObject[clothDataArrays.Length];
         RigClothClone = new GameObject[clothDataArrays.Length];
@@ -76,9 +76,9 @@ public class PlayerCreating : MonoBehaviour
         {
             selecting = 0;
         }
-        profileChooseUI.Right(selecting);
+        profileChooseUI.Right(clothDataArrays[0].clothDatas[selecting].name);
 
-        ClothIDArray[0] = PlayerPrefs.GetInt("Profile_" + selecting + "_HAT");
+        ClothIDArray[0] = selecting;
 
         ChangeHat();
     }
@@ -90,9 +90,9 @@ public class PlayerCreating : MonoBehaviour
         {
             selecting = 5; // PlayerPrefs.GetInt("Profile_Count") - 1
         }
-        profileChooseUI.Left(selecting);
+        profileChooseUI.Left(clothDataArrays[0].clothDatas[selecting].name);
 
-        ClothIDArray[0] = PlayerPrefs.GetInt("Profile_" + selecting + "_HAT");
+        ClothIDArray[0] = selecting;
 
         ChangeHat();
     }

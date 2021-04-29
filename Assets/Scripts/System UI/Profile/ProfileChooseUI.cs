@@ -27,22 +27,22 @@ public class ProfileChooseUI : MonoBehaviour
 
     }
 
-    public void Set(int num)
+    public void Set(string s)
     {
-        text.text = PlayerPrefs.GetString("Profile_" + num + "_Name");
+        text.text = s;
     }
 
-    public void Right(int num)
+    public void Right(string s)
     {
-        text.text = PlayerPrefs.GetString("Profile_" + num + "_Name");
+        text.text = s;
         RightArrowArray.DOComplete();
         RightArrowArray.DOPunchScale(new Vector3(.3f, .3f, .3f), 0.3f, 2, 0.1f);
         UISound.PlayOneShot(UISound.clip);
     }
 
-    public void Left(int num)
+    public void Left(string s)
     {
-        text.text = PlayerPrefs.GetString("Profile_" + num + "_Name");
+        text.text = s;
         LeftArrowArray.DOComplete();
         LeftArrowArray.DOPunchScale(new Vector3(.3f, .3f, .3f), 0.3f, 2, 0.1f);
         UISound.PlayOneShot(UISound.clip);
