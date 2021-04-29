@@ -14,6 +14,7 @@ public class SceneChangeFacility : FacilityArea
     public PlayableDirector playableDirector;
 
     bool Using = false;
+    bool HintActive = false;
 
     MeshRenderer meshRenderer;
     // Start is called before the first frame update
@@ -30,10 +31,12 @@ public class SceneChangeFacility : FacilityArea
         if (PlayersNum > 0 && !Using)
         {
             HintUI.SetActive(true);
+            HintActive = true;
         }
-        else
+        else if (PlayersNum == 0 && HintActive)
         {
             HintUI.SetActive(false);
+            HintActive = false;
         }
     }
 

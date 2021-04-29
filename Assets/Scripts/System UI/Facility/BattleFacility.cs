@@ -18,6 +18,7 @@ public class BattleFacility : FacilityArea
     public GameObject HintUI;
 
     bool Using = false;
+    bool HintActive = false;
 
     public PlayableDirector playableDirector;
 
@@ -36,10 +37,12 @@ public class BattleFacility : FacilityArea
         if(PlayersNum > 0 && !Using)
         {
             HintUI.SetActive(true);
+            HintActive = true;
         }
-        else
+        else if(PlayersNum == 0 && HintActive)
         {
             HintUI.SetActive(false);
+            HintActive = false;
         }
     }
 
