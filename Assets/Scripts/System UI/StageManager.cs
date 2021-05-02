@@ -15,6 +15,7 @@ public class StageManager : MonoBehaviour
     public OnBattleScene OnBattleScene;
     public static StageManager instance;
     public static List<GameObject> players = new List<GameObject>();
+    public static List<GameObject> playersRig = new List<GameObject>();
     public static int[] PlayerProfile;
     public static int[] playerScore;
     public static bool InGame = false;
@@ -104,6 +105,7 @@ public class StageManager : MonoBehaviour
                 Debug.Log("RTH");
                 GameObject g = Instantiate(Player, stageInfo.transforms[i].position, Quaternion.Euler(stageInfo.transforms[i].eulerAngles));
                 players.Add(g);
+                playersRig.Add(g.GetComponentInChildren<RagdollControl_AF>().gameObject);
             }
         }
     }

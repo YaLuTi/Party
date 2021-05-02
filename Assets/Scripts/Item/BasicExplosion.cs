@@ -61,7 +61,8 @@ public class BasicExplosion : MonoBehaviour
                 }
                 else if (collider.gameObject.transform.root.GetComponent <CreatureBasic>())
                 {
-                    Destroy(collider.gameObject);
+                    collider.gameObject.transform.root.GetComponent<CreatureBasic>().Death();
+                    collider.GetComponent<Rigidbody>().AddForceAtPosition((collider.ClosestPoint(transform.position) - transform.position).normalized * velocity * 2, collider.ClosestPoint(transform.position));
                 }
             }
 

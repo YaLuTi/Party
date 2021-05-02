@@ -100,8 +100,16 @@ public class Basic_Bullet : MonoBehaviour
                     hitten.OnHit(bulletHitInfo);
                     playerHittens.Add(hitten);
                 }
-
             }
+        }
+        else
+        {
+            if (other.gameObject.transform.root.GetComponent<CreatureBasic>())
+            {
+                CreatureBasic creatureBasic = other.gameObject.transform.root.GetComponent<CreatureBasic>();
+                creatureBasic.Death();
+            }
+            other.GetComponent<Rigidbody>().AddForceAtPosition((other.ClosestPoint(transform.position) - transform.position).normalized * velocity, other.ClosestPoint(transform.position));
         }
         GameObject g = Instantiate(CollisionEffect, transform.position, transform.rotation);
         Destroy(g, 2f);

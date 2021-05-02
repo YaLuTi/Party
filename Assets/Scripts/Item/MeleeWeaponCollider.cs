@@ -84,7 +84,8 @@ public class MeleeWeaponCollider : MonoBehaviour
             }
             else if (other.gameObject.transform.root.GetComponent<CreatureBasic>())
             {
-                Destroy(other.gameObject);
+                other.gameObject.transform.root.GetComponent<CreatureBasic>().Death();
+                other.GetComponent<Rigidbody>().AddForceAtPosition((other.ClosestPoint(transform.position) - transform.position).normalized * velocity * 2, other.ClosestPoint(transform.position));
             }
 
 
