@@ -248,6 +248,14 @@ public class PlayerHitten : MonoBehaviour
         {
             int r = Random.Range(0, hurtSound.Length);
             audioSource.PlayOneShot(hurtSound[r], 1f);
+        }else if(damage < 1)
+        {
+            if (!audioSource.isPlaying)
+            {
+                int r = Random.Range(0, hurtSound.Length);
+                audioSource.clip = hurtSound[r];
+                audioSource.Play();
+            }
         }
 
     }

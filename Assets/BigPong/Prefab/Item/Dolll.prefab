@@ -483,9 +483,9 @@ GameObject:
   - component: {fileID: 4471654724238586674}
   - component: {fileID: 7155746947594965244}
   - component: {fileID: 1040156671197645795}
-  - component: {fileID: 702169026733858614}
   - component: {fileID: 6248352860806448318}
   - component: {fileID: 7183204808039703691}
+  - component: {fileID: 7588976514264878285}
   m_Layer: 13
   m_Name: Dolll
   m_TagString: Untagged
@@ -543,30 +543,15 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 60
-  m_StoppingDistance: 0
+  m_AngularSpeed: 180
+  m_StoppingDistance: 0.25
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 0.51
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 1
---- !u!114 &702169026733858614
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2406430131987558982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12eac68ef26852546ad0e6a38b7f1a39, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LifeTime: 20
-  speed: 1
-  mainCollider: {fileID: 6248352860806448318}
+  m_ObstacleAvoidanceType: 4
 --- !u!136 &6248352860806448318
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -597,6 +582,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7588976514264878285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2406430131987558982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16a11c2ad6668344a8c6df8c38bdd424, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LifeTime: 20
+  speed: 1
+  RotateSpeed: 3
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 16
+  mainCollider: {fileID: 6248352860806448318}
 --- !u!1 &2655329850110606072
 GameObject:
   m_ObjectHideFlags: 0

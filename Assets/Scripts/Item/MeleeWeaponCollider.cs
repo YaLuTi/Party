@@ -86,6 +86,8 @@ public class MeleeWeaponCollider : MonoBehaviour
             {
                 other.gameObject.transform.root.GetComponent<CreatureBasic>().Death();
                 other.GetComponent<Rigidbody>().AddForceAtPosition((other.ClosestPoint(transform.position) - transform.position).normalized * velocity * 2, other.ClosestPoint(transform.position));
+                Instantiate(HitParticle, other.ClosestPoint(transform.position), Quaternion.identity);
+                audioSource.PlayOneShot(HitSFX, volume);
             }
 
 

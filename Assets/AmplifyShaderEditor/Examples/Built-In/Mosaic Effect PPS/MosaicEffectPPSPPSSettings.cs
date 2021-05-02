@@ -3,8 +3,7 @@
 #if UNITY_POST_PROCESSING_STACK_V2
 using System;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
-
+/*
 [Serializable]
 [PostProcess( typeof( MosaicEffectPPSPPSRenderer ), PostProcessEvent.AfterStack, "Mosaic Effect" )]
 public sealed class MosaicEffectPPSPPSSettings : PostProcessEffectSettings
@@ -27,5 +26,5 @@ public sealed class MosaicEffectPPSPPSRenderer : PostProcessEffectRenderer<Mosai
 		sheet.properties.SetColor( "_InBetweenColor", settings._InBetweenColor );
 		context.command.BlitFullscreenTriangle( context.source, context.destination, sheet, 0 );
 	}
-}
+}*/
 #endif

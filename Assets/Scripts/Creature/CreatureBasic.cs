@@ -10,15 +10,18 @@ public class CreatureBasic : MonoBehaviour
     [SerializeField]
     float LifeTime;
     [SerializeField]
-    float speed;
+    protected float speed;
     [SerializeField]
-    Collider mainCollider;
-    NavMeshAgent nav;
-    Animator animator;
+    protected float RotateSpeed;
+    protected NavMeshAgent nav;
+    protected Animator animator;
 
-    GameObject[] players; 
+    GameObject[] players;
+    protected Vector3 following;
+    [SerializeField]
+    protected LayerMask layerMask;
     // Start is called before the first frame update
-    void Start()
+     void Start()
     {
         nav = GetComponent<NavMeshAgent>();
         // Destroy(this.gameObject, LifeTime);
@@ -65,54 +68,11 @@ public class CreatureBasic : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
-        {
-            Debug.Log(2);
-            BulletHitInfo_AF bulletHitInfo_AF = new BulletHitInfo_AF();
-            bulletHitInfo_AF.bulletForce = Vector3.zero;
-            // bulletHitInfo.hitNormal = raycastHit.normal;
-            bulletHitInfo_AF.hitTransform = other.transform;
-            bulletHitInfo_AF.hitPoint = other.ClosestPoint(transform.position);
-            other.transform.root.gameObject.GetComponent<PlayerHitten>().OnHit(bulletHitInfo_AF);
-            // other.transform.root.gameObject.GetComponent<PlayerHitten>().OnDamaged(5);
-            Destroy(this.gameObject);
-        }
     }
 
-    public void Death()
+    public virtual void Death()
     {
-        animator.enabled = false;
-        nav.enabled = false;
-        mainCollider.enabled = false;
-        foreach (Collider c in GetComponentsInChildren<Collider>())
-        {
-            if (c != mainCollider)
-            {
-                // c.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                c.enabled = true;
-            }
-        }
-        this.enabled = false;
-        Destroy(this.gameObject, 4f);
     }
+    
 
-    IEnumerator _Death()
-    {
-        yield return new WaitForFixedUpdate();
-        yield return null;
-    }
-
-    private void OnAnimatorMove()
-    {
-        if (animator == null) return;
-        nav.velocity = animator.deltaPosition / Time.deltaTime * speed;
-
-        Vector3 dir = nav.desiredVelocity;
-        dir.y = 0f;
-
-        if (dir != Vector3.zero)
-        {
-            transform.rotation = Quaternion.LookRotation(dir);
-        }
-    }
 }
