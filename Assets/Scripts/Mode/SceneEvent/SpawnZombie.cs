@@ -21,7 +21,7 @@ public class SpawnZombie : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Spawn && cooldown > 30)
+        if(Spawn && cooldown > 5 && i < 10)
         {
             Instantiate(Zombie, transform.position, transform.rotation);
             cooldown = 0;
