@@ -7,10 +7,14 @@ public class KungFuManager : MonoBehaviour
 {
     static SceneChangeTest changeTest;
     public GameObject KungFuPlayer;
+    public static List<GameObject> players = new List<GameObject>();
     static int PlayerLifes;
+
+    public static bool IsFirst = true;
     // Start is called before the first frame update
     void Start()
     {
+        players.Clear();
         StageManager.instance.OnPlayerJoin += PlayerJoin;
         for(int i = 0; i < StageManager.players.Count; i++)
         {
@@ -19,10 +23,14 @@ public class KungFuManager : MonoBehaviour
             GameObject g = Instantiate(KungFuPlayer, p, Quaternion.Euler(r));
             g.GetComponent<KungFuPlayerControll>().Set(StageManager.players[i], i);
             g.GetComponent<KungFuPlayerControll>().HelmetNum = StageManager.players[i].GetComponent<PlayerIdentity>().Helmetnum;
+            g.GetComponent<KungFuPlayerControll>().Playernum = i;
             g.GetComponentInChildren<PlayerCreating>().CreatMini();
+            players.Add(g);
             PlayerLifes = StageManager.players.Count;
         }
         changeTest = GameObject.FindGameObjectWithTag("SceneChangeTester").GetComponent<SceneChangeTest>();
+
+        IsFirst = false;
     }
 
     // Update is called once per frame
@@ -40,6 +48,7 @@ public class KungFuManager : MonoBehaviour
         Debug.Log(PlayerLifes);
         g.GetComponent<KungFuPlayerControll>().HelmetNum = num;
         g.GetComponentInChildren<PlayerCreating>().CreatMini();
+        players.Add(g);
     }
 
     public static void PlayerDeath()

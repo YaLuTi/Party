@@ -10,6 +10,7 @@ public class KungFuPlayerControll : MonoBehaviour
     PlayerInput playerInput;
 
     public int HelmetNum;
+    public int Playernum;
 
     [SerializeField]
     Material[] materials;
@@ -93,6 +94,7 @@ public class KungFuPlayerControll : MonoBehaviour
         {
             animator.SetTrigger("Jump");
             animator.SetBool("Jumping", true);
+            Jump();
             Now_a = a;
             audioSource.PlayOneShot(clips[1]);
             Jumpcooldown = -1;
@@ -130,9 +132,23 @@ public class KungFuPlayerControll : MonoBehaviour
         if(gamePad.buttonWest.IsPressed(0) && Jumpcooldown == 0 && Shieldcooldown == 0)
         {
             Shieldcooldown = 1;
+            Swing();
             audioSource.PlayOneShot(clips[0]);
             StartCoroutine(ShieldEvent());
         }
+    }
+
+    public delegate void Handler(int num);
+    public Handler OnSwing;
+    public void Swing()
+    {
+        OnSwing?.Invoke(Playernum);
+    }
+
+    public Handler OnJump;
+    public void Jump()
+    {
+        OnJump?.Invoke(Playernum);
     }
 
     public void Death()
