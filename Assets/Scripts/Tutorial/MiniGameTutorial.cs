@@ -19,25 +19,21 @@ public class MiniGameTutorial : MonoBehaviour
     public Animator[] JumpButtonAnimator;
     public Animator[] SwingButtonAnimator;
     // Start is called before the first frame update
-    void Awake()
+
+    private void Start()
     {
-        /*if (KungFuManager.IsFirst)
+        if (KungFuManager.IsFirst)
         {
-            TutorialTimeline.Play();
             JumpChecker = new bool[StageManager.players.Count];
             SwingChecker = new bool[StageManager.players.Count];
 
-            foreach(GameObject g in KungFuManager.players)
+            foreach (GameObject g in KungFuManager.players)
             {
                 g.GetComponent<KungFuPlayerControll>().OnJump += JumpCheck;
                 g.GetComponent<KungFuPlayerControll>().OnSwing += SwingCheck;
             }
-        }*/
-        TutorialTimeline = GetComponent<PlayableDirector>();
-        if (KungFuManager.IsFirst)
-        {
-            TutorialTimeline.Play();
         }
+        TutorialTimeline = GetComponent<PlayableDirector>();
     }
 
     void TestSet()
@@ -69,7 +65,7 @@ public class MiniGameTutorial : MonoBehaviour
 
         if ((gamepadPressed || Keyboard.current.anyKey.IsPressed(0)) && !FacilityManager.IsMenu)
         {
-            TestSet();
+            // TestSet();
         }
 
         switch (level)

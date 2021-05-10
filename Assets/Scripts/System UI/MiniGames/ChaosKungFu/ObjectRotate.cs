@@ -18,6 +18,7 @@ public class ObjectRotate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        transform.eulerAngles = new Vector3(0, (int)Random.Range(0,4) * 90, 0);
     }
 
     // Update is called once per frame
@@ -42,7 +43,7 @@ public class ObjectRotate : MonoBehaviour
         }
         else
         {
-            speed += Time.deltaTime;
+            speed += a / 2 * Time.deltaTime;
         }
     }
 

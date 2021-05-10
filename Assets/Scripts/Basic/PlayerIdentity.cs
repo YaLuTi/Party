@@ -30,7 +30,7 @@ public class PlayerIdentity : MonoBehaviour
     public GameObject[] Helmet;
     public GameObject Crown;
 
-    public int Helmetnum;
+    public int[] ClothNum = new int[2];
 
     public SkinnedMeshRenderer BodyMeshRenderer1;
     public SkinnedMeshRenderer BodyMeshRenderer2;

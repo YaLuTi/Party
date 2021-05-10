@@ -11,6 +11,8 @@ public class KungFuManager : MonoBehaviour
     static int PlayerLifes;
 
     public static bool IsFirst = true;
+    public PlayableDirector StartTimeline;
+    public PlayableDirector TutorialTimeline;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +24,7 @@ public class KungFuManager : MonoBehaviour
             Vector3 r = GameObject.FindGameObjectWithTag("StageInfoTransform").GetComponent<StageInfo>().SpawnRotation[i];
             GameObject g = Instantiate(KungFuPlayer, p, Quaternion.Euler(r));
             g.GetComponent<KungFuPlayerControll>().Set(StageManager.players[i], i);
-            g.GetComponent<KungFuPlayerControll>().HelmetNum = StageManager.players[i].GetComponent<PlayerIdentity>().Helmetnum;
+            g.GetComponent<KungFuPlayerControll>().ClothNum = StageManager.players[i].GetComponent<PlayerIdentity>().ClothNum;
             g.GetComponent<KungFuPlayerControll>().Playernum = i;
             g.GetComponentInChildren<PlayerCreating>().CreatMini();
             players.Add(g);
@@ -30,6 +32,18 @@ public class KungFuManager : MonoBehaviour
         }
         changeTest = GameObject.FindGameObjectWithTag("SceneChangeTester").GetComponent<SceneChangeTest>();
 
+    }
+
+    public void StartGame()
+    {
+        if (!IsFirst)
+        {
+            StartTimeline.Play();
+        }
+        else
+        {
+            TutorialTimeline.Play();
+        }
         IsFirst = false;
     }
 
@@ -46,7 +60,7 @@ public class KungFuManager : MonoBehaviour
         g.GetComponent<KungFuPlayerControll>().Set(player, num);
         PlayerLifes++;
         Debug.Log(PlayerLifes);
-        g.GetComponent<KungFuPlayerControll>().HelmetNum = num;
+        g.GetComponent<KungFuPlayerControll>().ClothNum[0] = num;
         g.GetComponentInChildren<PlayerCreating>().CreatMini();
         players.Add(g);
     }

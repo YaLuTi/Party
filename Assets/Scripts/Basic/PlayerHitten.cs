@@ -212,9 +212,12 @@ public class PlayerHitten : MonoBehaviour
             ragdollControl.IsDead = false;
         }
         yield return new WaitForSeconds(4.5f);
-        Dead = false;
-        Decal.SetActive(true);
-        IsInvincible = false;
+        if (Respawnable)
+        {
+            Dead = false;
+            Decal.SetActive(true);
+            IsInvincible = false;
+        }
         yield return null;
     }
 

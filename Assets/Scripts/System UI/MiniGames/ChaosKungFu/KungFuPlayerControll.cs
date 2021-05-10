@@ -9,7 +9,7 @@ public class KungFuPlayerControll : MonoBehaviour
     [SerializeField]
     PlayerInput playerInput;
 
-    public int HelmetNum;
+    public int[] ClothNum = new int[2];
     public int Playernum;
 
     [SerializeField]

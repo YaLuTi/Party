@@ -19,6 +19,7 @@ public class PlayerCreating : MonoBehaviour
     GameObject[] RigClothClone;
 
     public int selecting = 0;
+    public int page = 0;
 
     bool IsEnable = false;
 
@@ -40,7 +41,7 @@ public class PlayerCreating : MonoBehaviour
             profileChooseUI.Set(clothDataArrays[0].clothDatas[selecting].name);
         }
 
-        ClothIDArray = new int[1]; // 手動設定吧
+        ClothIDArray = new int[2]; // 手動設定吧
         ClothIDArray[0] = selecting;
 
         ClothClone = new GameObject[clothDataArrays.Length];
@@ -52,15 +53,17 @@ public class PlayerCreating : MonoBehaviour
     {
         //
         // StageManager.PlayerProfile[playerIdentity.PlayerID] = playerIdentity.Helmetnum; // playerIdentity.PlayerID
-        selecting = GetComponentInParent<KungFuPlayerControll>().HelmetNum; // 這邊現在對之後擴增不友善
+        ClothIDArray = GetComponentInParent<KungFuPlayerControll>().ClothNum;
+        
 
         if (profileChooseUI != null)
         {
             profileChooseUI.Set(clothDataArrays[0].clothDatas[selecting].name);
         }
 
-        ClothIDArray = new int[1]; // 手動設定吧
-        ClothIDArray[0] = selecting;
+        /*ClothIDArray = new int[2]; // 手動設定吧
+        ClothIDArray[0] = ClothIDArray[0];
+        ClothIDArray[1] = ClothIDArray[1];*/
 
         ClothClone = new GameObject[clothDataArrays.Length];
         RigClothClone = new GameObject[clothDataArrays.Length];
@@ -72,13 +75,13 @@ public class PlayerCreating : MonoBehaviour
     {
         if (!this.enabled || !IsEnable) return;
         selecting++;
-        if(selecting >= 6) //PlayerPrefs.GetInt("Profile_Count")
+        if(selecting >= clothDataArrays[page].clothDatas.Length) //PlayerPrefs.GetInt("Profile_Count")
         {
             selecting = 0;
         }
-        profileChooseUI.Right(clothDataArrays[0].clothDatas[selecting].name);
+        profileChooseUI.Right(clothDataArrays[page].clothDatas[selecting].name);
 
-        ClothIDArray[0] = selecting;
+        ClothIDArray[page] = selecting;
 
         ChangeHat();
     }
@@ -88,11 +91,11 @@ public class PlayerCreating : MonoBehaviour
         selecting--;
         if (selecting < 0)
         {
-            selecting = 5; // PlayerPrefs.GetInt("Profile_Count") - 1
+            selecting = clothDataArrays[page].clothDatas.Length - 1; // PlayerPrefs.GetInt("Profile_Count") - 1
         }
-        profileChooseUI.Left(clothDataArrays[0].clothDatas[selecting].name);
+        profileChooseUI.Left(clothDataArrays[page].clothDatas[selecting].name);
 
-        ClothIDArray[0] = selecting;
+        ClothIDArray[page] = selecting;
 
         ChangeHat();
     }
@@ -152,14 +155,29 @@ public class PlayerCreating : MonoBehaviour
     {
         // StageManager.LoadSceneCheck(); // 在增加玩家數字前檢查 才可以進到全員OK?畫面
         if (!this.enabled || !IsEnable) return;
-        profileChooseUI.Ready();
+        /*profileChooseUI.Ready();
         StageManager.PlayerReady();
-        playerIdentity.Helmetnum = selecting;
-
+        playerIdentity.Helmetnum = selecting;*/
+        ClothIDArray[page] = selecting;
+        if(page < clothDataArrays.Length - 1)
+        {
+            selecting = 0;
+            page++;
+            profileChooseUI.Set(clothDataArrays[page].clothDatas[selecting].name);
+        }
+        else
+        {
+            profileChooseUI.Ready();
+            StageManager.PlayerReady();
+            for(int i = 0; i < ClothIDArray.Length; i++)
+            {
+                playerIdentity.ClothNum[i] = ClothIDArray[i];
+            }
+            IsEnable = false;
+        }
 
         // playerInput.SwitchCurrentActionMap("GamePlay");
 
-        IsEnable = false;
     }
 
     void OnCancel()
