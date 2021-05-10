@@ -294,7 +294,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6500
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: -0.000000044877225}
+  m_BoundingSphereOverride: {x: 0, y: 9e-44, z: 0, w: 9e-44}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1732,7 +1732,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 2356
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 2.6272e-41, z: 0, w: -5.820766e-10}
+  m_BoundingSphereOverride: {x: 4.121811e-29, y: 0, z: 0, w: 8e-45}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -11215,7 +11215,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1256699249}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
   m_Name: 
@@ -11788,7 +11788,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1423062222
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12757,6 +12757,32 @@ PrefabInstance:
       propertyPath: m_MaxPlayerCount
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 6828044636375899870, guid: 52f4e30810c54044a88bb95960552766,
+        type: 3}
+      propertyPath: m_JoinBehavior
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6828044636375899870, guid: 52f4e30810c54044a88bb95960552766,
+        type: 3}
+      propertyPath: m_JoinAction.m_Action.m_Id
+      value: 81532172-5278-4e6c-95e0-46768a229f7a
+      objectReference: {fileID: 0}
+    - target: {fileID: 6828044636375899870, guid: 52f4e30810c54044a88bb95960552766,
+        type: 3}
+      propertyPath: m_JoinAction.m_Action.m_Name
+      value: Join
+      objectReference: {fileID: 0}
+    - target: {fileID: 6828044636375899870, guid: 52f4e30810c54044a88bb95960552766,
+        type: 3}
+      propertyPath: m_JoinAction.m_UseReference
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6828044636375899870, guid: 52f4e30810c54044a88bb95960552766,
+        type: 3}
+      propertyPath: m_JoinAction.m_Reference
+      value: 
+      objectReference: {fileID: 6377559160363522845, guid: 449fb1eaac097a448ba65a772a056be3,
+        type: 3}
     - target: {fileID: 6828044636375899871, guid: 52f4e30810c54044a88bb95960552766,
         type: 3}
       propertyPath: m_LocalPosition.x

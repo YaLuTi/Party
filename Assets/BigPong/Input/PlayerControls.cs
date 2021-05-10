@@ -599,6 +599,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""aed7c8c0-8966-47a4-8f5f-d660b4caa2e6"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UI_Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""9110b639-68d0-41d9-9d6d-2b3a7f139568"",
                     ""path"": ""<Gamepad>/dpad/right"",
                     ""interactions"": """",
@@ -615,6 +626,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""UI_Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""edd9cbbb-0cb9-407f-b50c-41f02ea63209"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
                     ""action"": ""UI_Right"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -797,6 +819,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""AnyKey"",
+                    ""type"": ""Button"",
+                    ""id"": ""03c84c02-0171-40ad-8028-87ca49a1b21d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -808,6 +838,61 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""New action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""55fccb83-741b-4916-a087-5b20f1fbc81c"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyKey"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""587f6f58-1edb-49af-bed4-938fb2727110"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyKey"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5e965834-ea32-47d6-9616-55fa2d37190e"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyKey"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""50270806-fc80-4e1a-b91b-ef33b427d890"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyKey"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""54004914-0e8b-457a-8470-b978743815d2"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyKey"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -874,6 +959,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         // None
         m_None = asset.FindActionMap("None", throwIfNotFound: true);
         m_None_Newaction = m_None.FindAction("New action", throwIfNotFound: true);
+        m_None_AnyKey = m_None.FindAction("AnyKey", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1158,11 +1244,13 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputActionMap m_None;
     private INoneActions m_NoneActionsCallbackInterface;
     private readonly InputAction m_None_Newaction;
+    private readonly InputAction m_None_AnyKey;
     public struct NoneActions
     {
         private @PlayerControls m_Wrapper;
         public NoneActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Newaction => m_Wrapper.m_None_Newaction;
+        public InputAction @AnyKey => m_Wrapper.m_None_AnyKey;
         public InputActionMap Get() { return m_Wrapper.m_None; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1175,6 +1263,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Newaction.started -= m_Wrapper.m_NoneActionsCallbackInterface.OnNewaction;
                 @Newaction.performed -= m_Wrapper.m_NoneActionsCallbackInterface.OnNewaction;
                 @Newaction.canceled -= m_Wrapper.m_NoneActionsCallbackInterface.OnNewaction;
+                @AnyKey.started -= m_Wrapper.m_NoneActionsCallbackInterface.OnAnyKey;
+                @AnyKey.performed -= m_Wrapper.m_NoneActionsCallbackInterface.OnAnyKey;
+                @AnyKey.canceled -= m_Wrapper.m_NoneActionsCallbackInterface.OnAnyKey;
             }
             m_Wrapper.m_NoneActionsCallbackInterface = instance;
             if (instance != null)
@@ -1182,6 +1273,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Newaction.started += instance.OnNewaction;
                 @Newaction.performed += instance.OnNewaction;
                 @Newaction.canceled += instance.OnNewaction;
+                @AnyKey.started += instance.OnAnyKey;
+                @AnyKey.performed += instance.OnAnyKey;
+                @AnyKey.canceled += instance.OnAnyKey;
             }
         }
     }
@@ -1236,5 +1330,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     public interface INoneActions
     {
         void OnNewaction(InputAction.CallbackContext context);
+        void OnAnyKey(InputAction.CallbackContext context);
     }
 }

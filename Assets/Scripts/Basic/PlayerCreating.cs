@@ -153,6 +153,7 @@ public class PlayerCreating : MonoBehaviour
     // 這寫法目前不可逆 要再修正
     void OnEnter()
     {
+        StageManager.LoadSceneCheck();
         // StageManager.LoadSceneCheck(); // 在增加玩家數字前檢查 才可以進到全員OK?畫面
         if (!this.enabled || !IsEnable) return;
         /*profileChooseUI.Ready();
@@ -161,8 +162,8 @@ public class PlayerCreating : MonoBehaviour
         ClothIDArray[page] = selecting;
         if(page < clothDataArrays.Length - 1)
         {
-            selecting = 0;
             page++;
+            selecting = ClothIDArray[page];
             profileChooseUI.Set(clothDataArrays[page].clothDatas[selecting].name);
         }
         else
@@ -188,6 +189,15 @@ public class PlayerCreating : MonoBehaviour
             StageManager.PlayerUnReady();
             profileChooseUI.UnReady();
         }
+        else
+        {
+            if(page > 0)
+            {
+                page--;
+                selecting = ClothIDArray[page];
+                profileChooseUI.Set(clothDataArrays[page].clothDatas[selecting].name);
+            }
+        }
     }
 
     public void ChangeInput(string state)
@@ -197,7 +207,6 @@ public class PlayerCreating : MonoBehaviour
 
     void OnYes()
     {
-        StageManager.LoadSceneCheck();
 
         GameObject PausePanel = null;
         Transform[] objs = Resources.FindObjectsOfTypeAll<Transform>() as Transform[];
