@@ -19,6 +19,7 @@ public class FPSLock : MonoBehaviour
 
     void OnGUI()
     {
+        /*
         int w = Screen.width, h = Screen.height;
 
         GUIStyle style = new GUIStyle();
@@ -30,6 +31,6 @@ public class FPSLock : MonoBehaviour
         float msec = deltaTime * 1000.0f;
         float fps = 1.0f / deltaTime;
         string text = string.Format("{0:0.0} ms ({1:0.} fps)", msec, fps);
-        GUI.Label(rect, text, style);
+        GUI.Label(rect, text, style);*/
     }
 }

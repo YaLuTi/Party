@@ -8,6 +8,7 @@ using DG.Tweening;
 public class ProfileChooseUI : MonoBehaviour
 {
     public TextMeshPro text;
+    public TextMeshPro choosing;
 
     public Transform RightArrowArray;
     public Transform LeftArrowArray;
@@ -30,6 +31,21 @@ public class ProfileChooseUI : MonoBehaviour
     public void Set(string s)
     {
         text.text = s;
+    }
+
+    public void ChangeChoosing(int i)
+    {
+        switch (i)
+        {
+            case 0:
+                choosing.text = "Hat";
+                break;
+            case 1:
+                choosing.text = "Face";
+                break;
+            default:
+                break;
+        }
     }
 
     public void Right(string s)

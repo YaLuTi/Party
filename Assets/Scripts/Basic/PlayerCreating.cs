@@ -125,7 +125,14 @@ public class PlayerCreating : MonoBehaviour
             ClothClone[choosingArray].transform.localPosition = v;
             ClothClone[choosingArray].transform.localRotation = q;
             ClothClone[choosingArray].transform.localScale = s;
-            ClothClone[choosingArray].GetComponent<MeshRenderer>().enabled = false;
+            if(ClothClone[choosingArray].GetComponentInChildren<MeshRenderer>() != null)
+            {
+                ClothClone[choosingArray].GetComponentInChildren<MeshRenderer>().enabled = false;
+            }
+            else
+            {
+                ClothClone[choosingArray].GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
+            }
 
             if (RigClothClone[choosingArray] != null)
             {
@@ -165,6 +172,7 @@ public class PlayerCreating : MonoBehaviour
             page++;
             selecting = ClothIDArray[page];
             profileChooseUI.Set(clothDataArrays[page].clothDatas[selecting].name);
+            profileChooseUI.ChangeChoosing(page);
         }
         else
         {
@@ -196,6 +204,7 @@ public class PlayerCreating : MonoBehaviour
                 page--;
                 selecting = ClothIDArray[page];
                 profileChooseUI.Set(clothDataArrays[page].clothDatas[selecting].name);
+                profileChooseUI.ChangeChoosing(page);
             }
         }
     }

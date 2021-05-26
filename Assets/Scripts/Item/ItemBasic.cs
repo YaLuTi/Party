@@ -21,7 +21,8 @@ public class ItemBasic : MonoBehaviour
 
     [Header("GameValue")]
     [SerializeField]
-    public float Durability = 1;
+    public int Durability = 1;
+    public int MaxDurability = 1;
     [SerializeField]
     protected Vector3 HoldedPosition;
     [SerializeField]
@@ -39,6 +40,7 @@ public class ItemBasic : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+        MaxDurability = Durability;
     }
 
     // Start is called before the first frame update

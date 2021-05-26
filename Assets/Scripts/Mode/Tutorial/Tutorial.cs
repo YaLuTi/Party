@@ -30,6 +30,9 @@ public class Tutorial : MonoBehaviour
     GameObject EnhanceTable;
 
     [SerializeField]
+    GameObject FireBallSpawn2;
+
+    [SerializeField]
     PlayerHitten Doll;
     [SerializeField]
     PlayerHitten Doll2;
@@ -201,6 +204,7 @@ public class Tutorial : MonoBehaviour
 
         textMesh.ReadText("It can make your weapon more powerful.\r\nHave a Try.");
         EnhanceTable.SetActive(true);
+        FireBallSpawn2.SetActive(true);
         hintDirector[3].Play();
         PlaySound();
         yield return new WaitForSeconds(3.5f);

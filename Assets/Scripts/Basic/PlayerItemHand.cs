@@ -12,14 +12,21 @@ public class PlayerItemHand : MonoBehaviour
 
     public GameObject HoldingItem = null;
 
+    [SerializeField]
+    public GameObject PlayerUI;
+    public GameObject UI_copy;
+
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
+    {
+    }
+
+    public void SpawnUI()
     {
     }
 

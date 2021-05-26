@@ -53,7 +53,7 @@ public class PlayerHitten : MonoBehaviour
 
     [SerializeField]
     GameObject PlayerUI;
-    GameObject UI_copy;
+    public GameObject UI_copy;
 
     public delegate void PlayerHealthChangedHandler(PlayerHitten source, float oldHealth, float newHealth);
     public event PlayerHealthChangedHandler OnHealthChanged;
@@ -89,6 +89,7 @@ public class PlayerHitten : MonoBehaviour
                 UI_copy.transform.parent = canvas.transform;
                 UI_copy.transform.localScale = new Vector3(1, 1, 1);
             }
+            UI_copy.GetComponentInChildren<DurabilityUI>().SetUp(GetComponentInChildren<PlayerBehavior>());
         }
 
         for(int i = 0; i < Gamepad.all.Count; i++)
@@ -119,6 +120,7 @@ public class PlayerHitten : MonoBehaviour
                 UI_copy.transform.parent = canvas.transform;
                 UI_copy.transform.localScale = new Vector3(1, 1, 1);
             }
+            UI_copy.GetComponentInChildren<DurabilityUI>().SetUp(GetComponentInChildren<PlayerBehavior>());
         }
 
     }

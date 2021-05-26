@@ -71,10 +71,10 @@ public class EnhanceFacility : FacilityArea
     IEnumerator _PutAnimation(GameObject g)
     {
         // g.transform.DOMoveY(g.transform.position.y + 0.5f, 0.6f).SetEase(Ease.OutQuint);
-        g.transform.DOLocalMove(p, 2f).SetEase(Ease.OutQuint);
+        // g.transform.DOLocalMove(p, 0.8f).SetEase(Ease.OutQuint);
         audioSource.PlayOneShot(audioClips[0]);
 
-        yield return new WaitForSeconds(0.4f);
+        // yield return new WaitForSeconds(0.4f);
 
         g.transform.DOMoveY(g.transform.position.y + 1, EnhanceTime).SetEase(Ease.OutSine);
         while(Color_Intensity < 1.6f)
