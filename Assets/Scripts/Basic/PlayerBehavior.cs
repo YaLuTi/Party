@@ -36,6 +36,9 @@ public class PlayerBehavior : MonoBehaviour
     PlayerStatusAnimator playerStatus;
 
     GameObject ChoosingFacility;
+
+    public delegate void PlayerPickHandler(ItemBasic item);
+    public event PlayerPickHandler PickEvent;
     // Start is called before the first frame update
 
     private void Awake()
@@ -275,7 +278,8 @@ public class PlayerBehavior : MonoBehaviour
                 {
                     IsHolding = true;
                     itemHand.SetHoldingItem(pick.gameObject);
-                    if(pick.gameObject.GetComponent<ItemBasic>().IdleAnimation != "")
+                    PickEvent?.Invoke(pick.gameObject.GetComponent<ItemBasic>());
+                    if (pick.gameObject.GetComponent<ItemBasic>().IdleAnimation != "")
                     {
                         playerStatus.PlayerItemAnimationBool(pick.gameObject.GetComponent<ItemBasic>().IdleAnimation, true);
                     }

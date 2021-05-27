@@ -32,6 +32,7 @@ public class DurabilityUI : MonoBehaviour
     {
         Debug.Log("A");
         player = _player;
+        player.PickEvent += OnPick;
         /*slider.maxValue = playerHand.GetMaxHealth();
         slider.value = slider.maxValue;*/
     }
@@ -47,24 +48,25 @@ public class DurabilityUI : MonoBehaviour
             }
             slider.value = 0;
         }
-        else
+    }
+
+    void OnPick(ItemBasic item)
+    {
+        for (int i = 0; i < images.Length; i++)
         {
-            for(int i = 0; i < images.Length; i++)
-            {
-                Destroy(images[i]);
-            }
-            int num = (int)player.itemHand.HoldingItem.GetComponent<ItemBasic>().MaxDurability;
-            images = new GameObject[num];
-            for(int i = 0; i < num; i++)
-            {
-                images[i] = Instantiate(Demo);
-                images[i].transform.parent = DurabilityGroup.transform;
-            }
-            for (int i = images.Length - 1; i > player.itemHand.HoldingItem.GetComponent<ItemBasic>().Durability - 1; i--)
-            {
-                images[i].GetComponent<Image>().enabled = false;
-            }
-            // slider.maxValue = playerHand.HoldingItem.GetComponent<ItemBasic>().d
+            Destroy(images[i]);
+        }
+        int num = (int)item.MaxDurability;
+        images = new GameObject[num];
+        for (int i = 0; i < num; i++)
+        {
+            images[i] = Instantiate(Demo);
+            images[i].transform.parent = DurabilityGroup.transform;
+            images[i].transform.localScale = new Vector3(1, 1, 1);
+        }
+        for (int i = images.Length - 1; i > item.Durability - 1; i--)
+        {
+            images[i].GetComponent<Image>().enabled = false;
         }
     }
 }
