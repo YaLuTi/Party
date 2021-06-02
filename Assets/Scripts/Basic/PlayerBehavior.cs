@@ -39,6 +39,8 @@ public class PlayerBehavior : MonoBehaviour
 
     public delegate void PlayerPickHandler(ItemBasic item);
     public event PlayerPickHandler PickEvent;
+    public delegate void PlayerChargeHandler(float v);
+    public event PlayerChargeHandler ChargeEvent;
     // Start is called before the first frame update
 
     private void Awake()
@@ -65,6 +67,7 @@ public class PlayerBehavior : MonoBehaviour
             ThrowStrength += ThrowPower1 * Time.deltaTime;
             ThrowPower1 += ThrowPower2;
             ThrowStrength = Mathf.Min(ThrowStrength, 13f);
+            ChargeEvent?.Invoke(ThrowStrength / 13f);
         }
         
         Collider[] colliders = Physics.OverlapSphere(transform.position, PickRadius);

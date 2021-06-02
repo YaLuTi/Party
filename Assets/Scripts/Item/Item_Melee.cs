@@ -28,13 +28,13 @@ public class Item_Melee : ItemBasic
 
     public override void OnTriggerEnd()
     {
-        base.OnTriggerEnd();
         Durability--;
         if(Durability <= 0)
         {
             transform.root.GetComponentInChildren<Animator>().SetBool(IdleAnimation, false);
             Destroy(this.gameObject);
         }
+        base.OnTriggerEnd();
     }
 
     public override void Hold(Transform t)

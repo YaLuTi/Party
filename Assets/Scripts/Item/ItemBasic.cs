@@ -36,6 +36,9 @@ public class ItemBasic : MonoBehaviour
     [SerializeField]
     protected bool Enhaced = false;
 
+    public delegate void ItemTriggerHandler(int v);
+    public event ItemTriggerHandler TriggerEvent;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -126,7 +129,7 @@ public class ItemBasic : MonoBehaviour
 
     public virtual void OnTrigger()
     {
-
+        TriggerEvent?.Invoke(Durability);
     }
     
     public virtual void OnTriggerEnd()

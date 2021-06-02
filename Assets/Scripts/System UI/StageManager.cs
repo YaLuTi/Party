@@ -18,6 +18,7 @@ public class StageManager : MonoBehaviour
     public static List<GameObject> playersRig = new List<GameObject>();
     public static int[] PlayerProfile;
     public static int[] playerScore;
+    public static Texture2D[] playerIcons = new Texture2D[4];
     public static bool InGame = false;
     public static bool InLobby = false;
     public static bool LoadWin = false;
@@ -296,6 +297,20 @@ public class StageManager : MonoBehaviour
             InLobby = true;
         }
     }
+
+    public void LoadFirst()
+    {
+        foreach (GameObject player in players)
+        {
+            player.GetComponentInChildren<SimpleFootIK_AF>().followTerrain = false;
+        }
+        changeTest.LoadFirst("BlockoutTest 2");
+        if (!SceneChangeTest.IsLoadingTutorial)
+        {
+            InLobby = true;
+        }
+    }
+
     public static void ThrowPlayer(int i)
     {
         /*player.GetComponentInChildren<SimpleFootIK_AF>().followTerrain = true;

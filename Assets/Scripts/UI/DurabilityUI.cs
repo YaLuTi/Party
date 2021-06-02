@@ -33,6 +33,7 @@ public class DurabilityUI : MonoBehaviour
         Debug.Log("A");
         player = _player;
         player.PickEvent += OnPick;
+        player.ChargeEvent += OnCharge;
         /*slider.maxValue = playerHand.GetMaxHealth();
         slider.value = slider.maxValue;*/
     }
@@ -68,5 +69,19 @@ public class DurabilityUI : MonoBehaviour
         {
             images[i].GetComponent<Image>().enabled = false;
         }
+        item.TriggerEvent += OnTrigger;
+    }
+
+    void OnTrigger(int d)
+    {
+        for (int i = images.Length - 1; i > d - 1; i--)
+        {
+            images[i].GetComponent<Image>().enabled = false;
+        }
+    }
+
+    void OnCharge(float v)
+    {
+        slider.value = v;
     }
 }

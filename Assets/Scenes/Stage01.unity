@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2219316}
-  m_IndirectSpecularColor: {r: 0.022051182, g: 0.033940822, b: 0.05631917, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -197,7 +197,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6500
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 1.459e-41, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 3.7022e-41, z: 0, w: 5.675247e-10}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -4858,6 +4858,7 @@ MonoBehaviour:
   PlayerSelecting: 0
   UsingSound: []
   Durability: 1
+  MaxDurability: 1
   HoldedPosition: {x: 0, y: 0, z: 0}
   HoldedRotation: {x: 0, y: 0, z: 0}
   animation: 
@@ -12239,9 +12240,7 @@ MonoBehaviour:
   breakBeforeColorGrading: 0
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
-  m_AfterStackBundles:
-  - assemblyQualifiedName: MosaicEffectPPSPPSSettings, Unity.Postprocessing.Runtime,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_AfterStackBundles: []
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25101,7 +25100,7 @@ PrefabInstance:
     - target: {fileID: 1612260928219484801, guid: e356d49176279aa448d6b6b656e06580,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5642692695131540768, guid: e356d49176279aa448d6b6b656e06580,
         type: 3}

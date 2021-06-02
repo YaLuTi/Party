@@ -191,6 +191,41 @@ public class SceneChangeTest : MonoBehaviour
         yield return null;
     }
 
+    public void LoadFirst(string scene)
+    {
+        StartCoroutine(_LoadFirst(scene));
+    }
+    IEnumerator _LoadFirst(string scene)
+    {
+        StageManager.ClearPlayer();
+        yield return new WaitForFixedUpdate();
+        AsyncOperation asyncLoad;
+        asyncLoad = SceneManager.LoadSceneAsync("PhotoScene");
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(2f);
+
+        asyncLoad = SceneManager.LoadSceneAsync(scene);
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
+        StageManager.LoadNewScene();
+        if (IsLoadingTutorial)
+        {
+            GameObject.FindGameObjectWithTag("Tutorial").GetComponent<PlayableDirector>().Play();
+        }
+        else
+        {
+            GameObject.FindGameObjectWithTag("Enter").GetComponent<PlayableDirector>().Play();
+        }
+        yield return null;
+    }
+
     public void LoadMiniGame(string scene)
     {
         StartCoroutine(_LoadMiniGame(scene));

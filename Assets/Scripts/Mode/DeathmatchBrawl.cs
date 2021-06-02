@@ -44,19 +44,19 @@ public class DeathmatchBrawl : MonoBehaviour
             switch (i)
             {
                 case 0:
-                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(-330, 170);
+                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(-260, -180);
                     g.GetComponent<Text>().color = new Color(0.5f,1,1);
                     break;
                 case 1:
-                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(330, 170);
+                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(-85, -180);
                     g.GetComponent<Text>().color = Color.red;
                     break;
                 case 2:
-                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(-330, -190);
+                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(85, -180);
                     g.GetComponent<Text>().color = Color.yellow;
                     break;
                 case 3:
-                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(330, -190);
+                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(260, -180);
                     g.GetComponent<Text>().color = Color.green;
                     break;
             }

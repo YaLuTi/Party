@@ -71,6 +71,25 @@ public class PlayerCreating : MonoBehaviour
         IsEnable = true;
     }
 
+    public void CreatPhoto(int i)
+    {
+        ClothIDArray = StageManager.players[i].GetComponentInChildren<PlayerCreating>().ClothIDArray;
+
+        if (profileChooseUI != null)
+        {
+            profileChooseUI.Set(clothDataArrays[0].clothDatas[selecting].name);
+        }
+
+        /*ClothIDArray = new int[2]; // 手動設定吧
+        ClothIDArray[0] = ClothIDArray[0];
+        ClothIDArray[1] = ClothIDArray[1];*/
+
+        ClothClone = new GameObject[clothDataArrays.Length];
+        RigClothClone = new GameObject[clothDataArrays.Length];
+        ChangeHat();
+        IsEnable = true;
+    }
+
     void OnUI_Right()
     {
         if (!this.enabled || !IsEnable) return;

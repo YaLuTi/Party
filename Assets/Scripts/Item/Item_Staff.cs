@@ -29,7 +29,6 @@ public class Item_Staff : ItemBasic
 
     public override void OnTrigger()
     {
-        base.OnTrigger();
         if (DurabilityCheck())
         {
             List<RFX4_PhysicsMotion> list = new List<RFX4_PhysicsMotion>();
@@ -57,6 +56,7 @@ public class Item_Staff : ItemBasic
         {
             Destroy(this.gameObject);
         }
+        base.OnTrigger();
     }
 
     RFX4_PhysicsMotion Fire(float angle)
