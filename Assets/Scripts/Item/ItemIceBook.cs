@@ -12,9 +12,9 @@ public class ItemIceBook : Item_Staff
     float cooldown = 0;
     float cooldownvalue = 20;
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
-        
+        base.Start();
     }
 
     public override void Update()
