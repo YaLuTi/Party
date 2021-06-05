@@ -46,18 +46,22 @@ public class DeathmatchBrawl : MonoBehaviour
                 case 0:
                     g.GetComponent<RectTransform>().anchoredPosition = new Vector2(-260, -180);
                     g.GetComponent<Text>().color = new Color(0.5f,1,1);
+                    g.GetComponentInChildren<RenderTextureUI>().num = 0;
                     break;
                 case 1:
                     g.GetComponent<RectTransform>().anchoredPosition = new Vector2(-85, -180);
                     g.GetComponent<Text>().color = Color.red;
+                    g.GetComponentInChildren<RenderTextureUI>().num = 1;
                     break;
                 case 2:
                     g.GetComponent<RectTransform>().anchoredPosition = new Vector2(85, -180);
                     g.GetComponent<Text>().color = Color.yellow;
+                    g.GetComponentInChildren<RenderTextureUI>().num = 2;
                     break;
                 case 3:
                     g.GetComponent<RectTransform>().anchoredPosition = new Vector2(260, -180);
                     g.GetComponent<Text>().color = Color.green;
+                    g.GetComponentInChildren<RenderTextureUI>().num = 3;
                     break;
             }
             UIs.Add(g);

@@ -6,8 +6,11 @@ using UnityEngine.UI;
 public class RenderTextureUI : MonoBehaviour
 {
     Image image;
-    int num;
+    public int num;
     public Sprite ss;
+
+    [SerializeField]
+    Material[] materials;
     // Start is called before the first frame update
     void Start()
     {
