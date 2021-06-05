@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class CameraPhoto : MonoBehaviour
@@ -32,7 +33,16 @@ public class CameraPhoto : MonoBehaviour
         // ReadPixels looks at the active RenderTexture.
         RenderTexture.active = rTex;
         tex.ReadPixels(new Rect(0, 0, rTex.width, rTex.height), 0, 0);
-        tex.Apply();
+        tex.Apply(); 
+        /*
+        byte[] bytes = tex.EncodeToPNG();
+        var dirPath = Application.dataPath + "/../SaveImages/";
+        if (!Directory.Exists(dirPath))
+        {
+            Directory.CreateDirectory(dirPath);
+        }
+        File.WriteAllBytes(dirPath + "Image" + num + ".png", bytes);*/
+
         return tex;
     }
 }
