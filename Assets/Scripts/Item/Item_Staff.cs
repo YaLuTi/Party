@@ -5,14 +5,16 @@ using UnityEngine;
 public class Item_Staff : ItemBasic
 {
     public GameObject bullet;
+    public GameObject EnhanceBullet;
     public float DestroyTime;
     public Transform muzzle;
     [SerializeField]
     float BulletVelocity;
-    // Start is called before the first frame update
-    void Start()
-    {
 
+    // Start is called before the first frame update
+    public override void Start()
+    {
+        base.Start();
     }
 
     // Update is called once per frame
@@ -32,11 +34,13 @@ public class Item_Staff : ItemBasic
         if (DurabilityCheck())
         {
             List<RFX4_PhysicsMotion> list = new List<RFX4_PhysicsMotion>();
-            list.Add(Fire(0));
             if (Enhaced)
             {
-                list.Add(Fire(30));
-                list.Add(Fire(-30));
+                Instantiate(EnhanceBullet, FollowTransform.GetComponent<PlayerItemHand>().way.position + 1.6f * FollowTransform.GetComponent<PlayerItemHand>().way.transform.forward, FollowTransform.GetComponent<PlayerItemHand>().way.rotation);
+            }
+            else
+            {
+                list.Add(Fire(0));
             }
 
             if (list.Count > 1)
@@ -57,6 +61,11 @@ public class Item_Staff : ItemBasic
             Destroy(this.gameObject);
         }
         base.OnTrigger();
+    }
+
+    void EnhanceFire(Vector3 v)
+    {
+
     }
 
     RFX4_PhysicsMotion Fire(float angle)

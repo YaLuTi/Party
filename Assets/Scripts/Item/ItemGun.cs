@@ -21,7 +21,7 @@ public class ItemGun : ItemBasic
     }
 
     public override string OnUse(_playerItemStatus status)
-    {
+    {/*
         if (status.Throwing) return "Empty";
         if (DurabilityCheck())
         {
@@ -37,7 +37,26 @@ public class ItemGun : ItemBasic
         {
             Destroy(this.gameObject);
             return "Empty";
-        }
+        }*/
         return base.OnUse(status);
+    }
+
+    public override void OnTrigger()
+    {
+        if (DurabilityCheck())
+        {
+            GameObject b = Instantiate(bullet, muzzle.position, muzzle.rotation);
+            b.GetComponent<Rigidbody>().AddForce(BulletVelocity * transform.root.GetComponent<PlayerHitten>().FaceWay.forward);
+            audioSource.PlayOneShot(UsingSound[0]);
+            if (Durability == 0)
+            {
+                Destroy(this.gameObject);
+            }
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+        base.OnTrigger();
     }
 }

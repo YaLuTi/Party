@@ -11,6 +11,7 @@ public class Item_Melee : ItemBasic
 
     public override void OnTrigger()
     {
+        Durability--;
         base.OnTrigger();
         weaponCollider.Attack(PlayerID);
         audioSource.PlayOneShot(UsingSound[0]);
@@ -28,10 +29,8 @@ public class Item_Melee : ItemBasic
 
     public override void OnTriggerEnd()
     {
-        Durability--;
         if(Durability <= 0)
         {
-            transform.root.GetComponentInChildren<Animator>().SetBool(IdleAnimation, false);
             Destroy(this.gameObject);
         }
         base.OnTriggerEnd();

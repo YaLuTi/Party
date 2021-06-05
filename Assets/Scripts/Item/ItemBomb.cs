@@ -117,7 +117,10 @@ public class ItemBomb : ItemBasic
         yield return new WaitForSeconds(delay);
         GameObject g = Instantiate(ExplosionVFX, transform.position, Quaternion.identity);
         g.transform.localScale = this.transform.localScale * 2;
-        g.GetComponent<BasicExplosion>().PlayerID = PlayerID;
+        if (g.GetComponent<BasicExplosion>() != null)
+        {
+            g.GetComponent<BasicExplosion>().PlayerID = PlayerID;
+        }
         CameraController.CameraShake(CameraShakePower);
         Destroy(this.gameObject);
         yield return 0;

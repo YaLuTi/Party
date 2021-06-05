@@ -5,7 +5,7 @@ using UnityEngine;
 public class UIFollow : MonoBehaviour
 {
     [SerializeField]
-    Transform follow;
+    public Transform follow;
     [SerializeField]
     float y;
     [SerializeField]

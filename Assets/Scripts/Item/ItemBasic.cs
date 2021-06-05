@@ -36,6 +36,10 @@ public class ItemBasic : MonoBehaviour
     [SerializeField]
     protected bool Enhaced = false;
 
+    [SerializeField]
+    protected GameObject UI_Icon;
+    protected GameObject UI_IconCopy;
+
     public delegate void ItemTriggerHandler(int v);
     public event ItemTriggerHandler TriggerEvent;
 
@@ -47,8 +51,19 @@ public class ItemBasic : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
+        if (UI_Icon != null)
+        {
+            UI_IconCopy = Instantiate(UI_Icon);
+            UI_IconCopy.GetComponent<UIFollow>().follow = this.transform;
+            GameObject canvas = GameObject.FindGameObjectWithTag("Canvas");
+            if (canvas != null)
+            {
+                UI_IconCopy.transform.parent = canvas.transform;
+                UI_IconCopy.transform.localScale = new Vector3(1, 1, 1);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -130,6 +145,10 @@ public class ItemBasic : MonoBehaviour
     public virtual void OnTrigger()
     {
         TriggerEvent?.Invoke(Durability);
+        if (Durability <= 0 && IdleAnimation != null)
+        {
+            transform.root.GetComponentInChildren<Animator>().SetBool(IdleAnimation, false);
+        }
     }
     
     public virtual void OnTriggerEnd()
