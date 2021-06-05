@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Playables;
+using TMPro;
 
 public class DeathmatchBrawl : MonoBehaviour
 {
@@ -44,28 +45,32 @@ public class DeathmatchBrawl : MonoBehaviour
             switch (i)
             {
                 case 0:
-                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(-260, -180);
-                    g.GetComponent<Text>().color = new Color(0.5f,1,1);
+                    g.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(-190, -180);
+                    // g.GetComponent<Text>().color = new Color(0.5f,1,1);
                     g.GetComponentInChildren<RenderTextureUI>().num = 0;
                     break;
                 case 1:
-                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(-85, -180);
-                    g.GetComponent<Text>().color = Color.red;
+                    g.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(-45, -180);
+                    // g.GetComponent<Text>().color = Color.red;
                     g.GetComponentInChildren<RenderTextureUI>().num = 1;
                     break;
                 case 2:
-                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(85, -180);
-                    g.GetComponent<Text>().color = Color.yellow;
+                    g.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(100, -180);
+                    // g.GetComponent<Text>().color = Color.yellow;
                     g.GetComponentInChildren<RenderTextureUI>().num = 2;
                     break;
                 case 3:
-                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(260, -180);
-                    g.GetComponent<Text>().color = Color.green;
+                    g.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(245, -180);
+                    // g.GetComponent<Text>().color = Color.green;
                     g.GetComponentInChildren<RenderTextureUI>().num = 3;
                     break;
             }
             UIs.Add(g);
-            UIs[i].GetComponent<Text>().text = Lifes[i].ToString();
+            UIs[i].GetComponentInChildren<TextMeshProUGUI>().text = Lifes[i].ToString();
         }
     }
 
