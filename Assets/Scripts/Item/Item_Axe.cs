@@ -63,6 +63,10 @@ public class Item_Axe : Item_Melee
         }
     }
 
+    public override void OnTriggerEnd()
+    {
+    }
+
     public override void Enhance()
     {
     }

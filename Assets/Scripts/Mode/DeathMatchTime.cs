@@ -113,6 +113,6 @@ public class DeathMatchTime : DeathmatchBrawl
             Debug.Log(num);
             Lifes[num]++;
         }
-        UIs[num].GetComponent<Text>().text = Lifes[num].ToString();
+        UIs[num].GetComponentInChildren<TextMeshProUGUI>().text = Lifes[num].ToString();
     }
 }

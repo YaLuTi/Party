@@ -52,19 +52,19 @@ public class DeathmatchBrawl : MonoBehaviour
                     break;
                 case 1:
                     g.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(-45, -180);
+                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(-25, -180);
                     // g.GetComponent<Text>().color = Color.red;
                     g.GetComponentInChildren<RenderTextureUI>().num = 1;
                     break;
                 case 2:
                     g.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(100, -180);
+                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(140, -180);
                     // g.GetComponent<Text>().color = Color.yellow;
                     g.GetComponentInChildren<RenderTextureUI>().num = 2;
                     break;
                 case 3:
                     g.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(245, -180);
+                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(205, -180);
                     // g.GetComponent<Text>().color = Color.green;
                     g.GetComponentInChildren<RenderTextureUI>().num = 3;
                     break;
@@ -112,7 +112,7 @@ public class DeathmatchBrawl : MonoBehaviour
         }
         UIs.Add(g);
         Debug.Log(UIs.Count);
-        UIs[num].GetComponent<Text>().text = Lifes[num].ToString();
+        UIs[num].GetComponentInChildren<TextMeshProUGUI>().text = Lifes[num].ToString();
     }
 
     public virtual void OnPlayerDeath(PlayerHitten playerHitten)
@@ -123,7 +123,7 @@ public class DeathmatchBrawl : MonoBehaviour
         Debug.Log(Lifes[num].ToString());
         if(Lifes[num] <= 0)
         {
-            UIs[num].GetComponent<Text>().color = Color.red;
+            UIs[num].GetComponentInChildren<TextMeshProUGUI>().color = Color.red;
             playerHitten.SetRespawnable(false);
             StageManager.RemoveCameraTarget(playerHitten.playerMove.transform);
             DeadPlayer.Add(num);

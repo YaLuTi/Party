@@ -66,8 +66,8 @@ public class ItemBomb : ItemBasic
             {
                 FuseVFX.Play();
             }
-            meshRenderer.material.SetFloat("_Noise_Power", Pow);
-            meshRenderer.material.SetFloat("_Noise_Scale", Scale);
+            /*meshRenderer.material.SetFloat("_Noise_Power", Pow);
+            meshRenderer.material.SetFloat("_Noise_Scale", Scale);*/
 
 
             StartCoroutine(Explosion());
@@ -92,8 +92,8 @@ public class ItemBomb : ItemBasic
             {
                 FuseVFX.Play();
             }
-            meshRenderer.material.SetFloat("_Noise_Power", Pow);
-            meshRenderer.material.SetFloat("Vector1_C2A513C5", 1);
+            /*meshRenderer.material.SetFloat("_Noise_Power", Pow);
+            meshRenderer.material.SetFloat("Vector1_C2A513C5", 1);*/
             StartCoroutine(Explosion());
         }
     }

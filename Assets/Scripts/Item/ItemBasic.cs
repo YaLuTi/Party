@@ -53,6 +53,7 @@ public class ItemBasic : MonoBehaviour
     // Start is called before the first frame update
     public virtual void Start()
     {
+        /*
         if (UI_Icon != null)
         {
             UI_IconCopy = Instantiate(UI_Icon);
@@ -63,7 +64,7 @@ public class ItemBasic : MonoBehaviour
                 UI_IconCopy.transform.parent = canvas.transform;
                 UI_IconCopy.transform.localScale = new Vector3(1, 1, 1);
             }
-        }
+        }*/
     }
 
     // Update is called once per frame
