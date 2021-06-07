@@ -15,6 +15,8 @@ public class DeathmatchBrawl : MonoBehaviour
     public static List<int> Lifes = new List<int>();
     public static List<int> DeadPlayer = new List<int>();
 
+    public Transform parent;
+
     static bool First = false;
 
     private void Awake()
@@ -41,34 +43,9 @@ public class DeathmatchBrawl : MonoBehaviour
             playerHittens.Add(StageManager.players[i].GetComponent<PlayerHitten>());
             Lifes.Add(DefaultLife);
             GameObject g = Instantiate(UI);
-            g.transform.parent = GameObject.FindGameObjectWithTag("Canvas").transform;
-            switch (i)
-            {
-                case 0:
-                    g.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(-190, -180);
-                    // g.GetComponent<Text>().color = new Color(0.5f,1,1);
-                    g.GetComponentInChildren<RenderTextureUI>().num = 0;
-                    break;
-                case 1:
-                    g.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(-25, -180);
-                    // g.GetComponent<Text>().color = Color.red;
-                    g.GetComponentInChildren<RenderTextureUI>().num = 1;
-                    break;
-                case 2:
-                    g.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(140, -180);
-                    // g.GetComponent<Text>().color = Color.yellow;
-                    g.GetComponentInChildren<RenderTextureUI>().num = 2;
-                    break;
-                case 3:
-                    g.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-                    g.GetComponent<RectTransform>().anchoredPosition = new Vector2(205, -180);
-                    // g.GetComponent<Text>().color = Color.green;
-                    g.GetComponentInChildren<RenderTextureUI>().num = 3;
-                    break;
-            }
+            g.transform.parent = parent;
+            g.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+            g.GetComponentInChildren<RenderTextureUI>().num = i;
             UIs.Add(g);
             UIs[i].GetComponentInChildren<TextMeshProUGUI>().text = Lifes[i].ToString();
         }

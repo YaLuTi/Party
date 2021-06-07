@@ -14,27 +14,30 @@ public class ScoreManager : MonoBehaviour
     static int[] rank;
     
 
-    static TextMeshProUGUI[] texts;
     static bool IsEnd = false;
     static bool EndEvent = false;
     public PlayableDirector playableDirector;
 
-    [SerializeField]
-    TextMeshProUGUI[] ScoresUI;
+    public static TextMeshProUGUI[] texts;
 
+    public GameObject UI;
     public GameObject Crown;
     // Start is called before the first frame update
     void Start()
     {
         IsEnd = false;
-        texts = GetComponentsInChildren<TextMeshProUGUI>();
+        texts = new TextMeshProUGUI[4];
+        for (int i = 0; i < StageManager.players.Count; i++)
+        {
+            GameObject g = Instantiate(UI);
+            g.transform.parent = transform;
+            g.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+            texts[i] = GetComponentInChildren<TextMeshProUGUI>();
+            g.GetComponentInChildren<RenderTextureUI>().num = i;
+        }
         for(int i = 0; i < scores.Length; i++)
         {
             scores[i] = 0;
-        }
-        for (int i = 0; i < StageManager.players.Count; i++)
-        {
-            ScoresUI[i].alpha = 1;
         }
         WinScore = _WinScore;
     }
