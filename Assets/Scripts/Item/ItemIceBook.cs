@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemIceBook : Item_Staff
+public class ItemIceBook : ItemBasic
 {
     public float charge = 3;
     public float MaxCharge = 5;
     public float ChargeSpeed = 3;
     bool IsCharging = false;
+    public GameObject bullet;
+    public float DestroyTime;
 
     float cooldown = 0;
     float cooldownvalue = 20;
@@ -52,6 +54,7 @@ public class ItemIceBook : Item_Staff
         {
             Destroy(this.gameObject);
         }
+        base.OnTrigger();
     }
 
     Basic_Bullet Fire(float angle)
@@ -72,18 +75,4 @@ public class ItemIceBook : Item_Staff
         if (status.Throwing) return "Empty";
         return base.OnUse(status);
     }
-
-    /*public override string OnRelease(_playerItemStatus status)
-    {
-        IsCharging = false;
-        if (charge == 1) return "";
-        return base.OnRelease(status);
-    }
-
-    public override void Throw()
-    {
-        base.Throw();
-        IsCharging = false;
-        charge = 3;
-    }*/
 }

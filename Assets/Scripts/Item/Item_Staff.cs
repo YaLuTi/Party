@@ -85,9 +85,4 @@ public class Item_Staff : ItemBasic
         }
         return null;
     }
-
-    void StaffFire()
-    {
-        Debug.Log("X");
-    }
 }

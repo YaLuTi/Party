@@ -76,7 +76,7 @@ public class PlayerStatusAnimator : MonoBehaviour
     public bool CanAnimation()
     {
         CurrentClipInfo = animator.GetCurrentAnimatorClipInfo(1);
-        if (CurrentClipInfo.Length == 0)
+        if (CurrentClipInfo.Length == 0 || CurrentClipInfo[0].clip.name == "AxeIdle")
         {
             CurrentClipInfo = animator.GetCurrentAnimatorClipInfo(0);
             if (CurrentClipInfo[0].clip.name == "PlayerRun" || CurrentClipInfo[0].clip.name == "PlayerIdle")

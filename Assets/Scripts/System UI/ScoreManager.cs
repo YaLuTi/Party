@@ -32,7 +32,7 @@ public class ScoreManager : MonoBehaviour
             GameObject g = Instantiate(UI);
             g.transform.parent = transform;
             g.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-            texts[i] = GetComponentInChildren<TextMeshProUGUI>();
+            texts[i] = g.GetComponentInChildren<TextMeshProUGUI>();
             g.GetComponentInChildren<RenderTextureUI>().num = i;
         }
         for(int i = 0; i < scores.Length; i++)
@@ -57,10 +57,8 @@ public class ScoreManager : MonoBehaviour
     {
         if (IsEnd) return;
         scores[id] += score;
-        for(int i =0; i < texts.Length; i++)
-        {
-            texts[i].text = scores[i].ToString();
-        }
+        texts[id].text = scores[id].ToString();
+        
 
         if(scores[id] >= WinScore)
         {

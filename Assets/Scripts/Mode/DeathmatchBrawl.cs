@@ -96,7 +96,7 @@ public class DeathmatchBrawl : MonoBehaviour
     {
         int num = playerHittens.IndexOf(playerHitten);
         Lifes[num]--;
-        UIs[num].GetComponent<Text>().text = Lifes[num].ToString();
+        UIs[num].GetComponentInChildren<TextMeshProUGUI>().text = Lifes[num].ToString();
         Debug.Log(Lifes[num].ToString());
         if(Lifes[num] <= 0)
         {

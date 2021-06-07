@@ -434,7 +434,6 @@ public class StageManager : MonoBehaviour
         foreach(GameObject g in players)
         {
             g.GetComponent<PlayerHitten>().Refresh();
-            g.GetComponent<PlayerHitten>().Refresh();
         }
     }
 

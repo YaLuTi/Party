@@ -80,6 +80,7 @@ public class PlayerHitten : MonoBehaviour
 
         if (StageManager.Static_Testing)
         {
+            Debug.Log("UI1");
             UI_copy = Instantiate(PlayerUI);
             UI_copy.GetComponent<PlayerUI>().SetUp(this);
 
@@ -111,6 +112,7 @@ public class PlayerHitten : MonoBehaviour
 
         if (!StageManager.InLobby && !SceneChangeTest.IsLoadingTutorial)
         {
+            Debug.Log("UI2");
             UI_copy = Instantiate(PlayerUI);
             UI_copy.GetComponent<PlayerUI>().SetUp(this);
 

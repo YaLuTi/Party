@@ -35,6 +35,8 @@ public class ItemBasic : MonoBehaviour
 
     [SerializeField]
     protected bool Enhaced = false;
+    [SerializeField]
+    protected bool IsInfinity = false;
 
     [SerializeField]
     protected GameObject UI_Icon;
@@ -185,7 +187,10 @@ public class ItemBasic : MonoBehaviour
     {
         if (Durability > 0)
         {
-            Durability--;
+            if (!IsInfinity)
+            {
+                Durability--;
+            }
             for (int i = 0; i < UsingSound.Length; i++)
             {
                 audioSource.PlayOneShot(UsingSound[i]);
