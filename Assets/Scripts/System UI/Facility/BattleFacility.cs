@@ -60,7 +60,7 @@ public class BattleFacility : FacilityArea
             gamepadPressed = gamepad.buttonEast.isPressed;
         }
 
-        if ((gamepadPressed || Keyboard.current.anyKey.IsPressed(0)) && !FacilityManager.IsMenu && Using)
+        if ((gamepadPressed || Keyboard.current.kKey.IsPressed(0)) && !FacilityManager.IsMenu && Using)
         {
             OnCancel();
         }
