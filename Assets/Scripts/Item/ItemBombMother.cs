@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class ItemBombMother : ItemBasic
 {
@@ -40,6 +41,7 @@ public class ItemBombMother : ItemBasic
             {
                 Destroy(this.gameObject);
             }
+        base.OnTrigger();
     }
 
     ItemBomb Fire(float angle)
@@ -58,6 +60,14 @@ public class ItemBombMother : ItemBasic
             return b.GetComponent<ItemBomb>();
         }
         return null;
+    }
+
+
+    public override void Enhance()
+    {
+        base.Enhance();
+
+        transform.DOScale(transform.localScale * 2, 0.2f);
     }
 
     public override string OnUse(_playerItemStatus status)

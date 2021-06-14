@@ -53,7 +53,7 @@ public class PlayerCreating : MonoBehaviour
     {
         //
         // StageManager.PlayerProfile[playerIdentity.PlayerID] = playerIdentity.Helmetnum; // playerIdentity.PlayerID
-        ClothIDArray = GetComponentInParent<KungFuPlayerControll>().ClothNum;
+        ClothIDArray = GetComponentInParent<MiniPlayerControl>().ClothNum;
         
 
         if (profileChooseUI != null)

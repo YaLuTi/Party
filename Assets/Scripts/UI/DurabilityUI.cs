@@ -25,6 +25,7 @@ public class DurabilityUI : MonoBehaviour
 
     private void OnDestroy()
     {
+        player.PickEvent -= OnPick;
         Debug.Log("!?");
     }
 
@@ -84,4 +85,6 @@ public class DurabilityUI : MonoBehaviour
     {
         slider.value = v;
     }
+
+    
 }

@@ -4,12 +4,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
 
-public class KungFuPlayerControll : MonoBehaviour
+public class KungFuPlayerControll : MiniPlayerControl
 {
     [SerializeField]
     PlayerInput playerInput;
 
-    public int[] ClothNum = new int[2];
     public int Playernum;
 
     [SerializeField]
@@ -67,74 +66,110 @@ public class KungFuPlayerControll : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    public void Set(GameObject player, int num)
-    {
-        inputDevice = player.GetComponentInChildren<PlayerInput>().devices[0];
-        foreach(Gamepad g in Gamepad.all)
-        {
-            if(g.name == inputDevice.name)
-            {
-                gamePad = g;
-            }
-        }
-        OffsetY = transform.position.y;
-        Now_a = -a;
-        Material[] mats = BodyMeshRenderer1.materials;
-        mats[0] = materials[num];
-        BodyMeshRenderer1.materials = mats;
-    }
 
     // Update is called once per frame
     void Update()
     {
         if (IsDeath) return;
-        if (gamePad == null) return;
+        if (gamePad == null)
+        {
 
-        if (gamePad.buttonSouth.IsPressed(0) && Jumpcooldown == 0 && Shieldcooldown == 0)
-        {
-            animator.SetTrigger("Jump");
-            animator.SetBool("Jumping", true);
-            Jump();
-            Now_a = a;
-            audioSource.PlayOneShot(clips[1]);
-            Jumpcooldown = -1;
-        }
-        if(Now_a > -a)
-        {
-            transform.position += new Vector3(0, Now_a, 0) * Time.deltaTime * (Mathf.Abs(Now_a) / 2);
-            Now_a -= s * Time.deltaTime;
-            if(Now_a < 0)
+            if (Keyboard.current.kKey.IsPressed(0) && Jumpcooldown == 0 && Shieldcooldown == 0)
             {
-                Now_a -= 3 * Time.deltaTime;
+                animator.SetTrigger("Jump");
+                animator.SetBool("Jumping", true);
+                Jump();
+                Now_a = a;
+                audioSource.PlayOneShot(clips[1]);
+                Jumpcooldown = -1;
             }
-            // if (-a - Now_a >= ((-s - 3) * Time.deltaTime))
-            if(Now_a < JumpDelay)
+            if (Now_a > -a)
             {
-                animator.SetBool("Jumping", false);
+                transform.position += new Vector3(0, Now_a, 0) * Time.deltaTime * (Mathf.Abs(Now_a) / 2);
+                Now_a -= s * Time.deltaTime;
+                if (Now_a < 0)
+                {
+                    Now_a -= 3 * Time.deltaTime;
+                }
+                // if (-a - Now_a >= ((-s - 3) * Time.deltaTime))
+                if (Now_a < JumpDelay)
+                {
+                    animator.SetBool("Jumping", false);
+                }
+                if (-a - Now_a >= ((-s - 3) * Time.deltaTime))
+                {
+                    transform.DOMoveY(OffsetY, Time.deltaTime);
+                    Jumpcooldown = 1;
+                    Now_a = -a;
+                }
             }
-            if (-a - Now_a >= ((-s - 3) * Time.deltaTime))
+            if (Jumpcooldown > 0)
             {
-                transform.DOMoveY(OffsetY, Time.deltaTime);
-                Jumpcooldown = 1;
-                Now_a = -a;
+                Jumpcooldown = Mathf.Lerp(1, 0, JumpTime);
+                JumpTime += JumpcooldownSpeed * Time.deltaTime;
             }
-        }
-        if(Jumpcooldown > 0)
-        {
-            Jumpcooldown = Mathf.Lerp(1, 0, JumpTime);
-            JumpTime += JumpcooldownSpeed * Time.deltaTime;
+            else
+            {
+                JumpTime = 0;
+            }
+
+            if (Keyboard.current.jKey.IsPressed(0) && Jumpcooldown == 0 && Shieldcooldown == 0)
+            {
+                Shieldcooldown = 1;
+                Swing();
+                audioSource.PlayOneShot(clips[0]);
+                StartCoroutine(ShieldEvent());
+            }
         }
         else
         {
-            JumpTime = 0;
-        }
 
-        if(gamePad.buttonWest.IsPressed(0) && Jumpcooldown == 0 && Shieldcooldown == 0)
-        {
-            Shieldcooldown = 1;
-            Swing();
-            audioSource.PlayOneShot(clips[0]);
-            StartCoroutine(ShieldEvent());
+            if (gamePad.buttonSouth.IsPressed(0) && Jumpcooldown == 0 && Shieldcooldown == 0)
+            {
+                animator.SetTrigger("Jump");
+                animator.SetBool("Jumping", true);
+                Jump();
+                Now_a = a;
+                audioSource.PlayOneShot(clips[1]);
+                Jumpcooldown = -1;
+            }
+            if (Now_a > -a)
+            {
+                transform.position += new Vector3(0, Now_a, 0) * Time.deltaTime * (Mathf.Abs(Now_a) / 2);
+                Now_a -= s * Time.deltaTime;
+                if (Now_a < 0)
+                {
+                    Now_a -= 3 * Time.deltaTime;
+                }
+                // if (-a - Now_a >= ((-s - 3) * Time.deltaTime))
+                if (Now_a < JumpDelay)
+                {
+                    animator.SetBool("Jumping", false);
+                }
+                if (-a - Now_a >= ((-s - 3) * Time.deltaTime))
+                {
+                    transform.DOMoveY(OffsetY, Time.deltaTime);
+                    Jumpcooldown = 1;
+                    Now_a = -a;
+                }
+            }
+            if (Jumpcooldown > 0)
+            {
+                Jumpcooldown = Mathf.Lerp(1, 0, JumpTime);
+                JumpTime += JumpcooldownSpeed * Time.deltaTime;
+            }
+            else
+            {
+                JumpTime = 0;
+            }
+
+            if (gamePad.buttonWest.IsPressed(0) && Jumpcooldown == 0 && Shieldcooldown == 0)
+            {
+                Shieldcooldown = 1;
+                Swing();
+                audioSource.PlayOneShot(clips[0]);
+                StartCoroutine(ShieldEvent());
+            }
         }
     }
 
